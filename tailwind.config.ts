@@ -10,6 +10,7 @@ const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/common/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -25,47 +26,47 @@ const config: Config = {
       "H1": [
         pxToRem(56),
         {
-          lineHeight: "128.6em",
-          letterSpacing: "-3.19em",
+          lineHeight: "128.6%",
+          letterSpacing: "-3.19%",
           fontWeight: "bold",
         },
       ],
       "H2": [
         pxToRem(32),
         {
-          lineHeight: "133.4em",
-          letterSpacing: "-2.7em",
+          lineHeight: "133.4%",
+          letterSpacing: "-2.7%",
           fontWeight: "bold",
         },
       ],
       "H3": [
         pxToRem(22),
         {
-          lineHeight: "136.4em",
-          letterSpacing: "-1.94em",
+          lineHeight: "136.4%",
+          letterSpacing: "-1.94%",
           fontWeight: "bold",
         },
       ],
       "H4": [
         pxToRem(18),
         {
-          lineHeight: "144.5em",
-          letterSpacing: "-0.02em",
+          lineHeight: "144.5%",
+          letterSpacing: "-0.02%",
           fontWeight: "semibold",
         },
       ],
       "subtitle": [
         pxToRem(14),
         {
-          lineHeight: "136.4em",
-          letterSpacing: "-1.94em",
+          lineHeight: "136.4%",
+          letterSpacing: "-1.94%",
           fontWeight: "medium",
         },
       ],
       "caption": [
         pxToRem(12),
         {
-          lineHeight: "133.4em",
+          lineHeight: "133.4%",
           letterSpacing: "0",
           fontWeight: "regular",
         },
@@ -73,32 +74,32 @@ const config: Config = {
       "body-nomral": [
         pxToRem(16),
         {
-          lineHeight: "150em",
-          letterSpacing: "0.57em",
+          lineHeight: "150%",
+          letterSpacing: "0.57%",
           fontWeight: "regular",
         },
       ],
       "body-bold": [
         pxToRem(16),
         {
-          lineHeight: "150em",
-          letterSpacing: "0.57em",
+          lineHeight: "150%",
+          letterSpacing: "0.57%",
           fontWeight: "semibold",
         },
       ],
       "label-nomral": [
         pxToRem(14),
         {
-          lineHeight: "142.9em",
-          letterSpacing: "1.45em",
+          lineHeight: "142.9%",
+          letterSpacing: "1.45%",
           fontWeight: "medium",
         },
       ],
       "label-strong": [
         pxToRem(14),
         {
-          lineHeight: "142.9em",
-          letterSpacing: "1.45em",
+          lineHeight: "142.9%",
+          letterSpacing: "1.45%",
           fontWeight: "semibold",
         },
       ],
@@ -138,6 +139,9 @@ const config: Config = {
       "line-alt": "#F4F4F5",
     },
     extend: {
+      gridTemplateColumns: {
+        "3_9": "278px 790px",
+      },
       backgroundColor: {
         // bg-backdrop
         backdrop: "rgba(55, 56, 60, 12%)",
