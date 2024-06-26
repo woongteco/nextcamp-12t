@@ -52,7 +52,7 @@ const config: Config = {
         {
           lineHeight: "144.5%",
           letterSpacing: "-0.02%",
-          fontWeight: "semibold",
+          fontWeight: "bold",
         },
       ],
       "subtitle": [
@@ -143,7 +143,7 @@ const config: Config = {
         "3_9": "278px 790px",
       },
       backgroundColor: {
-        // bg-backdrop
+        // bg-*
         backdrop: "rgba(55, 56, 60, 12%)",
         normal: "#FFFFFF",
         alt: "#F7F7F8",
