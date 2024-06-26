@@ -27,7 +27,7 @@ const config: Config = {
         pxToRem(56),
         {
           lineHeight: "128.6%",
-          letterSpacing: "-3.19%",
+          letterSpacing: "-0.0319em",
           fontWeight: "bold",
         },
       ],
@@ -35,7 +35,7 @@ const config: Config = {
         pxToRem(32),
         {
           lineHeight: "133.4%",
-          letterSpacing: "-2.7%",
+          letterSpacing: "-0.027em",
           fontWeight: "bold",
         },
       ],
@@ -43,7 +43,7 @@ const config: Config = {
         pxToRem(22),
         {
           lineHeight: "136.4%",
-          letterSpacing: "-1.94%",
+          letterSpacing: "-0.0194em",
           fontWeight: "bold",
         },
       ],
@@ -51,15 +51,15 @@ const config: Config = {
         pxToRem(18),
         {
           lineHeight: "144.5%",
-          letterSpacing: "-0.02%",
-          fontWeight: "semibold",
+          letterSpacing: "-0.0002em",
+          fontWeight: "bold",
         },
       ],
       "subtitle": [
         pxToRem(14),
         {
           lineHeight: "136.4%",
-          letterSpacing: "-1.94%",
+          letterSpacing: "-0.0194em",
           fontWeight: "medium",
         },
       ],
@@ -75,7 +75,7 @@ const config: Config = {
         pxToRem(16),
         {
           lineHeight: "150%",
-          letterSpacing: "0.57%",
+          letterSpacing: "0",
           fontWeight: "regular",
         },
       ],
@@ -83,7 +83,7 @@ const config: Config = {
         pxToRem(16),
         {
           lineHeight: "150%",
-          letterSpacing: "0.57%",
+          letterSpacing: "0",
           fontWeight: "semibold",
         },
       ],
@@ -91,15 +91,15 @@ const config: Config = {
         pxToRem(14),
         {
           lineHeight: "142.9%",
-          letterSpacing: "1.45%",
+          letterSpacing: "0",
           fontWeight: "medium",
         },
       ],
-      "label-strong": [
+      "label-bold": [
         pxToRem(14),
         {
           lineHeight: "142.9%",
-          letterSpacing: "1.45%",
+          letterSpacing: "0",
           fontWeight: "semibold",
         },
       ],
@@ -139,11 +139,8 @@ const config: Config = {
       "line-alt": "#F4F4F5",
     },
     extend: {
-      gridTemplateColumns: {
-        "3_9": "278px 790px",
-      },
       backgroundColor: {
-        // bg-backdrop
+        // bg-*
         backdrop: "rgba(55, 56, 60, 12%)",
         normal: "#FFFFFF",
         alt: "#F7F7F8",
