@@ -1,16 +1,18 @@
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 
 export type TButtonProps = ComponentProps<"button"> & {
   variation?: "solid" | "outline" | "icon";
   color?: string;
   fullWidth?: boolean;
 };
-export type TLabelProps = React.ComponentProps<"label"> & {
+export type TLabelProps = ComponentProps<"label"> & {
   required: boolean;
 };
-export type TCaptionProps = React.ComponentProps<"p" | "span"> & {
+export type TCaptionProps = ComponentProps<"p" | "span"> & {
   inline: boolean;
 };
-export type TNavItemProps = Omit<ComponentProps<"li">, "className"> & {
-  active: boolean;
+export type TMenuItemProps = {
+  href: string;
+  label: string;
+  active?: boolean;
 };
