@@ -7,7 +7,7 @@ export default function MainLayout({ children }: Props) {
   return (
     <>
       <Header />
-      <main>
+      <main className="h-[100vh]">
         <Container>{children}</Container>
       </main>
       <Footer />
