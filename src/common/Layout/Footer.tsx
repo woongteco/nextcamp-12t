@@ -6,8 +6,9 @@ import {
   LinkedinIcon,
   XIcon,
 } from "../../../public/icons";
-import { FLogo } from "../../../public/images";
+// import { FLogo } from "../../../public/images";
 import Image from "next/image";
+import { FLogo } from "../../../public/images";
 
 export default function Footer() {
   return (
