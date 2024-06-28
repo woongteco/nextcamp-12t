@@ -7,6 +7,7 @@ const pxToRem = (px: number): string => {
 };
 
 const config: Config = {
+  plugins: [],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,16 +15,26 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "16px",
+        sm: "16px",
+        md: "16px",
+        lg: "16px",
+        xl: "24px",
+      },
+    },
     screens: {
       // ...breakpoints
-      // sm: mobile
-      // md: tablet
-      // lg: desktop
-      // xl: big desktop
+      sm: "460px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
     },
     fontSize: {
       // 1rem = 16px 기준으로 계산됨
-      "H1": [
+      H1: [
         pxToRem(56),
         {
           lineHeight: "128.6%",
@@ -31,7 +42,7 @@ const config: Config = {
           fontWeight: "bold",
         },
       ],
-      "H2": [
+      H2: [
         pxToRem(32),
         {
           lineHeight: "133.4%",
@@ -39,7 +50,7 @@ const config: Config = {
           fontWeight: "bold",
         },
       ],
-      "H3": [
+      H3: [
         pxToRem(22),
         {
           lineHeight: "136.4%",
@@ -47,7 +58,7 @@ const config: Config = {
           fontWeight: "bold",
         },
       ],
-      "H4": [
+      H4: [
         pxToRem(18),
         {
           lineHeight: "144.5%",
@@ -55,7 +66,7 @@ const config: Config = {
           fontWeight: "bold",
         },
       ],
-      "subtitle": [
+      subtitle: [
         pxToRem(14),
         {
           lineHeight: "136.4%",
@@ -63,7 +74,7 @@ const config: Config = {
           fontWeight: "medium",
         },
       ],
-      "caption": [
+      caption: [
         pxToRem(12),
         {
           lineHeight: "133.4%",
@@ -105,9 +116,9 @@ const config: Config = {
       ],
     },
     colors: {
-      "white": "#ffffff",
-      "black": "#000000",
-      "transparent": "transparent",
+      white: "#ffffff",
+      black: "#000000",
+      transparent: "transparent",
       "main-25": "#E6F0FF",
       "main-50": "#C7DEFF",
       "main-100": "#B4D2FF",
@@ -163,6 +174,5 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
 };
 export default config;
