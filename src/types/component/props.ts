@@ -5,6 +5,11 @@ export type TProps = {
 };
 export type TIconButtonProps = ComponentProps<"button"> & {
   variation: "icon";
+  size?: number;
+  colors?: {
+    bg: string;
+    text?: string;
+  };
 };
 export type TButtonProps = ComponentProps<"button"> & {
   variation: "solid" | "outline" | "text";
