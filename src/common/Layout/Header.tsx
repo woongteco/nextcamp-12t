@@ -6,7 +6,7 @@ import { DummyProfileImg } from "../../../public/images";
 
 export default function Header() {
   return (
-    <header>
+    <header className="border-b border-b-line-normal">
       <Container>
         <div className="h-16 flex items-center justify-between">
           <div className="flex gap-20">
