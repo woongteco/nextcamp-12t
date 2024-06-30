@@ -7,6 +7,7 @@ import ContentArea from "@/common/Organisms/ContentArea";
 import Button from "@/common/Atoms/Form/Button";
 import LinkButton from "@/common/Atoms/LinkButton";
 import LinkedStudyCard from "./_components/LinkedStudyCard";
+import Profile from "@/common/Atoms/Image/Profile";
 
 export default function PostDetail({
   params: { postId },
@@ -48,10 +49,10 @@ export default function PostDetail({
           </div>
           <div className="flex gap-6 items-center py-6 border-b border-b-line-normal">
             <div className="flex gap-6 items-center">
-              <Image
-                src={DummyProfileImg}
+              <Profile
+                size="large"
+                src="/images/profile/DummyProfileImg.jpg"
                 alt={`${post.writer.name} 프로필 이미지`}
-                className="block w-10 h-10 rounded-full"
               />
               <span className="text-H4">
                 {post.writer.position} {post.writer.name}
@@ -106,6 +107,7 @@ export default function PostDetail({
           </div>
         </div>
         <ContentArea html={post.contents.body} />
+        {/* TODO: 추후 Link 추가 필요 */}
         {/* {post.contents.linkedStudyId && ( */}
         <LinkedStudyCard studyId={post.contents.linkedStudyId || "0"} />
         {/* )} */}
