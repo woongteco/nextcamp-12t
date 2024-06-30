@@ -1,7 +1,9 @@
 import NotFound from "@/app/not-found";
+import LinkButton from "@/common/Atoms/LinkButton";
 import { Sidebar } from "@/common/Layout";
 import Dropdown from "@/common/Molecules/Dropdown";
 import PostListItem from "@/common/Organisms/PostListItem";
+import { getPosts } from "@/dummies/posts";
 import Link from "next/link";
 
 export type TPost = {
@@ -26,7 +28,7 @@ export type TPost = {
   like: number;
 };
 
-const menus = [
+export const menus = [
   { key: "all", href: "/post?filter=all", label: "전체", active: false },
   {
     key: "study",
@@ -68,6 +70,7 @@ export default function CommunityPostList({
 }: {
   searchParams: TQuery;
 }) {
+  const posts = getPosts();
   const filter = searchParams?.filter || "all";
   const page = searchParams?.page || "1";
   const sort = searchParams?.sort || "latest";
@@ -135,10 +138,7 @@ export default function CommunityPostList({
                 </li>
               ))}
             />
-            <Link
-              href="/post/write"
-              className="flex flex-row gap-2 px-5 py-3 rounded-[10px] bg-main-600 text-white hover:bg-main-600/75 hover:saturate-150 w-fit"
-            >
+            <LinkButton href="/post/write">
               <svg
                 width="24"
                 height="24"
@@ -154,34 +154,14 @@ export default function CommunityPostList({
                   stroke-linejoin="round"
                 />
               </svg>
-              <span className="text-body-bold">글 작성하기</span>
-            </Link>
+              <span className="text-body-600">글 작성하기</span>
+            </LinkButton>
           </div>
           <div className="flex flex-col gap-0">
             <ul>
-              <PostListItem
-                item={{
-                  postId: "10",
-                  filter: {
-                    value: "free",
-                    label: "자유게시판",
-                    isRecruiting: null,
-                  },
-                  contents: {
-                    title: "가나다라",
-                    body: "",
-                    linkedStudyId: null,
-                  },
-                  writer: {
-                    position: "개발자",
-                    name: "한유준",
-                    profileUrl: "",
-                  },
-                  createdAt: "2024-06-29 22:10:00",
-                  view: 188,
-                  like: 15,
-                }}
-              />
+              {posts.map((p) => (
+                <PostListItem item={p} />
+              ))}
               <PostListItem
                 item={{
                   postId: "9",
