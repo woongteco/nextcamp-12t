@@ -3,6 +3,7 @@ import { ComponentProps, ReactNode } from "react";
 export type TProps = {
   children: ReactNode;
 };
+export type TClassnameProps = React.ComponentProps<any>["className"];
 export type TIconButtonProps = ComponentProps<"button"> & {
   variation: "icon";
   size?: number;
@@ -21,9 +22,17 @@ export type TButtonProps = ComponentProps<"button"> & {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
 };
-export type TLabelProps = ComponentProps<"label"> & {
-  required: boolean;
+export type TLinkButtonProps = React.ComponentProps<"a"> & {
+  colors?: TButtonProps["colors"];
+  variation?: TButtonProps["variation"];
+  href: string | object;
 };
+type TLabel<T> = ComponentProps<T> & {
+  form?: boolean;
+  required?: boolean;
+};
+export type TLabelProps = TLabel<"label">;
+export type TLabelTextProps = TLabel<"p">;
 export type TCaptionProps = ComponentProps<"p" | "span"> & {
   inline: boolean;
 };
