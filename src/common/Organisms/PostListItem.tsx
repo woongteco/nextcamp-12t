@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
-import Image from "next/image";
-import { DummyProfileImg } from "../../../public/images";
 import { TPost } from "@/app/(route)/post/page";
+import Profile from "../Atoms/Image/Profile";
 
 function getCreatedBefore(createdAt: string): string {
   const createdTime = Date.parse(createdAt);
@@ -60,12 +59,16 @@ export default function PostListItem({ item }: { item: TPost }) {
           </div>
           <div className="flex justify-between items-center">
             <p className="flex gap-2 items-center">
-              <Image
-                src={item.writer.profileUrl || DummyProfileImg}
+              <Profile
+                size="small"
+                src={
+                  item.writer.profileUrl ||
+                  "/images/profile/DummyProfileImg.jpg"
+                }
                 alt={`${item.writer.name} 프로필 이미지`}
-                className="block w-5 h-5 rounded-full"
+                className="rounded-full"
               />
-              <span className="text-label-bold text-[#828285]">
+              <span className="text-label-600 text-[#828285]">
                 {item.writer.position} {item.writer.name}
               </span>
             </p>
