@@ -4,6 +4,7 @@ import { Sidebar } from "@/common/Layout";
 import Dropdown from "@/common/Molecules/Dropdown";
 import PostListItem from "@/common/Organisms/PostListItem";
 import { getPosts } from "@/dummies/posts";
+import { TUserBase } from "@/types/model/User";
 import Link from "next/link";
 
 export type TPost = {
@@ -18,13 +19,7 @@ export type TPost = {
     body: string;
     linkedStudyId: null | string;
   };
-  writer: {
-    id: string;
-    name: string;
-    role: "user" | "pro";
-    position: string;
-    profileUrl: string;
-  };
+  writer: TUserBase;
   createdAt: string;
   view: number;
   like: number;
@@ -178,7 +173,7 @@ export default function CommunityPostList({
                     linkedStudyId: null,
                   },
                   writer: {
-                    id: "hanyoojun",
+                    userId: "hanyoojun",
                     name: "한유준",
                     role: "user",
                     position: "개발자",
@@ -204,7 +199,7 @@ export default function CommunityPostList({
                     linkedStudyId: null,
                   },
                   writer: {
-                    id: "hanyoojun",
+                    userId: "hanyoojun",
                     name: "한유준",
                     role: "user",
                     position: "개발자",
@@ -229,7 +224,7 @@ export default function CommunityPostList({
                     linkedStudyId: null,
                   },
                   writer: {
-                    id: "hanyoojun",
+                    userId: "hanyoojun",
                     name: "한유준",
                     role: "user",
                     position: "개발자",
