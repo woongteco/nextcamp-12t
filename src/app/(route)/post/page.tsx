@@ -19,7 +19,9 @@ export type TPost = {
     linkedStudyId: null | string;
   };
   writer: {
+    id: string;
     name: string;
+    role: "user" | "pro";
     position: string;
     profileUrl: string;
   };
@@ -176,8 +178,10 @@ export default function CommunityPostList({
                     linkedStudyId: null,
                   },
                   writer: {
-                    position: "개발자",
+                    id: "hanyoojun",
                     name: "한유준",
+                    role: "user",
+                    position: "개발자",
                     profileUrl: "",
                   },
                   createdAt: "2024-06-29 20:00:00",
@@ -200,8 +204,10 @@ export default function CommunityPostList({
                     linkedStudyId: null,
                   },
                   writer: {
-                    position: "개발자",
+                    id: "hanyoojun",
                     name: "한유준",
+                    role: "user",
+                    position: "개발자",
                     profileUrl: "",
                   },
                   createdAt: "2024-06-29 00:00:00",
@@ -223,8 +229,10 @@ export default function CommunityPostList({
                     linkedStudyId: null,
                   },
                   writer: {
-                    position: "개발자",
+                    id: "hanyoojun",
                     name: "한유준",
+                    role: "user",
+                    position: "개발자",
                     profileUrl: "",
                   },
                   createdAt: "2024-06-25 00:00:00",

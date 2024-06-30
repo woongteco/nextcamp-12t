@@ -13,8 +13,10 @@ const example: TPost = {
     linkedStudyId: null,
   },
   writer: {
-    position: "개발자",
+    id: "hanyoojun",
     name: "한유준",
+    role: "user",
+    position: "개발자",
     profileUrl: "",
   },
   createdAt: "2024-06-29 22:10:00",
