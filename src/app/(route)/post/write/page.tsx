@@ -4,35 +4,25 @@ import Button from "@/common/Atoms/Form/Button";
 import Field from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
-import { menus } from "../page";
+import SelectCategory from "./_components/SelectCategory";
 
 export default function PostWrite() {
-  const categoryOptions = menus
-    .filter((m) => m.key !== "all")
-    .map((m) => ({ value: m.key, label: m.label }));
   return (
     <>
       <form action="" className="mt-20 mb-100 flex flex-col gap-[36px]">
-        <Field>
-          <LabelText form required>
-            카테고리 선택
-          </LabelText>
-          <Input.Select
-            options={categoryOptions}
-            defaultValue={categoryOptions[0]}
-          />
-        </Field>
+        <SelectCategory />
         <Field>
           <LabelText form required>
             글 제목
           </LabelText>
-          <Input.Text placeholder="제목을 입력하세요" />
+          <Input.Text placeholder="제목을 입력하세요" required />
         </Field>
         <Field>
           <LabelText form required>
             글 내용
           </LabelText>
           <TextEditor
+            required
             className="h-[580px]"
             placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
           />
