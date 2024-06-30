@@ -1,0 +1,51 @@
+.postBody {
+  padding-block-start: 2.5rem;
+  padding-block-end: 3.74rem;
+}
+.postBody > * {
+  display: block;
+  color: black;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+.postBody p {
+  font-weight: 400;
+  line-height: 1.5em;
+  margin-block: 0.25em;
+}
+.postBody p:empty {
+  margin-block: 1em;
+}
+.postBody h1,
+.postBody h2,
+.postBody h3 {
+  line-height: 1.5em;
+  margin-block: 0.5em;
+  font-weight: 700;
+}
+.postBody h1 {
+  font-size: 2em;
+}
+.postBody h2 {
+  font-size: 1.5em;
+}
+.postBody h3 {
+  font-size: 1.17em;
+}
+.postBody a {
+  color: #2a7ffe;
+}
+.postBody .ql-align-justify {
+  text-align: justify;
+}
+.postBody .ql-align-left {
+  text-align: left;
+}
+.postBody .ql-align-center {
+  text-align: center;
+}
+.postBody .ql-align-right {
+  text-align: right;
+}
