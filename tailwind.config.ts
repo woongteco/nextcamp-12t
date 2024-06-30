@@ -82,7 +82,7 @@ const config: Config = {
           fontWeight: 400, //" regular",
         },
       ],
-      "body-nomral": [
+      "body-400": [
         pxToRem(16),
         {
           lineHeight: "150%",
@@ -90,7 +90,7 @@ const config: Config = {
           fontWeight: 400, // "regular",
         },
       ],
-      "body-bold": [
+      "body-600": [
         pxToRem(16),
         {
           lineHeight: "150%",
@@ -98,7 +98,7 @@ const config: Config = {
           fontWeight: 600, // "semibold"
         },
       ],
-      "label-nomral": [
+      "label-400": [
         pxToRem(14),
         {
           lineHeight: "142.9%",
@@ -106,11 +106,19 @@ const config: Config = {
           fontWeight: 400, // "regular",
         },
       ],
-      "label-bold": [
+      "label-600": [
         pxToRem(14),
         {
           lineHeight: "142.9%",
           letterSpacing: "0",
+          fontWeight: 600, // "semibold"
+        },
+      ],
+      "label-form": [
+        pxToRem(18),
+        {
+          lineHeight: "144.5%",
+          letterSpacing: "-0.02%",
           fontWeight: 600, // "semibold"
         },
       ],
@@ -145,6 +153,8 @@ const config: Config = {
       "label-alt": "#B2B2B4",
       "label-assist": "rgba(55, 56, 60, 28%)",
       "label-disable": "rgba(55, 56, 60, 16%)",
+      "line-input": "#DBDBDD",
+      "line-input-hover": "#B3B3B3",
       "line-normal": "#E0E0E2",
       "line-neutral": "#E6E6E8",
       "line-alt": "#F4F4F5",
@@ -175,6 +185,19 @@ const config: Config = {
         "dropdown": "40",
         "modal-back": "50",
         "modal": "60",
+      },
+      borderRadius: {
+        ten: "10px",
+        twenty: "20px",
+      },
+      spacing: {
+        "100": "100px",
+        "gutter-xl": "30px",
+        "gutter-lg": "24px",
+        "gutter-md": "16px",
+        "gutter-sm": "20px",
+        "margin-lg": "24px",
+        "margin": "16px",
       },
     },
   },
