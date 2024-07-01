@@ -1,10 +1,72 @@
+import ProfileImg from "../Atoms/Image/ProfileImg";
 import CommentItem from "../Organisms/Comment/CommentItem";
 import CommentInput from "../Organisms/Comment/CommentInput";
-import Profile from "../Atoms/Image/Profile";
+import { TUserBase } from "@/types/model/User";
+
+// 데이터 없이 화면 테스트 시 컴포넌트 내부에서 comments 대신 example로 변경 후 확인
+const example: TComment[] = [
+  {
+    commentId: "0",
+    content: "디자인 초보도 참여 가능할까요?",
+    writer: {
+      userId: "kimjihyeon",
+      name: "김지현",
+      role: "user",
+      position: "",
+      profileUrl: "",
+    },
+    createdAt: "2024-05-01 11:02",
+    reply: [
+      {
+        originId: "0",
+        commentId: "1",
+        content:
+          "네, 가능합니다. 서로 공유하면서 배워나가는 스터디 모임입니다!",
+        writer: {
+          userId: "leesunhyeong",
+          name: "이선형",
+          role: "pro",
+          position: "UIUX 디자이너",
+          profileUrl: "",
+        },
+        createdAt: "2024.05.02 13:02",
+      },
+      {
+        originId: "0",
+        commentId: "2",
+        content: "스터디 참여 신청서 작성 부탁드려요",
+        writer: {
+          userId: "leesunhyeong",
+          name: "이선형",
+          role: "pro",
+          position: "UIUX 디자이너",
+          profileUrl: "",
+        },
+        createdAt: "2024.05.02 13:03",
+      },
+    ],
+  },
+  {
+    commentId: "3",
+    content: "저도 참여하고 싶어요! 진행중인데 참여 가능할까요?",
+    writer: {
+      userId: "shinjiwoo",
+      name: "신지우",
+      role: "user",
+      position: "",
+      profileUrl: "",
+    },
+    createdAt: "2024.05.03 13:52",
+    reply: [],
+  },
+];
 
 export type TComment = {
   commentId: string;
-  writer: string;
+  content: string;
+  writer: TUserBase;
+  createdAt: string;
+  reply: Array<Omit<TComment, "reply"> & { originId: string }>;
 };
 export default function CommentArea({
   titleText = "댓글",
@@ -44,7 +106,7 @@ export default function CommentArea({
         )}
       </div>
       <div className="flex flex-row gap-8 items-start w-full">
-        <Profile
+        <ProfileImg
           size="large"
           src="/images/profile/DummyProfileImg.jpg"
           alt="프로필 이미지"
