@@ -111,9 +111,9 @@ export default function CommunityPostList({
                   <path
                     d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z"
                     stroke="black"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </span>
@@ -146,9 +146,9 @@ export default function CommunityPostList({
                 <path
                   d="M4.08301 20.0001H20.0166M4.08301 20.0001V16.0001L12.0498 8.00012M4.08301 20.0001L8.06641 20.0001L16.0332 12.0001M12.0498 8.00012L14.9065 5.13146L14.9083 5.12976C15.3015 4.73488 15.4985 4.53709 15.7255 4.46301C15.9255 4.39775 16.141 4.39775 16.341 4.46301C16.5679 4.53704 16.7647 4.7346 17.1573 5.12892L18.8899 6.86872C19.2843 7.26474 19.4816 7.46284 19.5554 7.69117C19.6204 7.89201 19.6204 8.10835 19.5554 8.3092C19.4816 8.53736 19.2846 8.73516 18.8908 9.13061L18.8899 9.13146L16.0332 12.0001M12.0498 8.00012L16.0332 12.0001"
                   stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
               <span className="text-body-600">글 작성하기</span>
