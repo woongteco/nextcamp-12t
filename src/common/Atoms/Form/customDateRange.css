@@ -19,7 +19,7 @@
 }
 .react-datepicker__triangle {
   fill: white;
-  stroke-width: 0;
+  strokewidth: 0;
 }
 .react-datepicker__triangle path {
   box-shadow: var(--shadow-normal);
