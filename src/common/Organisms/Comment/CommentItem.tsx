@@ -26,7 +26,7 @@ export default function CommentItem({ comment }: { comment: TComment }) {
         {comment?.reply &&
           comment.reply.length > 0 &&
           comment.reply.map((reply) => (
-            <div className="flex flex-col gap-5 pt-6">
+            <div className="flex flex-col gap-5 pt-6" key={reply.commentId}>
               <Profile size="default" user={reply.writer} />
               <div className="flex flex-col gap-5 pl-14">
                 <CommentBodyLayout comment={reply} />
