@@ -1,9 +1,9 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ElementType, ReactNode } from "react";
 
 export type TProps = {
   children: ReactNode;
 };
-export type TClassnameProps = React.ComponentProps<any>["className"];
+export type TClassnameProps = { className: string }; //React.ComponentProps["className"];
 export type TIconButtonProps = ComponentProps<"button"> & {
   variation: "icon";
   size?: number;
@@ -27,7 +27,7 @@ export type TLinkButtonProps = React.ComponentProps<"a"> & {
   variation?: TButtonProps["variation"];
   href: string | object;
 };
-type TLabel<T> = ComponentProps<T> & {
+type TLabel<T> = ComponentProps<ElementType<T>> & {
   form?: boolean;
   required?: boolean;
 };
