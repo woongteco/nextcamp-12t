@@ -20,7 +20,7 @@ export default function DateRangePicker({ id }: { id: string }) {
         className="w-[144px] border-white text-center"
         ariaDescribedBy="react-datepicker"
       />
-      <span className="inline-block text-[#828285] mx-6">~</span>
+      <span className="inline-block text-label-dimmed mx-6">~</span>
       <ReactDatePicker
         dateFormat="yyyy.MM.dd"
         id={`${id}-end`}

@@ -151,6 +151,7 @@ const config: Config = {
       "label-strong": "#000000",
       "label-neutral": "#464748",
       "label-alt": "#B2B2B4",
+      "label-dimmed": "#A09F9F",
       "label-assist": "rgba(55, 56, 60, 28%)",
       "label-disable": "rgba(55, 56, 60, 16%)",
       "line-input": "#DBDBDD",

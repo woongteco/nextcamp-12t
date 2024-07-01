@@ -17,7 +17,7 @@ export default function LinkedStudyCard({ studyId }: { studyId: string }) {
       </div>
       <div className="flex flex-col gap-4 py-5">
         <div className="study-info flex flex-col gap-0">
-          <span className="text-body-nomral text-[#828285]">
+          <span className="text-body-nomral text-label-dimmed">
             {study.category.label} 스터디
           </span>
           <p className="text-[20px] text-black font-semibold w-full overflow-hidden text-nowrap text-ellipsis">
@@ -31,7 +31,7 @@ export default function LinkedStudyCard({ studyId }: { studyId: string }) {
               alt={`${writer.name} 프로필 이미지`}
               className="block w-5 h-5 rounded-full"
             />
-            <span className="text-label-600 text-[#828285]">
+            <span className="text-label-600 text-label-dimmed">
               {writer.position} {writer.name}
             </span>
           </p>
