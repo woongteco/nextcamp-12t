@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
+import Profile from "../Molecules/Profile";
 import { TPost } from "@/app/(route)/post/page";
-import Profile from "../Atoms/Image/Profile";
 
 function getCreatedBefore(createdAt: string): string {
   const createdTime = Date.parse(createdAt);
@@ -50,7 +50,7 @@ export default function PostListItem({ item }: { item: TPost }) {
       <li className="relative p-4 border-b border-b-line-neutral hover:bg-card">
         <Link href={`/post/${item.postId}`} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 pr-[120px]">
-            <span className="text-body-nomral text-[#828285]">
+            <span className="text-body-nomral text-label-dimmed">
               {item.filter.label}
             </span>
             <p className="text-[20px] text-black font-semibold w-full overflow-hidden text-nowrap text-ellipsis">
@@ -58,21 +58,8 @@ export default function PostListItem({ item }: { item: TPost }) {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <p className="flex gap-2 items-center">
-              <Profile
-                size="small"
-                src={
-                  item.writer.profileUrl ||
-                  "/images/profile/DummyProfileImg.jpg"
-                }
-                alt={`${item.writer.name} 프로필 이미지`}
-                className="rounded-full"
-              />
-              <span className="text-label-600 text-[#828285]">
-                {item.writer.position} {item.writer.name}
-              </span>
-            </p>
-            <span className="text-label-nomral text-[#828285]">
+            <Profile size="small" user={item.writer} />
+            <span className="text-label-400 text-label-dimmed">
               {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개
             </span>
           </div>

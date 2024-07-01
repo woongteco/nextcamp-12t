@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { getPost } from "@/dummies/posts";
-import Image from "next/image";
-import { DummyProfileImg } from "../../../../../public/images";
-import CommentArea, { TComment } from "@/common/Templates/CommentArea";
-import ContentArea from "@/common/Organisms/ContentArea";
 import Button from "@/common/Atoms/Form/Button";
 import LinkButton from "@/common/Atoms/LinkButton";
+import Profile from "@/common/Molecules/Profile";
+import ContentArea from "@/common/Organisms/ContentArea";
+import CommentArea, { TComment } from "@/common/Templates/CommentArea";
 import LinkedStudyCard from "./_components/LinkedStudyCard";
-import Profile from "@/common/Atoms/Image/Profile";
 
 export default function PostDetail({
   params: { postId },
@@ -48,16 +46,7 @@ export default function PostDetail({
             </h2>
           </div>
           <div className="flex gap-6 items-center py-6 border-b border-b-line-normal">
-            <div className="flex gap-6 items-center">
-              <Profile
-                size="large"
-                src="/images/profile/DummyProfileImg.jpg"
-                alt={`${post.writer.name} 프로필 이미지`}
-              />
-              <span className="text-H4">
-                {post.writer.position} {post.writer.name}
-              </span>
-            </div>
+            <Profile user={post.writer} size="large" />
             <p className="text-label-400 text-label-dimmed flex flex-row gap-2 items-center">
               <span>1일 전</span>
               {/* 본인이 작성한 글이라면 수정하기 버튼 show */}
