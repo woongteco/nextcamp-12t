@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
-import { TMenuItemProps } from "@/types/component/props";
+import { TMenuItemProps, TProps } from "@/types/component/props";
 
 export function NavItem({ href, label, active = false }: TMenuItemProps) {
   return (
@@ -28,15 +28,15 @@ function SideNav({
 }) {
   return (
     <ul className="flex flex-col gap-1">
-      {menus.map((item) => (
-        <NavItem key={item.href} {...item} />
+      {menus.map(({ key, ...items }) => (
+        <NavItem key={key} {...items} />
       ))}
       {action}
     </ul>
   );
 }
 
-function Container({ children }: { children: React.ReactNode }) {
+function Container({ children }: TProps) {
   return children;
 }
 
@@ -49,7 +49,7 @@ function Container({ children }: { children: React.ReactNode }) {
  *  2. [~1279px] flex column 레이아웃 시 NavItem 드롭다운
  *  3. Sidebar.Nav의 menus 반복, 현재 페이지표시
  */
-function Sidebar({ children }: { children: ReactNode }) {
+function Sidebar({ children }: TProps) {
   if (React.Children.count(children) !== 2) {
     throw new Error(
       "Sidebar 컴포넌트는 Sidebar.Nav와 Sidebar.Container 컴포넌트를 하나씩 가져야만합니다."
@@ -72,7 +72,7 @@ function Sidebar({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_3fr] gap-[30px]">
+    <div className="grid grid-cols-[282px_894px] gap-[30px] mt-20">
       {nav[0]}
       {container[0]}
     </div>

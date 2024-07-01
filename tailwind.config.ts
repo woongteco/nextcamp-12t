@@ -34,91 +34,99 @@ const config: Config = {
     },
     fontSize: {
       // 1rem = 16px 기준으로 계산됨
-      H1: [
+      "H1": [
         pxToRem(56),
         {
           lineHeight: "128.6%",
           letterSpacing: "-0.0319em",
-          fontWeight: "bold",
+          fontWeight: 700, // "bold",
         },
       ],
-      H2: [
+      "H2": [
         pxToRem(32),
         {
           lineHeight: "133.4%",
           letterSpacing: "-0.027em",
-          fontWeight: "bold",
+          fontWeight: 700, // "bold",
         },
       ],
-      H3: [
+      "H3": [
         pxToRem(22),
         {
           lineHeight: "136.4%",
           letterSpacing: "-0.0194em",
-          fontWeight: "bold",
+          fontWeight: 700, // "bold",
         },
       ],
-      H4: [
+      "H4": [
         pxToRem(18),
         {
           lineHeight: "144.5%",
           letterSpacing: "-0.0002em",
-          fontWeight: "bold",
+          fontWeight: 700, // "bold",
         },
       ],
-      subtitle: [
+      "subtitle": [
         pxToRem(14),
         {
           lineHeight: "136.4%",
           letterSpacing: "-0.0194em",
-          fontWeight: "medium",
+          fontWeight: 400, // "regular",
         },
       ],
-      caption: [
+      "caption": [
         pxToRem(12),
         {
           lineHeight: "133.4%",
           letterSpacing: "0",
-          fontWeight: "regular",
+          fontWeight: 400, //" regular",
         },
       ],
-      "body-nomral": [
+      "body-400": [
         pxToRem(16),
         {
           lineHeight: "150%",
           letterSpacing: "0",
-          fontWeight: "regular",
+          fontWeight: 400, // "regular",
         },
       ],
-      "body-bold": [
+      "body-600": [
         pxToRem(16),
         {
           lineHeight: "150%",
           letterSpacing: "0",
-          fontWeight: "semibold",
+          fontWeight: 600, // "semibold"
         },
       ],
-      "label-nomral": [
+      "label-400": [
         pxToRem(14),
         {
           lineHeight: "142.9%",
           letterSpacing: "0",
-          fontWeight: "medium",
+          fontWeight: 400, // "regular",
         },
       ],
-      "label-bold": [
+      "label-600": [
         pxToRem(14),
         {
           lineHeight: "142.9%",
           letterSpacing: "0",
-          fontWeight: "semibold",
+          fontWeight: 600, // "semibold"
+        },
+      ],
+      "label-form": [
+        pxToRem(18),
+        {
+          lineHeight: "144.5%",
+          letterSpacing: "-0.02%",
+          fontWeight: 600, // "semibold"
         },
       ],
     },
     colors: {
-      white: "#ffffff",
-      black: "#000000",
-      transparent: "transparent",
+      "white": "#ffffff", // = bg-normal
+      "black": "#000000",
+      "transparent": "transparent",
       "main-25": "#E6F0FF",
       "main-50": "#C7DEFF",
       "main-100": "#B4D2FF",
@@ -143,8 +151,11 @@ const config: Config = {
       "label-strong": "#000000",
       "label-neutral": "#464748",
       "label-alt": "#B2B2B4",
+      "label-dimmed": "#A09F9F",
       "label-assist": "rgba(55, 56, 60, 28%)",
       "label-disable": "rgba(55, 56, 60, 16%)",
+      "line-input": "#DBDBDD",
+      "line-input-hover": "#B3B3B3",
       "line-normal": "#E0E0E2",
       "line-neutral": "#E6E6E8",
       "line-alt": "#F4F4F5",
@@ -167,10 +178,27 @@ const config: Config = {
         heavy:
           "0 0 8px 0 rgba(0, 0, 0, 0.08), 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 30px 40px 0 rgba(16, 36, 94, 0.2)",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      zIndex: {
+        "base": "0",
+        "header": "20",
+        "header-dropdown": "10",
+        "dropdown-back": "30",
+        "dropdown": "40",
+        "modal-back": "50",
+        "modal": "60",
+      },
+      borderRadius: {
+        ten: "10px",
+        twenty: "20px",
+      },
+      spacing: {
+        "100": "100px",
+        "gutter-xl": "30px",
+        "gutter-lg": "24px",
+        "gutter-md": "16px",
+        "gutter-sm": "20px",
+        "margin-lg": "24px",
+        "margin": "16px",
       },
     },
   },
