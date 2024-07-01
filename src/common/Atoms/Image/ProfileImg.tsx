@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 
-export default function Profile(
+export default function ProfileImg(
   props: React.ComponentProps<typeof Image> & {
     size?: "default" | "large" | "small";
     altText?: string;
