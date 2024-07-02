@@ -27,7 +27,7 @@ export type TLinkButtonProps = React.ComponentProps<"a"> & {
   variation?: TButtonProps["variation"];
   href: string | object;
 };
-type TLabel<T> = ComponentProps<ElementType<T>> & {
+type TLabel<T> = ComponentProps<T> & {
   form?: boolean;
   required?: boolean;
 };
