@@ -1,4 +1,4 @@
-export const categories = [
+export const CATEGORIES = [
   {
     value: "cate_1",
     label: "개발",
