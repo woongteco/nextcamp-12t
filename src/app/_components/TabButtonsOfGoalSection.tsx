@@ -10,10 +10,11 @@ import {
   PuzzleIcon,
   TIconStylingProps,
 } from "@/common/Atoms/Image/Icon";
-import { useState } from "react";
-import { TabButton } from "./TabButton";
 import { GOALS } from "@/dummies/categories";
-import { getStudiesData } from "@/dummies/studies";
+import { TStudyCard, getStudiesData } from "@/dummies/studies";
+
+import { useEffect, useState } from "react";
+import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
 
 const ICONS = [
@@ -31,7 +32,11 @@ const GOALS_TAB = GOALS.map((goal, index) => ({ ...goal, Icon: ICONS[index] }));
 
 export default function TabButtonsOfGoalSection() {
   const [selected, setSelected] = useState(GOALS[0].value);
-  const proStudies = getStudiesData();
+  const [proStudies, setStudies] = useState<TStudyCard[]>([]);
+
+  useEffect(() => {
+    setStudies(() => getStudiesData());
+  }, [selected]);
 
   return (
     <>
