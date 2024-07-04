@@ -2,6 +2,8 @@ import PageTitle from "@/common/Atoms/Text/PageTitle";
 
 import { faker } from "@faker-js/faker";
 import StudyCardList from "@/common/Templates/CardList";
+import HotStudyList from "./_components/HotStudyList";
+import GoodStudyList from "./_components/GoodStudyList";
 
 const me = {
   username: "신지수",
@@ -207,26 +209,41 @@ export default function StudyComponent() {
 
         <div className="flex gap-[6.25rem] flex-col">
           <div>
-            <PageTitle size="md">
+            <PageTitle size="md" className="pb-6">
               {me.username}님이 찾던 케미 좋은 프로 스터디
             </PageTitle>
+            <div className="flex flex-col gap-6">
+              <div>
+                <PageTitle size="sm" className="pb-3">
+                  디자인 프로 스터디
+                </PageTitle>
+                <GoodStudyList />
+              </div>
+              <div>
+                <PageTitle size="sm" className="pb-3">
+                  취업 / 포트폴리오 프로 스터디
+                </PageTitle>
+                <GoodStudyList />
+              </div>
+            </div>
           </div>
           <div>
-            <div className="flex items-end justify-between pb-6">
-              <PageTitle size="md">
-                오늘의 프로 스터디를 통해 빠른 성장을 경험해 보세요!
-              </PageTitle>
-            </div>
+            <PageTitle size="md" className="pb-6">
+              오늘의 프로 스터디를 통해 빠른 성장을 경험해 보세요!
+            </PageTitle>
             <StudyCardList studyCard={studyCard} />
           </div>
           <div>
-            <div className="flex items-end justify-between pb-6">
-              <PageTitle size="md">프로없이, 우리끼리도 스터디해요</PageTitle>
-            </div>
+            <PageTitle size="md" className="pb-6">
+              프로없이, 우리끼리도 스터디해요
+            </PageTitle>
             <StudyCardList studyCard={studyCard} />
           </div>
           <div>
-            <PageTitle size="md">케밋에서 인기있는 프로의 스터디</PageTitle>
+            <PageTitle size="md" className="pb-6">
+              케밋에서 인기있는 프로의 스터디
+            </PageTitle>
+            <HotStudyList />
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@
 
 import { TStudyCard } from "@/app/(route)/study/page";
 import StudyCardItem from "../Organisms/StudyCardItem";
+import NoneStudyComponent from "@/app/(route)/study/_components/NoneStudyComponent";
 
 export default function StudyCardList({
   studyCard,
@@ -14,12 +15,7 @@ export default function StudyCardList({
   studyCard: TStudyCard[];
 }) {
   if (!studyCard) {
-    return (
-      <div className="w-full h-[19rem] bg-main-50 text-center">
-        모집 중인 스터디가 없습니다.
-        <br />첫 스터디를 만들어보세요!
-      </div>
-    );
+    return <NoneStudyComponent />;
   }
   return (
     <div className="grid grid-cols-4 gap-6">
