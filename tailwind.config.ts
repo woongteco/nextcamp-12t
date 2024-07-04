@@ -188,8 +188,8 @@ const config: Config = {
         "modal": "60",
       },
       borderRadius: {
-        ten: "10px",
-        twenty: "20px",
+        ten: "0.625rem",
+        twenty: "1.25rem",
       },
       spacing: {
         "100": "100px",

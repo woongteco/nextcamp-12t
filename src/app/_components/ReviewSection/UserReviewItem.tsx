@@ -4,9 +4,20 @@ export type TReview = {
   writerKeyword: string;
   studyName: string;
 };
-export default function UserReviewItem({ review }: { review: TReview }) {
+export default function UserReviewItem({
+  review,
+  className,
+}: {
+  review: TReview;
+  className?: string;
+}) {
   return (
-    <div className="snap-center snap-mandatory snap-x rounded-twenty overflow-hidden w-[520px] flex flex-col border border-line-alt">
+    <div
+      className={
+        "snap-center rounded-twenty overflow-hidden w-[520px] flex flex-col border border-line-alt mb-12 " +
+        className
+      }
+    >
       <div className="flex flex-col items-center justify-center py-4 px-16 bg-card h-[200px]">
         <p className="text-body-400 w-[380px] text-justify">{review.text}</p>
       </div>

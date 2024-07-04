@@ -1,8 +1,13 @@
 "use client";
 import clsx from "clsx";
 import UserReviewItem, { TReview } from "./UserReviewItem";
-import { ComponentProps, UIEvent, useEffect, useRef, useState } from "react";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 import useScroll from "@/hooks/useScroll";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Mousewheel, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const reviews: TReview[] = [
   {
@@ -50,7 +55,7 @@ export default function UserReviewSlider() {
 
   return (
     <>
-      <div
+      {/* <div
         ref={scrollRef}
         className="scrollbar-hidden w-full flex gap-6 snap-x snap-mandatory overflow-x-auto"
       >
@@ -72,6 +77,32 @@ export default function UserReviewSlider() {
             onClick={() => setActive(index)}
           />
         ))}
+      </div> */}
+      <div className="flex items-center justify-center w-full mx-auto overflow-hidden">
+        <div className="swiper-container w-[1900px] relative mx-auto">
+          <Swiper
+            modules={[Mousewheel, Pagination, A11y]}
+            mousewheel={true}
+            spaceBetween={24}
+            slidesPerView={3.5}
+            centeredSlides={true}
+            pagination={{
+              clickable: true,
+              renderBullet: function (_, className) {
+                return `<span class="${className} [&.swiper-pagination-bullet-active]:bg-label-strong"></span>`;
+              },
+            }}
+            className="reviewPromotion"
+          >
+            {reviews.map((review) => (
+              <SwiperSlide key={review.reviewId}>
+                <UserReviewItem review={review} />
+              </SwiperSlide>
+            ))}
+            <div className="bg-gradient-to-r from-white w-[600px] h-full absolute top-0 left-0 z-10"></div>
+            <div className="bg-gradient-to-l from-white w-[600px] h-full absolute top-0 right-0 z-10"></div>
+          </Swiper>
+        </div>
       </div>
     </>
   );

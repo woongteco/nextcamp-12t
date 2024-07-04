@@ -24,7 +24,7 @@ export default function StudyCardList({
   return (
     <div className="grid grid-cols-4 gap-6">
       {studyCard.map((card) => (
-        <StudyCardItem card={card} />
+        <StudyCardItem key={card.id} card={card} />
       ))}
     </div>
   );

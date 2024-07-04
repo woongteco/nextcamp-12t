@@ -66,12 +66,13 @@ export default ({
   ) : (
     <SelectInput
       {...restProps}
+      components={unstyled ? { IndicatorsContainer } : {}}
       styles={{
         ...styles,
         control: (baseStyles, state) => ({
           ...baseStyles,
           "height": "56px",
-          "padding": unstyled ? "0" : "9px 4px 9px 8px",
+          "padding": unstyled ? "" : "9px 4px 9px 8px",
           "borderRadius": "10px",
           "borderColor": unstyled
             ? "transparent"
@@ -89,8 +90,8 @@ export default ({
         }),
         indicatorSeparator: (styles) => ({
           ...styles,
-          visibility: unstyled ? "hidden" : styles.visibility,
-          opacity: unstyled ? 0 : styles.opacity,
+          visibility: "hidden",
+          opacity: 0,
         }),
       }}
     />

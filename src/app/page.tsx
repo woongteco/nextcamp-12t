@@ -5,6 +5,8 @@ import UserCurrentStudySection from "./_components/UserCurrentStudySection";
 import TabButtonsOfGoalSection from "./_components/TabButtonsOfGoalSection";
 import UserReviewSlider from "./_components/ReviewSection/UserReviewSlider";
 import { getUser } from "@/dummies/user";
+import RecommendProStudies from "./_components/RecommendProStudies";
+import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 
 const NOW_DATE = new Intl.DateTimeFormat("kr-KO", {
   weekday: "long",
@@ -33,11 +35,13 @@ export default function Home() {
             <PageTitle size="md" className="mb-6">
               인기 많은 프로 스터디 추천
             </PageTitle>
+            <RecommendProStudies />
           </section>
           <section>
             <PageTitle size="md" className="mb-6">
               방금 만들어진 스터디 추천
             </PageTitle>
+            <RecommendLatestStudies />
           </section>
           <section>
             <PageTitle size="md" className="mb-6">

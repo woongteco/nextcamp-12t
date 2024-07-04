@@ -11,8 +11,10 @@ import {
   TIconStylingProps,
 } from "@/common/Atoms/Image/Icon";
 import { useState } from "react";
-import { GOALS } from "./TopBannerSection";
 import { TabButton } from "./TabButton";
+import { GOALS } from "@/dummies/categories";
+import { getStudiesData } from "@/dummies/studies";
+import StudyCardList from "@/common/Templates/CardList";
 
 const ICONS = [
   (props: TIconStylingProps) => <NotebookIcon {...props} />,
@@ -29,9 +31,11 @@ const GOALS_TAB = GOALS.map((goal, index) => ({ ...goal, Icon: ICONS[index] }));
 
 export default function TabButtonsOfGoalSection() {
   const [selected, setSelected] = useState(GOALS[0].value);
+  const proStudies = getStudiesData();
+
   return (
     <>
-      <div className="flex flex-row gap-4 w-fit mx-auto">
+      <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
         {GOALS_TAB.map(({ label, value, Icon }) => {
           const active = selected === value;
           return (
@@ -46,6 +50,7 @@ export default function TabButtonsOfGoalSection() {
           );
         })}
       </div>
+      <StudyCardList studyCard={proStudies.slice(0, 8)} />
     </>
   );
 }
