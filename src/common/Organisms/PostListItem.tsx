@@ -76,7 +76,7 @@ export default function PostListItem({ item }: { item: TPost }) {
                   ? "text-label-normal"
                   : "text-label-neutral"
               }
-              style="absolute top-4 right-4"
+              className="absolute top-4 right-4"
             >
               {item.filter.isRecruiting ? "모집중" : "모집완료"}
             </Keyword>

@@ -1,4 +1,4 @@
-export const categories = [
+export const CATEGORIES = [
   {
     value: "cate_1",
     label: "개발",
@@ -205,4 +205,15 @@ export const categories = [
       { value: "cate_13_10", label: "기타 교육 및 학문" },
     ],
   },
+];
+
+export const GOALS = [
+  { label: "개념학습", value: "goal_1" },
+  { label: "응용/활용", value: "goal_2" },
+  { label: "프로젝트", value: "goal_3" },
+  { label: "자격증/시험", value: "goal_4" },
+  { label: "취업/면접", value: "goal_5" },
+  { label: "챌린지", value: "goal_6" },
+  { label: "특강", value: "goal_7" },
+  { label: "취미", value: "goal_8" },
 ];

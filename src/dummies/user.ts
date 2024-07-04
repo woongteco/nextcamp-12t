@@ -15,8 +15,8 @@ export function getWriter(userId?: string) {
 
 export function getUser(userId?: string) {
   return {
-    id: userId || "shinjisoo",
-    name: "신지수",
+    id: userId || "shinjiwoo",
+    name: "신지우",
     position: "",
     role: "user",
     email: "shin.jisoo@chemeet.com",

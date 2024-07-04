@@ -25,7 +25,7 @@ export type TPost = {
   like: number;
 };
 
-export const menus = [
+export const POST_CATEGORY = [
   { key: "all", href: "/post?filter=all", label: "전체", active: false },
   {
     key: "study",
@@ -53,7 +53,7 @@ export const menus = [
   },
 ];
 
-const sorts = [
+const POST_SORT_BY = [
   { key: "latest", label: "최신순" },
   { key: "comments", label: "댓글많은순" },
   { key: "likes", label: "좋아요순" },
@@ -71,8 +71,8 @@ export default function CommunityPostList({
   const filter = searchParams?.filter || "all";
   const page = searchParams?.page || "1";
   const sort = searchParams?.sort || "latest";
-  const filteredMenu = menus.find((item) => item.key === filter);
-  const sortedBy = sorts.find((item) => item.key === sort);
+  const filteredMenu = POST_CATEGORY.find((item) => item.key === filter);
+  const sortedBy = POST_SORT_BY.find((item) => item.key === sort);
   if (filteredMenu === undefined || sortedBy === undefined) {
     return <NotFound />;
   }
@@ -86,7 +86,7 @@ export default function CommunityPostList({
   return (
     <Sidebar>
       <Sidebar.Nav
-        menus={menus.map((item) =>
+        menus={POST_CATEGORY.map((item) =>
           item.key === filter ? { ...item, active: true } : item
         )}
       />
@@ -122,7 +122,7 @@ export default function CommunityPostList({
           <div className="flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
             <Dropdown
               buttonLabel={sortedBy.label}
-              items={sorts.map((item) => (
+              items={POST_SORT_BY.map((item) => (
                 <li
                   key={item.key}
                   className={`w-28 px-[12px] py-[6px] ${

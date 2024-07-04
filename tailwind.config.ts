@@ -132,7 +132,7 @@ const config: Config = {
       "main-100": "#B4D2FF",
       "main-200": "#92BEFF",
       "main-300": "#7AB0FF",
-      "main-400": "##599CFF",
+      "main-400": "#599CFF",
       "main-500": "#3E8BFF",
       "main-600": "#2A7FFE", // primary-normal
       "main-700": "#1468E7",
@@ -188,8 +188,8 @@ const config: Config = {
         "modal": "60",
       },
       borderRadius: {
-        ten: "10px",
-        twenty: "20px",
+        ten: "0.625rem",
+        twenty: "1.25rem",
       },
       spacing: {
         "100": "100px",

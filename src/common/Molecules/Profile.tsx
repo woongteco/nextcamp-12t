@@ -21,13 +21,10 @@ export default function Profile({
     large: "text-H4 text-label-normal",
     small: "text-label-600 text-label-dimmed",
   };
+  const src = user.profileUrl || "/images/profile/DummyProfileImg.jpg";
   return (
     <div className={clsx("flex flex-row flex-nowrap items-center", gap[size])}>
-      <ProfileImg
-        size={size}
-        src={user.profileUrl || "/images/profile/DummyProfileImg.jpg"}
-        alt={`${user.name} 프로필 이미지`}
-      />
+      <ProfileImg size={size} src={src} alt={`${user.name} 프로필 이미지`} />
       <span className={style[size]}>
         {user.position} {user.name}
       </span>

@@ -12,7 +12,7 @@ const me = {
 export type TStudyCard = {
   id: number;
   user: {
-    userType: string;
+    userType: "user" | "pro";
     nickname: string;
     image: string;
   };

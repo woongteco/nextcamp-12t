@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
-import { ActionMeta } from "react-select";
 
-import { menus } from "../../page";
+import { POST_CATEGORY } from "../../page";
 import Field from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
@@ -14,9 +13,9 @@ type Option = {
 };
 
 export default function SelectCategory() {
-  const categoryOptions = menus
-    .filter((m) => m.key !== "all")
-    .map((m) => ({ value: m.key, label: m.label }));
+  const categoryOptions = POST_CATEGORY.filter((m) => m.key !== "all").map(
+    (m) => ({ value: m.key, label: m.label })
+  );
   const defaultCategory = categoryOptions[0];
   const [category, setCategory] = useState<Option | null>(defaultCategory);
   return (

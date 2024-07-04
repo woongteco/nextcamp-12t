@@ -7,7 +7,12 @@ import CreatableSelect from "react-select/creatable";
 
 const IndicatorsContainer = (_: IndicatorsContainerProps) => <></>;
 
-export default ({ styles = {}, isCreatable = false, ...restProps }) =>
+export default ({
+  styles = {},
+  isCreatable = false,
+  unstyled = false,
+  ...restProps
+}) =>
   isCreatable ? (
     <CreatableSelect
       {...restProps}
@@ -61,18 +66,32 @@ export default ({ styles = {}, isCreatable = false, ...restProps }) =>
   ) : (
     <SelectInput
       {...restProps}
+      components={unstyled ? { IndicatorsContainer } : {}}
       styles={{
         ...styles,
         control: (baseStyles, state) => ({
           ...baseStyles,
-          height: "56px",
-          padding: "9px 4px 9px 8px",
-          borderRadius: "10px",
-          borderColor: state.isFocused ? "#2a7ffe" : "#dbdbdd",
+          "height": "56px",
+          "padding": unstyled ? "" : "9px 4px 9px 8px",
+          "borderRadius": "10px",
+          "borderColor": unstyled
+            ? "transparent"
+            : state.isFocused
+            ? "#2a7ffe"
+            : "#dbdbdd",
+          ":hover": {
+            borderColor: unstyled ? "transparent" : "var(--color-label-alt)",
+            color: unstyled ? "var(--color-main-600)" : baseStyles.color,
+          },
         }),
         singleValue: (styles) => ({
           ...styles,
           fontWeight: "600",
+        }),
+        indicatorSeparator: (styles) => ({
+          ...styles,
+          visibility: "hidden",
+          opacity: 0,
         }),
       }}
     />

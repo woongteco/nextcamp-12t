@@ -1,13 +1,22 @@
+import clsx from "clsx";
+
 type TKeywordProps = {
   bg: string;
   text: string;
-  style?: string;
+  className?: string;
   children: string;
 };
 export default function Keyword(props: TKeywordProps) {
-  const { bg, text, style = null, children } = props;
+  const { bg, text, className, children } = props;
   return (
-    <span className={`${bg} ${text} rounded-full px-4 py-2 ${style}`}>
+    <span
+      className={clsx([
+        bg,
+        text,
+        "rounded-full px-4 py-2 text-caption",
+        className,
+      ])}
+    >
       {children}
     </span>
   );
