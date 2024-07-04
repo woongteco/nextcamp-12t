@@ -39,12 +39,12 @@ export default function UserReviewSlider() {
   return (
     <>
       <div className="flex items-center justify-center w-full mx-auto overflow-hidden relative">
-        <div className="swiper-container w-[1900px] mx-auto">
+        <div className="swiperContainer w-[1900px] mx-auto">
           <Swiper
             modules={[Navigation, Pagination, A11y]}
             navigation={{
-              prevEl: ".prev-navigation",
-              nextEl: ".next-navigation",
+              prevEl: ".prevNavigation",
+              nextEl: ".nextNavigation",
             }}
             spaceBetween={24}
             slidesPerView={3.5}
@@ -68,10 +68,10 @@ export default function UserReviewSlider() {
           </Swiper>
         </div>
         <div className="navigations">
-          <div className="prev-navigation">
+          <div className="prevNavigation">
             <SliderNavigationButton direction="prev" />
           </div>
-          <div className="next-navigation">
+          <div className="nextNavigation">
             <SliderNavigationButton direction="next" />
           </div>
         </div>
@@ -118,7 +118,7 @@ function SliderNavigationButton({ direction }: { direction: "prev" | "next" }) {
   return (
     <div
       className={clsx(
-        "next-navigation flex items-center justify-center absolute z-[11] bottom-[5px]",
+        "flex items-center justify-center absolute z-[11] bottom-[5px]",
         [
           direction === "prev"
             ? "left-[calc(50vw-80px)] pr-[2px]"
