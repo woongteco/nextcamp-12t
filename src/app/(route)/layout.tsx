@@ -1,5 +1,5 @@
-import { Footer, Header } from "@/common/Layout";
-import Container from "@/common/Layout/Container";
+import { Footer, Header } from '@/common/Layout';
+import Container from '@/common/Layout/Container';
 
 type Props = { children: React.ReactNode };
 

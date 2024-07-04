@@ -1,5 +1,5 @@
-import Container from "@/common/Layout/Container";
-import MainLayout from "./(route)/layout";
+import Container from '@/common/Layout/Container';
+import MainLayout from './(route)/layout';
 
 type Props = { children: React.ReactNode };
 
