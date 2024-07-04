@@ -3,6 +3,54 @@
 @tailwind utilities;
 @tailwind variants;
 
+body {
+  --color-main-25: #e6f0ff;
+  --color-main-50: #c7deff;
+  --color-main-100: #b4d2ff;
+  --color-main-200: #92beff;
+  --color-main-300: #7ab0ff;
+  --color-main-400: #599cff;
+  --color-main-500: #3e8bff;
+  --color-main-600: #2a7ffe;
+  --color-main-700: #1468e7;
+  --color-main-800: #0050c8;
+  --color-main-900: #0042a4;
+  --color-main-950: #002b6c;
+  --color-primary-strong: '#005EEB';
+  --color-primary-heavy: '#0054D1';
+  --color-primary-heavy2: '#0FFED4';
+  --color-primary-heavy3: '#9EF103';
+  --color-status-positive: '#00BF40';
+  --color-status-caution: '#FF9200';
+  --color-status-danger: '#FF4242';
+  --color-label-normal: '#171719';
+  --color-label-strong: '#000000';
+  --color-label-neutral: '#464748';
+  --color-label-alt: '#B2B2B4';
+  --color-label-assist: rgba(55, 56, 60, 28%);
+  --color-label-disable: rgba(55, 56, 60, 16%);
+  --color-line-normal: '#E0E0E2';
+  --color-line-neutral: '#E6E6E8';
+  --color-line-alt: '#F4F4F5';
+  --color-line-input: '#DBDBDD';
+  --shadow-normal: 0 0px 2px rgba(0, 0, 0, 12%), 0 0 1px rgba(0, 0, 0, 8%);
+  --shadow-emphasize: 0 2px 8px rgba(0, 0, 0, 12%), 0 1px 4px rgba(0, 0, 0, 8%),
+    0 0 1px rgba(0, 0, 0, 8%);
+  --shadow-strong: 0 4px 8px rgba(0, 0, 0, 8%), 0 0 4px rgba(0, 0, 0, 8%),
+    0 20px 30px 0 rgba(16, 36, 94, 0.12);
+  --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 8%), 0 0 8px rgba(0, 0, 0, 8%),
+    0 30px 40px 0 rgba(16, 36, 94, 0.2);
+}
+
+button,
+a {
+  transition: backgroud-color ease-in-out 200ms, filter ease-in-out 200ms;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 @layer components {
   .center {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;

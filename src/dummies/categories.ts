@@ -1,5 +1,6 @@
-export const categories = [
+export const CATEGORIES = [
   {
+    value: "cate_1",
     label: "개발",
     options: [
       { value: "cate_1_1", label: "웹 개발" },
@@ -15,6 +16,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_2",
     label: "비즈니스",
     options: [
       { value: "cate_2_1", label: "기업가 정신" },
@@ -35,6 +37,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_3",
     label: "재무 및 회계",
     options: [
       { value: "cate_3_1", label: "회계 및 부기" },
@@ -51,6 +54,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_4",
     label: "IT 및 소프트웨어",
     options: [
       { value: "cate_4_1", label: "IT 인증" },
@@ -61,6 +65,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_5",
     label: "사무 생산성",
     options: [
       { value: "cate_5_1", label: "마이크로소프트" },
@@ -72,6 +77,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_6",
     label: "디자인",
     options: [
       { value: "cate_6_1", label: "웹 디자인" },
@@ -88,6 +94,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_7",
     label: "자기 계발",
     options: [
       { value: "cate_7_1", label: "자기 혁신" },
@@ -107,6 +114,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_8",
     label: "마케팅",
     options: [
       { value: "cate_8_1", label: "디지털 마케팅" },
@@ -126,6 +134,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_9",
     label: "라이프 스타일",
     options: [
       { value: "cate_9_1", label: "예술 및 공예" },
@@ -139,6 +148,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_10",
     label: "사진 및 영상",
     options: [
       { value: "cate_10_1", label: "디지털 사진" },
@@ -151,6 +161,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_11",
     label: "건강 및 피트니스",
     options: [
       { value: "cate_11_1", label: "피트니스" },
@@ -167,6 +178,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_12",
     label: "음악",
     options: [
       { value: "cate_12_1", label: "음악 프로덕션" },
@@ -178,6 +190,7 @@ export const categories = [
     ],
   },
   {
+    value: "cate_13",
     label: "교육 및 학문",
     options: [
       { value: "cate_13_1", label: "엔지니어링" },
@@ -192,4 +205,15 @@ export const categories = [
       { value: "cate_13_10", label: "기타 교육 및 학문" },
     ],
   },
+];
+
+export const GOALS = [
+  { label: "개념학습", value: "goal_1" },
+  { label: "응용/활용", value: "goal_2" },
+  { label: "프로젝트", value: "goal_3" },
+  { label: "자격증/시험", value: "goal_4" },
+  { label: "취업/면접", value: "goal_5" },
+  { label: "챌린지", value: "goal_6" },
+  { label: "특강", value: "goal_7" },
+  { label: "취미", value: "goal_8" },
 ];

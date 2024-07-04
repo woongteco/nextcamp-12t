@@ -1,26 +1,55 @@
-import { TButtonProps } from "@/types/component/props";
+import { TButtonProps, TIconButtonProps } from "@/types/component/props";
+import { getStyles } from "../atomStyle";
+import clsx from "clsx";
 
-export default function Button(props: TButtonProps) {
-  const {
-    variation = "solid",
-    color = "main-600",
-    fullWidth = false,
-    children,
-    ...restProps
-  } = props;
-  const styles = {
-    solid: `bg-${color} rounded-[10px] hover:brightness-75 hover:saturate-150`,
-    outline: `border border-${color} bg-transparent text-${color} rounded-[10px] hover:bg-${color} hover:text-white`,
-    icon: `rounded-md`,
-  };
-  return (
-    <button
-      className={`flex flex-row gap-2 ${styles[variation]} ${
-        fullWidth ? "w-full" : "w-fit"
-      }`}
-      {...restProps}
-    >
-      {children}
-    </button>
-  );
+export default function Button(props: TIconButtonProps | TButtonProps) {
+  switch (props.variation) {
+    case "icon": {
+      const {
+        variation,
+        className,
+        size = 40,
+        colors = { bg: "bg-main-600" },
+        children,
+      } = props;
+      const square = `w-[${size}px] h-[${size}px]`;
+      return (
+        <button
+          className={clsx(
+            className,
+            "flex items-center justify-center rounded-lg",
+            `${colors.bg}/0 hover:${colors.bg}/15`,
+            square
+          )}
+        >
+          {children}
+        </button>
+      );
+    }
+    default: {
+      const {
+        variation,
+        className,
+        colors = { bg: "bg-main-600", text: "text-white" },
+        startIcon = null,
+        endIcon = null,
+        fullWidth = false,
+        children,
+        ...restProps
+      } = props;
+      return (
+        <button
+          className={clsx(
+            "flex flex-row items-center justify-center gap-2 px-5 py-3 font-bold text-nowrap text-ellipsis overflow-hidden rounded-ten",
+            [getStyles(colors, variation), "w-full" && fullWidth, className]
+          )}
+          {...restProps}
+        >
+          {startIcon || null}
+          {children}
+          {endIcon || null}
+        </button>
+      );
+    }
+  }
 }
