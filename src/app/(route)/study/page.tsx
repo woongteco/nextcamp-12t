@@ -2,6 +2,7 @@ import PageTitle from "@/common/Atoms/Text/PageTitle";
 
 import { faker } from "@faker-js/faker";
 import StudyCardList from "@/common/Templates/CardList";
+import HotStudyList from "./_components/HotStudyList";
 
 const me = {
   username: "신지수",
@@ -226,7 +227,10 @@ export default function StudyComponent() {
             <StudyCardList studyCard={studyCard} />
           </div>
           <div>
-            <PageTitle size="md">케밋에서 인기있는 프로의 스터디</PageTitle>
+            <div className="flex items-end justify-between pb-6">
+              <PageTitle size="md">케밋에서 인기있는 프로의 스터디</PageTitle>
+            </div>
+            <HotStudyList />
           </div>
         </div>
       </div>
