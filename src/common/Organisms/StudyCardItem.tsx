@@ -32,8 +32,12 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
         <Image
           width={268}
           height={180}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL={card.study.image + "?blur=2"}
           src={card.study.image}
           alt={`${card.study.title} thumbnail`}
+          className="object-cover"
         />
         <span className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer">
           <Image src={heartIcon} className="" alt="heart Icon" />
