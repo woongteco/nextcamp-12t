@@ -49,6 +49,7 @@ export default function UserReviewSlider() {
             spaceBetween={24}
             slidesPerView={3.5}
             centeredSlides={true}
+            grabCursor={true}
             pagination={{
               clickable: true,
               renderBullet: function (_, className) {
