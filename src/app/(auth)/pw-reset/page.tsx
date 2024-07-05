@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Logo } from '@/icons';
+import { Logo } from '@public/icons';
 import { UserEmail } from '../login/_components/UserInput';
 
 export default function PWresetPage() {
