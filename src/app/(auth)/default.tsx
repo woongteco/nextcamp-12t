@@ -1,11 +1,11 @@
+import { TProps } from '@/types/component/props';
 import MainLayout from '../(route)/layout';
+import Home from '../page';
 
-type Props = { children: React.ReactNode };
-
-export default function AuthDefualt({ children }: Props) {
+export default function AuthDefualt({ children }: TProps) {
   return (
-    <div className=" opacity-30">
-      <MainLayout children={children} />
+    <div className="">
+      <Home />
     </div>
   );
 }
