@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import Link from "next/link";
-import { TMenuItemProps, TProps } from "@/types/component/props";
+import React, { ReactNode } from 'react';
+import Link from 'next/link';
+import { TMenuItemProps, TProps } from '@/types/component/props';
 
 export function NavItem({ href, label, active = false }: TMenuItemProps) {
   return (
@@ -9,8 +9,8 @@ export function NavItem({ href, label, active = false }: TMenuItemProps) {
         href={href}
         className={`w-full inline-block rounded-[20px] text-H4 px-6 py-[26px] ${
           active
-            ? "text-main-600 bg-main-25 hover:bg-main-50"
-            : "text-label-alt bg-white hover:bg-label-alt/20"
+            ? 'text-main-600 bg-main-25 hover:bg-main-50'
+            : 'text-label-alt bg-white hover:bg-label-alt/20'
         }`}
       >
         {label}
@@ -52,7 +52,7 @@ function Container({ children }: TProps) {
 function Sidebar({ children }: TProps) {
   if (React.Children.count(children) !== 2) {
     throw new Error(
-      "Sidebar 컴포넌트는 Sidebar.Nav와 Sidebar.Container 컴포넌트를 하나씩 가져야만합니다."
+      'Sidebar 컴포넌트는 Sidebar.Nav와 Sidebar.Container 컴포넌트를 하나씩 가져야만합니다.'
     );
   }
 
@@ -61,14 +61,10 @@ function Sidebar({ children }: TProps) {
   const container = childrenArr.filter((child) => child.type === Container);
 
   if (nav.length !== 1) {
-    throw new Error(
-      "Sidebar 컴포넌트 내부에는 Sidebar.Nav가 반드시 하나 필요합니다"
-    );
+    throw new Error('Sidebar 컴포넌트 내부에는 Sidebar.Nav가 반드시 하나 필요합니다');
   }
   if (container.length !== 1) {
-    throw new Error(
-      "Sidebar 컴포넌트 내부에는 Sidebar.Container가 반드시 하나 필요합니다"
-    );
+    throw new Error('Sidebar 컴포넌트 내부에는 Sidebar.Container가 반드시 하나 필요합니다');
   }
 
   return (
