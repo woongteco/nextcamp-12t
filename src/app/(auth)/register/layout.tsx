@@ -1,3 +1,3 @@
 export default async function RegisterLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <div className="h-full">{children}</div>;
 }

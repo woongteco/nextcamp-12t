@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Logo } from '@/icons';
 import LoginForm from './_components/LoginForm';
-import { SocialLogin, Google, Kakao } from '@/icons';
+import { SocialLogin, Google, Kakao, Logo } from '@public/icons';
 
 export default function LoginPage() {
   return (

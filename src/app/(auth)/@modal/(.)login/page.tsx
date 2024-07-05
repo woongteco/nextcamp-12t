@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Logo } from '@/icons';
 import LoginForm from '../../login/_components/LoginForm';
-import { SocialLogin, Google, Kakao } from '@/icons';
+import { SocialLogin, Google, Kakao, Logo } from '@public/icons';
 
 export default function InterceptedLoginPage() {
   return (
     <>
-      <dialog className="fixed top-1/2 -translate-y-1/2" open>
+      <dialog className="fixed top-1/2 -translate-y-1/2 z-modal" open>
         <div className="w-96 flex flex-col items-center justify-center gap-5 rounded-lg shadow-lg border border-gray-200 p-6 py-10 bg-white center">
           <Image src={Logo} alt="logo" />
           <LoginForm />
