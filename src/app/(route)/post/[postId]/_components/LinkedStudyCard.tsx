@@ -1,8 +1,5 @@
 import Image from "next/image";
-import {
-  DefaultThumbnailImg,
-  DummyProfileImg,
-} from "../../../../../../public/images";
+import { DefaultThumbnailImg, DummyProfileImg } from "@public/images";
 import { TStudy, getStudyData } from "@/dummies/studies";
 import { getWriter } from "@/dummies/user";
 import Thumbnail from "@/common/Atoms/Image/Thumbnail";

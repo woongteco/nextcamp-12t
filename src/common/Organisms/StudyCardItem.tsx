@@ -10,16 +10,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { TStudyCard } from "@/app/(route)/study/page";
 import Keyword from "../Atoms/Text/Keyword";
-import { BadgeIcon, heartIcon } from "../../../public/icons";
+import { BadgeIcon, heartIcon } from "@public/icons";
 import Profile from "../Molecules/Profile";
 
 export default function StudyCardItem({ card }: { card: TStudyCard }) {
   return (
     <div className="bg-white rounded-twenty border border-line-alt hover:shadow-normal overflow-hidden">
       <Link href={"/study/:studyPostId"}>
-        <div className="h-[11.25rem] relative">
+        <div className="h-[11.25rem] relative overflow-hidden">
           <Keyword
-            bg="bg-satus-danger"
+            bg="bg-status-danger"
             text="text-white"
             className="absolute left-0 top-5 rounded-l-none"
           >
@@ -38,7 +38,7 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
             blurDataURL={card.study.image + "?blur=2"}
             src={card.study.image}
             alt={`${card.study.title} thumbnail`}
-            className="thumbnailImage object-cover"
+            className="thumbnailImage object-cover min-w-full w-auto h-auto"
           />
           <form
             action=""
