@@ -23,7 +23,6 @@ export function getImageUrl(type?: IdTypes, width = 200, height = 200): string {
       ? Object.values(ids).reduce((prev, curr) => [...prev, ...curr], [])
       : ids[key];
   const randomIndex = Math.floor(Math.random() * idsByKey.length);
-  console.log(randomIndex, idsByKey[randomIndex]);
   return `https://picsum.photos/id/${idsByKey[randomIndex]}/${width}/${height}`;
 }
 

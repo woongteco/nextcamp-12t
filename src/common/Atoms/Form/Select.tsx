@@ -1,4 +1,5 @@
 "use client";
+import { useId } from "react";
 import SelectInput, {
   IndicatorsContainerProps,
   MultiValueProps,
@@ -7,14 +8,18 @@ import CreatableSelect from "react-select/creatable";
 
 const IndicatorsContainer = (_: IndicatorsContainerProps) => <></>;
 
-export default ({
+export default function ({
+  id = "",
   styles = {},
   isCreatable = false,
   unstyled = false,
   ...restProps
-}) =>
-  isCreatable ? (
+}) {
+  const uniqueId = useId();
+  return isCreatable ? (
     <CreatableSelect
+      id={uniqueId}
+      instanceId={uniqueId}
       {...restProps}
       /**
        * multi select의 경우 indicator none, value label은 Keyword와 유사한 디자인
@@ -65,6 +70,8 @@ export default ({
     />
   ) : (
     <SelectInput
+      id={uniqueId}
+      instanceId={uniqueId}
       {...restProps}
       components={unstyled ? { IndicatorsContainer } : {}}
       styles={{
@@ -96,3 +103,4 @@ export default ({
       }}
     />
   );
+}

@@ -14,7 +14,7 @@ export default function UserReviewItem({
   return (
     <div
       className={
-        "snap-center rounded-twenty overflow-hidden w-[520px] flex flex-col border border-line-alt mb-12 " +
+        "snap-center rounded-twenty overflow-hidden w-[520px] flex flex-col border border-line-alt select-none mb-12 " +
         className
       }
     >
