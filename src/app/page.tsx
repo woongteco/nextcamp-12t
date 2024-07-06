@@ -1,17 +1,17 @@
-import { Container, Footer, Header } from '@/common/Layout';
-import PageTitle from '@/common/Atoms/Text/PageTitle';
-import TopBannerSection from './_components/TopBannerSection';
-import UserCurrentStudySection from './_components/UserCurrentStudySection';
-import TabButtonsOfGoalSection from './_components/TabButtonsOfGoalSection';
-import UserReviewSlider from './_components/ReviewSection/UserReviewSlider';
-import { getUser } from '@/dummies/user';
-import RecommendProStudies from './_components/RecommendProStudies';
-import RecommendLatestStudies from './_components/RecommendLatestStudies';
+import { Container, Footer, Header } from "@/common/Layout";
+import PageTitle from "@/common/Atoms/Text/PageTitle";
+import TopBannerSection from "./_components/TopBannerSection";
+import UserCurrentStudySection from "./_components/UserCurrentStudySection";
+import TabButtonsOfGoalSection from "./_components/TabButtonsOfGoalSection";
+import UserReviewSlider from "./_components/ReviewSection/UserReviewSlider";
+import { getUser } from "@/dummies/user";
+import RecommendProStudies from "./_components/RecommendProStudies";
+import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 
-const NOW_DATE = new Intl.DateTimeFormat('kr-KO', {
-  weekday: 'long',
-  month: 'long',
-  day: 'numeric',
+const NOW_DATE = new Intl.DateTimeFormat("kr-KO", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
 }).format(Date.now());
 
 export default function Home() {
@@ -25,7 +25,8 @@ export default function Home() {
           {user && (
             <section>
               <PageTitle size="md" className="mb-6">
-                {user.name}님의 <span className="text-main-600">{NOW_DATE}</span> 스터디 현황
+                {user.name}님의{" "}
+                <span className="text-main-600">{NOW_DATE}</span> 스터디 현황
               </PageTitle>
               <UserCurrentStudySection />
             </section>

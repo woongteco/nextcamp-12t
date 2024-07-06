@@ -20,8 +20,6 @@ export default function TopBanner() {
         <form action="">
           <div className="search-bar w-[866px] h-[68px] shadow-normal bg-white rounded-full border border-line-alt flex flex-row flex-nowrap gap-5 items-center justify-between px-6 py-3">
             <Input.Select
-              id="select-category"
-              instaceId="select-category"
               placeholder="직무 선택"
               unstyled
               options={CATEGORIES}
@@ -29,8 +27,6 @@ export default function TopBanner() {
             />
             <div className="h-4 w-0 border-l border-l-line-input"></div>
             <Input.Select
-              id="select-goal"
-              instaceId="select-goal"
               placeholder="목표 선택"
               unstyled
               options={GOALS}
@@ -38,7 +34,6 @@ export default function TopBanner() {
             />
             <div className="h-4 w-0 border-l border-l-line-input"></div>
             <Input.Text
-              required
               placeholder="검색어를 입력하세요"
               className="border-none w-[400px] px-2 py-4 rounded-ten focus-visible:outline-1 focus-visible:outline-main-400"
             />

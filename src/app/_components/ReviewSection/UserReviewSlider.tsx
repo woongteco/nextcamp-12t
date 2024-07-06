@@ -1,13 +1,12 @@
 "use client";
 import clsx from "clsx";
 import UserReviewItem, { TReview } from "./UserReviewItem";
-import { ComponentProps, useEffect, useRef, useState } from "react";
-import useScroll from "@/hooks/useScroll";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Mousewheel, A11y } from "swiper/modules";
+import { Navigation, Pagination, A11y } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const reviews: TReview[] = [
   {
@@ -37,55 +36,20 @@ const reviews: TReview[] = [
 ];
 
 export default function UserReviewSlider() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [{ x }, { x: debounced }] = useScroll(scrollRef);
-  const position = Math.round(debounced / 550);
-  const [active, setActive] = useState(position);
-
-  function scrollToIndex(index: number) {
-    if (scrollRef.current) {
-      const centered = 550 * index;
-      scrollRef.current.scrollTo({ left: centered, behavior: "smooth" });
-    }
-  }
-
-  useEffect(() => {
-    scrollToIndex(active);
-  }, [active]);
-
   return (
     <>
-      {/* <div
-        ref={scrollRef}
-        className="scrollbar-hidden w-full flex gap-6 snap-x snap-mandatory overflow-x-auto"
-      >
-        <div
-          className={clsx(
-            "flex w-fit mx-[calc(50vw-272px)] scroll-smooth snap-mandatory snap-x [&>div]:mx-3"
-          )}
-        >
-          {reviews.map((review) => (
-            <UserReviewItem key={review.reviewId} review={review} />
-          ))}
-        </div>
-      </div>
-      <div className="mt-5 mx-auto flex gap-2 justify-center items-center">
-        {reviews.map((review, index) => (
-          <SliderNavButton
-            key={review.reviewId}
-            active={index === position}
-            onClick={() => setActive(index)}
-          />
-        ))}
-      </div> */}
-      <div className="flex items-center justify-center w-full mx-auto overflow-hidden">
-        <div className="swiper-container w-[1900px] relative mx-auto">
+      <div className="flex items-center justify-center w-full mx-auto overflow-hidden relative">
+        <div className="swiperContainer w-[1900px] mx-auto">
           <Swiper
-            modules={[Mousewheel, Pagination, A11y]}
-            mousewheel={true}
+            modules={[Navigation, Pagination, A11y]}
+            navigation={{
+              prevEl: ".prevNavigation",
+              nextEl: ".nextNavigation",
+            }}
             spaceBetween={24}
             slidesPerView={3.5}
             centeredSlides={true}
+            grabCursor={true}
             pagination={{
               clickable: true,
               renderBullet: function (_, className) {
@@ -99,25 +63,70 @@ export default function UserReviewSlider() {
                 <UserReviewItem review={review} />
               </SwiperSlide>
             ))}
-            <div className="bg-gradient-to-r from-white w-[600px] h-full absolute top-0 left-0 z-10"></div>
-            <div className="bg-gradient-to-l from-white w-[600px] h-full absolute top-0 right-0 z-10"></div>
+            <div className="bg-gradient-to-r from-white w-[520px] h-full absolute top-0 left-0 z-10"></div>
+            <div className="bg-gradient-to-l from-white w-[520px] h-full absolute top-0 right-0 z-10"></div>
           </Swiper>
+        </div>
+        <div className="navigations">
+          <div className="prevNavigation">
+            <SliderNavigationButton direction="prev" />
+          </div>
+          <div className="nextNavigation">
+            <SliderNavigationButton direction="next" />
+          </div>
         </div>
       </div>
     </>
   );
 }
 
-function SliderNavButton({
-  active,
-  onClick,
-}: { active: boolean } & Partial<ComponentProps<"button">>) {
+function SliderNavigationButton({ direction }: { direction: "prev" | "next" }) {
+  const icon =
+    direction === "prev" ? (
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 18.002L9 12.002L15 6.00195"
+          stroke="#171719"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ) : (
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 6.00195L15 12.002L9 18.002"
+          stroke="#171719"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
   return (
-    <button
-      className={clsx("w-2 h-2 rounded-full", [
-        active ? "bg-label-normal" : "bg-label-assist",
-      ])}
-      onClick={onClick}
-    ></button>
+    <div
+      className={clsx(
+        "flex items-center justify-center absolute z-[11] bottom-[5px]",
+        [
+          direction === "prev"
+            ? "left-[calc(50vw-80px)] pr-[2px]"
+            : "right-[calc(50vw-80px)] pl-[2px]",
+        ]
+      )}
+    >
+      {icon}
+    </div>
   );
 }

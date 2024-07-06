@@ -1,6 +1,6 @@
 import Image from "next/image";
 import ProfileImg from "../Atoms/Image/ProfileImg";
-import { BadgeIcon } from "../../../public/icons";
+import { BadgeIcon } from "@public/icons";
 import { TUserBase } from "@/types/model/User";
 import clsx from "clsx";
 

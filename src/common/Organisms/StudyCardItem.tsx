@@ -10,55 +10,62 @@ import Link from "next/link";
 import Image from "next/image";
 import { TStudyCard } from "@/app/(route)/study/page";
 import Keyword from "../Atoms/Text/Keyword";
-import { BadgeIcon, heartIcon } from "../../../public/icons";
+import { BadgeIcon, heartIcon } from "@public/icons";
 import Profile from "../Molecules/Profile";
 
 export default function StudyCardItem({ card }: { card: TStudyCard }) {
   return (
     <div className="bg-white rounded-twenty border border-line-alt hover:shadow-normal overflow-hidden">
-      <div className="h-[11.25rem] relative">
-        <Keyword
-          bg="bg-satus-danger"
-          text="text-white"
-          className="absolute left-0 top-5 rounded-l-none"
-        >
-          {card.study.RecruitmentStatus}
-        </Keyword>
-        {/* <img
+      <Link href={"/study/:studyPostId"}>
+        <div className="h-[11.25rem] relative overflow-hidden">
+          <Keyword
+            bg="bg-status-danger"
+            text="text-white"
+            className="absolute left-0 top-5 rounded-l-none"
+          >
+            {card.study.RecruitmentStatus}
+          </Keyword>
+          {/* <img
           src={card.study.image}
           className="w-full h-full"
           alt="study thumbnail"
         /> */}
-        <Image
-          width={268}
-          height={180}
-          src={card.study.image}
-          alt={`${card.study.title} thumbnail`}
-        />
-        <span className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer">
-          <Image src={heartIcon} className="" alt="heart Icon" />
-        </span>
-      </div>
-      <Link
-        href={"/study/:studyPostId"}
-        className="block my-4 px-3 h-[7.75rem]"
-      >
-        <span className="text-label-400 font-light">
-          {card.study.categoryJob}
-        </span>
-        <p className="text-lg font-semibold">{card.study.title}</p>
-        <div className="flex items-center gap-[.25rem] pt-2">
-          <Profile
-            user={{
-              profileUrl: card.user.image,
-              userId: card.user.nickname,
-              name: card.user.nickname.split(" ")[1],
-              position: card.user.nickname.split(" ")[0],
-              role: card.user.userType,
-            }}
-            size="small"
+          <Image
+            width={268}
+            height={180}
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={card.study.image + "?blur=2"}
+            src={card.study.image}
+            alt={`${card.study.title} thumbnail`}
+            className="thumbnailImage object-cover min-w-full w-auto h-auto"
           />
-          {/* <img
+          <form
+            action=""
+            className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer"
+          >
+            <button>
+              <Image src={heartIcon} className="" alt="heart Icon" />
+            </button>
+          </form>
+        </div>
+        <div className="block my-4 px-3 h-[7.75rem]">
+          <span className="text-label-400 font-light">
+            {card.study.categoryJob}
+          </span>
+          <p className="text-lg font-semibold">{card.study.title}</p>
+          <div className="flex items-center gap-[.25rem] pt-2">
+            <Profile
+              user={{
+                profileUrl: card.user.image,
+                userId: card.user.nickname,
+                name: card.user.nickname.split(" ")[1],
+                position: card.user.nickname.split(" ")[0],
+                role: card.user.userType,
+              }}
+              size="small"
+            />
+            {/* <img
             src={card.user.image}
             className="w-5 h-5 rounded-full"
             alt="user image"
@@ -69,14 +76,15 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           {card.user.userType === "pro" ? (
             <Image src={BadgeIcon} alt="pro badge" />
           ) : null} */}
-        </div>
-        <div className="mt-4 flex gap-1">
-          <span className="px-[1rem] py-[.35rem] text-caption bg-card rounded-[4rem]">
-            {card.study.people}
-          </span>
-          <span className="px-[1rem] py-[.35rem] text-caption bg-card rounded-[4rem]">
-            {card.study.deadline}
-          </span>
+          </div>
+          <div className="mt-4 flex gap-1">
+            <span className="px-[1rem] py-[.35rem] text-caption bg-card rounded-[4rem]">
+              {card.study.people}
+            </span>
+            <span className="px-[1rem] py-[.35rem] text-caption bg-card rounded-[4rem]">
+              {card.study.deadline}
+            </span>
+          </div>
         </div>
       </Link>
     </div>
