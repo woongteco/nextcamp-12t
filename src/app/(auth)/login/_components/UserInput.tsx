@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { PasswordHide } from '@/icons';
+import { PasswordHide } from '@public/icons';
 
 export function UserEmail() {
   return (

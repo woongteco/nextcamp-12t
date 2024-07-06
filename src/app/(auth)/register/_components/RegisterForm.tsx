@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { PasswordHide, PasswordCheck } from '@/icons';
+import { PasswordHide, PasswordCheck } from '@public/icons';
 import { UserEmail, UserPassword } from '../../login/_components/UserInput';
 
 const passwordRoles = [
