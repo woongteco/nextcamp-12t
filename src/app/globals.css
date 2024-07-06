@@ -4,45 +4,59 @@
 @tailwind variants;
 
 body {
-  --color-main-25: #e6f0ff;
-  --color-main-50: #c7deff;
-  --color-main-100: #b4d2ff;
-  --color-main-200: #92beff;
-  --color-main-300: #7ab0ff;
-  --color-main-400: #599cff;
-  --color-main-500: #3e8bff;
-  --color-main-600: #2a7ffe;
-  --color-main-700: #1468e7;
-  --color-main-800: #0050c8;
-  --color-main-900: #0042a4;
-  --color-main-950: #002b6c;
-  --color-primary-strong: "#005EEB";
-  --color-primary-heavy: "#0054D1";
-  --color-primary-heavy2: "#0FFED4";
-  --color-primary-heavy3: "#9EF103";
-  --color-status-positive: "#00BF40";
-  --color-status-caution: "#FF9200";
-  --color-status-danger: "#FF4242";
-  --color-label-normal: "#171719";
-  --color-label-strong: "#000000";
-  --color-label-neutral: "#464748";
-  --color-label-alt: "#B2B2B4";
-  --color-label-assist: rgba(55, 56, 60, 28%);
-  --color-label-disable: rgba(55, 56, 60, 16%);
-  --color-line-normal: "#E0E0E2";
-  --color-line-neutral: "#E6E6E8";
-  --color-line-alt: "#F4F4F5";
-  --color-line-input: "#DBDBDD";
-  --shadow-normal: 0 0px 2px rgba(0, 0, 0, 12%), 0 0 1px rgba(0, 0, 0, 8%);
-  --shadow-emphasize: 0 2px 8px rgba(0, 0, 0, 12%), 0 1px 4px rgba(0, 0, 0, 8%),
-    0 0 1px rgba(0, 0, 0, 8%);
-  --shadow-strong: 0 4px 8px rgba(0, 0, 0, 8%), 0 0 4px rgba(0, 0, 0, 8%),
-    0 20px 30px 0 rgba(16, 36, 94, 0.12);
-  --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 8%), 0 0 8px rgba(0, 0, 0, 8%),
-    0 30px 40px 0 rgba(16, 36, 94, 0.2);
+  --color-main-25: theme(colors.main-25);
+  --color-main-50: theme(colors.main-50);
+  --color-main-100: theme(colors.main-100);
+  --color-main-200: theme(colors.main-200);
+  --color-main-300: theme(colors.main-300);
+  --color-main-400: theme(colors.main-400);
+  --color-main-500: theme(colors.main-500);
+  --color-main-600: theme(colors.main-600);
+  --color-main-700: theme(colors.main-700);
+  --color-main-800: theme(colors.main-800);
+  --color-main-900: theme(colors.main-900);
+  --color-main-950: theme(colors.main-950);
+  --color-primary-strong: theme(colors.primary-strong);
+  --color-primary-heavy: theme(colors.primary-heavy);
+  --color-primary-heavy2: theme(colors.primary-heavy2);
+  --color-primary-heavy3: theme(colors.primary-heavy3);
+  --color-status-positive: theme(colors.status-positive);
+  --color-status-caution: theme(colors.status-caution);
+  --color-status-danger: theme(colors.status-danger);
+  --color-label-normal: theme(colors.label-normal);
+  --color-label-strong: theme(colors.label-strong);
+  --color-label-neutral: theme(colors.label-neutral);
+  --color-label-alt: theme(colors.label-alt);
+  --color-label-assist: theme(colors.label-assist);
+  --color-label-disable: theme(colors.label-disable);
+  --color-line-normal: theme(colors.line-normal);
+  --color-line-neutral: theme(colors.line-neutral);
+  --color-line-alt: theme(colors.line-alt);
+  --color-line-input: theme(colors.line-input);
+  --shadow-normal: theme(boxShadow.normal);
+  --shadow-emphasize: theme(boxShadow.emphasize);
+  --shadow-strong: theme(boxShadow.strong);
+  --shadow-heavy: theme(boxShadow.heavy);
+}
+
+@layer components {
+  .center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  .inputWrap {
+    @apply flex flex-col gap-2 w-full text-sm;
+  }
 }
 
 button,
 a {
   transition: backgroud-color ease-in-out 200ms, filter ease-in-out 200ms;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--color-label-strong);
 }

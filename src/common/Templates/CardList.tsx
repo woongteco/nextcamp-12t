@@ -18,9 +18,9 @@ export default function StudyCardList({
     return <NoneStudyComponent />;
   }
   return (
-    <div className="grid grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       {studyCard.map((card) => (
-        <StudyCardItem card={card} />
+        <StudyCardItem key={card.id} card={card} />
       ))}
     </div>
   );

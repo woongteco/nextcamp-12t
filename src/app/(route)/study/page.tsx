@@ -27,6 +27,7 @@ export type TStudyCard = {
   id: number;
   user: {
     userType: string | "user" | "pro";
+    userType: "user" | "pro";
     nickname: string;
     image: string;
   };
