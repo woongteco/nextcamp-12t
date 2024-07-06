@@ -6,6 +6,7 @@ import { SocialLogin, Google, Kakao, Logo } from '@public/icons';
 export default function InterceptedLoginPage() {
   return (
     <>
+      <div className="fixed top-0 left-0 w-full h-full bg-black opacity-30 z-50" />
       <dialog className="fixed top-1/2 -translate-y-1/2 z-modal" open>
         <div className="w-96 flex flex-col items-center justify-center gap-5 rounded-lg shadow-lg border border-gray-200 p-6 py-10 bg-white center">
           <Image src={Logo} alt="logo" />
