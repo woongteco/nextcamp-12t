@@ -4,6 +4,20 @@ import { faker } from "@faker-js/faker";
 import StudyCardList from "@/common/Templates/CardList";
 import HotStudyList from "./_components/HotStudyList";
 import GoodStudyList from "./_components/GoodStudyList";
+import Image from "next/image";
+import {
+  CategoryAplicationIcon,
+  CategoryChallengeIcon,
+  CategoryJobinterviewIcon,
+  CategoryLearningIcon,
+  CategoryLectureIcon,
+  CategoryLicensetestIcon,
+  CategoryOfflineIcon,
+  CategoryOnlienIcon,
+  CategoryProjectIcon,
+  CategoryhobbyIcon,
+} from "../../../../public/icons";
+import SelectCategory from "../post/write/_components/SelectCategory";
 
 const me = {
   username: "신지수",
@@ -12,7 +26,7 @@ const me = {
 export type TStudyCard = {
   id: number;
   user: {
-    userType: string;
+    userType: string | "user" | "pro";
     nickname: string;
     image: string;
   };
@@ -30,7 +44,7 @@ export const studyCard = [
   {
     id: 1,
     user: {
-      userType: "common",
+      userType: "user",
       nickname: "디자이너 이수빈",
       image: faker.image.avatar(),
     },
@@ -78,7 +92,7 @@ export const studyCard = [
   {
     id: 4,
     user: {
-      userType: "common",
+      userType: "user",
       nickname: "디자이너 이수빈",
       image: faker.image.avatar(),
     },
@@ -126,7 +140,7 @@ export const studyCard = [
   {
     id: 7,
     user: {
-      userType: "common",
+      userType: "user",
       nickname: "디자이너 이수빈",
       image: faker.image.avatar(),
     },
@@ -205,7 +219,125 @@ export default function StudyComponent() {
           </div>
         </div>
 
-        <div>카테고리 구역</div>
+        <div className="pt-[1.875rem] mb-11">
+          <div></div>
+          <div className="flex justify-between text-[#C2C3C4]">
+            <div className="flex gap-4">
+              <div className="flex flex-col items-center justify-center gap-2 cursor-pointer">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryLearningIcon}
+                    alt="개념 학습"
+                  />
+                </div>
+                <span>개념학습</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryAplicationIcon}
+                    alt="응용/활용"
+                  />
+                </div>
+                <span>응용/활용</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryProjectIcon}
+                    alt="프로젝트"
+                  />
+                </div>
+                <span>프로젝트</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryLicensetestIcon}
+                    alt="자격증/시험"
+                  />
+                </div>
+                <span>자격증/시험</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryJobinterviewIcon}
+                    alt="취업/면접"
+                  />
+                </div>
+                <span>취업/면접</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryChallengeIcon}
+                    alt="챌린지"
+                  />
+                </div>
+                <span>챌린지</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryLectureIcon}
+                    alt="특강"
+                  />
+                </div>
+                <span>특강</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryhobbyIcon}
+                    alt="취미"
+                  />
+                </div>
+                <span>취미</span>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryOfflineIcon}
+                    alt="오프라인"
+                  />
+                </div>
+                <span>오프라인</span>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex justify-center items-center w-11 h-11">
+                  <Image
+                    width={24}
+                    height={24}
+                    src={CategoryOnlienIcon}
+                    alt="온라인"
+                  />
+                </div>
+                <span>온라인</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="flex gap-[6.25rem] flex-col">
           <div>
