@@ -5,12 +5,11 @@ import { TStudyCard, getStudiesData } from "@/dummies/studies";
 import { useEffect, useState } from "react";
 import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
-import { CATEGORY_ICONS } from "./TabIcons";
-import StudyCategoryTabButtonList from "@/app/(route)/study/_components/StudyCategoryTabButtonList";
+import { CATEGORY_ICONS_NAME, CategoryTabIcon } from "./TabIcons";
 
 const GOALS_TAB = GOALS.map((goal, index) => ({
   ...goal,
-  Icon: CATEGORY_ICONS[index],
+  iconName: CATEGORY_ICONS_NAME[index],
 }));
 
 export default function TabButtonsOfGoalSection() {
@@ -30,7 +29,7 @@ export default function TabButtonsOfGoalSection() {
         />
       </div> */}
       <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
-        {GOALS_TAB.map(({ label, value, Icon }) => {
+        {GOALS_TAB.map(({ label, value, iconName }) => {
           const active = selected === value;
           return (
             <TabButton
@@ -39,7 +38,10 @@ export default function TabButtonsOfGoalSection() {
               active={active}
               onClick={() => setSelected(value)}
             >
-              <Icon strokeColor={active ? "#FFFFFF" : undefined} />
+              <CategoryTabIcon
+                name={iconName}
+                strokeColor={active ? "#FFFFFF" : undefined}
+              />
             </TabButton>
           );
         })}

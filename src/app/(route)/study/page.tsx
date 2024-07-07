@@ -12,6 +12,10 @@ import {
   ONOFFICONS,
   STUDYCATEGORYICONS,
 } from "./_components/icon/StudyCategoryIcons";
+import {
+  CATEGORY_ICONS_NAME,
+  ONOFF_ICONS_NAME,
+} from "@/app/_components/CategoryTab/TabIcons";
 
 export default function StudyComponent() {
   const user = getUser();
@@ -53,11 +57,11 @@ export default function StudyComponent() {
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
               LABEL_VALUE={GOALS}
-              ICONS={STUDYCATEGORYICONS}
+              ICONS_NAME={CATEGORY_ICONS_NAME}
             />
             <StudyCategoryTabButtonList
               LABEL_VALUE={ONOFF}
-              ICONS={ONOFFICONS}
+              ICONS_NAME={ONOFF_ICONS_NAME}
             />
           </div>
         </div>
