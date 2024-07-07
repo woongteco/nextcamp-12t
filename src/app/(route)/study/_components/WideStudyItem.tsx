@@ -15,7 +15,7 @@ export default function WideStudyItem() {
       />
 
       <div className="w-full h-full absolute bg-gradient-to-r from-black/30 to-black bg-no-repeat rounded-[1.25rem]">
-        <span className="absolute left-0 top-5 px-[1rem] py-[.35rem] bg-satus-danger rounded-r-3xl text-white text-caption font-bold ">
+        <span className="absolute left-0 top-5 px-[1rem] py-[.35rem] bg-status-danger rounded-r-3xl text-white text-caption font-bold ">
           모집중
         </span>
         <span className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer hover:bg-opacity-60">

@@ -1,4 +1,4 @@
-import PageTitle from "@/common/Atoms/Text/PageTitle";
+import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
 import LargeStudyList from "./_components/LargeStudyList";
 import WideStudyList from "./_components/WideStudyList";
@@ -12,6 +12,10 @@ import {
   ONOFFICONS,
   STUDYCATEGORYICONS,
 } from "./_components/icon/StudyCategoryIcons";
+import {
+  CATEGORY_ICONS_NAME,
+  ONOFF_ICONS_NAME,
+} from "@/app/_components/CategoryTab/TabIcons";
 
 export default function StudyComponent() {
   const user = getUser();
@@ -21,7 +25,7 @@ export default function StudyComponent() {
     <div className="py-20">
       <div>
         <div className="flex items-center justify-between">
-          <PageTitle size="lg">스터디</PageTitle>
+          <SectionTitle size="lg">스터디</SectionTitle>
           <div className="relative">
             <input
               type="search"
@@ -53,51 +57,51 @@ export default function StudyComponent() {
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
               LABEL_VALUE={GOALS}
-              ICONS={STUDYCATEGORYICONS}
+              ICONS_NAME={CATEGORY_ICONS_NAME}
             />
             <StudyCategoryTabButtonList
               LABEL_VALUE={ONOFF}
-              ICONS={ONOFFICONS}
+              ICONS_NAME={ONOFF_ICONS_NAME}
             />
           </div>
         </div>
 
         <div className="flex gap-[6.25rem] flex-col">
           <div>
-            <PageTitle size="md" className="pb-6">
+            <SectionTitle size="md" className="pb-6">
               {user.name}님이 찾던 케미 좋은 프로 스터디
-            </PageTitle>
+            </SectionTitle>
             <div className="flex flex-col gap-6">
               <div>
-                <PageTitle size="sm" className="pb-3">
+                <SectionTitle size="sm" className="pb-3">
                   디자인 프로 스터디
-                </PageTitle>
+                </SectionTitle>
                 <WideStudyList />
               </div>
               <div>
-                <PageTitle size="sm" className="pb-3">
+                <SectionTitle size="sm" className="pb-3">
                   취업 / 포트폴리오 프로 스터디
-                </PageTitle>
+                </SectionTitle>
                 <WideStudyList />
               </div>
             </div>
           </div>
           <div>
-            <PageTitle size="md" className="pb-6">
+            <SectionTitle size="md" className="pb-6">
               오늘의 프로 스터디를 통해 빠른 성장을 경험해 보세요!
-            </PageTitle>
+            </SectionTitle>
             <StudyCardList studyCard={studyCard} count={4} />
           </div>
           <div>
-            <PageTitle size="md" className="pb-6">
+            <SectionTitle size="md" className="pb-6">
               프로없이, 우리끼리도 스터디해요
-            </PageTitle>
+            </SectionTitle>
             <StudyCardList studyCard={studyCard} count={4} />
           </div>
           <div>
-            <PageTitle size="md" className="pb-6">
+            <SectionTitle size="md" className="pb-6">
               케밋에서 인기있는 프로의 스터디
-            </PageTitle>
+            </SectionTitle>
             <LargeStudyList />
           </div>
         </div>

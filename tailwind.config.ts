@@ -168,6 +168,9 @@ const config: Config = {
         alt: "#F7F7F8",
         card: "#F0F4FA",
       },
+      backgroundImage: {
+        "shield-badge": "url(/icons/ShieldShapeBadge.png)",
+      },
       boxShadow: {
         // shadow-*
         normal: "0 0 1px 0 rgba(0, 0, 0, 0.08), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
