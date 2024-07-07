@@ -1,6 +1,5 @@
 import NotFound from "@/app/not-found";
 import LinkButton from "@/common/Atoms/LinkButton";
-import { Sidebar } from "@/common/Layout";
 import SidebarAsideContentArea from "@/common/Layout/Sidebar/SidebarAsideContentArea";
 import SidebarNavArea from "@/common/Layout/Sidebar/SidebarNavArea";
 import SideNavItem from "@/common/Layout/Sidebar/SideNavItem";
@@ -82,7 +81,7 @@ export default function CommunityPostList({
   /**
    * TODO
    * - 글 리스트 데이터 가져오기 : TPost[]
-   * - 글 리스트 filter에 따라 리스트 화면에 표시
+   * - 글 리스트 category에 따라 리스트 화면에 표시
    * - 정렬 방법에 따라 sorted
    * - 검색 키워드에 따라 리스트 필터링
    */
