@@ -1,7 +1,7 @@
 export type TUserBase = {
   userId: string;
   name: string;
-  role: "user" | "pro";
+  role: string | "user" | "pro";
   position: string;
   profileUrl: string;
 };
