@@ -12,11 +12,12 @@ import { TStudyCard } from "@/app/(route)/study/page";
 import Keyword from "../Atoms/Text/Keyword";
 import { BadgeIcon, heartIcon } from "@public/icons";
 import Profile from "../Molecules/Profile";
+import Thumbnail from "../Atoms/Image/Thumbnail";
 
 export default function StudyCardItem({ card }: { card: TStudyCard }) {
   return (
     <div className="bg-white rounded-twenty border border-line-alt hover:shadow-normal overflow-hidden">
-      <Link href={"/study/:studyPostId"}>
+      <Link href={"/study/" + card.id}>
         <div className="h-[11.25rem] relative overflow-hidden">
           <Keyword
             bg="bg-status-danger"
@@ -30,7 +31,16 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           className="w-full h-full"
           alt="study thumbnail"
         /> */}
-          <Image
+          <Thumbnail
+            useIn="list"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={card.study.image + "?blur=2"}
+            src={card.study.image}
+            alt={`${card.study.title} thumbnail`}
+            className="thumbnailImage object-cover min-w-full w-auto h-auto"
+          />
+          {/* <Image
             width={268}
             height={180}
             loading="lazy"
@@ -39,7 +49,7 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
             src={card.study.image}
             alt={`${card.study.title} thumbnail`}
             className="thumbnailImage object-cover min-w-full w-auto h-auto"
-          />
+          /> */}
           <form
             action=""
             className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer"
@@ -50,10 +60,12 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           </form>
         </div>
         <div className="block my-4 px-3 h-[7.75rem]">
-          <span className="text-label-400 font-light">
+          <span className="text-label-400 text-label-dimmed line-clamp-1">
             {card.study.categoryJob}
           </span>
-          <p className="text-lg font-semibold">{card.study.title}</p>
+          <p className="text-lg font-semibold line-clamp-1">
+            {card.study.title}
+          </p>
           <div className="flex items-center gap-[.25rem] pt-2">
             <Profile
               user={{
@@ -70,7 +82,8 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
             className="w-5 h-5 rounded-full"
             alt="user image"
           />
-          <span className="font-semibold text-label-600">
+          <span className="font-semibold text-label-60
+          0">
             {card.user.nickname}
           </span>
           {card.user.userType === "pro" ? (
@@ -78,12 +91,12 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           ) : null} */}
           </div>
           <div className="mt-4 flex gap-1">
-            <span className="px-[1rem] py-[.35rem] text-caption bg-card rounded-[4rem]">
+            <Keyword bg="bg-card" text="text-label-normal">
               {card.study.people}
-            </span>
-            <span className="px-[1rem] py-[.35rem] text-caption bg-card rounded-[4rem]">
+            </Keyword>
+            <Keyword bg="bg-card" text="text-label-normal">
               {card.study.deadline}
-            </span>
+            </Keyword>
           </div>
         </div>
       </Link>
