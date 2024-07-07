@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const notosans = Noto_Sans_KR({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -27,7 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={notosans.className}>{children}</body>
+      <body className={notosans.className}>
+        <Toaster position="bottom-center" />
+        {children}
+      </body>
     </html>
   );
 }

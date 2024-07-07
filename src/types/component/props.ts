@@ -1,9 +1,10 @@
-import { ComponentProps, ElementType, ReactNode } from "react";
+import { ImageProps } from "next/image";
+import { ComponentProps, MouseEventHandler, ReactNode } from "react";
 
 export type TProps = {
   children: ReactNode;
 };
-export type TClassnameProps = { className: string }; //React.ComponentProps["className"];
+export type TClassnameProps = { className: string };
 export type TIconButtonProps = ComponentProps<"button"> & {
   variation: "icon";
   size?: number;
@@ -36,9 +37,18 @@ export type TLabelTextProps = TLabel<"p">;
 export type TCaptionProps = ComponentProps<"p" | "span"> & {
   inline: boolean;
 };
-export type TMenuItemProps = {
+export type TNavItemProps = {
   key: string;
   href: string;
   label: string;
-  active?: boolean;
+  active: boolean;
+};
+export type TImageThumbnailProps = ImageProps & {
+  src: string;
+  alt: string;
+  useIn?: "list" | "specific" | "linked";
+};
+export type TModalPortalProps = TProps & {
+  canClose?: boolean;
+  onClose: MouseEventHandler<HTMLButtonElement>;
 };

@@ -11,6 +11,7 @@ export default function Button(props: TIconButtonProps | TButtonProps) {
         size = 40,
         colors = { bg: "bg-main-600" },
         children,
+        ...restProps
       } = props;
       const square = `w-[${size}px] h-[${size}px]`;
       return (
@@ -21,6 +22,7 @@ export default function Button(props: TIconButtonProps | TButtonProps) {
             `${colors.bg}/0 hover:${colors.bg}/15`,
             square
           )}
+          {...restProps}
         >
           {children}
         </button>

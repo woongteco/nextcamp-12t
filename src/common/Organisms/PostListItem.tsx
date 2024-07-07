@@ -51,7 +51,7 @@ export default function PostListItem({ item }: { item: TPost }) {
         <Link href={`/post/${item.postId}`} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 pr-[120px]">
             <span className="text-body-nomral text-label-dimmed">
-              {item.filter.label}
+              {item.category.label}
             </span>
             <p className="text-[20px] text-black font-semibold w-full overflow-hidden text-nowrap text-ellipsis">
               {item.contents.title}
@@ -63,22 +63,22 @@ export default function PostListItem({ item }: { item: TPost }) {
               {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개
             </span>
           </div>
-          {(item.filter.value === "study" ||
-            item.filter.value === "project") && (
+          {(item.category.value === "study" ||
+            item.category.value === "project") && (
             <Keyword
               bg={
-                item.filter.isRecruiting
+                item.category.isRecruiting
                   ? "bg-primary-heavy2"
                   : "bg-label-disable"
               }
               text={
-                item.filter.isRecruiting
+                item.category.isRecruiting
                   ? "text-label-normal"
                   : "text-label-neutral"
               }
               className="absolute top-4 right-4"
             >
-              {item.filter.isRecruiting ? "모집중" : "모집완료"}
+              {item.category.isRecruiting ? "모집중" : "모집완료"}
             </Keyword>
           )}
         </Link>

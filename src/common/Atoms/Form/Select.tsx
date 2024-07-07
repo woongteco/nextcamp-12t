@@ -9,17 +9,17 @@ import CreatableSelect from "react-select/creatable";
 const IndicatorsContainer = (_: IndicatorsContainerProps) => <></>;
 
 export default function ({
-  id = "",
   styles = {},
   isCreatable = false,
   unstyled = false,
   ...restProps
 }) {
   const uniqueId = useId();
+  const generatedId = restProps?.id || uniqueId;
   return isCreatable ? (
     <CreatableSelect
-      id={uniqueId}
-      instanceId={uniqueId}
+      id={generatedId}
+      instanceId={generatedId}
       {...restProps}
       /**
        * multi select의 경우 indicator none, value label은 Keyword와 유사한 디자인
@@ -31,10 +31,10 @@ export default function ({
         ...styles,
         control: (baseStyles, state) => ({
           ...baseStyles,
-          "height": "56px",
-          "padding": "9px 4px 9px 8px",
-          "borderRadius": "10px",
-          "borderColor": state.isFocused
+          height: "56px",
+          padding: "9px 4px 9px 8px",
+          borderRadius: "10px",
+          borderColor: state.isFocused
             ? "var(--color-main-600)"
             : "var(--color-line-input)",
           "borderColor:hover": state.isFocused
@@ -43,9 +43,9 @@ export default function ({
         }),
         multiValue: (styles) => ({
           ...styles,
-          "backgroundColor": "#D9E8FF",
-          "borderRadius": "14px",
-          "overflow": "hidden",
+          backgroundColor: "#D9E8FF",
+          borderRadius: "14px",
+          overflow: "hidden",
           ":hover": {
             backgroundColor: "#C7DEFF",
           },
@@ -70,18 +70,18 @@ export default function ({
     />
   ) : (
     <SelectInput
-      id={uniqueId}
-      instanceId={uniqueId}
+      id={generatedId}
+      instanceId={generatedId}
       {...restProps}
       components={unstyled ? { IndicatorsContainer } : {}}
       styles={{
         ...styles,
         control: (baseStyles, state) => ({
           ...baseStyles,
-          "height": "56px",
-          "padding": unstyled ? "" : "9px 4px 9px 8px",
-          "borderRadius": "10px",
-          "borderColor": unstyled
+          height: "56px",
+          padding: unstyled ? "" : "9px 4px 9px 8px",
+          borderRadius: "10px",
+          borderColor: unstyled
             ? "transparent"
             : state.isFocused
             ? "#2a7ffe"
