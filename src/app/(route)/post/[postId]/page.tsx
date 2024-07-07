@@ -6,6 +6,7 @@ import Profile from "@/common/Molecules/Profile";
 import ContentArea from "@/common/Organisms/ContentArea";
 import CommentArea, { TComment } from "@/common/Templates/CommentArea";
 import LinkedStudyCard from "./_components/LinkedStudyCard";
+import ShareIconButton from "../../_components/ShareIconButton";
 
 export default function PostDetail({
   params: { postId },
@@ -15,10 +16,10 @@ export default function PostDetail({
   const post = getPost("10");
   const comments: TComment[] = [];
   return (
-    <>
+    <div className="mt-20">
       <Link
         href="/post"
-        className="flex flex-row gap-2 mt-5 mb-6 text-body-600"
+        className="flex flex-row gap-2 mb-8 text-body-600 hover:text-main-600 [&:hover_path]:stroke-main-600"
       >
         <svg
           width="24"
@@ -38,14 +39,16 @@ export default function PostDetail({
         <span>목록으로 돌아가기</span>
       </Link>
       <article>
-        <div className="post-header">
+        <div className="post-header border-y border-y-line-normal">
           <div>
-            <p className="text-label-assist text-[20px]">{post.filter.label}</p>
+            <p className="text-label-assist text-body-400 pt-6 pb-2">
+              {post.category.label}
+            </p>
             <h2 className="text-H2">
               {post.contents.title} #{postId}
             </h2>
           </div>
-          <div className="flex gap-6 items-center py-6 border-b border-b-line-normal">
+          <div className="flex gap-6 items-center py-6">
             <Profile user={post.writer} size="large" />
             <p className="text-label-400 text-label-dimmed flex flex-row gap-2 items-center">
               <span>1일 전</span>
@@ -60,10 +63,11 @@ export default function PostDetail({
               </LinkButton>
             </p>
             <div className="flex gap-4 items-center ml-auto">
-              <Button variation="icon">
+              <ShareIconButton />
+              {/* <Button variation="icon">
                 <svg
-                  width="36"
-                  height="36"
+                  width="28"
+                  height="28"
                   viewBox="0 0 36 36"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -73,11 +77,11 @@ export default function PostDetail({
                     fill="#464748"
                   />
                 </svg>
-              </Button>
+              </Button> */}
               <Button variation="icon">
                 <svg
-                  width="40"
-                  height="42"
+                  width="32"
+                  height="34"
                   viewBox="0 0 40 42"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -102,6 +106,6 @@ export default function PostDetail({
         {/* )} */}
       </article>
       <CommentArea comments={comments} />
-    </>
+    </div>
   );
 }

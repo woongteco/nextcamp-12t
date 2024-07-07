@@ -46,7 +46,6 @@ export default function Dropdown(props: TDropdownProps) {
   );
 }
 
-// TODO 가능하면 추후 이미지 파일로 변경
 function CircleChevronDown() {
   // 드롭다운에서만 사용하는 아이콘
   return (

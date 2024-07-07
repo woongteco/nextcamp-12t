@@ -14,7 +14,7 @@ export default function Profile({
   const gap = {
     default: "gap-4",
     large: "gap-6",
-    small: "gap-4",
+    small: "gap-2",
   };
   const style = {
     default: "text-H4 text-label-normal",

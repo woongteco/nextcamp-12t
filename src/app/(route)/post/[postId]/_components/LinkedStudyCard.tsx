@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { DefaultThumbnailImg, DummyProfileImg } from "@public/images";
+import { DummyProfileImg } from "@public/images";
 import { TStudy, getStudyData } from "@/dummies/studies";
 import { getWriter } from "@/dummies/user";
 import Thumbnail from "@/common/Atoms/Image/Thumbnail";
@@ -9,8 +9,15 @@ export default function LinkedStudyCard({ studyId }: { studyId: string }) {
   const writer = getWriter(study.writerId);
   return (
     <div className="overflow-hidden flex gap-6 justify-stretch items-center rounded-twenty border border-line-normal">
-      <div className="study-thumbnail bg-main-600">
-        <Thumbnail className="w-[200px] h-[132px]" />
+      <div className="study-thumbnail bg-main-600 relative w-[200px] h-[132px]">
+        <Thumbnail
+          useIn="linked"
+          width={200}
+          height={132}
+          src={study.thumbnailUrl}
+          alt={study.contents.title}
+        />
+        <div className="w-full h-full bg-gradient-to-tl from-black/25 absolute left-0 top-0"></div>
       </div>
       <div className="flex flex-col gap-4 py-5">
         <div className="study-info flex flex-col gap-0">

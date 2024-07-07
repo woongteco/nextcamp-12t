@@ -2,8 +2,8 @@ import clsx from "clsx";
 import { inputStyle } from "../atomStyle";
 
 type TInputElementProps = React.ComponentProps<"input">;
-function InputElement(props: TInputElementProps) {
-  return <input className={clsx(inputStyle, props.className)} {...props} />;
+function InputElement({ className, ...restProps }: TInputElementProps) {
+  return <input className={clsx(inputStyle, className)} {...restProps} />;
 }
 
 export function Text(props: TInputElementProps) {
