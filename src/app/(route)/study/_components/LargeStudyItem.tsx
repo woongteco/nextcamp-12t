@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import Image from "next/image";
-import { BadgeIcon, heartIcon } from "../../../../../public/icons";
+import { BadgeIcon, heartIcon } from "@public/icons";
 import Link from "next/link";
 
-export default function HotStudyItem() {
+export default function LargeStudyItem() {
   return (
     <>
       <div className="h-[28rem] relative">
