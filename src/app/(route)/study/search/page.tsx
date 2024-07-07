@@ -1,4 +1,4 @@
-import PageTitle from "@/common/Atoms/Text/PageTitle";
+import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
 import { getStudiesData } from "@/dummies/studies";
 
@@ -8,7 +8,7 @@ export default function StudySearchPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <PageTitle size="lg">스터디</PageTitle>
+        <SectionTitle size="lg">스터디</SectionTitle>
         <div className="relative">
           <input
             type="search"
@@ -34,7 +34,7 @@ export default function StudySearchPage() {
           </span>
         </div>
       </div>
-      <PageTitle size="md">전체 검색 결과 {studyCard.length}개</PageTitle>
+      <SectionTitle size="md">전체 검색 결과 {studyCard.length}개</SectionTitle>
       <StudyCardList studyCard={studyCard} count={16} />
     </div>
   );

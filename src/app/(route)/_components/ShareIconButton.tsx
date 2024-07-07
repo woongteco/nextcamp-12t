@@ -13,6 +13,7 @@ export default function ShareIconButton() {
   const pathname = usePathname();
   const [modalShow, setModalShow] = useState<boolean>(false);
   function copyPathname() {
+    // TODO: 추후 도메인 수정
     const fullPathname = "https://chemeet.com" + pathname;
     navigator.clipboard.writeText(fullPathname);
     toast.custom((t: Toast) => (

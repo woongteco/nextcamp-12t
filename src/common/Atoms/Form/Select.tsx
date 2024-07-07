@@ -31,7 +31,8 @@ export default function ({
         ...styles,
         control: (baseStyles, state) => ({
           ...baseStyles,
-          height: "56px",
+          minHeight: "56px",
+          height: "fit-content",
           padding: "9px 4px 9px 8px",
           borderRadius: "10px",
           borderColor: state.isFocused
@@ -78,7 +79,8 @@ export default function ({
         ...styles,
         control: (baseStyles, state) => ({
           ...baseStyles,
-          height: "56px",
+          minHeight: "56px",
+          height: "fit-content",
           padding: unstyled ? "" : "9px 4px 9px 8px",
           borderRadius: "10px",
           borderColor: unstyled
@@ -99,6 +101,26 @@ export default function ({
           ...styles,
           visibility: "hidden",
           opacity: 0,
+        }),
+        multiValue: (styles) => ({
+          ...styles,
+          backgroundColor: "#D9E8FF",
+          borderRadius: "14px",
+          overflow: "hidden",
+          ":hover": {
+            backgroundColor: "#C7DEFF",
+          },
+        }),
+        multiValueLabel: (styles) => ({
+          ...styles,
+          paddingLeft: "12px",
+          paddingRight: "4px",
+          color: "#2A7FFE",
+        }),
+        multiValueRemove: (styles) => ({
+          ...styles,
+          paddingRight: "6px",
+          color: "#2A7FFE",
         }),
       }}
     />

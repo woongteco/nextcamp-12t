@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export default function PageTitle(
+export default function SectionTitle(
   props: React.ComponentProps<"p"> & { size: "sm" | "md" | "lg" }
 ) {
   const { size, className, children, ...restProps } = props;
