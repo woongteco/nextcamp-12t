@@ -55,7 +55,7 @@ export default function TabButtonsOfGoalSection() {
           );
         })}
       </div>
-      <StudyCardList studyCard={proStudies.slice(0, 8)} />
+      <StudyCardList studyCard={proStudies} count={8} />
     </>
   );
 }

@@ -217,3 +217,8 @@ export const GOALS = [
   { label: "특강", value: "goal_7" },
   { label: "취미", value: "goal_8" },
 ];
+
+export const ONOFF = [
+  { label: "오프라인", value: "offline" },
+  { label: "온라인", value: "online" },
+];
