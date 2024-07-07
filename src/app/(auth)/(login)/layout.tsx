@@ -1,7 +1,14 @@
 export default async function LoginModalLayout({
+  modal,
   children,
 }: {
+  modal: React.ReactNode;
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {modal}
+      {children}
+    </>
+  );
 }
