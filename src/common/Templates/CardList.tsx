@@ -5,21 +5,24 @@
  * "2" : 스터디 탐색 페이지의 wide type 스터디 카드에만 사용합니다
  */
 
-import { TStudyCard } from "@/app/(route)/study/page";
+import { TStudyCard } from "@/dummies/studies";
 import StudyCardItem from "../Organisms/StudyCardItem";
 import NoneStudyComponent from "@/app/(route)/study/_components/NoneStudyComponent";
 
 export default function StudyCardList({
   studyCard,
+  count,
 }: {
   studyCard: TStudyCard[];
+  count: number;
 }) {
   if (!studyCard) {
     return <NoneStudyComponent />;
   }
+  const STUDYCARD = studyCard.slice(0, count);
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-      {studyCard.map((card) => (
+      {STUDYCARD.map((card) => (
         <StudyCardItem key={card.id} card={card} />
       ))}
     </div>
