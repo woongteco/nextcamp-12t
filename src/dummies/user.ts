@@ -19,7 +19,7 @@ export function getUser(userId?: string) {
     name: "신지우",
     position: "",
     role: "user",
-    email: "shin.jisoo@chemeet.com",
+    email: "shin.jiwoo@chemeet.com",
     password: "1234",
     profileUrl: "",
     authProviderIn: undefined,
