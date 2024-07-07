@@ -1,8 +1,10 @@
 import PageTitle from "@/common/Atoms/Text/PageTitle";
 import StudyCardList from "@/common/Templates/CardList";
-import { studyCard } from "../page";
+import { getStudiesData } from "@/dummies/studies";
 
 export default function StudySearchPage() {
+  const studyCard = getStudiesData();
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -32,8 +34,8 @@ export default function StudySearchPage() {
           </span>
         </div>
       </div>
-      <PageTitle size="md">전체 검색 결과 128개</PageTitle>
-      <StudyCardList studyCard={studyCard} />
+      <PageTitle size="md">전체 검색 결과 {studyCard.length}개</PageTitle>
+      <StudyCardList studyCard={studyCard} count={16} />
     </div>
   );
 }
