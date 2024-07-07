@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { Logo } from '@public/icons';
-import RegisterForm from './_components/RegisterForm';
+import Image from "next/image";
+import { Logo } from "@public/icons";
+import RegisterForm from "../_components/RegisterForm";
 
 export default function Register() {
   return (

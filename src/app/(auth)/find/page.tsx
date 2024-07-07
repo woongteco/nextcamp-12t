@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Logo } from "@public/icons";
-import { UserEmail } from "../(login)/login/_components/UserInput";
+import { UserEmail } from "../_components/UserInput";
 
 export default function FindPage() {
   return (
