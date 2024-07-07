@@ -2,7 +2,7 @@ import { Container, Footer, Header } from "@/common/Layout";
 import PageTitle from "@/common/Atoms/Text/PageTitle";
 import TopBannerSection from "./_components/TopBannerSection";
 import UserCurrentStudySection from "./_components/UserCurrentStudySection";
-import TabButtonsOfGoalSection from "./_components/TabButtonsOfGoalSection";
+import TabButtonsOfGoalSection from "./_components/CategoryTab/TabButtonsOfGoalSection";
 import UserReviewSlider from "./_components/ReviewSection/UserReviewSlider";
 import { getUser } from "@/dummies/user";
 import RecommendProStudies from "./_components/RecommendProStudies";

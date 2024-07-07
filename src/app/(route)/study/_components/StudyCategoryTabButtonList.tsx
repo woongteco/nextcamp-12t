@@ -1,6 +1,6 @@
 "use client";
 
-import { TabButton } from "@/app/_components/TabButton";
+import { TabButton } from "@/app/_components/CategoryTab/TabButton";
 import { TIconStylingProps } from "@/common/Atoms/Image/Icon";
 import React from "react";
 import { useState } from "react";

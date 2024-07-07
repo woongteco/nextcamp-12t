@@ -1,34 +1,17 @@
 "use client";
-import {
-  BellRingIcon,
-  BuildingIcon,
-  BulbIcon,
-  FileEditIcon,
-  KeyboardIcon,
-  MonitorPlayIcon,
-  NotebookIcon,
-  PuzzleIcon,
-  TIconStylingProps,
-} from "@/common/Atoms/Image/Icon";
 import { GOALS } from "@/dummies/categories";
 import { TStudyCard, getStudiesData } from "@/dummies/studies";
 
 import { useEffect, useState } from "react";
 import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
+import { CATEGORY_ICONS } from "./TabIcons";
+import StudyCategoryTabButtonList from "@/app/(route)/study/_components/StudyCategoryTabButtonList";
 
-const ICONS = [
-  (props: TIconStylingProps) => <NotebookIcon {...props} />,
-  (props: TIconStylingProps) => <KeyboardIcon {...props} />,
-  (props: TIconStylingProps) => <BulbIcon {...props} />,
-  (props: TIconStylingProps) => <FileEditIcon {...props} />,
-  (props: TIconStylingProps) => <BuildingIcon {...props} />,
-  (props: TIconStylingProps) => <BellRingIcon {...props} />,
-  (props: TIconStylingProps) => <MonitorPlayIcon {...props} />,
-  (props: TIconStylingProps) => <PuzzleIcon {...props} />,
-];
-
-const GOALS_TAB = GOALS.map((goal, index) => ({ ...goal, Icon: ICONS[index] }));
+const GOALS_TAB = GOALS.map((goal, index) => ({
+  ...goal,
+  Icon: CATEGORY_ICONS[index],
+}));
 
 export default function TabButtonsOfGoalSection() {
   const [selected, setSelected] = useState(GOALS[0].value);
@@ -40,6 +23,12 @@ export default function TabButtonsOfGoalSection() {
 
   return (
     <>
+      {/* <div className="w-fit mx-auto">
+        <StudyCategoryTabButtonList
+          LABEL_VALUE={GOALS}
+          ICONS={CATEGORY_ICONS}
+        />
+      </div> */}
       <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
         {GOALS_TAB.map(({ label, value, Icon }) => {
           const active = selected === value;

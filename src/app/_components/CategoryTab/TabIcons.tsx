@@ -6,10 +6,12 @@ import {
   KeyboardIcon,
   MonitorPlayIcon,
   NotebookIcon,
+  OfflineIcon,
+  OnlineIcon,
   PuzzleIcon,
 } from "@/common/Atoms/Image/Icon";
 
-export const ICONS = [
+export const CATEGORY_ICONS = [
   NotebookIcon,
   KeyboardIcon,
   BulbIcon,
@@ -19,3 +21,5 @@ export const ICONS = [
   MonitorPlayIcon,
   PuzzleIcon,
 ];
+
+export const ONOFFICONS = [OfflineIcon, OnlineIcon];
