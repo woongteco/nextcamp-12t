@@ -10,7 +10,7 @@ export const getStyles = (
       const solidHover = c.bg + "/75";
       return `${c.bg} ${c.text} hover:${solidHover} hover:saturate-150`;
     case "outline":
-      const border = "border-" + c.bg.split("bg-").at(0);
+      const border = "border-" + c.bg.split("bg-").at(1);
       const outlineHover = c.bg + "/15";
       return `border ${border} bg-transparent ${c.text} hover:${outlineHover}`;
     case "text":
