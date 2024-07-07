@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { PasswordHide, PasswordCheck } from "@public/icons";
-import {
-  UserEmail,
-  UserPassword,
-} from "../../(login)/login/_components/UserInput";
+import { UserEmail, UserPassword } from "./UserInput";
 
 const passwordRoles = [
   "영문/숫자/특수문자($, _, -, !) 중 2가지 이상 포함",
