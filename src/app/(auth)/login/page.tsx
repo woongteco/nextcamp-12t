@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import ModalBackdrop from "@/common/Molecules/ModalPortal/ModalBackdrop";
 import { DummyProfileImg } from "@public/images";
 import LoginForm from "../_components/LoginForm";
+import AuthWrap from "../_components/AuthWrap";
 
 export default function LoginProfile() {
   const [open, setOpen] = useState(false);
@@ -17,16 +18,16 @@ export default function LoginProfile() {
       modalRef.current?.close();
     }
 
-    const modalKeyClosehandler = (e: KeyboardEvent) => {
+    const modalKeyCloseHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         modalRef.current?.close;
         setOpen(false);
       }
     };
-    document.addEventListener("keydown", modalKeyClosehandler);
+    document.addEventListener("keydown", modalKeyCloseHandler);
 
     return () => {
-      document.removeEventListener("keydown", modalKeyClosehandler);
+      document.removeEventListener("keydown", modalKeyCloseHandler);
     };
   }, [open]);
 
@@ -46,7 +47,7 @@ export default function LoginProfile() {
             ref={modalRef}
             open
           >
-            <div className="w-full h-auto flex flex-col items-center justify-center gap-5 rounded-lg shadow-lg border border-gray-200 p-6 py-10 bg-white center">
+            <AuthWrap>
               <Image src={Logo} alt="logo" />
               <LoginForm />
               <div className="flex items-center gap-3 text-sm">
@@ -65,7 +66,7 @@ export default function LoginProfile() {
                   </button>
                 </div>
               </>
-            </div>
+            </AuthWrap>
           </dialog>
         </>
       )}

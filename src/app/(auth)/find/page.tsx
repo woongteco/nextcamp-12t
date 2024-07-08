@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Logo } from "@public/icons";
 import { UserEmail } from "../_components/UserInput";
+import AuthWrap from "../_components/AuthWrap";
 
 export default function FindPage() {
   return (
-    <div className="w-96 flex flex-col gap-5 items-center justify-center rounded-lg border border-gray-200 bg-white shadow-lg p-6 py-10 center">
+    <AuthWrap>
       <Image src={Logo} alt="logo" />
       <h1 className="text-xl font-semibold">이메일 찾기</h1>
       <form action="" className="w-full flex flex-col gap-5">
@@ -34,6 +35,6 @@ export default function FindPage() {
           </button>
         </div>
       </form>
-    </div>
+    </AuthWrap>
   );
 }
