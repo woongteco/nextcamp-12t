@@ -19,7 +19,7 @@ export default function ShareIconButton() {
     toast.custom((t: Toast) => (
       <Notification
         t={t}
-        status="default"
+        status="success"
         message={{
           title: "URL이 복사되었어요",
           text: "원하는 곳에 붙여넣기 하여 케밋을 공유해보세요!",
