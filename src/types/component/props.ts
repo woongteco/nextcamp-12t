@@ -48,7 +48,7 @@ export type TImageThumbnailProps = ImageProps & {
   alt: string;
   useIn?: "list" | "specific" | "linked";
 };
-export type TModalPortalProps = TProps & {
+export type TModalPortalProps<T> = TProps & {
   canClose?: boolean;
-  onClose: MouseEventHandler<HTMLButtonElement>;
+  onClose: MouseEventHandler<T>;
 };
