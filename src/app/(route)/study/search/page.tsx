@@ -1,4 +1,4 @@
-import PageTitle from "@/common/Atoms/Text/PageTitle";
+import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
 import { getStudiesData } from "@/dummies/studies";
 import StudyCategoryTabButtonList from "../_components/StudyCategoryTabButtonList";
@@ -15,7 +15,7 @@ export default function StudySearchPage() {
     <div className="py-20">
       <div>
         <div className="flex items-center justify-between">
-          <PageTitle size="lg">스터디</PageTitle>
+          <SectionTitle size="lg">스터디</SectionTitle>
           <div className="relative">
             <input
               type="search"
@@ -57,7 +57,7 @@ export default function StudySearchPage() {
         </div>
       </div>
       <div className="flex justify-between items-end pb-6">
-        <PageTitle size="md">전체 검색 결과 {studyCard.length}개</PageTitle>
+        <SectionTitle size="md">전체 검색 결과 {studyCard.length}개</SectionTitle>
         <div className="flex gap-3 font-semibold text-sm text-[#c2c3c4]">
           <span>최신 순</span>
           <span>좋아요 순</span>

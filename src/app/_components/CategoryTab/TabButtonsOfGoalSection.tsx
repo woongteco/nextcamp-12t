@@ -1,34 +1,16 @@
 "use client";
-import {
-  BellRingIcon,
-  BuildingIcon,
-  BulbIcon,
-  FileEditIcon,
-  KeyboardIcon,
-  MonitorPlayIcon,
-  NotebookIcon,
-  PuzzleIcon,
-  TIconStylingProps,
-} from "@/common/Atoms/Image/Icon";
 import { GOALS } from "@/dummies/categories";
 import { TStudyCard, getStudiesData } from "@/dummies/studies";
 
 import { useEffect, useState } from "react";
 import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
+import { CATEGORY_ICONS_NAME, CategoryTabIcon } from "./TabIcons";
 
-const ICONS = [
-  (props: TIconStylingProps) => <NotebookIcon {...props} />,
-  (props: TIconStylingProps) => <KeyboardIcon {...props} />,
-  (props: TIconStylingProps) => <BulbIcon {...props} />,
-  (props: TIconStylingProps) => <FileEditIcon {...props} />,
-  (props: TIconStylingProps) => <BuildingIcon {...props} />,
-  (props: TIconStylingProps) => <BellRingIcon {...props} />,
-  (props: TIconStylingProps) => <MonitorPlayIcon {...props} />,
-  (props: TIconStylingProps) => <PuzzleIcon {...props} />,
-];
-
-const GOALS_TAB = GOALS.map((goal, index) => ({ ...goal, Icon: ICONS[index] }));
+const GOALS_TAB = GOALS.map((goal, index) => ({
+  ...goal,
+  iconName: CATEGORY_ICONS_NAME[index],
+}));
 
 export default function TabButtonsOfGoalSection() {
   const [selected, setSelected] = useState(GOALS[0].value);
@@ -40,8 +22,14 @@ export default function TabButtonsOfGoalSection() {
 
   return (
     <>
+      {/* <div className="w-fit mx-auto">
+        <StudyCategoryTabButtonList
+          LABEL_VALUE={GOALS}
+          ICONS={CATEGORY_ICONS}
+        />
+      </div> */}
       <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
-        {GOALS_TAB.map(({ label, value, Icon }) => {
+        {GOALS_TAB.map(({ label, value, iconName }) => {
           const active = selected === value;
           return (
             <TabButton
@@ -50,7 +38,10 @@ export default function TabButtonsOfGoalSection() {
               active={active}
               onClick={() => setSelected(value)}
             >
-              <Icon strokeColor={active ? "#FFFFFF" : undefined} />
+              <CategoryTabIcon
+                name={iconName}
+                strokeColor={active ? "#FFFFFF" : undefined}
+              />
             </TabButton>
           );
         })}

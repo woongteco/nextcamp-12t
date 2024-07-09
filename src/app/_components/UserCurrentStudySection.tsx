@@ -3,6 +3,7 @@ import { TProps } from "@/types/component/props";
 import Link from "next/link";
 
 export default function UserCurrentStudySection() {
+  // TODO: :username에 session 확인 후 사용자 식별자 넣기
   return (
     <>
       <div className="grid grid-cols-3 gap-gutter-xl">

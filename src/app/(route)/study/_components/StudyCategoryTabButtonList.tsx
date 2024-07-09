@@ -1,6 +1,7 @@
 "use client";
 
-import { TabButton } from "@/app/_components/TabButton";
+import { TabButton } from "@/app/_components/CategoryTab/TabButton";
+import { CategoryTabIcon } from "@/app/_components/CategoryTab/TabIcons";
 import { TIconStylingProps } from "@/common/Atoms/Image/Icon";
 import React from "react";
 import { useState } from "react";
@@ -13,14 +14,14 @@ type TStudyCategoryIcon = (props: TIconStylingProps) => JSX.Element;
 
 export default function StudyCategoryTabButtonList({
   LABEL_VALUE,
-  ICONS,
+  ICONS_NAME,
 }: {
   LABEL_VALUE: TStudyCategoryValue[];
-  ICONS: TStudyCategoryIcon[];
+  ICONS_NAME: string[];
 }) {
   const STUDYCATEGORY_TAB = LABEL_VALUE.map((category, index) => ({
     ...category,
-    Icon: ICONS[index],
+    iconName: ICONS_NAME[index],
   }));
 
   const [select, setSelected] = useState(LABEL_VALUE[0].value);
@@ -36,7 +37,10 @@ export default function StudyCategoryTabButtonList({
             active={active}
             onClick={() => setSelected(value)}
           >
-            <Icon strokeColor={active ? "#FFF" : undefined} />
+            <CategoryTabIcon
+              name={iconName}
+              strokeColor={active ? "#FFF" : undefined}
+            />
           </TabButton>
         );
       })}

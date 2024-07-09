@@ -1,61 +1,47 @@
 import { Container, Footer, Header } from "@/common/Layout";
-import PageTitle from "@/common/Atoms/Text/PageTitle";
+import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import TopBannerSection from "./_components/TopBannerSection";
-import UserCurrentStudySection from "./_components/UserCurrentStudySection";
-import TabButtonsOfGoalSection from "./_components/TabButtonsOfGoalSection";
+import TabButtonsOfGoalSection from "./_components/CategoryTab/TabButtonsOfGoalSection";
 import UserReviewSlider from "./_components/ReviewSection/UserReviewSlider";
 import { getUser } from "@/dummies/user";
 import RecommendProStudies from "./_components/RecommendProStudies";
 import RecommendLatestStudies from "./_components/RecommendLatestStudies";
-
-const NOW_DATE = new Intl.DateTimeFormat("kr-KO", {
-  weekday: "long",
-  month: "long",
-  day: "numeric",
-}).format(Date.now());
+import MainStatusBoard from "./_components/MainStatusBoard";
 
 export default function Home() {
-  const user = getUser();
+  const session = getUser(); // TODO: session 확인으로 변경하여 값 사용
   return (
     <>
       <Header />
       <TopBannerSection />
       <Container>
         <div className="flex flex-col gap-100 mt-100">
-          {user && (
-            <section>
-              <PageTitle size="md" className="mb-6">
-                {user.name}님의{" "}
-                <span className="text-main-600">{NOW_DATE}</span> 스터디 현황
-              </PageTitle>
-              <UserCurrentStudySection />
-            </section>
-          )}
+          {session && <MainStatusBoard />}
           <section>
-            <PageTitle size="md" className="mb-6">
+            <SectionTitle size="md" className="mb-6">
               인기 많은 프로 스터디 추천
-            </PageTitle>
+            </SectionTitle>
             <RecommendProStudies />
           </section>
           <section>
-            <PageTitle size="md" className="mb-6">
+            <SectionTitle size="md" className="mb-6">
               방금 만들어진 스터디 추천
-            </PageTitle>
+            </SectionTitle>
             <RecommendLatestStudies />
           </section>
           <section>
-            <PageTitle size="md" className="mb-6">
+            <SectionTitle size="md" className="mb-6">
               목표별 스터디 탐색하기
-            </PageTitle>
+            </SectionTitle>
             <TabButtonsOfGoalSection />
           </section>
         </div>
       </Container>
       <section className="reviews-promotion mt-100">
         <Container>
-          <PageTitle size="md" className="mb-6">
+          <SectionTitle size="md" className="mb-6">
             케밋 스터디원들의 놀라운 성장 후기
-          </PageTitle>
+          </SectionTitle>
         </Container>
         <UserReviewSlider />
       </section>

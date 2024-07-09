@@ -7,6 +7,7 @@
   color: black;
   text-align: left;
   white-space: pre-wrap;
+  text-wrap: balance;
   word-wrap: break-word;
   box-sizing: border-box;
 }

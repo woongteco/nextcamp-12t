@@ -1,25 +1,25 @@
-import Image from 'next/image';
-import { PasswordHide, PasswordCheck } from '@/icons';
-import { UserEmail, UserPassword } from '../../login/_components/UserInput';
+import Image from "next/image";
+import { PasswordHide, PasswordCheck } from "@public/icons";
+import { UserEmail, UserPassword } from "./UserInput";
 
 const passwordRoles = [
-  '영문/숫자/특수문자($, _, -, !) 중 2가지 이상 포함',
-  '8자 이상 32자 이하 입력(공백 제외)',
-  '연속 3자 이상 동일한 문자/숫자 제외',
+  "영문/숫자/특수문자($, _, -, !) 중 2가지 이상 포함",
+  "8자 이상 32자 이하 입력(공백 제외)",
+  "연속 3자 이상 동일한 문자/숫자 제외",
 ];
 
 const serviceCheck = [
   {
-    id: 'service',
-    service: '서비스 이용약관 동의 (필수)',
+    id: "service",
+    service: "서비스 이용약관 동의 (필수)",
   },
   {
-    id: 'privacy',
-    service: '개인정보 수집 및 이용 동의 (필수)',
+    id: "privacy",
+    service: "개인정보 수집 및 이용 동의 (필수)",
   },
   {
-    id: 'marketing',
-    service: '마케팅 수신 동의 (선택)',
+    id: "marketing",
+    service: "마케팅 수신 동의 (선택)",
   },
 ];
 
@@ -90,7 +90,9 @@ export default function RegisterForm() {
             ))}
           </ul>
         </div>
-        <button className="w-full rounded-md py-2 text-white bg-main-600">가입하기</button>
+        <button className="w-full rounded-md py-2 text-white bg-main-600">
+          가입하기
+        </button>
       </form>
     </>
   );

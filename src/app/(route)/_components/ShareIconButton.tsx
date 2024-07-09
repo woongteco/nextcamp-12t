@@ -12,13 +12,14 @@ import Notification from "@/common/Molecules/Notification";
 export default function ShareIconButton() {
   const pathname = usePathname();
   const [modalShow, setModalShow] = useState<boolean>(false);
+  // TODO: 추후 도메인 수정
+  const fullPathname = "https://chemeet.com" + pathname;
   function copyPathname() {
-    const fullPathname = "https://chemeet.com" + pathname;
     navigator.clipboard.writeText(fullPathname);
     toast.custom((t: Toast) => (
       <Notification
         t={t}
-        status="default"
+        status="success"
         message={{
           title: "URL이 복사되었어요",
           text: "원하는 곳에 붙여넣기 하여 케밋을 공유해보세요!",
@@ -50,7 +51,7 @@ export default function ShareIconButton() {
               <div className="flex gap-4">
                 <Input.Text
                   readOnly
-                  value={"https://chemeet.com" + pathname}
+                  value={fullPathname}
                   className="w-[400px]"
                 />
                 <Button variation="solid" onClick={copyPathname}>
