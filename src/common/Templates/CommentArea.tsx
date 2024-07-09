@@ -77,7 +77,7 @@ export default function CommentArea({
 }) {
   return (
     <section className="flex flex-col gap-8 mt-5 px-10 py-8 rounded-twenty border border-line-normal">
-      <p className="flex flex-row gap-1 text-H4">
+      <p className="flex flex-row items-center gap-1 text-H4">
         <svg
           width="25"
           height="25"

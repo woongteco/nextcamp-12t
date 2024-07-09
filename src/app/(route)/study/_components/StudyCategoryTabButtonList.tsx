@@ -27,8 +27,8 @@ export default function StudyCategoryTabButtonList({
   const [select, setSelected] = useState(LABEL_VALUE[0].value);
 
   return (
-    <div className="flex gap-4 w-fit mb-11">
-      {STUDYCATEGORY_TAB.map(({ label, value, iconName }) => {
+    <div className="flex gap-4 w-fit">
+      {STUDYCATEGORY_TAB.map(({ label, value, Icon }) => {
         const active = select === value;
         return (
           <TabButton
