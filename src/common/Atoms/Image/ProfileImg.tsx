@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function ProfileImg(
   props: React.ComponentProps<typeof Image> & {
-    size?: "default" | "huge" | "large" | "small";
+    size?: "default" | "huge" | "xlarge" | "large" | "small";
     altText?: string;
   }
 ) {
@@ -11,6 +11,7 @@ export default function ProfileImg(
   const square = {
     default: 40,
     huge: 80,
+    xlarge: 60,
     large: 48,
     small: 20,
   };

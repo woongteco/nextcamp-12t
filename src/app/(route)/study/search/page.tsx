@@ -1,12 +1,18 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
 import { getStudiesData } from "@/dummies/studies";
+import StudyCategoryTabButtonList from "../_components/StudyCategoryTabButtonList";
+import { GOALS, ONOFF } from "@/dummies/categories";
+import {
+  ONOFFICONS,
+  STUDYCATEGORYICONS,
+} from "../_components/icon/StudyCategoryIcons";
 
 export default function StudySearchPage() {
   const studyCard = getStudiesData();
 
   return (
-    <div>
+    <div className="py-20">
       <div className="flex items-center justify-between">
         <SectionTitle size="lg">스터디</SectionTitle>
         <div className="relative">

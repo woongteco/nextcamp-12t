@@ -8,11 +8,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { TStudyCard } from "@/app/(route)/study/page";
 import Keyword from "../Atoms/Text/Keyword";
 import { BadgeIcon, heartIcon } from "@public/icons";
 import Profile from "../Molecules/Profile";
 import Thumbnail from "../Atoms/Image/Thumbnail";
+import { TStudyCard } from "@/dummies/studies";
 
 export default function StudyCardItem({ card }: { card: TStudyCard }) {
   return (
