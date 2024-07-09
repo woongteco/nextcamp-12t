@@ -71,7 +71,7 @@ export default function Notification(props: {
   return (
     <div
       className={`${
-        t.visible ? "animate-slide-in" : "animate-leave"
+        t.visible ? "animate-slidein" : "animate-leave"
       } max-w-md w-full bg-black/70 text-white shadow-strong rounded-lg pointer-events-auto flex backdrop-blur-[2px]`}
     >
       <div className="flex-1 w-0 p-4">

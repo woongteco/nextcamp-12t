@@ -5,7 +5,7 @@ export default function ModalLayer({
   children,
   canClose = true,
   onClose,
-}: TModalPortalProps) {
+}: TModalPortalProps<HTMLButtonElement>) {
   if (
     (canClose && onClose === undefined) ||
     (onClose !== undefined && canClose === false)
