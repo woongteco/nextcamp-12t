@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { AlarmIcon, CreateStudyIcon, Logo } from "../../../public/icons";
+import { AlarmIcon, CreateStudyIcon, Logo } from "@public/icons";
 import Image from "next/image";
 import Container from "./Container";
-import { DummyProfileImg } from "../../../public/images";
+import LoginProfile from "@/app/(auth)/login/page";
 
 export default function Header() {
   return (
@@ -43,9 +43,7 @@ export default function Header() {
             </Link>
             <div className="flex gap-8 items-center">
               <div className="relative after:absolute after:top-1 after:left-[140%] after:block after:w-[1px] after:h-8 after:bg-label-alt">
-                <Link href={"/login"}>
-                  <Image src={DummyProfileImg} alt="profile img" />
-                </Link>
+                <LoginProfile />
 
                 <ul className="my-menu hidden">
                   <li>
