@@ -44,7 +44,7 @@ export default function CommentInput({
       className="w-full border border-line-input h-[60px]"
       onClick={() => setFocus(true)}
     >
-      <p className="text-label-400 text-label-assist w-full text-left">
+      <p className="text-base text-label-assist font-medium w-full text-left">
         {placeholder}
       </p>
     </Button>

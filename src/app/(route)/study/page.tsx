@@ -49,7 +49,7 @@ export default function StudyComponent() {
         </div>
 
         <div className="pt-[1.875rem] mb-11">
-          <div></div>
+          <div className="mb-7"></div>
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
               LABEL_VALUE={GOALS}

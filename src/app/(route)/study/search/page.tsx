@@ -1,40 +1,68 @@
 import PageTitle from "@/common/Atoms/Text/PageTitle";
 import StudyCardList from "@/common/Templates/CardList";
 import { getStudiesData } from "@/dummies/studies";
+import StudyCategoryTabButtonList from "../_components/StudyCategoryTabButtonList";
+import { GOALS, ONOFF } from "@/dummies/categories";
+import {
+  ONOFFICONS,
+  STUDYCATEGORYICONS,
+} from "../_components/icon/StudyCategoryIcons";
 
 export default function StudySearchPage() {
   const studyCard = getStudiesData();
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <PageTitle size="lg">스터디</PageTitle>
-        <div className="relative">
-          <input
-            type="search"
-            placeholder="검색어를 입력하세요"
-            className="w-[380px] py-2 pr-9 pl-6 border border-line-normal rounded-lg placeholder:text-label-assist placeholder:text-label-nomral"
-          />
-          <span className="absolute right-2 top-2">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z"
-                stroke="black"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
+    <div className="py-20">
+      <div>
+        <div className="flex items-center justify-between">
+          <PageTitle size="lg">스터디</PageTitle>
+          <div className="relative">
+            <input
+              type="search"
+              placeholder="검색어를 입력하세요"
+              className="w-[380px] py-2 pr-9 pl-6 border border-line-normal rounded-lg placeholder:text-label-assist placeholder:text-label-nomral"
+            />
+            <span className="absolute right-2 top-2">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z"
+                  stroke="black"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div className="pt-[1.875rem] mb-11">
+          <div className="mb-7"></div>
+          <div className="flex justify-between text-[#C2C3C4]">
+            <StudyCategoryTabButtonList
+              LABEL_VALUE={GOALS}
+              ICONS={STUDYCATEGORYICONS}
+            />
+            <StudyCategoryTabButtonList
+              LABEL_VALUE={ONOFF}
+              ICONS={ONOFFICONS}
+            />
+          </div>
         </div>
       </div>
-      <PageTitle size="md">전체 검색 결과 {studyCard.length}개</PageTitle>
+      <div className="flex justify-between items-end pb-6">
+        <PageTitle size="md">전체 검색 결과 {studyCard.length}개</PageTitle>
+        <div className="flex gap-3 font-semibold text-sm text-[#c2c3c4]">
+          <span>최신 순</span>
+          <span>좋아요 순</span>
+        </div>
+      </div>
       <StudyCardList studyCard={studyCard} count={16} />
     </div>
   );

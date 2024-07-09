@@ -14,3 +14,16 @@ export { default as InstagramIcon } from "./sns/InstagramIcon.svg";
 export { default as LinkedinIcon } from "./sns/LinkedinIcon.svg";
 export { default as XIcon } from "./sns/XcomIcon.svg";
 export { default as FacebookIcon } from "./sns/FacebookIcon.svg";
+
+export { default as CalendarIcon } from "./details/calendar.svg";
+export { default as CategoryIcon } from "./details/category.svg";
+export { default as ExpenseIcon } from "./details/expense.svg";
+export { default as OnOffIcon } from "./details/onoff.svg";
+export { default as PeopleIcon } from "./details/people.svg";
+
+export { default as ShareIcon } from "./share.svg";
+export { default as FullheartIcon } from "./fullheart.svg";
+
+export { default as ArrowIcon } from "./Arrow.svg";
+export { default as SaveHeartSMIcon } from "./saveheart-sm.svg";
+export { default as QandAIcon } from "./QandAIcon.svg";

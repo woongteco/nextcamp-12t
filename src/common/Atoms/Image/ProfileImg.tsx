@@ -3,13 +3,14 @@ import Image from "next/image";
 
 export default function ProfileImg(
   props: React.ComponentProps<typeof Image> & {
-    size?: "default" | "large" | "small";
+    size?: "default" | "xlarge" | "large" | "small";
     altText?: string;
   }
 ) {
   const { size = "default", className, ...restProps } = props;
   const square = {
     default: 40,
+    xlarge: 60,
     large: 48,
     small: 20,
   };

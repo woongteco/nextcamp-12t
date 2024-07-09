@@ -41,7 +41,10 @@ export function Password(props: TInputElementProps) {
 export function Textarea(props: React.ComponentProps<"textarea">) {
   return (
     <>
-      <textarea className={clsx("h-[60px] w-full", inputStyle)} {...props} />
+      <textarea
+        className={clsx("h-[60px] w-full resize-none", inputStyle)}
+        {...props}
+      />
     </>
   );
 }
