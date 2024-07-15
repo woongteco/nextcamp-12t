@@ -5,7 +5,8 @@ import WideStudyList from "./_components/WideStudyList";
 
 import { getUser } from "@/dummies/user";
 import { getStudiesData } from "@/dummies/studies";
-import { GOALS, ONOFF } from "@/dummies/categories";
+import { GOALS } from "@/constants/categories/study_goal";
+import { ONOFF } from "@/constants/categories/study_type";
 
 import StudyCategoryTabButtonList from "./_components/StudyCategoryTabButtonList";
 import {

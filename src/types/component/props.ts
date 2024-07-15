@@ -1,5 +1,5 @@
 import { ImageProps } from "next/image";
-import { ComponentProps, MouseEventHandler, ReactNode } from "react";
+import { ComponentProps, MouseEventHandler, ReactNode, RefObject } from "react";
 
 export type TProps = {
   children: ReactNode;
@@ -23,17 +23,24 @@ export type TButtonProps = ComponentProps<"button"> & {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
 };
+export type TImageInputWithButtonProps = {
+  buttonProps: Omit<TButtonProps, "children">;
+  children: ReactNode; // be button's children
+} & Omit<
+  ComponentProps<"input">,
+  "type" | "accept" | "hidden" | "style" | "ref"
+>;
 export type TLinkButtonProps = React.ComponentProps<"a"> & {
   colors?: TButtonProps["colors"];
   variation?: TButtonProps["variation"];
   href: string | object;
 };
-type TLabel<T> = ComponentProps<T> & {
+type TLabel = {
   form?: boolean;
   required?: boolean;
 };
-export type TLabelProps = TLabel<"label">;
-export type TLabelTextProps = TLabel<"p">;
+export type TLabelProps = ComponentProps<"label"> & TLabel;
+export type TLabelTextProps = ComponentProps<"p"> & TLabel;
 export type TCaptionProps = ComponentProps<"p" | "span"> & {
   inline: boolean;
 };
@@ -49,6 +56,10 @@ export type TImageThumbnailProps = ImageProps & {
   useIn?: "list" | "specific" | "linked";
 };
 export type TModalPortalProps<T> = TProps & {
-  canClose?: boolean;
   onClose: MouseEventHandler<T>;
+  ref?: RefObject<HTMLDialogElement>;
+};
+export type TCustomSelectProps = {
+  isCreatable?: boolean;
+  unstyled?: boolean;
 };

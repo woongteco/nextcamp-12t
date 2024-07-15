@@ -20,7 +20,8 @@ export default function Button(props: TIconButtonProps | TButtonProps) {
             className,
             "flex items-center justify-center rounded-lg",
             `${colors.bg}/0 hover:${colors.bg}/15`,
-            square
+            square,
+            "disabled:border-label-assist disabled:text-label-assist disabled:cursor-not-allowed disabled:opacity-35"
           )}
           {...restProps}
         >
@@ -43,7 +44,8 @@ export default function Button(props: TIconButtonProps | TButtonProps) {
         <button
           className={clsx(
             "flex flex-row items-center justify-center gap-2 px-5 py-3 font-bold text-nowrap text-ellipsis overflow-hidden rounded-ten",
-            [getStyles(colors, variation), "w-full" && fullWidth, className]
+            [getStyles(colors, variation), "w-full" && fullWidth, className],
+            "disabled:border-label-assist disabled:text-label-assist disabled:cursor-not-allowed disabled:opacity-35"
           )}
           {...restProps}
         >

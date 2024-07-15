@@ -2,7 +2,7 @@ import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
 import { getStudiesData } from "@/dummies/studies";
 import { getUser } from "@/dummies/user";
-import CircleProgressGraph from "../../_components/CircleProgressGraph";
+import CircleProgressGraph from "../_components/CircleProgressGraph";
 
 export default function MyStudyPage() {
   const user = getUser();
@@ -14,7 +14,7 @@ export default function MyStudyPage() {
         <SectionTitle size="lg" className="mb-6">
           {user.name}님, 오늘 하루도 달려봐요!
         </SectionTitle>
-        <div className="grid gap-6 grid-flow-col lg:grid-flow-row grid-cols-[3fr_2fr] [&>.cardBox]:h-[220px] [&>.cardBox]:bg-card [&>.cardBox]:rounded-twenty [&>.cardBox]:px-8 [&>.cardBox]:py-6">
+        <div className="grid gap-6 grid-flow-col lg:grid-flow-row grid-cols-[4fr_2fr] [&>.cardBox]:h-[220px] [&>.cardBox]:bg-card [&>.cardBox]:rounded-twenty [&>.cardBox]:px-8 [&>.cardBox]:py-6">
           <div className="cardBox relative">
             <p className="text-H4 text-main-600 mb-6">오늘의 미션</p>
             <p className="text-[20px] font-bold text-label-normal">

@@ -3,21 +3,21 @@ import Image from "next/image";
 
 export default function ProfileImg(
   props: React.ComponentProps<typeof Image> & {
-    size?: "default" | "huge" | "xlarge" | "large" | "small";
+    size?: "default" | "xxlarge" | "xlarge" | "large" | "small";
     altText?: string;
   }
 ) {
   const { size = "default", className, ...restProps } = props;
   const square = {
     default: 40,
-    huge: 80,
+    xxlarge: 80,
     xlarge: 60,
     large: 48,
     small: 20,
   };
   return (
     <Image
-      className={clsx(className, "rounded-full")}
+      className={clsx(className, "rounded-full aspect-square")}
       width={square[size]}
       height={square[size]}
       {...restProps}
