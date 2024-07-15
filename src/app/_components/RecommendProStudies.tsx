@@ -3,5 +3,5 @@ import { getStudiesData } from "@/dummies/studies";
 
 export default function RecommendProStudies() {
   const proStudies = getStudiesData();
-  return <StudyCardList studyCard={proStudies.slice(0, 8)} />;
+  return <StudyCardList studyCard={proStudies} count={8} />;
 }
