@@ -9,6 +9,13 @@ export { default as SocialLogin } from "./login/SocialLogin.svg";
 export { default as PasswordCheck } from "./login/PasswordCheck.svg";
 export { default as PasswordHide } from "./login/PasswordHide.svg";
 
+// header
+export { default as SettingProfileIcon } from "./header/SettingProfileIcon.svg";
+export { default as StudyIcon } from "./header/StudyIcon.svg";
+export { default as SaveHeartIcon } from "./header/SaveHeartIcon.svg";
+export { default as PostIcon } from "./header/PostIcon.svg";
+export { default as LogoutIcon } from "./header/LogoutIcon.svg";
+
 // sns
 export { default as InstagramIcon } from "./sns/InstagramIcon.svg";
 export { default as LinkedinIcon } from "./sns/LinkedinIcon.svg";
