@@ -6,7 +6,13 @@ import toast, { Toast } from "react-hot-toast";
 import Notification from "@/common/Molecules/Notification";
 import useModal from "@/hooks/useModal";
 
-export default function ShareIconButton() {
+export default function ShareIconButton({
+  width,
+  height,
+}: {
+  width: string;
+  height: string;
+}) {
   const pathname = usePathname();
   // TODO: 추후 도메인 수정
   const fullPathname = "https://chemeet.com" + pathname;
@@ -43,8 +49,8 @@ export default function ShareIconButton() {
     <>
       <Button variation="icon" onClick={open}>
         <svg
-          width="28"
-          height="28"
+          width={width}
+          height={height}
           viewBox="0 0 36 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

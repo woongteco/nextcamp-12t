@@ -5,11 +5,18 @@ import StudyCategoryTabButtonList from "../_components/StudyCategoryTabButtonLis
 import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 import {
-  ONOFFICONS,
-  STUDYCATEGORYICONS,
-} from "../_components/icon/StudyCategoryIcons";
+  CATEGORY_ICONS_NAME,
+  ONOFF_ICONS_NAME,
+} from "@/app/_components/CategoryTab/TabIcons";
+import SearchInput from "../../_components/SearchInput";
+import { TQuery } from "../page";
+import StudyCategorySelectBox from "../_components/StudyCategorySelectBox";
 
-export default function StudySearchPage() {
+export default function StudySearchPage({
+  searchParams,
+}: {
+  searchParams: TQuery;
+}) {
   const studyCard = getStudiesData();
 
   return (
@@ -66,7 +73,14 @@ export default function StudySearchPage() {
           <span>좋아요 순</span>
         </div>
       </div>
-      <SectionTitle size="md">전체 검색 결과 {studyCard.length}개</SectionTitle>
+
+      <div className="pb-6">
+        <SectionTitle size="md">
+          전체 검색 결과 {studyCard.length}개
+        </SectionTitle>
+        <div></div>
+      </div>
+
       <StudyCardList studyCard={studyCard} count={16} />
     </div>
   );

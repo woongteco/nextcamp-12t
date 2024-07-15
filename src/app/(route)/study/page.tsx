@@ -10,59 +10,45 @@ import { ONOFF } from "@/constants/categories/study_type";
 
 import StudyCategoryTabButtonList from "./_components/StudyCategoryTabButtonList";
 import {
-  ONOFFICONS,
-  STUDYCATEGORYICONS,
-} from "./_components/icon/StudyCategoryIcons";
-import {
   CATEGORY_ICONS_NAME,
   ONOFF_ICONS_NAME,
 } from "@/app/_components/CategoryTab/TabIcons";
+import SearchInput from "../_components/SearchInput";
+import StudyCategorySelectBox from "./_components/StudyCategorySelectBox";
 
-export default function StudyComponent() {
+export type TQuery = {
+  job_c?: string;
+  category?: string;
+  page?: string;
+  sort?: string;
+};
+
+export default function StudyComponent({
+  searchParams,
+}: {
+  searchParams: TQuery;
+}) {
   const user = getUser();
   const studyCard = getStudiesData();
 
   return (
     <div className="py-20">
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pb-9">
           <SectionTitle size="lg">스터디</SectionTitle>
-          <div className="relative">
-            <input
-              type="search"
-              placeholder="검색어를 입력하세요"
-              className="w-[380px] py-2 pr-9 pl-6 border border-line-normal rounded-lg placeholder:text-label-assist placeholder:text-label-nomral"
-            />
-            <span className="absolute right-2 top-2">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </div>
+          <SearchInput />
         </div>
 
-        <div className="pt-[1.875rem] mb-11">
-          <div className="mb-7"></div>
+        <div>
+          <StudyCategorySelectBox searchParams={searchParams} />
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
-              LABEL_VALUE={GOALS}
-              ICONS_NAME={CATEGORY_ICONS_NAME}
+              categoryName={GOALS}
+              categoryIcons={CATEGORY_ICONS_NAME}
             />
             <StudyCategoryTabButtonList
-              LABEL_VALUE={ONOFF}
-              ICONS_NAME={ONOFF_ICONS_NAME}
+              categoryName={ONOFF}
+              categoryIcons={ONOFF_ICONS_NAME}
             />
           </div>
         </div>
@@ -77,13 +63,13 @@ export default function StudyComponent() {
                 <SectionTitle size="sm" className="pb-3">
                   디자인 프로 스터디
                 </SectionTitle>
-                <WideStudyList />
+                <WideStudyList studyCard={studyCard} count={2} />
               </div>
               <div>
                 <SectionTitle size="sm" className="pb-3">
                   취업 / 포트폴리오 프로 스터디
                 </SectionTitle>
-                <WideStudyList />
+                <WideStudyList studyCard={studyCard} count={2} />
               </div>
             </div>
           </div>
@@ -103,7 +89,7 @@ export default function StudyComponent() {
             <SectionTitle size="md" className="pb-6">
               케밋에서 인기있는 프로의 스터디
             </SectionTitle>
-            <LargeStudyList />
+            <LargeStudyList studyCard={studyCard} count={3} />
           </div>
         </div>
       </div>
