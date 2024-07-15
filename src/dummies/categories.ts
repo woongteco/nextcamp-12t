@@ -222,3 +222,76 @@ export const ONOFF = [
   { label: "오프라인", value: "offline" },
   { label: "온라인", value: "online" },
 ];
+
+export const JOBCATEGORIES = [
+  {
+    key: "all",
+    value: "cate_0",
+    label: "직무 전체",
+  },
+  {
+    key: "development",
+    value: "cate_1",
+    label: "개발",
+  },
+  {
+    key: "business",
+    value: "cate_2",
+    label: "비즈니스",
+  },
+  {
+    key: "finance",
+    value: "cate_3",
+    label: "재무 및 회계",
+  },
+  {
+    key: "it",
+    value: "cate_4",
+    label: "IT 및 소프트웨어",
+  },
+  {
+    key: "affairs",
+    value: "cate_5",
+    label: "사무 생산성",
+  },
+  {
+    key: "design",
+    value: "cate_6",
+    label: "디자인",
+  },
+  {
+    key: "self_developement",
+    value: "cate_7",
+    label: "자기 계발",
+  },
+  {
+    key: "marketing",
+    value: "cate_8",
+    label: "마케팅",
+  },
+  {
+    key: "life",
+    value: "cate_9",
+    label: "라이프 스타일",
+  },
+  {
+    key: "photo",
+    value: "cate_10",
+    label: "사진 및 영상",
+  },
+  {
+    key: "health",
+    value: "cate_11",
+    label: "건강 및 피트니스",
+  },
+  {
+    key: "music",
+    value: "cate_12",
+    label: "음악",
+  },
+  {
+    key: "education",
+    value: "cate_13",
+    label: "교육 및 학문",
+  },
+];
