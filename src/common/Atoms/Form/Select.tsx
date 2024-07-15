@@ -1,32 +1,40 @@
 "use client";
-import { useId } from "react";
+import { ComponentType, useId } from "react";
 import SelectInput, {
+  GroupBase,
   IndicatorsContainerProps,
-  MultiValueProps,
+  Props,
 } from "react-select";
 import CreatableSelect from "react-select/creatable";
 
-const IndicatorsContainer = (_: IndicatorsContainerProps) => <></>;
+import { TCustomSelectProps } from "@/types/component/props";
+import { selectCommonStyle } from "../atomStyle";
 
-export default function ({
-  styles = {},
-  isCreatable = false,
-  unstyled = false,
-  ...restProps
-}) {
+export default function Select<
+  Option,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(props: Props<Option, IsMulti, Group> & TCustomSelectProps) {
+  const {
+    styles = {},
+    isCreatable = false,
+    unstyled = false,
+    id = undefined,
+    ...restProps
+  } = props;
   const uniqueId = useId();
-  const generatedId = restProps?.id || uniqueId;
+  const generatedId = id || uniqueId;
   return isCreatable ? (
     <CreatableSelect
       id={generatedId}
       instanceId={generatedId}
       {...restProps}
+      // isMulti
       /**
        * multi select의 경우 indicator none, value label은 Keyword와 유사한 디자인
        * inner component name: https://react-select.com/styles#inner-components
        */
-      isMulti
-      components={{ IndicatorsContainer }}
+      components={{ IndicatorsContainer: () => <></> }}
       styles={{
         ...styles,
         control: (baseStyles, state) => ({
@@ -42,31 +50,7 @@ export default function ({
             ? "var(--color-main-700)"
             : "var(--color-label-alt)",
         }),
-        multiValue: (styles) => ({
-          ...styles,
-          backgroundColor: "#D9E8FF",
-          borderRadius: "14px",
-          overflow: "hidden",
-          ":hover": {
-            backgroundColor: "#C7DEFF",
-          },
-        }),
-        multiValueLabel: (styles) => ({
-          ...styles,
-          paddingLeft: "12px",
-          paddingRight: "4px",
-          color: "#2A7FFE",
-        }),
-        multiValueRemove: (styles) => ({
-          ...styles,
-          paddingRight: "6px",
-          color: "#2A7FFE",
-        }),
-        indicatorSeparator: (styles) => ({
-          ...styles,
-          visibility: "hidden",
-          opacity: 0,
-        }),
+        ...selectCommonStyle,
       }}
     />
   ) : (
@@ -74,7 +58,7 @@ export default function ({
       id={generatedId}
       instanceId={generatedId}
       {...restProps}
-      components={unstyled ? { IndicatorsContainer } : {}}
+      components={unstyled ? { IndicatorsContainer: () => <></> } : {}}
       styles={{
         ...styles,
         control: (baseStyles, state) => ({
@@ -93,35 +77,7 @@ export default function ({
             color: unstyled ? "var(--color-main-600)" : baseStyles.color,
           },
         }),
-        singleValue: (styles) => ({
-          ...styles,
-          fontWeight: "600",
-        }),
-        indicatorSeparator: (styles) => ({
-          ...styles,
-          visibility: "hidden",
-          opacity: 0,
-        }),
-        multiValue: (styles) => ({
-          ...styles,
-          backgroundColor: "#D9E8FF",
-          borderRadius: "14px",
-          overflow: "hidden",
-          ":hover": {
-            backgroundColor: "#C7DEFF",
-          },
-        }),
-        multiValueLabel: (styles) => ({
-          ...styles,
-          paddingLeft: "12px",
-          paddingRight: "4px",
-          color: "#2A7FFE",
-        }),
-        multiValueRemove: (styles) => ({
-          ...styles,
-          paddingRight: "6px",
-          color: "#2A7FFE",
-        }),
+        ...selectCommonStyle,
       }}
     />
   );
