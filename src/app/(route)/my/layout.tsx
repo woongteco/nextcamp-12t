@@ -3,7 +3,8 @@ import SidebarAsideContentArea from "@/common/Layout/Sidebar/SidebarAsideContent
 import SidebarNavArea from "@/common/Layout/Sidebar/SidebarNavArea";
 import SideNavItem from "@/common/Layout/Sidebar/SideNavItem";
 import { TProps } from "@/types/component/props";
-import { useSelectedLayoutSegments } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { useSelectedLayoutSegments, useRouter } from "next/navigation";
 
 export const MYPAGE_MENUS = [
   { key: "profile", href: `/my/test/profile`, label: "프로필" },
@@ -22,6 +23,13 @@ export const MYPAGE_MENUS = [
 
 export default function layout({ children }: TProps) {
   const [_, segment] = useSelectedLayoutSegments();
+  const router = useRouter();
+
+  async function onLogout() {
+    await signOut({ redirect: false });
+    router.replace("/");
+  }
+
   return (
     <>
       <SidebarAsideContentArea>
@@ -30,7 +38,10 @@ export default function layout({ children }: TProps) {
             <SideNavItem key={key} {...item} active={key === segment} />
           ))}
           <li>
-            <button className="w-full inline-block rounded-[20px] text-H4 px-6 py-[26px] text-left text-label-alt bg-white hover:bg-label-alt/20">
+            <button
+              className="w-full inline-block rounded-[20px] text-H4 px-6 py-[26px] text-left text-label-alt bg-white hover:bg-label-alt/20"
+              onClick={onLogout}
+            >
               로그아웃
             </button>
           </li>
