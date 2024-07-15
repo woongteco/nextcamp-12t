@@ -24,6 +24,16 @@ export function getUser(userId?: string) {
     profileUrl: "",
     authProviderIn: undefined,
     phone: "010-1234-5678",
+    interest: [
+      {
+        value: "cate_6_4",
+        label: "UI/UX 디자인",
+      },
+      {
+        value: "cate_6_1",
+        label: "웹 디자인",
+      },
+    ],
     badges: 8,
   };
 }

@@ -1,9 +1,5 @@
-export type TReview = {
-  reviewId: string;
-  text: string;
-  writerKeyword: string;
-  studyName: string;
-};
+import { TReview } from "@/constants/main_review";
+
 export default function UserReviewItem({
   review,
   className,

@@ -1,6 +1,7 @@
 import NoneStudyComponent from "@/app/(route)/study/_components/NoneStudyComponent";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
+import StudyCardList from "@/common/Templates/CardList";
 import { getStudiesData } from "@/dummies/studies";
 
 export default function MyStudyLiked() {
@@ -15,7 +16,7 @@ export default function MyStudyLiked() {
         {studyCard.length === 0 ? (
           <NoneStudyComponent />
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
             {studyCard.map((card) => (
               <StudyCardItem key={card.id} card={card} />
             ))}

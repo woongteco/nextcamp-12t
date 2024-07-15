@@ -1,6 +1,7 @@
 import BannerImage from "./BannerImage";
 import Input from "@/common/Molecules/Form/Input";
-import { CATEGORIES, GOALS } from "@/dummies/categories";
+import { CATEGORIES } from "@/constants/categories/job_category";
+import { GOALS } from "@/constants/categories/study_goal";
 import Button from "@/common/Atoms/Form/Button";
 import { Container } from "@/common/Layout";
 
@@ -20,6 +21,7 @@ export default function TopBanner() {
         <form action="">
           <div className="search-bar w-[866px] h-[68px] shadow-normal bg-white rounded-full border border-line-alt flex flex-row flex-nowrap gap-5 items-center justify-between px-6 py-3">
             <Input.Select
+              name="jobCategory"
               placeholder="직무 선택"
               unstyled
               options={CATEGORIES}
@@ -27,6 +29,7 @@ export default function TopBanner() {
             />
             <div className="h-4 w-0 border-l border-l-line-input"></div>
             <Input.Select
+              name="studyGoal"
               placeholder="목표 선택"
               unstyled
               options={GOALS}

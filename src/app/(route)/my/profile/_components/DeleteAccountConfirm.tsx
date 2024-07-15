@@ -26,7 +26,7 @@ export default function DeleteAccountConfirm() {
       <Button
         variation="outline"
         colors={{ bg: "bg-status-danger", text: "text-status-danger" }}
-        className="border-status-danger disabled:border-label-assist disabled:text-label-assist disabled:cursor-not-allowed"
+        className="border-status-danger"
         disabled={!checked}
       >
         회원 탈퇴
