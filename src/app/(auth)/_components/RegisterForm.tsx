@@ -1,19 +1,14 @@
 import Image from "next/image";
 import { PasswordHide, PasswordCheck } from "@public/icons";
 import { UserEmail, UserPassword } from "./UserInput";
+import { register } from "@/lib/action";
+import { useState } from "react";
+import RegisterCheck from "./RegisterCheck";
 
-type TRegisterProps = {
-  roles: string[];
-  services: {
-    id: string;
-    service: string;
-  }[];
-};
-
-export default function RegisterForm({ roles, services }: TRegisterProps) {
+export default function RegisterForm({ roles }: { roles: string[] }) {
   return (
     <>
-      <form action="" className="flex flex-col w-full gap-5 mb-5">
+      <form action={register} className="flex flex-col w-full gap-5 mb-5">
         <UserEmail />
         <div className="w-full flex flex-col gap-2">
           <UserPassword />
@@ -38,32 +33,7 @@ export default function RegisterForm({ roles, services }: TRegisterProps) {
             required
           />
         </div>
-        <div className="self-start text-sm">
-          <div className="flex items-center gap-[5px]">
-            <input
-              id="allCheck"
-              type="checkbox"
-              name="allCheck"
-              className="relative w-5 h-5 border border-gray-400 rounded bg-white checked:bg-main-600 checked:border-none checked:text-white checked:before:content-['✓'] checked:before:center appearance-none"
-            />
-            <label htmlFor="allCheck" className="font-semibold">
-              전체 동의
-            </label>
-          </div>
-          <ul className="flex flex-col gap-1 mt-3">
-            {services.map(({ id, service }) => (
-              <li key={id} className="flex items-center gap-[5px]">
-                <input
-                  id={id}
-                  type="checkbox"
-                  name={id}
-                  className="relative w-5 h-5 border border-gray-400 rounded bg-white checked:bg-main-600 checked:border-none checked:text-white checked:before:content-['✓'] checked:before:center appearance-none"
-                />
-                <label htmlFor={id}>{service}</label>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <RegisterCheck />
         <button className="w-full rounded-md py-2 text-white bg-main-600">
           가입하기
         </button>
