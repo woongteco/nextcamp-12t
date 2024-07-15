@@ -66,6 +66,7 @@ export default function StudySearchPage() {
           <span>좋아요 순</span>
         </div>
       </div>
+      <SectionTitle size="md">전체 검색 결과 {studyCard.length}개</SectionTitle>
       <StudyCardList studyCard={studyCard} count={16} />
     </div>
   );
