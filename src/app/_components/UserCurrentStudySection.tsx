@@ -3,11 +3,10 @@ import { TProps } from "@/types/component/props";
 import Link from "next/link";
 
 export default function UserCurrentStudySection() {
-  // TODO: :username에 session 확인 후 사용자 식별자 넣기
   return (
     <>
       <div className="grid grid-cols-3 gap-gutter-xl">
-        <Link href="/my/:username/study">
+        <Link href="/my/study">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6 flex items-start leading-[22px] text-main-600 font-semibold">
               {/* {참여 중인 스터디 수} */}
@@ -27,7 +26,7 @@ export default function UserCurrentStudySection() {
             </div>
           </CurrentStudyBox>
         </Link>
-        <Link href="/my/:username/like-study">
+        <Link href="/my/like-study">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6">
               <ChevronRightIcon />
@@ -47,7 +46,7 @@ export default function UserCurrentStudySection() {
             </div>
           </CurrentStudyBox>
         </Link>
-        <Link href="/my/:username/study">
+        <Link href="/my/study">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6">
               <ChevronRightIcon />
