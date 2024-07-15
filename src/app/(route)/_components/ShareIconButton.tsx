@@ -1,19 +1,31 @@
 "use client";
-import { useState } from "react";
-import { createPortal } from "react-dom";
-
 import Button from "@/common/Atoms/Form/Button";
-import ModalPortal from "@/common/Molecules/ModalPortal/ModalPortal";
 import Input from "@/common/Molecules/Form/Input";
 import { usePathname } from "next/navigation";
 import toast, { Toast } from "react-hot-toast";
 import Notification from "@/common/Molecules/Notification";
+import useModal from "@/hooks/useModal";
 
 export default function ShareIconButton() {
   const pathname = usePathname();
-  const [modalShow, setModalShow] = useState<boolean>(false);
   // TODO: 추후 도메인 수정
   const fullPathname = "https://chemeet.com" + pathname;
+
+  const { Modal, open } = useModal({
+    children: (
+      <div className="flex flex-col gap-6">
+        <p className="text-H3 text-label-normal">공유하기</p>
+        <div className="flex gap-4">
+          <Input.Text readOnly value={fullPathname} className="w-[400px]" />
+          <Button variation="solid" onClick={copyPathname}>
+            URL 복사
+          </Button>
+        </div>
+      </div>
+    ),
+    key: "share-modal",
+  });
+
   function copyPathname() {
     navigator.clipboard.writeText(fullPathname);
     toast.custom((t: Toast) => (
@@ -29,7 +41,7 @@ export default function ShareIconButton() {
   }
   return (
     <>
-      <Button variation="icon" onClick={() => setModalShow(true)}>
+      <Button variation="icon" onClick={open}>
         <svg
           width="28"
           height="28"
@@ -43,26 +55,7 @@ export default function ShareIconButton() {
           />
         </svg>
       </Button>
-      {modalShow &&
-        createPortal(
-          <ModalPortal canClose onClose={() => setModalShow(false)}>
-            <div className="flex flex-col gap-6">
-              <p className="text-H3 text-label-normal">공유하기</p>
-              <div className="flex gap-4">
-                <Input.Text
-                  readOnly
-                  value={fullPathname}
-                  className="w-[400px]"
-                />
-                <Button variation="solid" onClick={copyPathname}>
-                  URL 복사
-                </Button>
-              </div>
-            </div>
-          </ModalPortal>,
-          document.body,
-          "share-modal"
-        )}
+      {Modal}
     </>
   );
 }
