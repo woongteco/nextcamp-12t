@@ -6,7 +6,7 @@ import { Container } from "@/common/Layout";
 
 export default function TopBanner() {
   return (
-    <section className="banner relative mb-8">
+    <section className="banner relative mt-16 mb-8">
       <div>
         <BannerImage />
         <Container>

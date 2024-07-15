@@ -31,7 +31,7 @@ export default function StudyComponent({
   const studyCard = getStudiesData();
 
   return (
-    <div className="py-20">
+    <div className="mt-16 py-20">
       <div>
         <div className="flex items-center justify-between pb-9">
           <SectionTitle size="lg">스터디</SectionTitle>

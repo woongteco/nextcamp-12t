@@ -34,7 +34,7 @@ export default function LoginProfile() {
     <>
       <Image
         src={DummyProfileImg}
-        className="cursor-pointer"
+        className="py-3 cursor-pointer"
         alt="profile img"
         onClick={() => setOpen(true)}
       />
