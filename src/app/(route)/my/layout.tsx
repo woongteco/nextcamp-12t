@@ -1,27 +1,17 @@
 "use client";
+
+import { useSelectedLayoutSegments } from "next/navigation";
+
 import SidebarAsideContentArea from "@/common/Layout/Sidebar/SidebarAsideContentArea";
 import SidebarNavArea from "@/common/Layout/Sidebar/SidebarNavArea";
 import SideNavItem from "@/common/Layout/Sidebar/SideNavItem";
-import { TProps } from "@/types/component/props";
-import { useSelectedLayoutSegments } from "next/navigation";
 
-export const MYPAGE_MENUS = [
-  { key: "profile", href: `/my/test/profile`, label: "프로필" },
-  {
-    key: "study",
-    href: `/my/test/study`,
-    label: "내 스터디 활동",
-  },
-  {
-    key: "like-study",
-    href: `/my/test/like-study`,
-    label: "찜한 스터디",
-  },
-  { key: "post", href: `/my/test/post`, label: "내가 작성한 글" },
-];
+import { TProps } from "@/types/component/props";
+import { MYPAGE_MENUS } from "@/constants/menu/my_page";
 
 export default function layout({ children }: TProps) {
-  const [_, segment] = useSelectedLayoutSegments();
+  // ...get logged session
+  const [segment] = useSelectedLayoutSegments();
   return (
     <>
       <SidebarAsideContentArea>
@@ -35,7 +25,6 @@ export default function layout({ children }: TProps) {
             </button>
           </li>
         </SidebarNavArea>
-        {/* <Sidebar.Nav menus={menus.map((item) => item)} /> */}
         <section>{children}</section>
       </SidebarAsideContentArea>
     </>

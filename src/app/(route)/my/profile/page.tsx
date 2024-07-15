@@ -2,18 +2,26 @@
 import { ChangeEvent, useState } from "react";
 
 import Button from "@/common/Atoms/Form/Button";
-import Keyword from "@/common/Atoms/Text/Keyword";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import Input from "@/common/Molecules/Form/Input";
 
-import { CATEGORIES } from "@/dummies/categories";
+import { CATEGORIES } from "@/constants/categories/job_category";
 import { getUser } from "@/dummies/user";
-import { TProps } from "@/types/component/props";
-import { DummyProfileImg } from "@public/images";
 
-import ProfileImageInput from "../../_components/ProfileImageInput";
-import DeleteAccountConfirm from "../../_components/DeleteAccountConfirm";
+import ProfileImageInput from "./_components/ProfileImageInput";
+import DeleteAccountConfirm from "./_components/DeleteAccountConfirm";
+import ProfilePreview from "./_components/ProfilePreview";
+import { ActionMeta } from "react-select";
+import { CategoryOption } from "@/types/model/Category";
+import { ProfileInputArea } from "./_components/ProfileInput";
+
+export type TProfileData = {
+  profileUrl: string;
+  positionTag: string;
+  introduce: string;
+  email: string;
+  interest: Array<CategoryOption>;
+};
 
 export default function MyProfilePage() {
   const user = getUser();
@@ -22,49 +30,54 @@ export default function MyProfilePage() {
     positionTag: user.position,
     introduce: "",
     email: user.email,
-    interest: [],
-    newPassword: "",
-    phone: user.phone,
+    interest: user.interest,
   };
-  const [data, setData] = useState(defaultData);
+  const [data, setData] = useState<TProfileData>(defaultData);
   function changeProfileImage(profileUrl: string) {
     setData((p) => ({ ...p, profileUrl }));
   }
-  function changeData(
+  const changeData = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) {
+  ) => {
     console.log(e.target.name);
     const name = e.target.name;
     const value = e.target.value;
     setData((p) => ({ ...p, [name]: value }));
-  }
+  };
+  const changeMultiSelect: (
+    newValue: unknown,
+    actionMeta: ActionMeta<unknown>
+  ) => void = (newValue) => {
+    console.log({ newValue });
+    if (Array.isArray(newValue)) setData((p) => ({ ...p, interest: newValue }));
+  };
   return (
     <>
       <SectionTitle size="md" className="mb-6">
         프로필 수정
       </SectionTitle>
       <div className="grid xl:grid-cols-[5fr_4fr] xl:items-start gap-gutter-xl">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           <p className="text-H2 text-label-dimmed">{user.name}</p>
-          <InputArea label="아바타 이미지">
+          <ProfileInputArea label="아바타 이미지">
             <ProfileImageInput setProfileImg={changeProfileImage} />
-          </InputArea>
-          <InputArea label="포지션 태그">
+          </ProfileInputArea>
+          <ProfileInputArea label="포지션 태그">
             <Input.Text
               name="positionTag"
               placeholder="이름 앞에 추가될 포지션 태그를 추가하세요"
               value={data.positionTag}
               onChange={changeData}
             />
-          </InputArea>
-          <InputArea label="내 소개">
+          </ProfileInputArea>
+          <ProfileInputArea label="내 소개">
             <Input.Textarea
               name="introduce"
               placeholder="나를 소개할 말을 추가하세요"
               onChange={changeData}
             />
-          </InputArea>
-          <InputArea label="이메일">
+          </ProfileInputArea>
+          <ProfileInputArea label="이메일">
             <Input.Email
               name="email"
               value={data.email}
@@ -81,9 +94,8 @@ export default function MyProfilePage() {
                 *변경 후 재인증이 필요합니다.
               </span>
             </div>
-          </InputArea>
-          <div className="w-full h-[1px] border-t border-t-line-normal"></div>
-          <InputArea label="관심 카테고리">
+          </ProfileInputArea>
+          <ProfileInputArea label="관심 카테고리">
             {/* TODO:
              * - 사용자 데이터에서 관심 카테고리 기존 값 가져와서 defaultValue로 지정
              * - select 값 변경 시 프로필 미리보기에서 Keyword로 보여주기
@@ -93,22 +105,44 @@ export default function MyProfilePage() {
               placeholder="관심 카테고리를 추가하세요"
               isMulti
               options={CATEGORIES}
+              value={data.interest}
+              onChange={changeMultiSelect}
             />
-          </InputArea>
-          <InputArea label="비밀번호 변경">
+          </ProfileInputArea>
+          <Button
+            variation="outline"
+            colors={{ bg: "bg-main-600", text: "text-main-600" }}
+            className="self-start"
+          >
+            프로필 저장
+          </Button>
+          <div className="w-full h-[1px] border-t border-t-line-normal"></div>
+          <ProfileInputArea label="비밀번호 변경">
+            <Input.Password
+              name="password"
+              placeholder="현재 비밀번호를 입력하세요"
+            />
             <Input.Password
               name="newPassword"
               placeholder="변경할 비밀번호를 입력하세요"
-              onChange={changeData}
             />
-          </InputArea>
-          <InputArea label="번호 인증">
+            <Input.Password
+              name="newPasswordCheck"
+              placeholder="변경할 비밀번호를 다시 입력하세요"
+            />
+            <Button
+              variation="outline"
+              colors={{ bg: "bg-main-600", text: "text-main-600" }}
+              className="self-start"
+              disabled
+            >
+              비밀번호 변경
+            </Button>
+          </ProfileInputArea>
+          <div className="w-full h-[1px] border-t border-t-line-normal"></div>
+          <ProfileInputArea label="번호 인증">
             <div className="flex gap-4 items-center">
-              <Input.Text
-                name="phone"
-                placeholder="핸드폰 번호를 입력하세요"
-                onChange={changeData}
-              />
+              <Input.Text name="phone" placeholder="핸드폰 번호를 입력하세요" />
               <Button
                 variation="outline"
                 colors={{ bg: "bg-main-600", text: "text-main-600" }}
@@ -116,48 +150,23 @@ export default function MyProfilePage() {
                 인증하기
               </Button>
             </div>
-          </InputArea>
+          </ProfileInputArea>
           <div className="w-full h-[1px] border-t border-t-line-normal"></div>
           <DeleteAccountConfirm />
         </div>
         <div className="previewBox rounded-2xl xl:sticky xl:top-20 p-6 border border-line-normal flex flex-col gap-4">
-          {/* TODO: 프로필 미리보기 */}
-          <div className="flex flex-col items-center py-4 gap-4">
-            <ProfileImg
-              size="huge"
-              src={data.profileUrl || DummyProfileImg}
-              alt={user.name}
-            />
-            <p className="text-H3 text-label-normal">{user.name}</p>
-            <p className="text-body-400 text-label-alt">
-              <span className="block text-center">{data.email}</span>
-              <span className="block text-center">
-                {data.positionTag || "나를 소개할 말을 추가해주세요"}
-              </span>
-            </p>
-            <div className="flex gap-2">
-              <Keyword bg="border border-main-600" text="text-main-600">
-                #UI/UX 디자인
-              </Keyword>
-              <Keyword bg="border border-main-600" text="text-main-600">
-                #웹 디자인
-              </Keyword>
-            </div>
-          </div>
-          <Button variation="solid" className="self-end">
-            프로필 저장
-          </Button>
+          <ProfilePreview
+            name={user.name}
+            data={{
+              positionTag: data.positionTag,
+              profileUrl: data.profileUrl,
+              email: data.email,
+              introduce: data.introduce,
+              interest: data.interest,
+            }}
+          />
         </div>
       </div>
     </>
-  );
-}
-
-function InputArea({ label, children }: { label: string } & TProps) {
-  return (
-    <div className="flex flex-col gap-2 justify-start">
-      <p className="text-H4">{label}</p>
-      {children}
-    </div>
   );
 }
