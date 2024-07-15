@@ -9,7 +9,13 @@ import { usePathname } from "next/navigation";
 import toast, { Toast } from "react-hot-toast";
 import Notification from "@/common/Molecules/Notification";
 
-export default function ShareIconButton() {
+export default function ShareIconButton({
+  width,
+  height,
+}: {
+  width: string;
+  height: string;
+}) {
   const pathname = usePathname();
   const [modalShow, setModalShow] = useState<boolean>(false);
   // TODO: 추후 도메인 수정
@@ -31,8 +37,8 @@ export default function ShareIconButton() {
     <>
       <Button variation="icon" onClick={() => setModalShow(true)}>
         <svg
-          width="28"
-          height="28"
+          width={width}
+          height={height}
           viewBox="0 0 36 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
