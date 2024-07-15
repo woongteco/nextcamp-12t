@@ -1,4 +1,3 @@
-import Button from "@/common/Atoms/Form/Button";
 import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import { DummyProfileImg } from "@public/images";
@@ -25,7 +24,7 @@ export default function ProfilePreview({ name, data }: TProfilePreviewProps) {
         </p>
         <p className="text-body-400 text-label-alt">
           <span className="block text-center">{data.email}</span>
-          <span className="block text-center">
+          <span className="block text-center mt-2">
             {data.introduce || <em>나를 소개할 말을 추가해주세요</em>}
           </span>
         </p>

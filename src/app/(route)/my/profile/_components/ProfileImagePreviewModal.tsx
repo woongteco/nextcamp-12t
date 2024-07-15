@@ -11,7 +11,7 @@ type PropsToPreviewModal = {
 export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
   const { imageUrl, getImage, onSave } = props;
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-4">
       <SectionTitle size="md">프로필 미리보기</SectionTitle>
       <input
         type="image"
@@ -19,6 +19,9 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         src={imageUrl}
         className="w-20 h-20 rounded-full my-4 aspect-square"
       />
+      <p className="text-label-400 text-label-alt">
+        *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하
+      </p>
       <div className="flex items-center justify-start gap-4">
         <ImageInputWithButton
           buttonProps={{
@@ -30,7 +33,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
           다시 선택
         </ImageInputWithButton>
         <Button variation="solid" onClick={onSave}>
-          저장
+          적용하기
         </Button>
       </div>
     </div>

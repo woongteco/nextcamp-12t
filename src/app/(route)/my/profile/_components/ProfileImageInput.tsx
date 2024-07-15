@@ -42,22 +42,31 @@ export default function ProfileImageInput({
   }
   return (
     <>
-      <div className="flex items-center gap-4">
-        <ImageInputWithButton
-          buttonProps={{
-            variation: "solid",
-          }}
-          onChange={onChange}
-        >
-          이미지 변경하기
-        </ImageInputWithButton>
-        <Button
-          variation="text"
-          colors={{ bg: "bg-label-neutral", text: "text-label-neutral" }}
-          onClick={() => setProfileImg("")}
-        >
-          이미지 제거
-        </Button>
+      <div>
+        <div className="flex items-center gap-4">
+          <ImageInputWithButton
+            buttonProps={{
+              variation: "outline",
+              colors: {
+                bg: "bg-main-600",
+                text: "text-main-600",
+              },
+            }}
+            onChange={onChange}
+          >
+            이미지 변경하기
+          </ImageInputWithButton>
+          <Button
+            variation="text"
+            colors={{ bg: "bg-label-neutral", text: "text-label-neutral" }}
+            onClick={() => setProfileImg("")}
+          >
+            이미지 제거
+          </Button>
+        </div>
+        <p className="text-label-400 text-label-alt mt-2">
+          *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하
+        </p>
       </div>
       {Modal}
     </>
