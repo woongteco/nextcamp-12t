@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
 import Profile from "../Molecules/Profile";
-import { TPost } from "@/app/(route)/post/page";
+import { TPost } from "@/types/model/PostItem";
 
 function getCreatedBefore(createdAt: string): string {
   const createdTime = Date.parse(createdAt);

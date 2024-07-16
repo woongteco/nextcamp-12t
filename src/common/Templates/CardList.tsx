@@ -14,12 +14,12 @@ export default function StudyCardList({
   count,
 }: {
   studyCard: TStudyCard[];
-  count: number;
+  count?: number;
 }) {
   if (!studyCard) {
     return <NoneStudyComponent />;
   }
-  const STUDYCARD = studyCard.slice(0, count);
+  const STUDYCARD = count ? studyCard.slice(0, count) : studyCard;
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       {STUDYCARD.map((card) => (

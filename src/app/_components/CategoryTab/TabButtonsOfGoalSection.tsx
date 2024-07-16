@@ -1,5 +1,5 @@
 "use client";
-import { GOALS } from "@/dummies/categories";
+import { GOALS } from "@/constants/categories/study_goal";
 import { TStudyCard, getStudiesData } from "@/dummies/studies";
 
 import { useEffect, useState } from "react";
@@ -22,12 +22,6 @@ export default function TabButtonsOfGoalSection() {
 
   return (
     <>
-      {/* <div className="w-fit mx-auto">
-        <StudyCategoryTabButtonList
-          LABEL_VALUE={GOALS}
-          ICONS={CATEGORY_ICONS}
-        />
-      </div> */}
       <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
         {GOALS_TAB.map(({ label, value, iconName }) => {
           const active = selected === value;

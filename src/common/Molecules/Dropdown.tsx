@@ -20,7 +20,7 @@ export default function Dropdown(props: TDropdownProps) {
   };
   return (
     <div className="relative py-2" data-open={open}>
-      <button onClick={openMenu} className="flex gap-3">
+      <button onClick={openMenu} className="flex items-center gap-3">
         {align === "right" && <CircleChevronDown />}
         {buttonLabel}
         {align === "left" && <CircleChevronDown />}
@@ -33,7 +33,7 @@ export default function Dropdown(props: TDropdownProps) {
           ></div>
           <div onClick={closeMenu}>
             <ul
-              className={`absolute top-8 z-dropdown mt-2 px-1 py-2 rounded-lg bg-normal text-label-neutral shadow-emphasize ${
+              className={`absolute top-8 z-dropdown w-40 mt-2 px-1 py-2 rounded-lg bg-normal text-label-neutral shadow-emphasize ${
                 align === "left" ? "left-0" : "right-0"
               }`}
             >

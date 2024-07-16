@@ -9,7 +9,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Keyword from "../Atoms/Text/Keyword";
-import { BadgeIcon, heartIcon } from "@public/icons";
+import { BadgeIcon, PostCardHeart } from "@public/icons";
 import Profile from "../Molecules/Profile";
 import Thumbnail from "../Atoms/Image/Thumbnail";
 import { TStudyCard } from "@/dummies/studies";
@@ -26,11 +26,6 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           >
             {card.study.RecruitmentStatus}
           </Keyword>
-          {/* <img
-          src={card.study.image}
-          className="w-full h-full"
-          alt="study thumbnail"
-        /> */}
           <Thumbnail
             useIn="list"
             loading="lazy"
@@ -40,22 +35,12 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
             alt={`${card.study.title} thumbnail`}
             className="thumbnailImage object-cover min-w-full w-auto h-auto"
           />
-          {/* <Image
-            width={268}
-            height={180}
-            loading="lazy"
-            placeholder="blur"
-            blurDataURL={card.study.image + "?blur=2"}
-            src={card.study.image}
-            alt={`${card.study.title} thumbnail`}
-            className="thumbnailImage object-cover min-w-full w-auto h-auto"
-          /> */}
           <form
             action=""
             className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer"
           >
             <button>
-              <Image src={heartIcon} className="" alt="heart Icon" />
+              <Image src={PostCardHeart} className="" alt="heart Icon" />
             </button>
           </form>
         </div>
@@ -77,18 +62,6 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
               }}
               size="small"
             />
-            {/* <img
-            src={card.user.image}
-            className="w-5 h-5 rounded-full"
-            alt="user image"
-          />
-          <span className="font-semibold text-label-60
-          0">
-            {card.user.nickname}
-          </span>
-          {card.user.userType === "pro" ? (
-            <Image src={BadgeIcon} alt="pro badge" />
-          ) : null} */}
           </div>
           <div className="mt-4 flex gap-1">
             <Keyword bg="bg-card" text="text-label-normal">

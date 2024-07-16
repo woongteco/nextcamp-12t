@@ -1,10 +1,9 @@
 import clsx from "clsx";
 
-type TKeywordProps = {
+type TKeywordProps = React.ComponentProps<"span"> & {
   bg: string;
   text: string;
-  className?: string;
-  children: string;
+  children: string | string[];
 };
 export default function Keyword(props: TKeywordProps) {
   const { bg, text, className, children } = props;

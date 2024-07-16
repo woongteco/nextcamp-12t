@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { POST_CATEGORY } from "../../page";
+import { POST_CATEGORY } from "@/constants/menu/community_posts";
 import Field from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
