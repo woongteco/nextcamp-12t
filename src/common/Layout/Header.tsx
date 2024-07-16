@@ -14,6 +14,7 @@ import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
 import LoginModal from "@/app/(auth)/_components/LoginModal";
 import { getSession } from "@/auth";
+import UnstyledLogoutButton from "./UnstyledLogoutButton";
 
 export default async function Header() {
   const session = await getSession();
@@ -41,9 +42,7 @@ export default async function Header() {
           </div>
 
           {session ? (
-            <div className="flex gap-8 ">
-          <div className="flex gap-8 items-center">
-            {user && user.id ? (
+            <div className="flex gap-8 items-center">
               <>
                 <Link
                   href={"/studyroom/create"}
@@ -62,7 +61,6 @@ export default async function Header() {
                     <ul className="fixed top-[4.0625rem] py-1 bg-white shadow-emphasize rounded-b-xl hidden">
                       <li className="py-2 px-4">
                         <Link
-                          href={`/my/${session?.user.name}/pofile`}
                           href={`/my/profile`}
                           className="flex gap-3 items-center"
                         >
@@ -79,7 +77,6 @@ export default async function Header() {
                       </li>
                       <li className="py-2 px-4">
                         <Link
-                          href={`/my/${session?.user.name}/study`}
                           href={`/my/study`}
                           className="flex gap-3 items-center"
                         >
@@ -96,7 +93,6 @@ export default async function Header() {
                       </li>
                       <li className="py-2 px-4">
                         <Link
-                          href={`/my/${session?.user.name}/like-study`}
                           href={`/my/like-study`}
                           className="flex gap-3 items-center"
                         >
@@ -113,7 +109,6 @@ export default async function Header() {
                       </li>
                       <li className="pt-2 pb-3 px-4">
                         <Link
-                          href={`/my/${session?.user.name}/post`}
                           href={`/my/post`}
                           className="flex gap-3 items-center"
                         >
@@ -129,7 +124,18 @@ export default async function Header() {
                         </Link>
                       </li>
                       <li className="pt-3 pb-2 px-4 border-t">
-                        <button
+                        <UnstyledLogoutButton className="flex gap-3 items-center">
+                          <Image
+                            src={LogoutIcon}
+                            alt="로그아웃"
+                            width={24}
+                            height={24}
+                          />
+                          <span className="text-base text-label-neutral">
+                            로그아웃
+                          </span>
+                        </UnstyledLogoutButton>
+                        {/* <button
                           type="button"
                           className="flex gap-3 items-center"
                         >
@@ -142,7 +148,7 @@ export default async function Header() {
                           <span className="text-base text-label-neutral">
                             로그아웃
                           </span>
-                        </button>
+                        </button> */}
                       </li>
                     </ul>
                   </div>
