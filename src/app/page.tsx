@@ -7,16 +7,24 @@ import { getUser } from "@/dummies/user";
 import RecommendProStudies from "./_components/RecommendProStudies";
 import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 import MainStatusBoard from "./_components/MainStatusBoard";
+import { getSession } from "@/auth";
 
-export default function Home() {
-  const session = getUser(); // TODO: session 확인으로 변경하여 값 사용
+export default async function Home() {
+  // const session = getUser(); // TODO: session 확인으로 변경하여 값 사용
+
+  const session = await getSession();
+
+  console.log("세션", session?.user);
+
   return (
     <>
       <Header />
       <TopBannerSection />
       <Container>
         <div className="flex flex-col gap-100 mt-100">
-          {session && <MainStatusBoard />}
+          {session?.user && (
+            <MainStatusBoard name={session?.user.name || "테스트"} />
+          )}
           <section>
             <SectionTitle size="md" className="mb-6">
               인기 많은 프로 스터디 추천
