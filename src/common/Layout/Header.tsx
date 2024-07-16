@@ -10,17 +10,14 @@ import {
   StudyIcon,
 } from "@public/icons";
 import Image from "next/image";
+import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
-import LoginProfile from "@/app/(auth)/login/page";
+import LoginModal from "@/app/(auth)/_components/LoginModal";
+import { getSession } from "@/auth";
 
-const user = {
-  id: 1,
-  name: "sinjisu",
-  nickname: "신지수",
-  userType: "user",
-  image: null,
-};
-export default function Header() {
+export default async function Header() {
+  const session = await getSession();
+
   return (
     <header className="fixed top-0 w-full bg-white z-header border-b border-b-line-normal">
       <Container>
@@ -43,6 +40,8 @@ export default function Header() {
             </nav>
           </div>
 
+          {session ? (
+            <div className="flex gap-8 ">
           <div className="flex gap-8 items-center">
             {user && user.id ? (
               <>
@@ -54,11 +53,16 @@ export default function Header() {
                   <span className="text-label-400">스터디 만들기</span>
                 </Link>
                 <div className="flex gap-8 items-center">
-                  <div className="relative after:absolute after:top-1 after:left-[140%] after:block after:w-[1px] after:h-8 after:my-3 after:bg-label-alt [&:hover>ul]:block">
-                    <LoginProfile />
+                  <div className="relative after:absolute after:top-1 after:left-[140%] after:block after:w-[1px] after:h-8 after:bg-label-alt [&:hover>ul]:block">
+                    <Image
+                      src={DummyProfileImg}
+                      className="py-3"
+                      alt="profile img"
+                    />
                     <ul className="fixed top-[4.0625rem] py-1 bg-white shadow-emphasize rounded-b-xl hidden">
                       <li className="py-2 px-4">
                         <Link
+                          href={`/my/${session?.user.name}/pofile`}
                           href={`/my/profile`}
                           className="flex gap-3 items-center"
                         >
@@ -75,6 +79,7 @@ export default function Header() {
                       </li>
                       <li className="py-2 px-4">
                         <Link
+                          href={`/my/${session?.user.name}/study`}
                           href={`/my/study`}
                           className="flex gap-3 items-center"
                         >
@@ -91,6 +96,7 @@ export default function Header() {
                       </li>
                       <li className="py-2 px-4">
                         <Link
+                          href={`/my/${session?.user.name}/like-study`}
                           href={`/my/like-study`}
                           className="flex gap-3 items-center"
                         >
@@ -107,6 +113,7 @@ export default function Header() {
                       </li>
                       <li className="pt-2 pb-3 px-4">
                         <Link
+                          href={`/my/${session?.user.name}/post`}
                           href={`/my/post`}
                           className="flex gap-3 items-center"
                         >
@@ -122,7 +129,10 @@ export default function Header() {
                         </Link>
                       </li>
                       <li className="pt-3 pb-2 px-4 border-t">
-                        <button className="flex gap-3 items-center">
+                        <button
+                          type="button"
+                          className="flex gap-3 items-center"
+                        >
                           <Image
                             src={LogoutIcon}
                             alt="로그아웃"
@@ -141,15 +151,17 @@ export default function Header() {
                   </div>
                 </div>
               </>
-            ) : (
-              <Link
+
+              {/* <Link
                 href={"/login"}
                 className={`py-2 px-4 border border-solid border-main-600 rounded-[.6rem] text-main-600 font-semibold`}
               >
                 로그인
-              </Link>
-            )}
-          </div>
+              </Link> */}
+            </div>
+          ) : (
+            <LoginModal />
+          )}
         </div>
       </Container>
     </header>

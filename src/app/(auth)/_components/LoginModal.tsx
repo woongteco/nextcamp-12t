@@ -5,10 +5,11 @@ import Image from "next/image";
 import { SocialLogin, Google, Kakao, Logo } from "@public/icons";
 import { useEffect, useState, useRef } from "react";
 import ModalBackdrop from "@/common/Molecules/ModalPortal/ModalBackdrop";
-import { DummyProfileImg } from "@public/images";
-import LoginForm from "../_components/LoginForm";
+import LoginForm from "./LoginForm";
+import AuthWrap from "./AuthWrap";
+import { loginGoogle, loginKakao } from "@/lib/action";
 
-export default function LoginProfile() {
+export default function LoginModal() {
   const [open, setOpen] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -17,27 +18,28 @@ export default function LoginProfile() {
       modalRef.current?.close();
     }
 
-    const modalKeyClosehandler = (e: KeyboardEvent) => {
+    const modalKeyCloseHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        modalRef.current?.close;
+        modalRef.current?.close();
         setOpen(false);
       }
     };
-    document.addEventListener("keydown", modalKeyClosehandler);
+    document.addEventListener("keydown", modalKeyCloseHandler);
 
     return () => {
-      document.removeEventListener("keydown", modalKeyClosehandler);
+      document.removeEventListener("keydown", modalKeyCloseHandler);
     };
   }, [open]);
 
   return (
     <>
-      <Image
-        src={DummyProfileImg}
-        className="py-3 cursor-pointer"
-        alt="profile img"
+      <button
+        type="button"
+        className="py-2 px-4 border border-solid border-main-600 rounded-[.6rem] text-main-600 font-semibold"
         onClick={() => setOpen(true)}
-      />
+      >
+        로그인
+      </button>
       {open && (
         <>
           <ModalBackdrop onClick={() => setOpen(false)} />
@@ -46,7 +48,7 @@ export default function LoginProfile() {
             ref={modalRef}
             open
           >
-            <div className="w-full h-auto flex flex-col items-center justify-center gap-5 rounded-lg shadow-lg border border-gray-200 p-6 py-10 bg-white center">
+            <AuthWrap>
               <Image src={Logo} alt="logo" />
               <LoginForm />
               <div className="flex items-center gap-3 text-sm">
@@ -57,15 +59,19 @@ export default function LoginProfile() {
               <>
                 <Image src={SocialLogin} alt="간편 로그인 이미지" />
                 <div className="flex items-center justify-center gap-4">
-                  <button type="button">
-                    <Image src={Kakao} alt="카카오 로그인" />
-                  </button>
-                  <button type="button">
-                    <Image src={Google} alt="구글 로그인" />
-                  </button>
+                  <form action={loginKakao}>
+                    <button>
+                      <Image src={Kakao} alt="카카오 로그인" />
+                    </button>
+                  </form>
+                  <form action={loginGoogle}>
+                    <button>
+                      <Image src={Google} alt="구글 로그인" />
+                    </button>
+                  </form>
                 </div>
               </>
-            </div>
+            </AuthWrap>
           </dialog>
         </>
       )}
