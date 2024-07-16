@@ -1,24 +1,36 @@
 "use client";
 
+import { FormEvent } from "react";
 import Link from "next/link";
 import { UserEmail, UserPassword } from "./UserInput";
-import { login } from "@/lib/action";
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
-  // 서버 액션에서 로그인 후 redirect가 경로가 아닌 모달이라 세션을 확인하려면 새로고침이 필요함
-  async function onLogin(formData: FormData) {
-    const result = await login(formData);
+  async function login(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-    if (result) {
-      window.location.reload();
-    } else {
-      alert("이메일 또는 비밀번호를 확인해주세요.");
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    if (!email || !password) {
+      alert("입력한 정보를 다시 확인해 주세요.");
+    }
+    try {
+      await signIn("credentials", {
+        callbackUrl: "/",
+        email,
+        password,
+      });
+      alert("로그인 완료");
+    } catch (error) {
+      console.log(error);
     }
   }
 
   return (
     <>
-      <form action={onLogin} className="flex flex-col w-full gap-5">
+      <form onSubmit={login} className="flex flex-col w-full gap-5">
         <UserEmail />
         <UserPassword />
         <div className="w-full flex flex-col items-center gap-4">

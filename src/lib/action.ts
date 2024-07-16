@@ -16,7 +16,7 @@ export async function register(formData: FormData) {
     alert("입력한 정보를 다시 확인해 주세요.");
   }
 
-  // 유효성 부분을 클라이언트에서?
+  // 유효성 부분 클라이언트에서 처리 필요
   const emailRegex = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
   const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{12,}$/;
 
@@ -39,7 +39,6 @@ export async function register(formData: FormData) {
     alert("이미 가입된 회원입니다.");
   }
 
-  // password 암호화 및 검증
   const hashPassword = await hash(String(password), 10);
   const user = new User({
     email,
@@ -55,29 +54,6 @@ export async function register(formData: FormData) {
   }
 
   redirect("/");
-}
-
-export async function login(formData: FormData) {
-  const email = formData.get("email");
-  const password = formData.get("password");
-
-  if (!email || !password) {
-    alert("입력한 정보를 다시 확인해 주세요.");
-  }
-
-  try {
-    console.log("login action", email, password);
-    await signIn("credentials", {
-      redirect: false,
-      callbackUrl: "/",
-      email,
-      password,
-    });
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
 }
 
 export const loginGoogle = async () => {
