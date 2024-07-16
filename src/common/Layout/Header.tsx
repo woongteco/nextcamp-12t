@@ -1,17 +1,13 @@
-"use client";
-
 import Link from "next/link";
 import { AlarmIcon, CreateStudyIcon, Logo } from "@public/icons";
 import Image from "next/image";
 import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
 import LoginModal from "@/app/(auth)/_components/LoginModal";
-import { useSession } from "next-auth/react";
+import { getSession } from "@/auth";
 
-export default function Header() {
-  const { data: session } = useSession();
-
-  console.log(session);
+export default async function Header() {
+  const session = await getSession();
 
   return (
     <header className="border-b border-b-line-normal">
