@@ -43,15 +43,15 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="flex gap-8 ">
+          <div className="flex gap-8 items-center">
             {user && user.id ? (
               <>
                 <Link
                   href={"/studyroom/create"}
-                  className="flex items-center justify-center gap-2 w-36 text-main-600 border border-solid border-main-600 rounded-[1.3rem]"
+                  className="flex items-center justify-center gap-2 w-36 h-8 leading-8 text-main-600 border border-solid border-main-600 rounded-[1.3rem]"
                 >
                   <Image src={CreateStudyIcon} alt="create study" />
-                  <span>스터디 만들기</span>
+                  <span className="text-label-400">스터디 만들기</span>
                 </Link>
                 <div className="flex gap-8 items-center">
                   <div className="relative after:absolute after:top-1 after:left-[140%] after:block after:w-[1px] after:h-8 after:my-3 after:bg-label-alt [&:hover>ul]:block">
@@ -59,7 +59,7 @@ export default function Header() {
                     <ul className="fixed top-[4.0625rem] py-1 bg-white shadow-emphasize rounded-b-xl hidden">
                       <li className="py-2 px-4">
                         <Link
-                          href={`/my/${user.name}/pofile`}
+                          href={`/my/profile`}
                           className="flex gap-3 items-center"
                         >
                           <Image
@@ -75,7 +75,7 @@ export default function Header() {
                       </li>
                       <li className="py-2 px-4">
                         <Link
-                          href={`/my/${user.name}/study`}
+                          href={`/my/study`}
                           className="flex gap-3 items-center"
                         >
                           <Image
@@ -91,7 +91,7 @@ export default function Header() {
                       </li>
                       <li className="py-2 px-4">
                         <Link
-                          href={`/my/${user.name}/like-study`}
+                          href={`/my/like-study`}
                           className="flex gap-3 items-center"
                         >
                           <Image
@@ -107,7 +107,7 @@ export default function Header() {
                       </li>
                       <li className="pt-2 pb-3 px-4">
                         <Link
-                          href={`/my/${user.name}/post`}
+                          href={`/my/post`}
                           className="flex gap-3 items-center"
                         >
                           <Image

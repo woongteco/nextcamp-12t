@@ -1,16 +1,12 @@
 "use client";
 import { useState } from "react";
 
-import Button from "@/common/Atoms/Form/Button";
-import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import Input from "@/common/Molecules/Form/Input";
-
 import { getUser } from "@/dummies/user";
+import { CategoryOption } from "@/types/model/Category";
 
+import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import DeleteAccountConfirm from "./_components/DeleteAccountConfirm";
 import ProfilePreview from "./_components/ProfilePreview";
-import { CategoryOption } from "@/types/model/Category";
-import ProfileInputArea from "./_components/ProfileInputArea";
 import FormEditProfile from "./_components/FormEditProfile";
 import FormUpdatePassword from "./_components/FormUpdatePassword";
 import FormUpdatePhoneNumber from "./_components/FormUpdatePhoneNumber";
@@ -57,16 +53,7 @@ export default function MyProfilePage() {
           <DeleteAccountConfirm />
         </div>
         <div className="previewBox rounded-2xl xl:sticky xl:top-20 p-6 border border-line-normal flex flex-col gap-4">
-          <ProfilePreview
-            name={user.name}
-            data={{
-              positionTag: data.positionTag,
-              profileUrl: data.profileUrl,
-              email: data.email,
-              introduce: data.introduce,
-              interest: data.interest,
-            }}
-          />
+          <ProfilePreview name={user.name} data={data} />
         </div>
       </div>
     </>

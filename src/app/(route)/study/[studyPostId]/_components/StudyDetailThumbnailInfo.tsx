@@ -48,7 +48,7 @@ export default function StudyDetailThumbnailInfo({
           스터디 참여 신청하기
         </button>
         <div className="flex items-center gap-3">
-          <ShareIconButton width="38" height="38" />
+          <ShareIconButton />
           <Image
             className="w-9 h-9"
             width={36}
