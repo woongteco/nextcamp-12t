@@ -13,7 +13,7 @@ import Image from "next/image";
 import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
 import LoginModal from "@/app/(auth)/_components/LoginModal";
-import { getSession, signOut } from "@/auth";
+import { getSession } from "@/auth";
 
 export default async function Header() {
   const session = await getSession();
