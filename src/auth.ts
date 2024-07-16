@@ -60,10 +60,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
 
-  // session: {
-  //   strategy: 'jwt',
-  //   maxAge: 30 * 24 * 60 * 60, // jwt 유효 기본값 30일
-  // },
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60,
+  },
 
   callbacks: {
     signIn: async ({ user, account }: { user: any; account: any }) => {
@@ -75,6 +75,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.log("소셜정보", email, name);
 
         await connectDB();
+
+        // 수정 고유값 필요 providerAccountId 값을 db에 저장
         const socialUserCheck = await User.findOne({
           email,
           authProviderId: "google" || "kakao",
@@ -131,3 +133,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
+
+export { auth as getSession };
