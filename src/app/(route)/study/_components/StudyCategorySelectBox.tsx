@@ -2,15 +2,15 @@ import NotFound from "@/app/not-found";
 import Dropdown from "@/common/Molecules/Dropdown";
 import Link from "next/link";
 import { TQuery } from "../page";
-import { JOBCATEGORIES } from "@/dummies/categories";
+import { CATEGORIES } from "@/constants/categories/job_category";
 
 export default function StudyCategorySelectBox({
   searchParams,
 }: {
   searchParams: TQuery;
 }) {
-  const jobC = searchParams?.job_c || "all";
-  const jobCategory = JOBCATEGORIES.find((item) => item.key === jobC);
+  const jobC = searchParams?.job_c || "cate_1";
+  const jobCategory = CATEGORIES.find((item) => item.value === jobC);
 
   if (jobCategory === undefined) {
     return <NotFound />;
@@ -19,13 +19,13 @@ export default function StudyCategorySelectBox({
     <div className="mb-6 text-lg font-medium text-gray-950">
       <Dropdown
         buttonLabel={jobCategory.label}
-        items={JOBCATEGORIES.map((item) => (
+        items={CATEGORIES.map((item) => (
           <li
-            key={item.key}
+            key={item.value}
             className={`w-pull px-[12px] py-[6px] hover:text-main-600
-            ${jobC === item.key ? "text-main-500" : ""}`}
+            ${jobC === item.value ? "text-main-500" : ""}`}
           >
-            <Link className="block" href={`/study?job_c=${item.key}`}>
+            <Link className="block" href={`/study?job_c=${item.value}`}>
               {item.label}
             </Link>
           </li>
