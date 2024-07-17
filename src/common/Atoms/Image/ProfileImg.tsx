@@ -7,7 +7,7 @@ export default function ProfileImg(
     altText?: string;
   }
 ) {
-  const { size = "default", className, ...restProps } = props;
+  const { size = "default", className, alt = "profile", ...restProps } = props;
   const square = {
     default: 40,
     xxlarge: 80,
@@ -20,6 +20,7 @@ export default function ProfileImg(
       className={clsx(className, "rounded-full aspect-square")}
       width={square[size]}
       height={square[size]}
+      alt={alt}
       {...restProps}
     />
   );

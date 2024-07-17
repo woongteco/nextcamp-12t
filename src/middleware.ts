@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "./auth";
+// import { getSession } from "./auth";
 
 export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
+export async function middleware(request: NextRequest) {
+  return NextResponse.next();
+}
+
+/* export const config = {
   matcher: ["/my/:path*", "/post/write"],
 };
 
@@ -13,4 +20,4 @@ export async function middleware(request: NextRequest) {
   if (session) {
     return NextResponse.next();
   }
-}
+} */

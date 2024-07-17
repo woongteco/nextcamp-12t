@@ -27,7 +27,7 @@ export default function useThrottle<T>(value: T, delay = 500) {
     return () => {
       timeout.current && clearTimeout(timeout.current);
     };
-  }, [value]);
+  }, [value, delay]);
 
   return throttled;
 }
