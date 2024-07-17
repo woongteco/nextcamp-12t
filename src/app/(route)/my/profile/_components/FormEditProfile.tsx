@@ -34,7 +34,7 @@ export default function FormEditProfile({
   };
 
   return (
-    <form action="" className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <ProfileInputArea label="아바타 이미지">
         <ProfileImageInput setProfileImg={changeProfileImage} />
       </ProfileInputArea>
@@ -68,10 +68,6 @@ export default function FormEditProfile({
         </div>
       </ProfileInputArea>
       <ProfileInputArea label="관심 카테고리">
-        {/* TODO:
-         * - 사용자 데이터에서 관심 카테고리 기존 값 가져와서 defaultValue로 지정
-         * - select 값 변경 시 프로필 미리보기에서 Keyword로 보여주기
-         */}
         <Input.Select
           name="interest"
           placeholder="관심 카테고리를 추가하세요"
@@ -84,6 +80,6 @@ export default function FormEditProfile({
       <Button type="submit" variation="solid" className="self-start">
         프로필 저장
       </Button>
-    </form>
+    </div>
   );
 }

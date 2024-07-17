@@ -4,7 +4,6 @@ import Link from "next/link";
 import { TQuery } from "../page";
 import { CATEGORIES } from "@/constants/categories/job_category";
 import { CategoryGroup } from "@/types/model/Category";
-
 export default function StudyCategorySelectBox({
   searchParams,
 }: {

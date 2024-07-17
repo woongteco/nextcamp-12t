@@ -7,11 +7,11 @@ import Notification from "@/common/Molecules/Notification";
 import useModal from "@/hooks/useModal";
 
 export default function ShareIconButton({
-  width,
-  height,
+  width = "38",
+  height = "38",
 }: {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }) {
   const pathname = usePathname();
   // TODO: 추후 도메인 수정

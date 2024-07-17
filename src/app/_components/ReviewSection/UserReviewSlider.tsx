@@ -1,18 +1,15 @@
 "use client";
-import { SwiperSlide } from "swiper/react";
-import ReviewSwiper from "./ReviewSwiper";
+import DefaultSwiper from "../../../common/Molecules/DefaultSwiper";
 import UserReviewItem from "./UserReviewItem";
 import getMainReview from "@/constants/main_review";
 
 export default function UserReviewSlider() {
   const reviews = getMainReview();
   return (
-    <ReviewSwiper>
-      {reviews.map((review) => (
-        <SwiperSlide key={review.reviewId}>
-          <UserReviewItem review={review} />
-        </SwiperSlide>
-      ))}
-    </ReviewSwiper>
+    <DefaultSwiper
+      items={reviews}
+      render={(review) => <UserReviewItem review={review} />}
+      getId={(review) => review.reviewId}
+    />
   );
 }
