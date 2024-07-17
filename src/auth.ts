@@ -104,11 +104,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }) {
       console.log("JWT", token, "USER", user, "ACCOUNT", account);
 
-      if (account) {
-        token.id = user.id;
-        token.phone = user.phone;
-        token.role = user.role;
-        token.accessToken = account.access_token;
+      if (user) {
+        token.user = user;
       }
 
       return token;
@@ -123,12 +120,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token: any;
       user: any;
     }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.phone = token.phone;
-        session.user.role = token.role;
-        session.accessToken = token.accessToken;
-      }
+      session.user = token.user;
+
       return session;
     },
   },
