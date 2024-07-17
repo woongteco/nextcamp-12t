@@ -3,17 +3,17 @@ import LargeStudyItem from "./LargeStudyItem";
 import NoneStudyComponent from "./NoneStudyComponent";
 
 export default function LargeStudyList({
-  studyCard,
+  studyCards,
   count,
 }: {
-  studyCard: TStudyCard[];
+  studyCards: TStudyCard[];
   count: number;
 }) {
-  if (!studyCard) {
+  if (!studyCards) {
     return <NoneStudyComponent />;
   }
 
-  const STUDYCARD = studyCard.slice(0, count);
+  const STUDYCARD = studyCards.slice(0, count);
 
   return (
     <div className="grid grid-cols-3 gap-3">

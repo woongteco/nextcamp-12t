@@ -1,17 +1,18 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
-import { getStudiesData } from "@/dummies/studies";
 import StudyCategoryTabButtonList from "../_components/StudyCategoryTabButtonList";
-import { GOALS } from "@/constants/categories/study_goal";
-import { ONOFF } from "@/constants/categories/study_type";
 import SearchInput from "../../_components/SearchInput";
-import { TQuery } from "../page";
 import StudyCategorySelectBox from "../_components/StudyCategorySelectBox";
 import {
-  CategoryTabIcon,
   categoryIconsName,
   onOffIconsName,
 } from "@/app/_components/CategoryTab/TabIcons";
+
+import { GOALS } from "@/constants/categories/study_goal";
+import { ONOFF } from "@/constants/categories/study_type";
+
+import { TQuery } from "../page";
+import { getStudiesData } from "@/dummies/studies";
 
 export default function StudySearchPage({
   searchParams,
@@ -53,7 +54,7 @@ export default function StudySearchPage({
         </div>
       </div>
 
-      <StudyCardList studyCard={studyCard} count={16} />
+      <StudyCardList studyCards={studyCard} count={16} />
     </div>
   );
 }
