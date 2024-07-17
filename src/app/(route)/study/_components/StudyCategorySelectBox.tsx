@@ -3,14 +3,25 @@ import Dropdown from "@/common/Molecules/Dropdown";
 import Link from "next/link";
 import { TQuery } from "../page";
 import { CATEGORIES } from "@/constants/categories/job_category";
+import { CategoryGroup } from "@/types/model/Category";
 
 export default function StudyCategorySelectBox({
   searchParams,
 }: {
   searchParams: TQuery;
 }) {
-  const jobC = searchParams?.job_c || "cate_1";
-  const jobCategory = CATEGORIES.find((item) => item.value === jobC);
+  const jobC = searchParams?.job_c || "default";
+  const categories: CategoryGroup[] = [
+    {
+      value: "default",
+      label: "직무선택",
+      options: [],
+    },
+    ...CATEGORIES,
+  ];
+  const jobCategory = categories.find((item) => item.value === jobC);
+
+  console.log("jobCategory", jobCategory);
 
   if (jobCategory === undefined) {
     return <NotFound />;

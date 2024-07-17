@@ -1,3 +1,4 @@
+import { TComment } from "@/app/(route)/study/[studyPostId]/_components/CommentList";
 import { getImageUrl } from "./getImages";
 
 // 스터디 상세게시글 규칙
@@ -58,9 +59,11 @@ export function getStudyPostDetail() {
   };
 }
 
-export function getComment() {
-  return {
-    comment: [
+export function getComments() {
+  const result: {
+    comments: TComment[];
+  } = {
+    comments: [
       {
         commentId: 1,
         user: {
@@ -104,7 +107,9 @@ export function getComment() {
         },
         content: "저도 참여하고 싶어요! 진행중인데 참여 가능할까요?",
         createdAt: "2024.11.21 11:05",
+        replyComment: [],
       },
     ],
   };
+  return result;
 }

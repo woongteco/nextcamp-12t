@@ -9,12 +9,12 @@ import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 
 import StudyCategoryTabButtonList from "./_components/StudyCategoryTabButtonList";
-import {
-  CATEGORY_ICONS_NAME,
-  ONOFF_ICONS_NAME,
-} from "@/app/_components/CategoryTab/TabIcons";
 import SearchInput from "../_components/SearchInput";
 import StudyCategorySelectBox from "./_components/StudyCategorySelectBox";
+import {
+  categoryIconsName,
+  onOffIconsName,
+} from "@/app/_components/CategoryTab/TabIcons";
 
 export type TQuery = {
   job_c?: string;
@@ -44,11 +44,11 @@ export default function StudyComponent({
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
               categoryName={GOALS}
-              categoryIcons={CATEGORY_ICONS_NAME}
+              categoryIcons={categoryIconsName}
             />
             <StudyCategoryTabButtonList
               categoryName={ONOFF}
-              categoryIcons={ONOFF_ICONS_NAME}
+              categoryIcons={onOffIconsName}
             />
           </div>
         </div>

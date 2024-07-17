@@ -5,11 +5,11 @@ import { TStudyCard, getStudiesData } from "@/dummies/studies";
 import { useEffect, useState } from "react";
 import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
-import { CATEGORY_ICONS_NAME, CategoryTabIcon } from "./TabIcons";
+import { CategoryTabIcon, categoryIconsName } from "./TabIcons";
 
 const GOALS_TAB = GOALS.map((goal, index) => ({
   ...goal,
-  iconName: CATEGORY_ICONS_NAME[index],
+  iconName: categoryIconsName[index],
 }));
 
 export default function TabButtonsOfGoalSection() {

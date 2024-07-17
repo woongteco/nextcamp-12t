@@ -52,7 +52,7 @@ export default async function Header() {
                   <span className="text-label-400">스터디 만들기</span>
                 </Link>
                 <div className="flex gap-8 items-center">
-                  <div className="relative after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[140%] after:block after:w-[1px] after:h-8 after:bg-label-alt [&:hover>ul]:block">
+                  <div className="relative after:absolute after:top-4 after:left-[140%] after:block after:w-[1px] after:h-8 after:bg-label-alt [&:hover>ul]:block">
                     <Image
                       src={DummyProfileImg}
                       className="py-3"

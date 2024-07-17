@@ -27,6 +27,7 @@ export default function CommunityPostList({
   if (filteredMenu === undefined || sortedBy === undefined) {
     return <NotFound />;
   }
+  console.log(category);
   /**
    * TODO
    * - 글 리스트 데이터 가져오기 : TPost[]
