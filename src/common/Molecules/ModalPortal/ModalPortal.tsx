@@ -40,6 +40,8 @@ const ModalPortal = forwardRef(
   }
 );
 
+ModalPortal.displayName = "ModalPortal";
+
 export default ModalPortal;
 
 // export default function ModalPortal(
