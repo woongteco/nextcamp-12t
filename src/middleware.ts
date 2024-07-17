@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "./auth";
 
 export const config = {
-  runtime: "edge", // for Edge API Routes only
+  runtime: "experimental-edge", // for Edge API Routes only
   matcher: ["/my/:path*", "/post/write"],
 };
 
