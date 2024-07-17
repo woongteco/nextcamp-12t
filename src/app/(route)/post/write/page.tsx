@@ -30,7 +30,6 @@ export default async function PostWrite() {
             글 내용
           </LabelText>
           <TextEditor
-            required
             className="h-[580px]"
             placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
           />
