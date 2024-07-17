@@ -1,0 +1,110 @@
+/*
+ * next/font 적용이 안되는 문제 해결
+ * TODO: 가능하면 globals.css var()과 next/font 적용 방법 찾기
+ */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+/* Box */
+.editor .ql-toolbar.ql-snow,
+.editor .ql-container.ql-snow {
+  /* var(--color-line-input) */
+  border-color: #dbdbdd;
+}
+.editor:hover .ql-toolbar.ql-snow,
+.editor:hover .ql-container.ql-snow {
+  /* var(--color-label-alt) */
+  border-color: #b2b2b4;
+}
+.editor:hover .ql-toolbar.ql-snow,
+.editor:hover .ql-container.ql-snow {
+  /* var(--color-label-alt) */
+  border-color: #b2b2b4;
+}
+.editor .ql-container.ql-snow {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.editor .ql-toolbar.ql-snow {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+.editor .ql-toolbar.ql-snow .ql-formats {
+  margin-right: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.editor .ql-toolbar.ql-snow .ql-formats button {
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+.editor .ql-editor.ql-blank::before {
+  font-style: 400;
+  font-size: 16px;
+  font-style: normal;
+  color: var(--color-label-assist);
+}
+
+/* Label content */
+.ql-snow .ql-picker.ql-header .ql-picker-label::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item::before {
+  content: "보통";
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
+  content: "제목1";
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
+  content: "제목2";
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
+  content: "제목3";
+}
+
+/* Font, Color style */
+.editor .ql-editor,
+.editor .ql-editor.ql-blank::before,
+.editor .ql-tooltip.ql-editing,
+.editor .ql-toolbar.ql-snow .ql-formats .ql-picker-label,
+.ql-snow .ql-picker.ql-header .ql-picker-item {
+  font-family: "Noto Sans KR", sans-serif;
+}
+.ql-snow .ql-picker {
+  font-weight: 400;
+}
+.ql-snow .ql-editor h1,
+.ql-snow .ql-editor h2,
+.ql-snow .ql-editor h3 {
+  margin-block: 0.5em;
+}
+.ql-editor p {
+  line-height: 1.5em;
+  margin-block: 0.25em;
+}
+.ql-snow .ql-editor h1,
+.ql-snow .ql-editor h2,
+.ql-snow .ql-editor h3,
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
+  font-weight: 600;
+}
+.editor .ql-toolbar.ql-snow .ql-formats button:hover path,
+.editor .ql-toolbar.ql-snow .ql-formats .ql-picker-label:hover .ql-stroke {
+  /* var(--color-main-800) */
+  stroke: #0050c8;
+}
+.editor .ql-toolbar.ql-snow .ql-formats .ql-picker-label:hover {
+  /* var(--color-main-800) */
+  color: #0050c8;
+}
