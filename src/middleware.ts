@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "./auth";
+// import { getSession } from "./auth";
 
 export const config = {
-  runtime: "experimental-edge", // for Edge API Routes
-  unstable_allowDynamic: [
-    "/node_modules/function-bind/**", // use a glob to allow anything in the function-bind 3rd party module
-  ],
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-    "/my/:path*",
-    "/post/write",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
+export async function middleware(request: NextRequest) {
+  return NextResponse.next();
+}
+
+/* export const config = {
+  matcher: ["/my/:path*", "/post/write"],
 };
 
 export async function middleware(request: NextRequest) {
@@ -21,6 +20,4 @@ export async function middleware(request: NextRequest) {
   if (session) {
     return NextResponse.next();
   }
-  // TEST
-  return NextResponse.error();
-}
+} */
