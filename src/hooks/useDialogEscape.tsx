@@ -25,5 +25,5 @@ export default function useDialogEscape({
     return () => {
       document.removeEventListener("keydown", modalKeyClosehandler);
     };
-  }, [show]);
+  }, [show, ref, close]);
 }
