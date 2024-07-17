@@ -5,15 +5,15 @@ export type TAccordionList = { accordionId: number; content: string };
 
 export default function Accordion({
   title,
-  contentList,
+  lists,
 }: {
   title: string;
-  contentList: TAccordionList[];
+  lists: TAccordionList[];
 }) {
   return (
     <div className="border-b">
       <AccordionTitle title={title} />
-      <AccordionList contentList={contentList} />
+      <AccordionList lists={lists} />
     </div>
   );
 }

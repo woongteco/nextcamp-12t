@@ -1,13 +1,10 @@
 import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import CommentInput from "@/common/Organisms/Comment/CommentInput";
-import { getComments } from "@/dummies/studypostdetail";
 import { QandAIcon } from "@public/icons";
 import Image from "next/image";
-import CommentList from "./CommentList";
+import CommentList, { TComment } from "./CommentList";
 
-export default function Comment() {
-  const { comments } = getComments();
-
+export default function Comment({ comments }: { comments: TComment[] }) {
   return (
     <div className="py-8 px-10 border border-line-neutral rounded-twenty">
       <div className="flex items-center gap-1 mb-8">

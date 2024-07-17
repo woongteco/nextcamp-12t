@@ -6,7 +6,7 @@ import Keyword from "@/common/Atoms/Text/Keyword";
 
 export default function WideStudyItem({ card }: { card: TStudyCard }) {
   return (
-    <Link href={"/study/:studyID"} className="h-[11.25rem] relative">
+    <Link href={`/study/${card.id}`} className="h-[11.25rem] relative">
       <Image
         src={card.study.image}
         className="absolute rounded-[1.25rem] h-full"

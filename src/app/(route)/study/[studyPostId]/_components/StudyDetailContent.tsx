@@ -1,17 +1,27 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import LeaderProfile from "./LeaderProfile";
+import LeaderProfile, { TLeaderProfile } from "./LeaderProfile";
 import {
   Curriculum,
   Rule,
   getStudyLeaderUser,
   getStudyPostDetail,
 } from "@/dummies/studypostdetail";
-import Accordion from "../../_components/Accordion";
+import Accordion, { TAccordionList } from "../../_components/Accordion";
 
-export default function StudyDetailContent() {
-  const profile = getStudyLeaderUser();
-  const cont = getStudyPostDetail();
-  const { content } = cont;
+export type TContents = {
+  content: string;
+  rule: TAccordionList[];
+  curriculum: TAccordionList[];
+};
+
+export default function StudyDetailContent({
+  contents,
+  user,
+}: {
+  contents: TContents;
+  user: TLeaderProfile;
+}) {
+  const { content, rule, curriculum } = contents;
 
   return (
     <div className="my-20 border-t border-b">
@@ -20,7 +30,7 @@ export default function StudyDetailContent() {
           <SectionTitle size="md" className="pb-6 text-2xl font-semibold">
             스터디장
           </SectionTitle>
-          <LeaderProfile profile={profile} />
+          <LeaderProfile user={user} />
         </div>
 
         <div className="py-16  border-b">
@@ -33,8 +43,8 @@ export default function StudyDetailContent() {
         </div>
       </div>
 
-      <Accordion title="규칙" contentList={Rule} />
-      <Accordion title="세부 커리큘럼" contentList={Curriculum} />
+      <Accordion title="규칙" lists={rule} />
+      <Accordion title="세부 커리큘럼" lists={curriculum} />
     </div>
   );
 }

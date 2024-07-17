@@ -17,7 +17,7 @@ import { TStudyCard } from "@/dummies/studies";
 export default function StudyCardItem({ card }: { card: TStudyCard }) {
   return (
     <div className="bg-white rounded-twenty border border-line-alt hover:shadow-normal overflow-hidden">
-      <Link href={"/study/" + card.id}>
+      <Link href={`/study/${card.id}`}>
         <div className="h-[11.25rem] relative overflow-hidden">
           <Keyword
             bg="bg-status-danger"

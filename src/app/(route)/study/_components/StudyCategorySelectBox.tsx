@@ -21,8 +21,6 @@ export default function StudyCategorySelectBox({
   ];
   const jobCategory = categories.find((item) => item.value === jobC);
 
-  console.log("jobCategory", jobCategory);
-
   if (jobCategory === undefined) {
     return <NotFound />;
   }
