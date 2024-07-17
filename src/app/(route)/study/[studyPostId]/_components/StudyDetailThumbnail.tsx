@@ -7,6 +7,7 @@ import ThumbnailInfoValue from "./ThumbnailInfoValue";
 import Link from "next/link";
 import ShareIconButton from "@/app/(route)/_components/ShareIconButton";
 import { DetailFullHeartIcon } from "@public/icons";
+import dayjs from "dayjs";
 
 export type TThumbnailInfo = {
   thumbnailUrl: string;
@@ -45,6 +46,11 @@ export default function StudyDetailThumbnail({
     heartStatus,
     heartCount,
   } = thumbnailInfo;
+
+  const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
+  const recruitmentDay = dayjs(recruitmentPeriod[1]);
+  const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");
+
   return (
     <div className="flex gap-7">
       <div className="relative">
@@ -55,20 +61,18 @@ export default function StudyDetailThumbnail({
           src={thumbnailUrl}
           alt="썸네일 이미지"
         />
-        <Keyword
-          bg="bg-status-danger"
-          text="text-white"
-          className="absolute left-0 top-6 rounded-l-none"
-        >
-          모집중
-        </Keyword>
-        <Keyword
-          bg="bg-status-danger"
-          text="text-white"
-          className="absolute left-[68px] top-6"
-        >
-          5/17 마감
-        </Keyword>
+        <div className="flex gap-1 absolute left-0 top-6">
+          <Keyword
+            bg={`${resultDay < 0 ? "bg-status-danger" : "bg-slate-700"}`}
+            text="text-white"
+            className="rounded-l-none "
+          >
+            {resultDay < 0 ? "모집중" : "모집마감"}
+          </Keyword>
+          <Keyword bg="bg-status-danger" text="text-white">
+            {dayjs(recruitmentDay).format("MM/DD")} 마감
+          </Keyword>
+        </div>
       </div>
       <div>
         <span className="block mb-3 text-[#888] text-xl">
