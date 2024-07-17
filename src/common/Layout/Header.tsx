@@ -46,13 +46,13 @@ export default async function Header() {
               <>
                 <Link
                   href={"/studyroom/create"}
-                  className="flex items-center justify-center gap-2 w-36 h-8 leading-8 text-main-600 border border-solid border-main-600 rounded-[1.3rem]"
+                  className="flex items-center justify-center gap-2 w-36 py-2 leading-8 text-main-600 border border-solid border-main-600 rounded-[1.3rem]"
                 >
                   <Image src={CreateStudyIcon} alt="create study" />
                   <span className="text-label-400">스터디 만들기</span>
                 </Link>
                 <div className="flex gap-8 items-center">
-                  <div className="relative after:absolute after:top-1 after:left-[140%] after:block after:w-[1px] after:h-8 after:bg-label-alt [&:hover>ul]:block">
+                  <div className="relative after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[140%] after:block after:w-[1px] after:h-8 after:bg-label-alt [&:hover>ul]:block">
                     <Image
                       src={DummyProfileImg}
                       className="py-3"
@@ -135,20 +135,6 @@ export default async function Header() {
                             로그아웃
                           </span>
                         </UnstyledLogoutButton>
-                        {/* <button
-                          type="button"
-                          className="flex gap-3 items-center"
-                        >
-                          <Image
-                            src={LogoutIcon}
-                            alt="로그아웃"
-                            width={24}
-                            height={24}
-                          />
-                          <span className="text-base text-label-neutral">
-                            로그아웃
-                          </span>
-                        </button> */}
                       </li>
                     </ul>
                   </div>
@@ -157,13 +143,6 @@ export default async function Header() {
                   </div>
                 </div>
               </>
-
-              {/* <Link
-                href={"/login"}
-                className={`py-2 px-4 border border-solid border-main-600 rounded-[.6rem] text-main-600 font-semibold`}
-              >
-                로그인
-              </Link> */}
             </div>
           ) : (
             <LoginModal />
