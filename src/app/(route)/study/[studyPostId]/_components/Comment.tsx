@@ -23,7 +23,7 @@ export default function Comment() {
       ) : (
         <ul>
           {comments.map((list) => {
-            return <CommentList list={list} />;
+            return <CommentList key={list.commentId} list={list} />;
           })}
         </ul>
       )}

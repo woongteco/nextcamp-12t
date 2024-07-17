@@ -45,7 +45,7 @@ export default function CommentList({ list }: { list: TComment }) {
       {(list.replyComment?.length as number) > 0 ? (
         <ul className="flex flex-col gap-4 mt-4 pl-14">
           {list.replyComment.map((reply) => {
-            return <CommentReply reply={reply} />;
+            return <CommentReply key={reply.replyCommentId} reply={reply} />;
           })}
         </ul>
       ) : null}
