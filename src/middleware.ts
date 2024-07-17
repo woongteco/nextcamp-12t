@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "./auth";
 
 export const config = {
-  runtime: "experimental-edge", // for Edge API Routes 
+  runtime: "experimental-edge", // for Edge API Routes
   unstable_allowDynamic: [
     "/node_modules/function-bind/**", // use a glob to allow anything in the function-bind 3rd party module
   ],
-  matcher: ["/my/:path*", "/post/write"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/my/:path*",
+    "/post/write",
+  ],
 };
 
 export async function middleware(request: NextRequest) {
