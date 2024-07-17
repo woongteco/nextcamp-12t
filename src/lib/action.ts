@@ -56,10 +56,10 @@ export async function register(formData: FormData) {
   redirect("/");
 }
 
-export const loginGoogle = async () => {
+export async function loginGoogle() {
   await signIn("google");
-};
+}
 
-export const loginKakao = async () => {
+export async function loginKakao() {
   await signIn("kakao");
-};
+}
