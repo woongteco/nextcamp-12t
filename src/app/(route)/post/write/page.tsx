@@ -5,8 +5,16 @@ import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./_components/SelectCategory";
+import { getSession } from "@/auth";
+import NotFound from "@/app/not-found";
 
-export default function PostWrite() {
+export default async function PostWrite() {
+  const session = await getSession();
+
+  if (!session) {
+    return <NotFound />;
+  }
+
   return (
     <>
       <form action="" className="mt-20 mb-100 flex flex-col gap-[36px]">
