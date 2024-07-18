@@ -1,12 +1,8 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import LeaderProfile, { TLeaderProfile } from "./LeaderProfile";
-import {
-  Curriculum,
-  Rule,
-  getStudyLeaderUser,
-  getStudyPostDetail,
-} from "@/dummies/studypostdetail";
-import Accordion, { TAccordionList } from "../../_components/Accordion";
+import AccordionComponent, {
+  TAccordionList,
+} from "../../_components/AccordionComponent";
 
 export type TContents = {
   content: string;
@@ -43,8 +39,8 @@ export default function StudyDetailContent({
         </div>
       </div>
 
-      <Accordion title="규칙" lists={rule} />
-      <Accordion title="세부 커리큘럼" lists={curriculum} />
+      <AccordionComponent title="규칙" lists={rule} />
+      <AccordionComponent title="세부 커리큘럼" lists={curriculum} />
     </div>
   );
 }

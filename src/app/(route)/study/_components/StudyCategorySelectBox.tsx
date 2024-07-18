@@ -31,8 +31,8 @@ export default function StudyCategorySelectBox({
         items={CATEGORIES.map((item) => (
           <li
             key={item.value}
-            className={`w-pull px-[12px] py-[6px] hover:text-main-600
-            ${jobC === item.value ? "text-main-500" : ""}`}
+            className={`w-pull px-[12px] py-[6px] text-sm text-slate-700 font-normal hover:text-main-600
+            ${jobC === item.value ? "text-main-400" : ""}`}
           >
             <Link className="block" href={`/study?job_c=${item.value}`}>
               {item.label}

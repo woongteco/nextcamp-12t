@@ -21,10 +21,10 @@ export default function StudyCardList({
   }
   const STUDYCARD = count ? studyCards.slice(0, count) : studyCards;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+    <ul className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       {STUDYCARD.map((card) => (
         <StudyCardItem key={card.id} card={card} />
       ))}
-    </div>
+    </ul>
   );
 }
