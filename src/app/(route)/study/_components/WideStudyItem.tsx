@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BadgeIcon, PostCardHeart } from "@public/icons";
+import { BadgeIcon, PostCardHeart, SaveHeartIcon } from "@public/icons";
 import Link from "next/link";
 import { TStudyCard } from "@/dummies/studies";
 import Keyword from "@/common/Atoms/Text/Keyword";
@@ -23,10 +23,6 @@ export default function WideStudyItem({ card }: { card: TStudyCard }) {
         >
           {card.study.RecruitmentStatus}
         </Keyword>
-
-        <span className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer hover:bg-opacity-60">
-          <Image src={PostCardHeart} alt="찜하기" />
-        </span>
         <div className="absolute bottom-5 flex items-end justify-between px-5 w-full">
           <div className="flex items-center gap-[.25rem]">
             <Image
@@ -51,12 +47,24 @@ export default function WideStudyItem({ card }: { card: TStudyCard }) {
               {card.study.title}
             </p>
             <div className="mt-2 flex gap-1">
-              <span className="px-[1rem] py-[.35rem] text-caption border border-line-neutral text-line-neutral rounded-[4rem]">
+              <Keyword
+                text="text-line-neutral"
+                className="border border-line-neutral"
+              >
                 {card.study.people}
-              </span>
-              <span className="px-[1rem] py-[.35rem] text-caption border border-line-neutral text-line-neutral rounded-[4rem]">
+              </Keyword>
+              <Keyword
+                text="text-line-neutral"
+                className="border border-line-neutral"
+              >
                 {card.study.deadline}
-              </span>
+              </Keyword>
+              <Keyword
+                text="text-line-neutral"
+                className="border border-line-neutral"
+              >
+                좋아요 234
+              </Keyword>
             </div>
           </div>
         </div>

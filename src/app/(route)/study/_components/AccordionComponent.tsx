@@ -24,7 +24,7 @@ export default function AccordionComponent({
           type="button"
           aria-label="button"
           onClick={() => {
-            isOpen === false ? setIsOpen(true) : setIsOpen(false);
+            setIsOpen((isOpen) => !isOpen);
             console.log("isOpen", isOpen);
           }}
           className="flex items-center gap-4 py-6 w-full"
@@ -33,9 +33,7 @@ export default function AccordionComponent({
             src={ArrowIcon}
             alt="화살표"
             className={`${
-              isOpen === false
-                ? "rotate-0 transition-all"
-                : "rotate-180 transition-all"
+              !isOpen ? "rotate-0 transition-all" : "rotate-180 transition-all"
             }`}
           />
           <span className="text-label-normal font-semibold text-2xl">

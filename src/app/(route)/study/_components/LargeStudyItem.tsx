@@ -3,6 +3,7 @@ import Image from "next/image";
 import { BadgeIcon, PostCardHeart } from "@public/icons";
 import Link from "next/link";
 import { TStudyCard } from "@/dummies/studies";
+import Keyword from "@/common/Atoms/Text/Keyword";
 
 export default function LargeStudyItem({ card }: { card: TStudyCard }) {
   return (
@@ -18,9 +19,6 @@ export default function LargeStudyItem({ card }: { card: TStudyCard }) {
       <div className="w-full h-full absolute bg-gradient-to-t from-black to-black/30 bg-no-repeat rounded-[1.25rem]">
         <span className="absolute left-0 top-5 px-[1rem] py-[.35rem] bg-status-danger rounded-r-3xl text-white text-caption font-bold ">
           {card.study.RecruitmentStatus}
-        </span>
-        <span className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer hover:bg-opacity-60">
-          <Image src={PostCardHeart} className="" alt="heart Icon" />
         </span>
         <Link
           href={`/study/${card.id}`}
@@ -51,12 +49,24 @@ export default function LargeStudyItem({ card }: { card: TStudyCard }) {
             </p>
 
             <div className="mt-2 flex gap-1">
-              <span className="px-[1rem] py-[.35rem] text-caption border border-line-neutral text-line-neutral rounded-[4rem]">
+              <Keyword
+                text="text-line-neutral"
+                className="border border-line-neutral"
+              >
                 {card.study.people}
-              </span>
-              <span className="px-[1rem] py-[.35rem] text-caption border border-line-neutral text-line-neutral rounded-[4rem]">
+              </Keyword>
+              <Keyword
+                text="text-line-neutral"
+                className="border border-line-neutral"
+              >
                 {card.study.deadline}
-              </span>
+              </Keyword>
+              <Keyword
+                text="text-line-neutral"
+                className="border border-line-neutral"
+              >
+                좋아요 123
+              </Keyword>
             </div>
           </div>
         </Link>

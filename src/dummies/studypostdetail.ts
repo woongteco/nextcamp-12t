@@ -80,27 +80,6 @@ export function getStudyPostDetail() {
         { listId: 3, content: "3주차 : 클론피그마 활용 TIP" },
         { listId: 4, content: "4주차 : 유튜브 뮤직앱 클론피그마 완성" },
       ],
-      // rule: {
-      //   accordionId: 1,
-      //   lists: [
-      //     {
-      //       listId: 1,
-      //       content: "⏰ 집중 작업 시간 [ PM 14:00 - PM 17:00 ] ⏰",
-      //     },
-      //     { listId: 2, content: "개인사정 및 불참 시 미리 공지하기" },
-      //     { listId: 3, content: "모르는 부분은 바로바로 질문하기" },
-      //     { listId: 4, content: "공유 및 대화 환영하기" },
-      //   ],
-      // },
-      // curriculum: {
-      //   accordionId: 2,
-      //   lists: [
-      //     { listId: 1, content: "1주차 : 유튜브 뮤직앱 클론피그마 도전" },
-      //     { listId: 2, content: "2주차 : 강의 시청 및 과제 부가" },
-      //     { listId: 3, content: "3주차 : 클론피그마 활용 TIP" },
-      //     { listId: 4, content: "4주차 : 유튜브 뮤직앱 클론피그마 완성" },
-      //   ],
-      // },
     },
   };
   return result;

@@ -8,11 +8,7 @@ export default function AccordionList({
   isOpen: boolean;
 }) {
   return (
-    <ul
-      className={`${
-        isOpen === true ? "flex " : "hidden"
-      } flex-col gap-12 pt-6 pb-16`}
-    >
+    <ul className={`${isOpen ? "flex " : "hidden"} flex-col gap-12 pt-6 pb-16`}>
       {lists.map((list) => {
         return (
           <li key={list.listId} className="flex items-center gap-4">

@@ -38,14 +38,6 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
             alt={`${card.study.title} thumbnail`}
             className="thumbnailImage object-cover min-w-full w-auto h-auto"
           />
-          <form
-            action=""
-            className="flex items-center justify-center absolute right-4 top-5 w-[1.875rem] h-[1.875rem] bg-black bg-opacity-30 rounded-full cursor-pointer"
-          >
-            <button>
-              <Image src={PostCardHeart} className="" alt="heart Icon" />
-            </button>
-          </form>
         </div>
         <div className="block my-4 px-3 h-[7.75rem]">
           <span className="text-label-400 text-label-dimmed line-clamp-1">
@@ -72,6 +64,9 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
             </Keyword>
             <Keyword bg="bg-card" text="text-label-normal">
               {card.study.deadline}
+            </Keyword>
+            <Keyword bg="bg-card" text="text-label-normal">
+              좋아요 234
             </Keyword>
           </div>
         </div>
