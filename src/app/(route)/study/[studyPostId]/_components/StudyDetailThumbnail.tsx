@@ -1,13 +1,11 @@
-import StudyDetailThumbnailInfo from "./StudyDetailThumbnailInfo";
-import StudyDetailThumbnailImg from "./StudyDetailThumbnailImg";
 import Image from "next/image";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import ThumbnailInfoList from "./ThumbnailInfoLabel";
-import ThumbnailInfoValue from "./ThumbnailInfoValue";
 import Link from "next/link";
 import ShareIconButton from "@/app/(route)/_components/ShareIconButton";
 import { DetailFullHeartIcon } from "@public/icons";
 import dayjs from "dayjs";
+import SaveHeartButton from "@/common/Molecules/Form/SaveHeartButton";
 
 export type TThumbnailInfo = {
   thumbnailUrl: string;
@@ -74,7 +72,7 @@ export default function StudyDetailThumbnail({
           </Keyword>
         </div>
       </div>
-      <div>
+      <div className="flex-1">
         <span className="block mb-3 text-[#888] text-xl">
           {jobCategory.label}
         </span>
@@ -104,17 +102,7 @@ export default function StudyDetailThumbnail({
           </button>
           <div className="flex items-center gap-3">
             <ShareIconButton />
-            <Image
-              className="w-9 h-9"
-              width={36}
-              height={36}
-              src={DetailFullHeartIcon}
-              // DetailHeartIcon (빈 하트)
-              alt="좋아요"
-            />
-            <span className="text-label-neutral font-semibold">
-              {heartCount}
-            </span>
+            <SaveHeartButton heartCount={heartCount} />
           </div>
         </div>
       </div>
