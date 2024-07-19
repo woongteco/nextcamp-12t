@@ -5,8 +5,16 @@ import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./_components/SelectCategory";
+import { getSession } from "@/auth";
+import NotFound from "@/app/not-found";
 
-export default function PostWrite() {
+export default async function PostWrite() {
+  const session = await getSession();
+
+  if (!session) {
+    return <NotFound />;
+  }
+
   return (
     <>
       <form action="" className="mt-20 mb-100 flex flex-col gap-[36px]">
@@ -22,7 +30,6 @@ export default function PostWrite() {
             글 내용
           </LabelText>
           <TextEditor
-            required
             className="h-[580px]"
             placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
           />

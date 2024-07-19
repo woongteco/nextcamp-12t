@@ -80,15 +80,9 @@ export default async function Header() {
                       className="py-3"
                       alt="profile img"
                     />
-                    <ul className="fixed top-[4.0625rem] py-1 bg-white shadow-emphasize rounded-b-xl hidden">
-                      {profileDepthList.map(({ link, title, icon }, index) => (
-                        <li
-                          className={`px-4 ${
-                            index === profileDepthList.length - 1
-                              ? "pt-2 pb-3"
-                              : "py-2"
-                          }`}
-                        >
+                    <ul className="fixed top-[4.0625rem] bg-white shadow-emphasize rounded-b-xl hidden">
+                      {profileDepthList.map(({ link, title, icon }) => (
+                        <li className={"px-4 py-3 hover:bg-gray-100"}>
                           <Link href={link} className="flex gap-3 items-center">
                             <Image
                               src={icon}
@@ -102,7 +96,7 @@ export default async function Header() {
                           </Link>
                         </li>
                       ))}
-                      <li className="pt-3 pb-2 px-4 border-t">
+                      <li className="px-4 py-3 border-t hover:rounded-b-xl hover:bg-gray-100">
                         <UnstyledLogoutButton className="flex gap-3 items-center">
                           <Image
                             src={LogoutIcon}

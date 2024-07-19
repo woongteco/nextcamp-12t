@@ -48,7 +48,10 @@ export default function LeaderProfile({
       <p className="pt-4 text-sm text-label-dimmed">{profile.content}</p>
       <div className="flex gap-4 mt-4">
         {profile.tags.map((tag) => (
-          <span className="py-1 px-5 text-main-600 text-xs font-semibold border border-blue-600 rounded-twenty">
+          <span
+            key={tag}
+            className="py-1 px-5 text-main-600 text-xs font-semibold border border-blue-600 rounded-twenty"
+          >
             {tag}
           </span>
         ))}

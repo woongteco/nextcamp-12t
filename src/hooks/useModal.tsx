@@ -13,7 +13,8 @@ type TModalHookParams<T> = TProps & {
 export default function useModal<T>(props: TModalHookParams<T>) {
   const { onClose, children, defaultValue = false, key = undefined } = props;
   const modalRef = useRef<HTMLDialogElement>(null);
-  const modalKey = key || useId();
+  const uid = useId();
+  const modalKey = key || uid;
   const [show, setShow] = useState(defaultValue);
 
   useDialogEscape({
