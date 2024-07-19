@@ -63,7 +63,6 @@ export default async function Header() {
               </ul>
             </nav>
           </div>
-
           {session ? (
             <div className="flex gap-8 items-center">
               <>
@@ -82,10 +81,12 @@ export default async function Header() {
                       alt="profile img"
                     />
                     <ul className="fixed top-[4.0625rem] py-1 bg-white shadow-emphasize rounded-b-xl hidden">
-                      {profileDepthList.map(({ link, title, icon }) => (
+                      {profileDepthList.map(({ link, title, icon }, index) => (
                         <li
                           className={`px-4 ${
-                            title === "내가 쓴 글" ? "pt-2 pb-3" : "py-2"
+                            index === profileDepthList.length - 1
+                              ? "pt-2 pb-3"
+                              : "py-2"
                           }`}
                         >
                           <Link href={link} className="flex gap-3 items-center">
