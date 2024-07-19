@@ -43,10 +43,12 @@ export default function StudyComponent({
           <StudyCategorySelectBox searchParams={searchParams} />
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
+              paramsKey="c"
               categoryName={GOALS}
               categoryIcons={categoryIconsName}
             />
             <StudyCategoryTabButtonList
+              paramsKey="l"
               categoryName={ONOFF}
               categoryIcons={onOffIconsName}
             />
