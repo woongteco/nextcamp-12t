@@ -16,6 +16,29 @@ import LoginModal from "@/app/(auth)/_components/LoginModal";
 import { getSession } from "@/auth";
 import UnstyledLogoutButton from "./UnstyledLogoutButton";
 
+const profileDepthList = [
+  {
+    link: "/my/profile",
+    title: "내 프로필",
+    icon: SettingProfileIcon,
+  },
+  {
+    link: "/my/study",
+    title: "내 스터디",
+    icon: StudyIcon,
+  },
+  {
+    link: "/my/like-study",
+    title: "찜 스터디",
+    icon: SaveHeartIcon,
+  },
+  {
+    link: "/my/post",
+    title: "내가 쓴 글",
+    icon: PostIcon,
+  },
+];
+
 export default async function Header() {
   const session = await getSession();
 
@@ -59,70 +82,25 @@ export default async function Header() {
                       alt="profile img"
                     />
                     <ul className="fixed top-[4.0625rem] py-1 bg-white shadow-emphasize rounded-b-xl hidden">
-                      <li className="py-2 px-4">
-                        <Link
-                          href={`/my/profile`}
-                          className="flex gap-3 items-center"
+                      {profileDepthList.map(({ link, title, icon }) => (
+                        <li
+                          className={`px-4 ${
+                            title === "내가 쓴 글" ? "pt-2 pb-3" : "py-2"
+                          }`}
                         >
-                          <Image
-                            src={SettingProfileIcon}
-                            alt="내 프로필"
-                            width={24}
-                            height={24}
-                          />
-                          <span className="text-base text-label-neutral">
-                            내 프로필
-                          </span>
-                        </Link>
-                      </li>
-                      <li className="py-2 px-4">
-                        <Link
-                          href={`/my/study`}
-                          className="flex gap-3 items-center"
-                        >
-                          <Image
-                            src={StudyIcon}
-                            alt="내 스터디"
-                            width={24}
-                            height={24}
-                          />
-                          <span className="text-base text-label-neutral">
-                            내 스터디
-                          </span>
-                        </Link>
-                      </li>
-                      <li className="py-2 px-4">
-                        <Link
-                          href={`/my/like-study`}
-                          className="flex gap-3 items-center"
-                        >
-                          <Image
-                            src={SaveHeartIcon}
-                            alt="찜 스터디"
-                            width={24}
-                            height={24}
-                          />
-                          <span className="text-base text-label-neutral">
-                            찜 스터디
-                          </span>
-                        </Link>
-                      </li>
-                      <li className="pt-2 pb-3 px-4">
-                        <Link
-                          href={`/my/post`}
-                          className="flex gap-3 items-center"
-                        >
-                          <Image
-                            src={PostIcon}
-                            alt="내가 쓴 글"
-                            width={24}
-                            height={24}
-                          />
-                          <span className="text-base text-label-neutral">
-                            내가 쓴 글
-                          </span>
-                        </Link>
-                      </li>
+                          <Link href={link} className="flex gap-3 items-center">
+                            <Image
+                              src={icon}
+                              alt={title}
+                              width={24}
+                              height={24}
+                            />
+                            <span className="text-base text-label-neutral">
+                              {title}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
                       <li className="pt-3 pb-2 px-4 border-t">
                         <UnstyledLogoutButton className="flex gap-3 items-center">
                           <Image
