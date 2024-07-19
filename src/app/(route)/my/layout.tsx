@@ -1,3 +1,5 @@
+"use client";
+
 import SidebarAsideContentArea from "@/common/Layout/Sidebar/SidebarAsideContentArea";
 import SidebarNavArea from "@/common/Layout/Sidebar/SidebarNavArea";
 import SideNavItem from "@/common/Layout/Sidebar/SideNavItem";
