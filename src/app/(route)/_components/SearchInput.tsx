@@ -1,8 +1,24 @@
+"use client";
+
+import useQueryString from "@/hooks/useQueryString";
+import { FormEvent } from "react";
+
 export default function SearchInput() {
+  const onChangeQuery = useQueryString({
+    paramsKey: "q",
+    queryInclude: "search",
+  });
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onChangeQuery(e.currentTarget.search.value);
+  };
+
   return (
-    <div className="relative">
+    <form className="relative" onSubmit={onSubmit}>
       <input
         type="search"
+        name="search"
         placeholder="검색어를 입력하세요"
         className="w-[380px] py-2 pr-9 pl-6 border border-line-normal rounded-lg placeholder:text-label-assist placeholder:text-label-nomral"
       />
@@ -23,6 +39,6 @@ export default function SearchInput() {
           />
         </svg>
       </span>
-    </div>
+    </form>
   );
 }

@@ -1,9 +1,11 @@
+"use client";
+
 import NotFound from "@/app/not-found";
 import Dropdown from "@/common/Molecules/Dropdown";
-import Link from "next/link";
 import { TQuery } from "../page";
 import { CATEGORIES } from "@/constants/categories/job_category";
 import { CategoryGroup } from "@/types/model/Category";
+import useQueryString from "@/hooks/useQueryString";
 
 export default function StudyCategorySelectBox({
   searchParams,
@@ -24,6 +26,16 @@ export default function StudyCategorySelectBox({
   if (jobCategory === undefined) {
     return <NotFound />;
   }
+
+  const onChangeQuery = useQueryString({
+    paramsKey: "job_c",
+    queryInclude: "search",
+  });
+
+  const onClickLink = (value: string) => {
+    onChangeQuery(value);
+  };
+
   return (
     <div className="mb-6 text-lg font-medium text-gray-950">
       <Dropdown
@@ -34,9 +46,9 @@ export default function StudyCategorySelectBox({
             className={`w-pull px-[12px] py-[6px] text-sm text-slate-700 font-normal hover:text-main-600
             ${jobC === item.value ? "text-main-400" : ""}`}
           >
-            <Link className="block" href={`/study/search?job_c=${item.value}`}>
+            <button className="block" onClick={() => onClickLink(item.value)}>
               {item.label}
-            </Link>
+            </button>
           </li>
         ))}
       />
