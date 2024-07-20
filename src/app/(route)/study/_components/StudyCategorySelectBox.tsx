@@ -21,11 +21,6 @@ export default function StudyCategorySelectBox({
     },
     ...CATEGORIES,
   ];
-  const jobCategory = categories.find((item) => item.value === jobC);
-
-  if (jobCategory === undefined) {
-    return <NotFound />;
-  }
 
   const onChangeQuery = useQueryString({
     paramsKey: "job_c",
@@ -35,6 +30,12 @@ export default function StudyCategorySelectBox({
   const onClickLink = (value: string) => {
     onChangeQuery(value);
   };
+
+  const jobCategory = categories.find((item) => item.value === jobC);
+
+  if (jobCategory === undefined) {
+    return <NotFound />;
+  }
 
   return (
     <div className="mb-6 text-lg font-medium text-gray-950">
