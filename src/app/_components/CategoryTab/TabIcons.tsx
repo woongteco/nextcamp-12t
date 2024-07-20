@@ -11,7 +11,6 @@ import {
   PuzzleIcon,
   TIconStylingProps,
 } from "@/common/Atoms/Image/Icon";
-import { FunctionComponent } from "react";
 
 export const categoryIconsName = [
   "Notebook",

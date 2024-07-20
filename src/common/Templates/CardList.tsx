@@ -10,21 +10,21 @@ import StudyCardItem from "../Organisms/StudyCardItem";
 import NoneStudyComponent from "@/app/(route)/study/_components/NoneStudyComponent";
 
 export default function StudyCardList({
-  studyCard,
+  studyCards,
   count,
 }: {
-  studyCard: TStudyCard[];
+  studyCards: TStudyCard[];
   count?: number;
 }) {
-  if (!studyCard) {
+  if (!studyCards) {
     return <NoneStudyComponent />;
   }
-  const STUDYCARD = count ? studyCard.slice(0, count) : studyCard;
+  const STUDYCARD = count ? studyCards.slice(0, count) : studyCards;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+    <ul className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       {STUDYCARD.map((card) => (
         <StudyCardItem key={card.id} card={card} />
       ))}
-    </div>
+    </ul>
   );
 }
