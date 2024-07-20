@@ -20,7 +20,7 @@ export default function Comment({ comments }: { comments: TComment[] }) {
       ) : (
         <ul>
           {comments.map((list) => {
-            return <CommentList list={list} />;
+            return <CommentList key={list.commentId} list={list} />;
           })}
         </ul>
       )}

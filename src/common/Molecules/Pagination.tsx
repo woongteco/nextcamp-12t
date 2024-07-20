@@ -1,7 +1,7 @@
 import { TButtonProps, TIconButtonProps } from "@/types/component/props";
 import Button from "../Atoms/Form/Button";
 import { PaginationChevronIcon } from "../Atoms/Image/Icon";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useId } from "react";
 
 type TPages = {
   length: number;
@@ -10,6 +10,7 @@ type TPages = {
 };
 export default function Pagination(props: TPages) {
   const { length, current, setCurrent } = props;
+  const thisId = useId();
   const pageNums = Array(length)
     .fill(1)
     .map((num, idx) => num + idx);
@@ -31,6 +32,7 @@ export default function Pagination(props: TPages) {
       <div className="flex items-center justify-center">
         {pageNums.map((page) => (
           <PageButton
+            key={`${thisId}-page-${page}`}
             active={current === page}
             onClick={() => setCurrent(page)}
           >
