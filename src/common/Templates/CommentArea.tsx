@@ -4,7 +4,7 @@ import CommentInput from "../Organisms/Comment/CommentInput";
 import { TUserBase } from "@/types/model/User";
 
 // 데이터 없이 화면 테스트 시 컴포넌트 내부에서 comments 대신 example로 변경 후 확인
-const example: TComment[] = [
+export const example: TComment[] = [
   {
     commentId: "0",
     content: "디자인 초보도 참여 가능할까요?",
