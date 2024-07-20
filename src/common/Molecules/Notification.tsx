@@ -75,7 +75,9 @@ export default function Notification(props: {
       } max-w-md w-full bg-black/70 text-white shadow-strong rounded-lg pointer-events-auto flex backdrop-blur-[2px]`}
     >
       <div className="flex-1 w-0 p-4">
-        <div className="flex items-start">
+        <div
+          className={`flex items-start ${status === "error" && "items-center"}`}
+        >
           {status !== "default" && (
             <div className="flex-shrink-0 pt-0.5">
               <div
@@ -88,7 +90,13 @@ export default function Notification(props: {
               </div>
             </div>
           )}
-          <div className="ml-3 flex flex-col gap-1">
+          <div
+            className={`ml-3 flex gap-1 ${
+              status === "error"
+                ? "w-full justify-center flex-row"
+                : "flex flex-col"
+            }`}
+          >
             {message?.title && (
               <p className="text-label-600 text-white">{message.title}</p>
             )}
