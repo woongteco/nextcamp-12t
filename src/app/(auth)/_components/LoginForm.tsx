@@ -2,7 +2,7 @@
 
 import { FormEvent } from "react";
 import Link from "next/link";
-import { UserEmail, UserPassword } from "./UserInput";
+import { Input } from "./UserInput";
 import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
@@ -24,15 +24,25 @@ export default function LoginForm() {
       });
       alert("로그인 완료");
     } catch (error) {
-      console.log(error);
+      alert("이메일 또는 비밀번호가 일치하지 않습니다.");
     }
   }
 
   return (
     <>
       <form onSubmit={login} className="flex flex-col w-full gap-5">
-        <UserEmail />
-        <UserPassword />
+        <Input
+          id="email"
+          type="email"
+          title="이메일"
+          placeholder="example@chemeet.com"
+        />
+        <Input
+          id="password"
+          type="password"
+          title="비밀번호"
+          placeholder="********"
+        />
         <div className="w-full flex flex-col items-center gap-4">
           <button className="w-full rounded-md py-2 text-white bg-main-600">
             로그인
