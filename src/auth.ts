@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin("정보를 다시 확인해주세요.");
         }
 
-        connectDB();
+        await connectDB();
 
         const user = await User.findOne({ email }).select(
           "+id +name +image +phone +role"
@@ -66,32 +66,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    signIn: async ({ user, account }: { user: any; account: any }) => {
-      console.log("확인", user, account);
+    // signIn: async ({ user, account }: { user: any; account: any }) => {
+    //   console.log("확인", user, account);
 
-      if (account?.provider === "google" || account?.provider === "kakao") {
-        const { email, name } = user;
+    //   if (account?.provider === "google" || account?.provider === "kakao") {
+    //     const { email, name } = user;
 
-        console.log("소셜정보", email, name);
+    //     console.log("소셜정보", email, name);
 
-        await connectDB();
+    //     await connectDB();
 
-        // 수정 고유값 필요 providerAccountId 값을 db에 저장
-        const socialUserCheck = await User.findOne({
-          email,
-          authProviderId: "google" || "kakao",
-        });
+    //     // 수정 고유값 필요 providerAccountId 값을 db에 저장
+    //     const socialUserCheck = await User.findOne({
+    //       email,
+    //       authProviderId: "google" || "kakao",
+    //     });
 
-        if (!socialUserCheck) {
-          await new User({
-            name,
-            email,
-          });
-        }
-      }
+    //     if (!socialUserCheck) {
+    //       await new User({
+    //         name,
+    //         email,
+    //       });
+    //     }
+    //   }
 
-      return true;
-    },
+    //   return true;
+    // },
 
     async jwt({
       token,
