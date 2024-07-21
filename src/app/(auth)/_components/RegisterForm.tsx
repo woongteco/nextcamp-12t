@@ -5,8 +5,7 @@ import { FormEvent } from "react";
 import RegisterCheck from "./RegisterCheck";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import toast, { Toast } from "react-hot-toast";
-import Notification from "@/common/Molecules/Notification";
+import handleAlert from "./ErrorAlert";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -29,25 +28,13 @@ export default function RegisterForm() {
         name,
         phone,
       });
-      alert(response.data.message);
+      handleAlert("success", response.data.message);
       router.replace("/");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        handleError(error.response?.data.message);
+        handleAlert("error", error.response?.data.message);
       }
     }
-  }
-
-  function handleError(content: string) {
-    toast.custom((t: Toast) => (
-      <Notification
-        t={t}
-        status="error"
-        message={{
-          title: content,
-        }}
-      />
-    ));
   }
 
   return (

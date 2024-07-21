@@ -9,9 +9,10 @@ type TUserInput = {
   type: string;
   title: string;
   placeholder: string;
+
 };
 
-export function Input({ id, type, title, placeholder }: TUserInput) {
+export function Input({ id, type, title, placeholder}: TUserInput) {
   const [pwToggle, setPwToggle] = useState(false);
 
   return (

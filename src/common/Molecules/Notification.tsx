@@ -76,7 +76,9 @@ export default function Notification(props: {
     >
       <div className="flex-1 w-0 p-4">
         <div
-          className={`flex items-start ${status === "error" && "items-center"}`}
+          className={`flex items-start ${
+            (status === "error" || status === "success") && "items-center"
+          }`}
         >
           {status !== "default" && (
             <div className="flex-shrink-0 pt-0.5">
@@ -92,7 +94,7 @@ export default function Notification(props: {
           )}
           <div
             className={`ml-3 flex gap-1 ${
-              status === "error"
+              status === "error" || status === "success"
                 ? "w-full justify-center flex-row"
                 : "flex flex-col"
             }`}
