@@ -4,8 +4,12 @@ import { FormEvent } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import handleAlert from "./ErrorAlert";
 
 export default function LoginForm() {
+  const router = useRouter();
+
   async function login(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -14,18 +18,22 @@ export default function LoginForm() {
     const password = formData.get("password");
 
     if (!email || !password) {
-      alert("입력한 정보를 다시 확인해 주세요.");
+      handleAlert("error", "입력한 정보를 다시 확인해 주세요.");
+      return;
     }
-    try {
-      await signIn("credentials", {
-        callbackUrl: "/",
-        email,
-        password,
-      });
-      alert("로그인 완료");
-    } catch (error) {
-      alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+
+    const login = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (login?.error) {
+      handleAlert("error", "이메일 또는 비밀번호를 다시 확인해주세요.");
+      return;
     }
+
+    router.refresh();
   }
 
   return (
