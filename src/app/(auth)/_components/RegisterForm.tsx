@@ -1,13 +1,14 @@
 "use client";
 
 import { Input } from "./UserInput";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import RegisterCheck from "./RegisterCheck";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import handleAlert from "./ErrorAlert";
 
 export default function RegisterForm() {
+  const [phoneData, setPhoneData] = useState<string>("");
   const router = useRouter();
 
   async function register(e: FormEvent<HTMLFormElement>) {
@@ -35,6 +36,11 @@ export default function RegisterForm() {
         handleAlert("error", error.response?.data.message);
       }
     }
+  }
+
+  function handlePhoneInput(e: ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    setPhoneData(value);
   }
 
   return (
@@ -72,6 +78,8 @@ export default function RegisterForm() {
           type="tel"
           title="휴대폰 번호"
           placeholder="01012345678 (- 제외 숫자만 가능)"
+          onChange={handlePhoneInput}
+          value={phoneData}
         />
         <RegisterCheck />
         <button className="w-full rounded-md py-2 text-white bg-main-600">
