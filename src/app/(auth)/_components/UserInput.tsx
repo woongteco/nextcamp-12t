@@ -45,7 +45,7 @@ export function Input({
         {(id === "password" || id === "pwCheck") && (
           <button
             type="button"
-            className="p-2 mx-2 hover:bg-slate-50 hover:rounded-md"
+            className="p-1 mx-2 hover:bg-slate-50 hover:rounded-md"
             onClick={() => setPwToggle(!pwToggle)}
           >
             <Image
