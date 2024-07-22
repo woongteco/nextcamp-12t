@@ -1,22 +1,24 @@
 import { ActionMeta } from "react-select";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 import Input from "@/common/Molecules/Form/Input";
 import ProfileImageInput from "./ProfileImageInput";
 import ProfileInputArea from "./ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
 import { CATEGORIES } from "@/constants/categories/job_category";
-import { TProfileData } from "../page";
+import { Session } from "next-auth";
+import axios from "axios";
+import handleAlert from "@/app/(auth)/_components/ErrorAlert";
+import { TProfileData } from "./ProfileForms";
 
 export default function FormEditProfile({
   data,
   setData,
+  session,
 }: {
   data: TProfileData;
   setData: Dispatch<SetStateAction<TProfileData>>;
+  session: Session | null;
 }) {
-  function changeProfileImage(profileUrl: string) {
-    setData((p) => ({ ...p, profileUrl }));
-  }
   const changeData = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -29,15 +31,32 @@ export default function FormEditProfile({
     newValue: unknown,
     actionMeta: ActionMeta<unknown>
   ) => void = (newValue) => {
-    console.log({ newValue });
+    // console.log({ newValue });
     if (Array.isArray(newValue)) setData((p) => ({ ...p, interest: newValue }));
   };
 
+  async function save(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const userId = session?.user.id;
+    const my_category = data.interest.map((v) => v.value);
+    try {
+      const response = await axios.post("/api/auth/profile", {
+        // userId,
+        position_tag: data.positionTag,
+        introduce: data.introduce,
+        my_category,
+      });
+      handleAlert("success", response.data.message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        handleAlert("error", error.response?.data.message);
+      }
+    }
+  }
+
   return (
-    <div className="flex flex-col gap-8">
-      <ProfileInputArea label="아바타 이미지">
-        <ProfileImageInput setProfileImg={changeProfileImage} />
-      </ProfileInputArea>
+    <form onSubmit={save} className="flex flex-col gap-8">
       <ProfileInputArea label="포지션 태그">
         <Input.Text
           name="positionTag"
@@ -53,20 +72,27 @@ export default function FormEditProfile({
           onChange={changeData}
         />
       </ProfileInputArea>
-      <ProfileInputArea label="이메일">
-        <Input.Email name="email" value={data.email} onChange={changeData} />
-        <div className="flex gap-4 items-center">
-          <Button
-            variation="outline"
-            colors={{ bg: "bg-main-600", text: "text-main-600" }}
-          >
-            이메일 인증
-          </Button>
-          <span className="text-label-400 text-main-600">
-            *변경 후 재인증이 필요합니다.
-          </span>
-        </div>
-      </ProfileInputArea>
+      {session?.account.provider === "credentials" && (
+        <ProfileInputArea label="이메일">
+          <Input.Email
+            name="email"
+            value={data.email}
+            onChange={changeData}
+            placeholder="이메일 주소를 입력하세요"
+          />
+          <div className="flex gap-4 items-center">
+            <Button
+              variation="outline"
+              colors={{ bg: "bg-main-600", text: "text-main-600" }}
+            >
+              이메일 인증
+            </Button>
+            <span className="text-label-400 text-main-600">
+              *변경 후 재인증이 필요합니다.
+            </span>
+          </div>
+        </ProfileInputArea>
+      )}
       <ProfileInputArea label="관심 카테고리">
         <Input.Select
           name="interest"
@@ -80,6 +106,6 @@ export default function FormEditProfile({
       <Button type="submit" variation="solid" className="self-start">
         프로필 저장
       </Button>
-    </div>
+    </form>
   );
 }
