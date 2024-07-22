@@ -8,7 +8,7 @@ const NOW_DATE = new Intl.DateTimeFormat("kr-KO", {
   day: "numeric",
 }).format(Date.now());
 
-export default function MainStatusBoard({ name }: { name: string }) {
+export default function MainStatusBoard({ name }: { name: string | null }) {
   // const user = getUser();
   return (
     <section>

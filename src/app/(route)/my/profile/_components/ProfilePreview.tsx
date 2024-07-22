@@ -4,7 +4,7 @@ import { DummyProfileImg } from "@public/images";
 import { TProfileData } from "../page";
 
 type TProfilePreviewProps = {
-  name: string;
+  name: string | null | undefined;
   data: TProfileData;
 };
 
@@ -16,7 +16,7 @@ export default function ProfilePreview({ name, data }: TProfilePreviewProps) {
         <ProfileImg
           size="xxlarge"
           src={data.profileUrl || DummyProfileImg}
-          alt={name}
+          alt={name + "프로필 이미지"}
         />
         <p className="text-H3 text-label-normal">
           {data.positionTag ? data.positionTag + " " : ""}

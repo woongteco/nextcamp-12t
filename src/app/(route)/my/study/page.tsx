@@ -3,8 +3,10 @@ import StudyCardItem from "@/common/Organisms/StudyCardItem";
 import { getStudiesData } from "@/dummies/studies";
 import { getUser } from "@/dummies/user";
 import CircleProgressGraph from "../_components/CircleProgressGraph";
+import { getSession } from "@/auth";
 
-export default function MyStudyPage() {
+export default async function MyStudyPage() {
+  const session = await getSession();
   const user = getUser();
   const studyCard = getStudiesData();
   const mission = { total: 5, done: 4 };
@@ -12,7 +14,7 @@ export default function MyStudyPage() {
     <div className="flex flex-col gap-100">
       <section>
         <SectionTitle size="lg" className="mb-6">
-          {user.name}님, 오늘 하루도 달려봐요!
+          {session?.user.name}님, 오늘 하루도 달려봐요!
         </SectionTitle>
         <div className="grid gap-6 grid-flow-col lg:grid-flow-row grid-cols-[4fr_2fr] [&>.cardBox]:h-[220px] [&>.cardBox]:bg-card [&>.cardBox]:rounded-twenty [&>.cardBox]:px-8 [&>.cardBox]:py-6">
           <div className="cardBox relative">

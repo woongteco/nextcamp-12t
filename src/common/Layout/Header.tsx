@@ -43,7 +43,6 @@ export default async function Header() {
               </ul>
             </nav>
           </div>
-
           {session ? (
             <div data-name="header__right-side__profile">
               <ResponsiveMenu

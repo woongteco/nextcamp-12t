@@ -5,6 +5,7 @@ import { User } from "./lib/schema";
 import { compare } from "bcryptjs";
 import google from "next-auth/providers/google";
 import kakao from "next-auth/providers/kakao";
+import github from "next-auth/providers/github";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -22,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin("정보를 다시 확인해주세요.");
         }
 
-        connectDB();
+        await connectDB();
 
         const user = await User.findOne({ email }).select(
           "+id +name +image +phone +role"
@@ -58,6 +59,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientId: process.env.AUTH_KAKAO_ID,
       clientSecret: process.env.AUTH_KAKAO_SECRET,
     }),
+
+    github({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    }),
   ],
 
   session: {
@@ -66,27 +72,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    signIn: async ({ user, account }: { user: any; account: any }) => {
+    async signIn({ user, account }: { user: any; account: any }) {
       console.log("확인", user, account);
 
-      if (account?.provider === "google" || account?.provider === "kakao") {
-        const { email, name } = user;
-
-        console.log("소셜정보", email, name);
+      if (account?.provider !== "credentials") {
+        const { name } = user;
+        const { providerAccountId, provider } = account;
 
         await connectDB();
 
-        // 수정 고유값 필요 providerAccountId 값을 db에 저장
         const socialUserCheck = await User.findOne({
-          email,
-          authProviderId: "google" || "kakao",
+          providerAccountId,
+          provider,
         });
 
         if (!socialUserCheck) {
-          await new User({
+          const user = await new User({
             name,
-            email,
+            providerAccountId,
+            provider,
           });
+          const dbSave = await user.save();
+          console.log("소셜회원정보 저장 완료" + dbSave);
         }
       }
 
@@ -104,31 +111,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }) {
       console.log("JWT", token, "USER", user, "ACCOUNT", account);
 
-      if (account) {
-        token.id = user.id;
-        token.phone = user.phone;
-        token.role = user.role;
-        token.accessToken = account.access_token;
+      if (user) {
+        token.user = user;
+        token.account = account;
       }
 
       return token;
     },
 
-    async session({
-      session,
-      token,
-      user,
-    }: {
-      session: any;
-      token: any;
-      user: any;
-    }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.phone = token.phone;
-        session.user.role = token.role;
-        session.accessToken = token.accessToken;
-      }
+    async session({ session, token }: { session: any; token: any }) {
+      session.user = token.user;
+      session.account = token.account;
+
       return session;
     },
   },

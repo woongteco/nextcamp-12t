@@ -5,9 +5,11 @@ export { default as AlarmIcon } from "./AlarmIcon.svg";
 
 export { default as Kakao } from "./login/Kakao.svg";
 export { default as Google } from "./login/Google.svg";
+export { default as Github } from "./login/Github.svg";
 export { default as SocialLogin } from "./login/SocialLogin.svg";
 export { default as PasswordCheck } from "./login/PasswordCheck.svg";
 export { default as PasswordHide } from "./login/PasswordHide.svg";
+export { default as PasswordShow } from "./login/PasswordShow.svg";
 
 // header
 export { default as SettingProfileIcon } from "./header/SettingProfileIcon.svg";
