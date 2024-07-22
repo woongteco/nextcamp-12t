@@ -40,7 +40,7 @@ export default function TabButtonsOfGoalSection() {
           );
         })}
       </div>
-      <StudyCardList studyCard={proStudies} count={8} />
+      <StudyCardList studyCards={proStudies} count={8} />
     </>
   );
 }

@@ -1,17 +1,19 @@
-import { TAccordionList } from "./Accordion";
+import { TAccordionList } from "./AccordionComponent";
 
 export default function AccordionList({
-  contentList,
+  lists,
+  isOpen,
 }: {
-  contentList: TAccordionList[];
+  lists: TAccordionList[];
+  isOpen: boolean;
 }) {
   return (
-    <ul className="flex flex-col gap-12 pt-6 pb-16">
-      {contentList.map((list) => {
+    <ul className={`${isOpen ? "flex " : "hidden"} flex-col gap-12 pt-6 pb-16`}>
+      {lists.map((list) => {
         return (
-          <li key={list.accordionId} className="flex items-center gap-4">
+          <li key={list.listId} className="flex items-center gap-4">
             <span className="py-[3px] px-3 w-9 h-9 border-2 border-neutral-500 rounded-full font-semibold text-neutral-500">
-              {list.accordionId}
+              {list.listId}
             </span>
             <p className="text-lg font-semibold text-neutral-500">
               {list.content}

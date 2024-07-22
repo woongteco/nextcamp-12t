@@ -51,7 +51,7 @@ export type TStudyCard = {
   };
 };
 
-const studyCard: TStudyCard[] = [
+const studyCards: TStudyCard[] = [
   {
     id: 1,
     user: {
@@ -199,5 +199,5 @@ const studyCard: TStudyCard[] = [
 ];
 
 export function getStudiesData(): TStudyCard[] {
-  return studyCard;
+  return studyCards;
 }

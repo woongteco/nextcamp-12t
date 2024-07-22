@@ -43,10 +43,12 @@ export default async function StudyComponent({
           <StudyCategorySelectBox searchParams={searchParams} />
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
+              queryKey="c"
               categoryName={GOALS}
               categoryIcons={categoryIconsName}
             />
             <StudyCategoryTabButtonList
+              queryKey="l"
               categoryName={ONOFF}
               categoryIcons={onOffIconsName}
             />
@@ -63,13 +65,13 @@ export default async function StudyComponent({
                 <SectionTitle size="sm" className="pb-3">
                   디자인 프로 스터디
                 </SectionTitle>
-                <WideStudyList studyCard={studyCard} count={2} />
+                <WideStudyList studyCards={studyCards} count={2} />
               </div>
               <div>
                 <SectionTitle size="sm" className="pb-3">
                   취업 / 포트폴리오 프로 스터디
                 </SectionTitle>
-                <WideStudyList studyCard={studyCard} count={2} />
+                <WideStudyList studyCards={studyCards} count={2} />
               </div>
             </div>
           </div>
@@ -77,19 +79,19 @@ export default async function StudyComponent({
             <SectionTitle size="md" className="pb-6">
               오늘의 프로 스터디를 통해 빠른 성장을 경험해 보세요!
             </SectionTitle>
-            <StudyCardList studyCard={studyCard} count={4} />
+            <StudyCardList studyCards={studyCards} count={4} />
           </div>
           <div>
             <SectionTitle size="md" className="pb-6">
               프로없이, 우리끼리도 스터디해요
             </SectionTitle>
-            <StudyCardList studyCard={studyCard} count={4} />
+            <StudyCardList studyCards={studyCards} count={4} />
           </div>
           <div>
             <SectionTitle size="md" className="pb-6">
               케밋에서 인기있는 프로의 스터디
             </SectionTitle>
-            <LargeStudyList studyCard={studyCard} count={3} />
+            <LargeStudyList studyCards={studyCards} count={3} />
           </div>
         </div>
       </div>
