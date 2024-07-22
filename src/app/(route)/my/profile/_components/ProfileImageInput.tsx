@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import useModal from "@/hooks/useModal";
 import ProfileImagePreviewModal from "./ProfileImagePreviewModal";
@@ -20,21 +20,31 @@ export default function ProfileImageInput({
       />
     ),
   });
-  function getImage(e: ChangeEvent<HTMLInputElement>) {
-    const { files } = e.target;
-    if (files && files.length > 0) {
-      const file = files[0];
-      const src = URL.createObjectURL(file);
-      setImageUrl(src);
-      return src;
-    }
-  }
-  function onChange(e: ChangeEvent<HTMLInputElement>) {
-    const url = getImage(e);
-    if (url) {
+
+  useEffect(() => {
+    if (imageUrl) {
       open();
     }
+  }, [imageUrl]);
+
+  function getImage(e: ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+
+    if (files && files.length > 0) {
+      const file = files[0];
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        const encoding = fileReader.result as string;
+        setImageUrl(encoding);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
   }
+
+  console.log(imageUrl);
+
   function onSave() {
     // ...프로필 이미지 저장
     setProfileImg(imageUrl);
@@ -52,7 +62,7 @@ export default function ProfileImageInput({
                 text: "text-main-600",
               },
             }}
-            onChange={onChange}
+            onChange={(e) => getImage(e)}
           >
             이미지 변경하기
           </ImageInputWithButton>

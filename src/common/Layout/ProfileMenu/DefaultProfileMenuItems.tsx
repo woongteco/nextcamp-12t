@@ -14,6 +14,7 @@ export default function DefaultProfileMenuItems() {
   return (
     <>
       <ProfileMenuItemLink
+        href="/my/profile"
         icon={
           <Image
             src={SettingProfileIcon}
@@ -25,38 +26,36 @@ export default function DefaultProfileMenuItems() {
         label="내 프로필"
       />
       <ProfileMenuItemLink
+        href="/my/study"
         icon={<Image src={StudyIcon} alt="내 스터디" />}
         label="내 스터디"
       />
       <ProfileMenuItemLink
+        href="/my/like-study"
         icon={<Image src={SaveHeartIcon} alt="찜 스터디" />}
         label="찜 스터디"
       />
       <ProfileMenuItemLink
+        href="/my/post"
         icon={<Image src={PostIcon} alt="내가 쓴 글" />}
         label="내가 쓴 글"
       />
-      <div className="w-full h-0 border-t my-2 p-0"></div>
-      <UnstyledLogoutButton className="w-full">
-        <ProfileMenuItemLink
-          icon={<Image src={LogoutIcon} alt="로그아웃" />}
-          label="로그아웃"
-        />
-      </UnstyledLogoutButton>
     </>
   );
 }
 
 function ProfileMenuItemLink({
+  href,
   icon,
   label,
 }: {
+  href: string;
   icon: ReactNode;
   label: string;
 }) {
   return (
     <li className="hover:bg-backdrop/10 rounded-lg w-full">
-      <Link href={`/my/post`} className="flex gap-3 items-center">
+      <Link href={href} className="flex gap-3 items-center">
         <div className="w-6 h-6 flex items-center justify-center">{icon}</div>
         <span className="text-label-400 text-label-neutral">{label}</span>
       </Link>

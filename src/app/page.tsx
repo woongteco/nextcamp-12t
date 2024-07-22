@@ -3,18 +3,13 @@ import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import TopBannerSection from "./_components/TopBannerSection";
 import TabButtonsOfGoalSection from "./_components/CategoryTab/TabButtonsOfGoalSection";
 import UserReviewSlider from "./_components/ReviewSection/UserReviewSlider";
-import { getUser } from "@/dummies/user";
 import RecommendProStudies from "./_components/RecommendProStudies";
 import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 import MainStatusBoard from "./_components/MainStatusBoard";
 import { getSession } from "@/auth";
 
 export default async function Home() {
-  // const session = getUser(); // TODO: session 확인으로 변경하여 값 사용
-
   const session = await getSession();
-
-  console.log("세션", session?.user);
 
   return (
     <>
@@ -22,9 +17,7 @@ export default async function Home() {
       <TopBannerSection />
       <Container>
         <div className="flex flex-col gap-100 mt-100">
-          {session?.user && (
-            <MainStatusBoard name={session?.user.name || "테스트"} />
-          )}
+          {session?.user && <MainStatusBoard name={session?.user.name} />}
           <section>
             <SectionTitle size="md" className="mb-6">
               인기 많은 프로 스터디 추천
