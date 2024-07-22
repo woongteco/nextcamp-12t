@@ -1,18 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "@/lib/schema";
 import connectDB from "@/lib/db";
-import { hashPassword } from "@/lib/action";
-
-const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
-const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
-const nameValid = /^[가-힣]{2,4}$/;
+import { handleValidate, handleHashPassword } from "@/lib/action";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const data = req.body;
-  const { email, password, pwCheck, name, phone } = data;
+  const { email, password, pwCheck, name, phone } = req.body;
 
   await connectDB();
 
@@ -23,36 +18,15 @@ export default async function handler(
     return;
   }
 
-  if (!emailValid.test(email)) {
-    res.status(400).json({ message: "이메일 유형에 알맞게 입력해주세요." });
-    return;
+  const validateError = handleValidate(email, password, pwCheck, name, phone);
+
+  if (validateError) {
+    return res
+      .status(validateError.status)
+      .json({ message: validateError.message });
   }
 
-  if (!passwordValid.test(password)) {
-    res.status(400).json({
-      message: "조건에 맞는 비밀번호를 입력해주세요.",
-    });
-    return;
-  }
-
-  if (!nameValid.test(name)) {
-    res.status(400).json({ message: "조건에 맞는 이름을 입력해주세요." });
-    return;
-  }
-
-  if (password !== pwCheck) {
-    res.status(400).json({ message: "입력한 비밀번호와 일치하지 않습니다." });
-    return;
-  }
-
-  if (phone.length <= 10) {
-    res
-      .status(400)
-      .json({ message: "휴대폰 번호 11자리 숫자만 입력해주세요." });
-    return;
-  }
-
-  const hashedPassword = await hashPassword(password);
+  const hashedPassword = await handleHashPassword(password);
 
   const user = new User({
     email,
