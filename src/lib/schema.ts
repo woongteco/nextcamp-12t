@@ -8,6 +8,8 @@ const user = new mongoose.Schema(
     profile_img: { type: String, default: null },
     phone: { type: String, require: true },
     role: { type: String, enum: ["user", "pro", "admin"], default: "user" },
+    provider: { type: String, required: false },
+    providerAccountId: { type: String, required: false },
   },
   { timestamps: true }
 );

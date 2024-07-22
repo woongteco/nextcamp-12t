@@ -5,6 +5,7 @@ import { User } from "./lib/schema";
 import { compare } from "bcryptjs";
 import google from "next-auth/providers/google";
 import kakao from "next-auth/providers/kakao";
+import github from "next-auth/providers/github";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -58,6 +59,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientId: process.env.AUTH_KAKAO_ID,
       clientSecret: process.env.AUTH_KAKAO_SECRET,
     }),
+
+    github({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    }),
   ],
 
   session: {
@@ -66,32 +72,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    // signIn: async ({ user, account }: { user: any; account: any }) => {
-    //   console.log("확인", user, account);
+    async signIn({ user, account }: { user: any; account: any }) {
+      console.log("확인", user, account);
 
-    //   if (account?.provider === "google" || account?.provider === "kakao") {
-    //     const { email, name } = user;
+      if (account?.provider !== "credentials") {
+        const { name } = user;
+        const { providerAccountId, provider } = account;
 
-    //     console.log("소셜정보", email, name);
+        await connectDB();
 
-    //     await connectDB();
+        const socialUserCheck = await User.findOne({
+          providerAccountId,
+          provider,
+        });
 
-    //     // 수정 고유값 필요 providerAccountId 값을 db에 저장
-    //     const socialUserCheck = await User.findOne({
-    //       email,
-    //       authProviderId: "google" || "kakao",
-    //     });
+        if (!socialUserCheck) {
+          const user = await new User({
+            name,
+            providerAccountId,
+            provider,
+          });
+          const dbSave = await user.save();
+          console.log("소셜회원정보 저장 완료" + dbSave);
+        }
+      }
 
-    //     if (!socialUserCheck) {
-    //       await new User({
-    //         name,
-    //         email,
-    //       });
-    //     }
-    //   }
-
-    //   return true;
-    // },
+      return true;
+    },
 
     async jwt({
       token,
@@ -111,15 +118,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
 
-    async session({
-      session,
-      token,
-      user,
-    }: {
-      session: any;
-      token: any;
-      user: any;
-    }) {
+    async session({ session, token }: { session: any; token: any }) {
       session.user = token.user;
 
       return session;
