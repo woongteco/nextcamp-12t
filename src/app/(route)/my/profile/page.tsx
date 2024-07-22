@@ -52,7 +52,7 @@ export default function MyProfilePage() {
           <div className="w-full h-[1px] border-t border-t-line-normal"></div>
           <DeleteAccountConfirm />
         </div>
-        <div className="previewBox rounded-2xl xl:sticky xl:top-20 p-6 border border-line-normal flex flex-col gap-4">
+        <div className="previewBox rounded-2xl hidden xl:sticky xl:top-20 p-6 border border-line-normal xl:flex flex-col gap-4">
           <ProfilePreview name={user.name} data={data} />
         </div>
       </div>

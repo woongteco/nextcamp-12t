@@ -3,7 +3,7 @@ import { TProps } from "@/types/component/props";
 
 export default function SidebarAsideContentArea({ children }: TProps) {
   return (
-    <div className="py-16">
+    <div data-name="sidebar-layout__content" className="py-16">
       <GridField>{children}</GridField>
     </div>
   );
