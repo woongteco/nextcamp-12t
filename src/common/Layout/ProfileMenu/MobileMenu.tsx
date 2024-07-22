@@ -1,4 +1,5 @@
 "use client";
+
 import usePopover from "@/hooks/usePopover";
 import { MenuIcon } from "../../Atoms/Image/Icon";
 import { TProfileImage } from "./ResponsiveMenu";
@@ -7,10 +8,8 @@ import Image from "next/image";
 import { AlarmIcon, CreateStudyIcon } from "@public/icons";
 import DefaultProfileMenuItems from "./DefaultProfileMenuItems";
 import { useEffect } from "react";
-import useMediaQuery from "@/hooks/useMediaQuery";
 
 export default function MobileMenu({ profileImage }: TProfileImage) {
-  const notMobile = useMediaQuery("lg");
   const { Popup, open, close } = usePopover({
     key: "mobile-menu",
     children: (
@@ -43,16 +42,12 @@ export default function MobileMenu({ profileImage }: TProfileImage) {
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log(notMobile);
-  // }, [notMobile]);
-
-  return notMobile ? null : (
-    <>
-      <button className="lg:hidden" onClick={open}>
+  return (
+    <div className="lg:hidden [&>*]:invisible">
+      <button onClick={open}>
         <MenuIcon />
       </button>
       {Popup}
-    </>
+    </div>
   );
 }
