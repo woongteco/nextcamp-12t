@@ -2,17 +2,25 @@
 
 import Image from "next/image";
 import { PasswordHide, PasswordShow } from "@public/icons";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 type TUserInput = {
   id: string;
   type: string;
   title: string;
   placeholder: string;
-
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function Input({ id, type, title, placeholder}: TUserInput) {
+export function Input({
+  id,
+  type,
+  title,
+  placeholder,
+  value,
+  onChange,
+}: TUserInput) {
   const [pwToggle, setPwToggle] = useState(false);
 
   return (
@@ -30,6 +38,8 @@ export function Input({ id, type, title, placeholder}: TUserInput) {
           placeholder={placeholder}
           className="w-full p-3 focus:outline-none placeholder:text-xs"
           maxLength={id === "name" ? 4 : id === "phone" ? 11 : 30}
+          value={value}
+          onChange={onChange}
           required
         />
         {(id === "password" || id === "pwCheck") && (
