@@ -14,3 +14,7 @@ export async function loginGoogle() {
 export async function loginKakao() {
   await signIn("kakao");
 }
+
+export async function loginGithub() {
+  await signIn("github");
+}
