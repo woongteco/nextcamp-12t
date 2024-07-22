@@ -3,7 +3,8 @@ import { createPortal } from "react-dom";
 
 import { TProps } from "@/types/component/props";
 import useDialogEscape from "./useDialogEscape";
-import SidePopup from "@/common/Layout/Sidebar/SidePopup";
+import SidePopup from "@/common/Molecules/SidePopup";
+import usePopoverScrollPrevent from "./usePopoverScrollPrevent";
 
 export type TPopoverHookParams = TProps & {
   onClose?: () => void;
@@ -22,6 +23,8 @@ export default function usePopover(props: TPopoverHookParams) {
     ref: modalRef,
     close: () => setShow(false),
   });
+
+  usePopoverScrollPrevent(show);
 
   function open() {
     if (show === false) {
