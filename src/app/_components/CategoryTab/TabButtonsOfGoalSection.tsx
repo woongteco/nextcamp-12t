@@ -22,7 +22,7 @@ export default function TabButtonsOfGoalSection() {
 
   return (
     <>
-      <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
+      <div className="flex flex-wrap xl:flex-row gap-4 w-fit mx-auto mb-11">
         {GOALS_TAB.map(({ label, value, iconName }) => {
           const active = selected === value;
           return (

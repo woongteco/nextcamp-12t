@@ -113,6 +113,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (user) {
         token.user = user;
+        token.account = account;
       }
 
       return token;
@@ -120,6 +121,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }: { session: any; token: any }) {
       session.user = token.user;
+      session.account = token.account;
 
       return session;
     },

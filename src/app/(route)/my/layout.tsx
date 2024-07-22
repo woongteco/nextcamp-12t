@@ -16,14 +16,6 @@ export default async function layout({ children }: TProps) {
       <SidebarAsideContentArea>
         <SidebarNavArea>
           <MyPageSidebarNavs />
-          {/* {MYPAGE_MENUS.map(({ key, ...item }) => (
-            <SideNavItem key={key} {...item} active={false} />
-          ))}
-          <li>
-            <UnstyledLogoutButton className="w-full inline-block rounded-[20px] text-H4 px-6 py-[26px] text-left text-label-alt bg-white hover:bg-label-alt/20">
-              로그아웃
-            </UnstyledLogoutButton>
-          </li> */}
         </SidebarNavArea>
         <section>{children}</section>
       </SidebarAsideContentArea>

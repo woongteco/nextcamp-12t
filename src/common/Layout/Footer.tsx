@@ -12,10 +12,10 @@ import { FLogo } from "../../../public/images";
 
 export default function Footer() {
   return (
-    <footer className="flex h-[25rem] mt-100 py-20 bg-label-normal">
+    <footer className="flex xl:h-[25rem] justify-center mt-100 py-20 bg-label-normal">
       <Container>
         {/* sns md:추가 */}
-        <div className="flex justify-between text-line-alt text-[12px]">
+        <div className="flex flex-col gap-10 xl:flex-row xl:justify-between text-line-alt text-[12px]">
           <ul className="hidden">
             <li>
               <Link
@@ -91,7 +91,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col items-end text-right">
+          <div className="flex flex-col items-start xl:items-end mt-8 xl:mt-0">
             {/* sns md:제거 */}
             <ul className="flex items-center gap-8 pb-4 border-b border-line-alt border-solid">
               <li>
@@ -119,10 +119,10 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-            <div className="flex flex-col gap-5 mt-4">
+            <div className="flex flex-col text-left xl:text-right gap-5 mt-4">
               <div>
-                <span className="block">고객센터 : 0000-0000</span>
-                <span>월~금(공휴일제외) 09:00~18:00</span>
+                <p>고객센터 : 0000-0000</p>
+                <p>월~금(공휴일제외) 09:00~18:00</p>
               </div>
               <div>
                 <span>(주)웅진씽크빅 대표이사 : 이봉주</span>
@@ -131,7 +131,7 @@ export default function Footer() {
                 </p>
               </div>
               {/* 모바일 open : start */}
-              <ul className="flex justify-end gap-5">
+              <ul className="flex justify-start xl:justify-end gap-5">
                 <li>
                   <span>고객센터</span>
                 </li>

@@ -39,7 +39,6 @@ export default function MyProfilePage() {
         <div className="flex flex-col gap-8">
           <p className="text-H2 text-label-dimmed">{session.data?.user.name}</p>
           <FormEditProfile data={data} setData={setData} />
-
           {session.data?.account.provider === "credentials" && (
             <>
               <div className="w-full h-[1px] border-t border-t-line-normal"></div>
@@ -49,7 +48,6 @@ export default function MyProfilePage() {
               <FormUpdatePassword />
             </>
           )}
-
           <div className="w-full h-[1px] border-t border-t-line-normal"></div>
           <SectionTitle size="md" className="mb-2">
             연락처 수정
@@ -58,7 +56,8 @@ export default function MyProfilePage() {
           <div className="w-full h-[1px] border-t border-t-line-normal"></div>
           <DeleteAccountConfirm />
         </div>
-        <div className="previewBox rounded-2xl xl:sticky xl:top-20 p-6 border border-line-normal flex flex-col gap-4">
+
+        <div className="previewBox rounded-2xl hidden xl:sticky xl:top-20 p-6 border border-line-normal xl:flex flex-col gap-4">
           <ProfilePreview name={session.data?.user.name} data={data} />
         </div>
       </div>
