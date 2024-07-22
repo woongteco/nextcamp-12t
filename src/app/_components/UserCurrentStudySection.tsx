@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function UserCurrentStudySection() {
   return (
     <>
-      <div className="grid grid-cols-3 gap-gutter-xl">
+      <div className="flex flex-col md:grid md:grid-cols-3 gap-gutter-md lg:gap-gutter-lg xl:gap-gutter-xl">
         <Link href="/my/study">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6 flex items-start leading-[22px] text-main-600 font-semibold">
