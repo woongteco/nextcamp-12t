@@ -1,16 +1,11 @@
-import { useEffect, useId, useReducer, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { TProps } from "@/types/component/props";
 import ModalPortal from "@/common/Molecules/ModalPortal/ModalPortal";
 import useDialogEscape from "./useDialogEscape";
+import { TPopoverHookParams } from "./usePopover";
 
-type TModalHookParams<T> = TProps & {
-  onClose?: () => void;
-  defaultValue?: boolean;
-  key?: string;
-};
-export default function useModal<T>(props: TModalHookParams<T>) {
+export default function useModal(props: TPopoverHookParams) {
   const { onClose, children, defaultValue = false, key = undefined } = props;
   const modalRef = useRef<HTMLDialogElement>(null);
   const uid = useId();
