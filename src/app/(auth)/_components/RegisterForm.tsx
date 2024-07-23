@@ -3,38 +3,22 @@
 import { Input } from "./UserInput";
 import { ChangeEvent, FormEvent, useState } from "react";
 import RegisterCheck from "./RegisterCheck";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import handleAlert from "./ErrorAlert";
+import { handleSignUpSignIn } from "@/lib/action";
 
 export default function RegisterForm() {
   const [phoneData, setPhoneData] = useState<string>("");
-  const router = useRouter();
 
   async function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const pwCheck = formData.get("pwCheck");
-    const name = formData.get("name");
-    const phone = formData.get("phone");
 
     try {
-      const response = await axios.post("/api/auth/register", {
-        email,
-        password,
-        pwCheck,
-        name,
-        phone,
-      });
-      handleAlert("success", response.data.message);
-      router.replace("/");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        handleAlert("error", error.response?.data.message);
-      }
+      await handleSignUpSignIn(formData);
+      handleAlert("success", "회원가입 완료되어 로그인 되었습니다.");
+    } catch (error: any) {
+      handleAlert("error", error.message);
     }
   }
 

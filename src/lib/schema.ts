@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const user = new mongoose.Schema(
   {
     email: { type: String, require: true },
-    password: { type: String, require: false },
-    name: { type: String, require: false },
+    password: { type: String },
+    name: { type: String, require: true },
     profile_img: { type: String, default: null },
     phone: { type: String, require: true },
     role: { type: String, enum: ["user", "pro", "admin"], default: "user" },
@@ -20,7 +20,7 @@ const profile = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   position_tag: { type: String, default: null },
   introduce: { type: String, default: null },
-  my_category: { type: String, default: null },
+  my_category: { type: [String], default: [] },
 });
 
 export const Profile =
