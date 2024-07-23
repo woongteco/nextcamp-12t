@@ -21,7 +21,7 @@ export default function StudyCategoryTabButtonList({
   categoryIcons: string[];
 }) {
   const params = useSearchParams();
-  const [select, setSelected] = useState(params.get(queryKey));
+  const [select, setSelected] = useState(params?.get(queryKey) || "");
 
   const studyCategoryIcons = categoryName.map((category, index) => ({
     ...category,
