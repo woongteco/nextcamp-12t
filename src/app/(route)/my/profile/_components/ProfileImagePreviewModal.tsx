@@ -33,7 +33,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
           다시 선택
         </ImageInputWithButton>
         <Button variation="solid" onClick={onSave}>
-          적용하기
+          저장
         </Button>
       </div>
     </div>
