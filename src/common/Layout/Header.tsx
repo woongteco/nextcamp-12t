@@ -45,7 +45,7 @@ export default async function Header() {
             <div className="flex gap-8 items-center">
               <>
                 <Link
-                  href={"/studyroom/create"}
+                  href={"/study/create"}
                   className="flex items-center justify-center gap-2 w-36 py-2 leading-8 text-main-600 border border-solid border-main-600 rounded-[1.3rem]"
                 >
                   <Image src={CreateStudyIcon} alt="create study" />

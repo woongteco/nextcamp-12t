@@ -17,7 +17,7 @@ export default async function PostWrite() {
 
   return (
     <>
-      <form action="" className="mt-20 mb-100 flex flex-col gap-[36px]">
+      <form action="" className="mb-100 flex flex-col gap-[36px]">
         <SelectCategory />
         <GridField>
           <LabelText form required>
@@ -38,7 +38,7 @@ export default async function PostWrite() {
           <LabelText form>관련 스터디 링크</LabelText>
           <Input.Text />
         </GridField>
-        <div className="flex gap-gutter-xl items-center justify-center mt-40">
+        <div className="flex gap-gutter-xl items-center justify-center mt-24">
           <LinkButton
             href="/post"
             variation="outline"

@@ -9,7 +9,7 @@ import { getStudiesData } from "@/dummies/studies";
 export default function StudyPostComponent() {
   const studyCards = getStudiesData();
   return (
-    <div className="py-20">
+    <div>
       <BackButton />
       <StudyDetail />
 

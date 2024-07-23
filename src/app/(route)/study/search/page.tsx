@@ -22,7 +22,7 @@ export default function StudySearchPage({
   const studyCard = getStudiesData();
 
   return (
-    <div className="mt-14 py-20">
+    <>
       <div>
         <div className="flex items-center justify-between">
           <SectionTitle size="lg">스터디</SectionTitle>
@@ -57,6 +57,6 @@ export default function StudySearchPage({
       </div>
 
       <StudyCardList studyCards={studyCard} count={16} />
-    </div>
+    </>
   );
 }
