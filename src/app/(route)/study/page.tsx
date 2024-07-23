@@ -29,7 +29,7 @@ export default async function StudyComponent({
   searchParams: TQuery;
 }) {
   const session = await getSession();
-  const studyCard = getStudiesData();
+  const studyCards = getStudiesData();
 
   return (
     <div className="mt-16 py-20">
