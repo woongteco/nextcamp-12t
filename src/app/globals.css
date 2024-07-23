@@ -53,6 +53,10 @@ a {
   transition: backgroud-color ease-in-out 200ms, filter ease-in-out 200ms;
 }
 
+details > summary {
+  list-style: none;
+}
+
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }

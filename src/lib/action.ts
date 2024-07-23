@@ -1,65 +1,50 @@
 "use server";
 
 import { signIn } from "@/auth";
-import connectDB from "./db";
-import { User } from "./schema";
 import { hash } from "bcryptjs";
-import { redirect } from "next/navigation";
 
-export async function register(formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const passwordCheck = formData.get("pwCheck");
-  const phone = formData.get("phone");
+const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
+const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
+const nameValid = /^[가-힣]{2,4}$/;
 
-  if (!email || !password || !passwordCheck || !phone) {
-    alert("입력한 정보를 다시 확인해 주세요.");
+export const handleValidate = (
+  email: string,
+  password: string,
+  pwCheck: string,
+  name: string,
+  phone: string
+) => {
+  if (!emailValid.test(email)) {
+    return { status: 400, message: "이메일 유형에 알맞게 입력해주세요." };
   }
-
-  // 유효성 부분 클라이언트에서 처리 필요
-  const emailRegex = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
-  const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{12,}$/;
-
-  if (!emailRegex.test(email)) {
-    throw new Error("유효한 이메일을 입력해 주세요.");
-  }
-
   if (!passwordValid.test(password)) {
-    throw new Error("비밀번호는 문자, 숫자, 특수기호 포함 12자 이상");
+    return { status: 400, message: "조건에 맞는 비밀번호를 입력해주세요." };
+  }
+  if (!nameValid.test(name)) {
+    return { status: 400, message: "조건에 맞는 이름을 입력해주세요." };
+  }
+  if (password !== pwCheck) {
+    return { status: 400, message: "입력한 비밀번호와 일치하지 않습니다." };
+  }
+  if (phone.length !== 11) {
+    return { status: 400, message: "휴대폰 번호 숫자 11자리를 입력해주세요." };
   }
 
-  if (password !== passwordCheck) {
-    throw new Error("비밀번호가 일치하지 않습니다.");
-  }
+  return null;
+};
 
-  connectDB();
-
-  const userCheck = await User.findOne({ email });
-  if (userCheck) {
-    alert("이미 가입된 회원입니다.");
-  }
-
-  const hashPassword = await hash(String(password), 10);
-  const user = new User({
-    email,
-    password: hashPassword,
-    phone,
-  });
-
-  try {
-    const dbSave = await user.save();
-    console.log("회원가입 정보 저장 완료" + dbSave);
-  } catch (error) {
-    console.log(error);
-  }
-
-  redirect("/");
+export async function handleHashPassword(password: string) {
+  return await hash(password, 10);
 }
 
-export const loginGoogle = async () => {
+export async function loginGoogle() {
   await signIn("google");
-};
+}
 
-export const loginKakao = async () => {
+export async function loginKakao() {
   await signIn("kakao");
-};
+}
+
+export async function loginGithub() {
+  await signIn("github");
+}

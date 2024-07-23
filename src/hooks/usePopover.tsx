@@ -1,11 +1,17 @@
 import { useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import ModalPortal from "@/common/Molecules/ModalPortal/ModalPortal";
+import { TProps } from "@/types/component/props";
 import useDialogEscape from "./useDialogEscape";
-import { TPopoverHookParams } from "./usePopover";
+import SidePopup from "@/common/Molecules/SidePopup";
+import usePopoverScrollPrevent from "./usePopoverScrollPrevent";
 
-export default function useModal(props: TPopoverHookParams) {
+export type TPopoverHookParams = TProps & {
+  onClose?: () => void;
+  defaultValue?: boolean;
+  key?: string;
+};
+export default function usePopover(props: TPopoverHookParams) {
   const { onClose, children, defaultValue = false, key = undefined } = props;
   const modalRef = useRef<HTMLDialogElement>(null);
   const uid = useId();
@@ -17,6 +23,8 @@ export default function useModal(props: TPopoverHookParams) {
     ref: modalRef,
     close: () => setShow(false),
   });
+
+  usePopoverScrollPrevent(show);
 
   function open() {
     if (show === false) {
@@ -33,16 +41,16 @@ export default function useModal(props: TPopoverHookParams) {
 
   const element = show
     ? createPortal(
-        <ModalPortal ref={modalRef} onClose={close}>
+        <SidePopup ref={modalRef} onClose={close}>
           {children}
-        </ModalPortal>,
+        </SidePopup>,
         document.body,
         modalKey
       )
     : null;
 
   return {
-    Modal: element,
+    Popup: element,
     open,
     close,
   };
