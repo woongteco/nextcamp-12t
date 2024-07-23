@@ -1,7 +1,7 @@
 import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import { DummyProfileImg } from "@public/images";
-import { TProfileData } from "../page";
+import { TProfileData } from "./ProfileForms";
 
 type TProfilePreviewProps = {
   name: string | null | undefined;
