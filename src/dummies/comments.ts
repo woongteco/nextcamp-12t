@@ -1,6 +1,6 @@
 import { CommentSchema } from "@/types/model/Comment";
 
-const comments: CommentSchema[] = [
+export const comments: CommentSchema[] = [
   {
     commentId: "comment-12345",
     content: "디자인 초보도 참여 가능할까요?",
