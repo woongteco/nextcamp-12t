@@ -1,10 +1,11 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { getSession, signIn } from "@/auth";
 import { hash } from "bcryptjs";
 import connectDB from "./db";
-import { User } from "./schema";
+import { Post, Profile, User } from "./schema";
 import { redirect } from "next/navigation";
+import mongoose from "mongoose";
 
 const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
 const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
@@ -34,7 +35,8 @@ export const handleValidate = (
   }
 };
 
-export const handleSignUpSignIn = async (formData: FormData) => {
+// 회원가입
+export async function authAction(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const pwCheck = formData.get("pwCheck") as string;
@@ -68,7 +70,132 @@ export const handleSignUpSignIn = async (formData: FormData) => {
   });
 
   redirect("/");
-};
+}
+
+// 프로필 등록
+export async function profileAction(id: string, formData: FormData) {
+  const userId = id;
+  const position_tag = formData.get("positionTag") as string;
+  const introduce = formData.get("introduce") as string;
+  const my_category = formData.get("interest") as string;
+
+  if (!userId) {
+    throw new Error("유효한 id가 필요합니다.");
+  }
+
+  if (!position_tag || !introduce || !my_category) {
+    throw new Error("포지션 태그, 소개, 카테고리 모두 입력해주세요.");
+  }
+
+  await connectDB();
+
+  const profile = new Profile({
+    userId,
+    position_tag,
+    introduce,
+    my_category,
+  });
+
+  await profile.save();
+  const populatedProfile = await Profile.findById(profile._id).populate(
+    "userId"
+  );
+
+  console.log(populatedProfile);
+}
+
+// 커뮤니티 등록
+export async function communityAction(formData: FormData) {
+  const postId = "111";
+  const categoryValue = formData.get("categoryValue") as string;
+  const categoryLabel = formData.get("categoryLabel") as string;
+  const isRecruiting = formData.get("isRecruiting");
+  const title = formData.get("title") as string;
+  const body = formData.get("body") as string;
+  const linkedStudyId = formData.get("linkedStudyId") as string;
+  const userId = formData.get("userId") as string;
+  const name = formData.get("name") as string;
+  const role = formData.get("role") as string;
+  const position = formData.get("position") as string;
+  const profileUrl = formData.get("profileUrl") as string;
+
+  if (!categoryLabel || !title || !body) {
+    throw new Error("제목 또는 내용을 입력해주세요.");
+  }
+
+  await connectDB();
+
+  const post = new Post({
+    postId,
+    category: {
+      value: categoryValue,
+      label: categoryLabel,
+      isRecruiting,
+    },
+    contents: {
+      title,
+      body,
+      linkedStudyId,
+    },
+    writer: {
+      userId,
+      name,
+      role,
+      position,
+      profileUrl,
+    },
+    createdAt: new Date(),
+    view: 0,
+    like: 0,
+  });
+
+  const dbSavePost = await post.save();
+
+  console.log("커뮤니티 작성 완료" + dbSavePost);
+}
+
+// 댓글 작성
+export async function commentAction(postId: string, formData: FormData) {
+  const commentId = new mongoose.Types.ObjectId().toString();
+  const content = formData.get("content") as string;
+  const userId = formData.get("userId") as string;
+  const name = formData.get("name") as string;
+  const role = formData.get("role") as string;
+  const position = formData.get("position") as string;
+  const profileUrl = formData.get("profileUrl") as string;
+
+  if (!content) {
+    throw new Error("댓글 내용을 입력해주세요.");
+  }
+
+  await connectDB();
+
+  const comment = {
+    commentId,
+    content,
+    writer: {
+      userId,
+      name,
+      role,
+      position,
+      profileUrl,
+    },
+    createdAt: new Date(),
+    reply: [],
+  };
+
+  // postId로 해당 포스트 찾기
+  const currentPost = await Post.findOne({ postId });
+
+  if (!currentPost) {
+    throw new Error("해당 포스트를 찾을 수 없습니다.");
+  }
+
+  currentPost.comments.push(comment);
+  const dbSaveComment = await currentPost.save();
+
+  console.log("댓글 추가 완료" + dbSaveComment);
+}
 
 export async function loginGoogle() {
   await signIn("google");
