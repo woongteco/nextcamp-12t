@@ -1,8 +1,8 @@
-// import { UserSchema } from "./User";
+import { UserSchema } from "./User";
 
 export type ProfileSchema = {
   _id: object;
-  userId: any;
+  userId: UserSchema;
   position_tag: string;
   introduce: string;
   my_category: string[];
