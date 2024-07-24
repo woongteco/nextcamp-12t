@@ -73,11 +73,15 @@ export async function authAction(formData: FormData) {
 }
 
 // 프로필 등록
-export async function profileAction(id: string, formData: FormData) {
-  const userId = id;
+export async function profileAction(session: any, formData: FormData) {
+  const userId = session.user.id;
+  const providerAccountId = session.account.providerAccountId;
   const position_tag = formData.get("positionTag") as string;
   const introduce = formData.get("introduce") as string;
   const my_category = formData.get("interest") as string;
+  let profile;
+
+  console.log(userId);
 
   if (!userId) {
     throw new Error("유효한 id가 필요합니다.");
@@ -89,24 +93,37 @@ export async function profileAction(id: string, formData: FormData) {
 
   await connectDB();
 
-  const profile = new Profile({
-    userId,
-    position_tag,
-    introduce,
-    my_category,
-  });
+  if (session.account.provider === "credentials") {
+    const profileCheck = await Profile.findOne({ userId });
+    if (profileCheck) {
+      throw new Error("작성된 프로필을 수정해주세요.");
+    }
+    profile = new Profile({
+      userId,
+      position_tag,
+      introduce,
+      my_category,
+    });
+  } else {
+    const profileCheck = await Profile.findOne({ providerAccountId });
+    if (profileCheck) {
+      throw new Error("작성된 프로필을 수정해주세요.");
+    }
+    profile = new Profile({
+      providerAccountId,
+      position_tag,
+      introduce,
+      my_category,
+    });
+  }
 
-  await profile.save();
-  const populatedProfile = await Profile.findById(profile._id).populate(
-    "userId"
-  );
+  const dbSaveProfile = await profile.save();
 
-  console.log(populatedProfile);
+  console.log("프로필 저장 완료" + dbSaveProfile);
 }
 
 // 커뮤니티 등록
 export async function communityAction(formData: FormData) {
-  const postId = "111";
   const categoryValue = formData.get("categoryValue") as string;
   const categoryLabel = formData.get("categoryLabel") as string;
   const isRecruiting = formData.get("isRecruiting");
@@ -126,7 +143,6 @@ export async function communityAction(formData: FormData) {
   await connectDB();
 
   const post = new Post({
-    postId,
     category: {
       value: categoryValue,
       label: categoryLabel,
@@ -156,7 +172,6 @@ export async function communityAction(formData: FormData) {
 
 // 댓글 작성
 export async function commentAction(postId: string, formData: FormData) {
-  const commentId = new mongoose.Types.ObjectId().toString();
   const content = formData.get("content") as string;
   const userId = formData.get("userId") as string;
   const name = formData.get("name") as string;
@@ -171,7 +186,6 @@ export async function commentAction(postId: string, formData: FormData) {
   await connectDB();
 
   const comment = {
-    commentId,
     content,
     writer: {
       userId,
@@ -184,7 +198,6 @@ export async function commentAction(postId: string, formData: FormData) {
     reply: [],
   };
 
-  // postId로 해당 포스트 찾기
   const currentPost = await Post.findOne({ postId });
 
   if (!currentPost) {

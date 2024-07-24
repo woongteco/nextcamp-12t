@@ -17,10 +17,11 @@ const user = new mongoose.Schema(
 export const User = mongoose.models?.User || mongoose.model("User", user);
 
 const profile = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   position_tag: { type: String, default: null },
   introduce: { type: String, default: null },
   my_category: { type: [String], default: [] },
+  providerAccountId: { type: String },
 });
 
 export const Profile =

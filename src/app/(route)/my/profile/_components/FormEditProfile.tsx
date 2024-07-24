@@ -44,12 +44,24 @@ export default function FormEditProfile({
 
   async function save(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const userId = "669bf4d4894a60fc9669e924";
     const formData = new FormData(e.currentTarget);
 
+    if (!session) {
+      handleAlert("error", "유효한 id가 필요합니다.");
+      return;
+    }
+
+    let id;
+    const provider = session?.account.provider;
+
+    if (provider === "provider") {
+      id = session?.user.id;
+    } else {
+      id = session?.account.providerAccountId;
+    }
+
     try {
-      await profileAction(userId, formData);
+      await profileAction(session, formData);
       handleAlert("success", "프로필 정보가 저장되었습니다.");
     } catch (error: any) {
       handleAlert("error", error.message);
