@@ -50,32 +50,31 @@ export default async function MyStudyPage() {
         <SectionTitle size="md" className="mb-6">
           참여 중인 스터디
         </SectionTitle>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
+        <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(0, 1).map((card) => (
             <StudyCardItem key={card.id} card={card} />
           ))}
-        </div>
+        </ul>
       </section>
-      {/* TODO: 종료된 스터디 표시 추가 필요 */}
       <section>
         <SectionTitle size="md" className="mb-6">
           종료된 스터디
         </SectionTitle>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
+        <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(1, 3).map((card) => (
             <StudyCardItem key={card.id} card={card} />
           ))}
-        </div>
+        </ul>
       </section>
       <section>
         <SectionTitle size="md" className="mb-6">
           내가 만든 스터디
         </SectionTitle>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
+        <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(3, 5).map((card) => (
             <StudyCardItem key={card.id} card={card} />
           ))}
-        </div>
+        </ul>
       </section>
     </div>
   );
