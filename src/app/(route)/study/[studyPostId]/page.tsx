@@ -4,10 +4,10 @@ import StudyCardList from "@/common/Templates/CardList";
 import BackButton from "../../_components/BackButton";
 import StudyDetail from "./_components/StudyDetail";
 
-import { getStudiesData } from "@/dummies/studies";
+import { getStudyCards } from "@/dummies/studies";
 
 export default function StudyPostComponent() {
-  const studyCards = getStudiesData();
+  const studyCards = getStudyCards();
   return (
     <div>
       <BackButton />

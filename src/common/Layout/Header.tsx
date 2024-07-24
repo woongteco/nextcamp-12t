@@ -25,7 +25,7 @@ export default async function Header() {
         <div className="h-16 flex items-center justify-between">
           <div
             data-name="header__left-side"
-            className="flex gap-6 lg:gap-20 items-center"
+            className="flex gap-14 lg:gap-20 items-center"
           >
             <h1>
               <Link href={"/"}>
@@ -33,7 +33,7 @@ export default async function Header() {
               </Link>
             </h1>
             <nav>
-              <ul className="flex gap-6 lg:gap-12">
+              <ul className="flex gap-9 lg:gap-12">
                 <li>
                   <Link href={"/study"}>스터디</Link>
                 </li>

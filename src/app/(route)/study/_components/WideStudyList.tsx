@@ -1,6 +1,6 @@
-import { TStudyCard } from "@/dummies/studies";
 import WideStudyItem from "./WideStudyItem";
 import NoneStudyComponent from "./NoneStudyComponent";
+import { TStudyCard } from "@/types/model/StudyCard";
 
 export default function WideStudyList({
   studyCards,
@@ -17,7 +17,7 @@ export default function WideStudyList({
   return (
     <div className="grid grid-cols-2 gap-6">
       {STUDYCARD.map((card) => (
-        <WideStudyItem key={card.id} card={card} />
+        <WideStudyItem key={card.studyId} card={card} />
       ))}
     </div>
   );

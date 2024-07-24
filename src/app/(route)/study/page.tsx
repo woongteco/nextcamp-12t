@@ -3,7 +3,7 @@ import StudyCardList from "@/common/Templates/CardList";
 import LargeStudyList from "./_components/LargeStudyList";
 import WideStudyList from "./_components/WideStudyList";
 
-import { getStudiesData } from "@/dummies/studies";
+import { getStudyCards } from "@/dummies/studies";
 import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 
@@ -29,7 +29,7 @@ export default async function StudyComponent({
   searchParams: TQuery;
 }) {
   const session = await getSession();
-  const studyCards = getStudiesData();
+  const studyCards = getStudyCards();
 
   return (
     <>
