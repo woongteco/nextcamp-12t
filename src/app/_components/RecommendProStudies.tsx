@@ -1,7 +1,7 @@
 import StudyCardList from "@/common/Templates/CardList";
-import { getStudiesData } from "@/dummies/studies";
+import { getStudyCards } from "@/dummies/studies";
 
 export default function RecommendProStudies() {
-  const proStudies = getStudiesData();
+  const proStudies = getStudyCards();
   return <StudyCardList studyCards={proStudies} count={8} />;
 }
