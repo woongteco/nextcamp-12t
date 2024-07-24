@@ -57,7 +57,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "user",
       nickname: "디자이너 이수빈",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(0, "animal", 48, 48),
     },
     study: {
       title: "내가 디자인한 앱을 출시하기까지",
@@ -65,7 +65,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 8명",
       deadline: "8/13 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("tech", 268, 180),
+      image: getImageUrl(4, "tech", 268, 180),
     },
   },
   {
@@ -73,7 +73,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "pro",
       nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(11, "animal", 48, 48),
     },
     study: {
       title: "재밌는 생명과학 실험 스터디",
@@ -81,7 +81,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 12명",
       deadline: "8/23 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180),
+      image: getImageUrl(7, "nature", 268, 180),
     },
   },
   {
@@ -89,7 +89,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "pro",
       nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(12, "animal", 48, 48),
     },
     study: {
       title: "재밌는 생명과학 실험 스터디",
@@ -97,7 +97,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 12명",
       deadline: "8/23 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180),
+      image: getImageUrl(4, "nature", 268, 180),
     },
   },
   {
@@ -105,7 +105,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "user",
       nickname: "디자이너 이수빈",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(8, "animal", 48, 48),
     },
     study: {
       title: "내가 디자인한 앱을 출시하기까지",
@@ -113,7 +113,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 8명",
       deadline: "8/13 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("desk", 268, 180),
+      image: getImageUrl(7, "desk", 268, 180),
     },
   },
   {
@@ -121,7 +121,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "pro",
       nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(9, "animal", 48, 48),
     },
     study: {
       title: "재밌는 생명과학 실험 스터디",
@@ -129,7 +129,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 12명",
       deadline: "8/23 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180),
+      image: getImageUrl(10, "nature", 268, 180),
     },
   },
   {
@@ -137,7 +137,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "pro",
       nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(11, "animal", 48, 48),
     },
     study: {
       title: "재밌는 생명과학 실험 스터디",
@@ -145,7 +145,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 12명",
       deadline: "8/23 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180),
+      image: getImageUrl(5, "nature", 268, 180),
     },
   },
   {
@@ -153,7 +153,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "user",
       nickname: "디자이너 이수빈",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(6, "animal", 48, 48),
     },
     study: {
       title: "내가 디자인한 앱을 출시하기까지",
@@ -161,7 +161,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 8명",
       deadline: "8/13 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("desk", 268, 180),
+      image: getImageUrl(1, "desk", 268, 180),
     },
   },
   {
@@ -169,7 +169,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "pro",
       nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(11, "animal", 48, 48),
     },
     study: {
       title: "재밌는 생명과학 실험 스터디",
@@ -177,7 +177,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 12명",
       deadline: "8/23 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180),
+      image: getImageUrl(4, "nature", 268, 180),
     },
   },
   {
@@ -185,7 +185,7 @@ const studyCards: TStudyCard[] = [
     user: {
       userType: "pro",
       nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48),
+      image: getImageUrl(11, "animal", 48, 48),
     },
     study: {
       title: "재밌는 생명과학 실험 스터디",
@@ -193,7 +193,7 @@ const studyCards: TStudyCard[] = [
       people: "모집 12명",
       deadline: "8/23 마감",
       RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180),
+      image: getImageUrl(4, "nature", 268, 180),
     },
   },
 ];
