@@ -11,10 +11,12 @@ import { getPosts } from "@/dummies/posts";
 import ContentSearchBar from "../_components/ContentSearchBar";
 import { WriteIcon } from "@/common/Atoms/Image/Icon";
 import PostListWithPagination from "@/common/Templates/PostListWithPagination";
+import { Post } from "@/lib/schema";
+import connectDB from "@/lib/db";
 
 type TQuery = { category?: string; sort?: string };
 
-export default function CommunityPostList({
+export default async function CommunityPostList({
   searchParams,
 }: {
   searchParams: TQuery;
@@ -35,6 +37,13 @@ export default function CommunityPostList({
    * - 정렬 방법에 따라 sorted
    * - 검색 키워드에 따라 리스트 필터링
    */
+
+  await connectDB();
+
+  const post = await Post.find();
+
+  console.log(post);
+
   return (
     <SidebarAsideContentArea>
       <SidebarNavArea>

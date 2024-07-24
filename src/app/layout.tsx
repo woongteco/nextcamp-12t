@@ -43,7 +43,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={notosans.className}>
         <Toaster position="bottom-center" />
-        <AuthSession>{children}</AuthSession>
+        {children}
       </body>
     </html>
   );
