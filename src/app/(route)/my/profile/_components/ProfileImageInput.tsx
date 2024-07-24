@@ -6,9 +6,9 @@ import Button from "@/common/Atoms/Form/Button";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 
 export default function ProfileImageInput({
-  setProfileImg,
+  setProfileImage,
 }: {
-  setProfileImg: Function;
+  setProfileImage: (image: string) => void;
 }) {
   const [imageUrl, setImageUrl] = useState("");
   const { Modal, open, close } = useModal({
@@ -43,18 +43,20 @@ export default function ProfileImageInput({
     }
   }
 
-  console.log(imageUrl);
+  // console.log(imageUrl);
 
   function onSave() {
-    // ...프로필 이미지 저장
-    setProfileImg(imageUrl);
+    // TODO: DB에 저장
+    setProfileImage(imageUrl);
     close();
   }
+
   return (
     <>
       <div>
         <div className="flex items-center gap-4">
           <ImageInputWithButton
+            name="profileImage"
             buttonProps={{
               variation: "outline",
               colors: {
@@ -66,13 +68,13 @@ export default function ProfileImageInput({
           >
             이미지 변경하기
           </ImageInputWithButton>
-          <Button
+          {/* <Button
             variation="text"
             colors={{ bg: "bg-label-neutral", text: "text-label-neutral" }}
-            onClick={() => setProfileImg("")}
+            onClick={() => setImageUrl("")}
           >
             이미지 제거
-          </Button>
+          </Button> */}
         </div>
         <p className="text-label-400 text-label-alt mt-2">
           *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하

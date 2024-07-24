@@ -1,10 +1,7 @@
 "use client";
-import { ComponentType, useId } from "react";
-import SelectInput, {
-  GroupBase,
-  IndicatorsContainerProps,
-  Props,
-} from "react-select";
+
+import { useId } from "react";
+import SelectInput, { GroupBase, Props } from "react-select";
 import CreatableSelect from "react-select/creatable";
 
 import { TCustomSelectProps } from "@/types/component/props";
