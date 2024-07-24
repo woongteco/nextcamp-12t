@@ -17,19 +17,20 @@ type IdTypes =
   | "all";
 
 export function getImageUrl(
-  index: number,
   type?: IdTypes,
   width = 200,
-  height = 200
+  height = 200,
+  index?: number
 ): string {
   const key = type || "all";
   const idsByKey =
     key === "all"
       ? Object.values(ids).reduce((prev, curr) => [...prev, ...curr], [])
       : ids[key];
-  // const randomIndex = Math.floor(Math.random() * idsByKey.length);
+  const randomIndex = Math.floor(Math.random() * idsByKey.length);
+  const random = index ? idsByKey.at(index) : idsByKey[randomIndex];
   // console.log({ randomIndex });
-  return `https://picsum.photos/id/${idsByKey.at(index)}/${width}/${height}`;
+  return `https://picsum.photos/id/${random}/${width}/${height}`;
 }
 
 export function getImageUrls(
