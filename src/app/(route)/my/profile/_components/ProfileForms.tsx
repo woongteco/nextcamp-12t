@@ -3,7 +3,7 @@ import ProfileInputArea from "./ProfileInputArea";
 import ProfileImageInput from "./ProfileImageInput";
 import FormEditProfile from "./FormEditProfile";
 import { getUser } from "@/dummies/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import FormUpdatePassword from "./FormUpdatePassword";
 import FormUpdatePhoneNumber from "./FormUpdatePhoneNumber";

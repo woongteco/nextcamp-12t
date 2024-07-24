@@ -4,7 +4,7 @@ import { Input } from "./UserInput";
 import { ChangeEvent, FormEvent, useState } from "react";
 import RegisterCheck from "./RegisterCheck";
 import handleAlert from "./ErrorAlert";
-import { handleSignUpSignIn } from "@/lib/action";
+import { authAction } from "@/lib/action";
 
 export default function RegisterForm() {
   const [phoneData, setPhoneData] = useState<string>("");
@@ -15,7 +15,7 @@ export default function RegisterForm() {
     const formData = new FormData(e.currentTarget);
 
     try {
-      await handleSignUpSignIn(formData);
+      await authAction(formData);
       handleAlert("success", "회원가입 완료되어 로그인 되었습니다.");
     } catch (error: any) {
       handleAlert("error", error.message);

@@ -1,14 +1,21 @@
 import { ActionMeta } from "react-select";
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+} from "react";
 import Input from "@/common/Molecules/Form/Input";
 import ProfileImageInput from "./ProfileImageInput";
 import ProfileInputArea from "./ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
 import { CATEGORIES } from "@/constants/categories/job_category";
 import { Session } from "next-auth";
-import axios from "axios";
-import handleAlert from "@/app/(auth)/_components/ErrorAlert";
+
 import { TProfileData } from "./ProfileForms";
+import { profileAction } from "@/lib/action";
+import handleAlert from "@/app/(auth)/_components/ErrorAlert";
 
 export default function FormEditProfile({
   data,
@@ -38,20 +45,14 @@ export default function FormEditProfile({
   async function save(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const userId = session?.user.id;
-    const my_category = data.interest.map((v) => v.value);
+    const userId = "669bf4d4894a60fc9669e924";
+    const formData = new FormData(e.currentTarget);
+
     try {
-      const response = await axios.post("/api/auth/profile", {
-        // userId,
-        position_tag: data.positionTag,
-        introduce: data.introduce,
-        my_category,
-      });
-      handleAlert("success", response.data.message);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        handleAlert("error", error.response?.data.message);
-      }
+      await profileAction(userId, formData);
+      handleAlert("success", "프로필 정보가 저장되었습니다.");
+    } catch (error: any) {
+      handleAlert("error", error.message);
     }
   }
 

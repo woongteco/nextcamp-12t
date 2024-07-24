@@ -7,6 +7,7 @@ import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./_components/SelectCategory";
 import { getSession } from "@/auth";
 import NotFound from "@/app/not-found";
+import { communityAction } from "@/lib/action";
 
 export default async function PostWrite() {
   const session = await getSession();
@@ -17,7 +18,10 @@ export default async function PostWrite() {
 
   return (
     <>
-      <form action="" className="mb-100 flex flex-col gap-[36px]">
+      <form
+        action={communityAction}
+        className="mb-100 flex flex-col gap-[36px]"
+      >
         <SelectCategory />
         <GridField>
           <LabelText form required>
