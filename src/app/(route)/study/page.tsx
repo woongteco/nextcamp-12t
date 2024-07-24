@@ -15,6 +15,8 @@ import {
   onOffIconsName,
 } from "@/app/_components/CategoryTab/TabIcons";
 import { getSession } from "@/auth";
+import { StudyList } from "@/lib/schema";
+import connectDB from "@/lib/db";
 
 export type TQuery = {
   job_c?: string;
@@ -30,6 +32,12 @@ export default async function StudyComponent({
 }) {
   const session = await getSession();
   const studyCards = getStudiesData();
+
+  await connectDB();
+
+  const studyList = await StudyList.find();
+
+  console.log("스터디 리스트 가져오기" + studyList);
 
   return (
     <>

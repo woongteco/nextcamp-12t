@@ -30,6 +30,62 @@ const tempStudyData = {
   writerId: "hanyoojun",
 };
 
+// 리스트
+// const tempStudyDatas = [
+//   {
+//     studyPostId: 0,
+//     thumbnamilUrl: "",
+//     title: "",
+//     jobCategory: {
+//       label: "cate_1",
+//       vaule: "개발",
+//     },
+//     targetCategory: {
+//       label: "취업/면접",
+//       vaule: "cate_",
+//     },
+//     recruitmentPeople: 1,
+//     recruitmentPeriod: ["", ""],
+//     location: "오프라인",
+//     place: "서울특별시 성수동 2022-1번지",
+//     heartCount: 0,
+//     createAt: "",
+//   },
+// ];
+
+// 개설
+// const defaultStudyDetailData = {
+//   thumbnailInfo: {
+//     thumbnailUrl: null,
+//     title: "",
+//     jobCategory: {
+//       label: "",
+//       value: "",
+//     },
+//     targetCategory: {
+//       label: "",
+//       value: "",
+//     },
+//     expense: 13450,
+//     recruitmentPeople: 1,
+//     recruitmentPeriod: ["", ""],
+//     studyPeriod: ["", ""],
+//     location: "온라인",
+//     place: null,
+//   },
+//   contents: {
+//     content: "",
+//     rule: [
+//       { listId: 1, content: "집중작업시간" },
+//       { listId: 2, content: "집중작업시간" },
+//     ],
+//     curriculum: [
+//       { listId: 1, content: "1주차:강의" },
+//       { listId: 2, content: "2주차:강의 활용" },
+//     ],
+//   },
+// };
+
 export function getStudyData(studyId: string): TStudy {
   return tempStudyData;
 }
