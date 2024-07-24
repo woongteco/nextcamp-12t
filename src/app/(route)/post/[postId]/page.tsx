@@ -4,63 +4,45 @@ import Button from "@/common/Atoms/Form/Button";
 import LinkButton from "@/common/Atoms/LinkButton";
 import Profile from "@/common/Molecules/Profile";
 import ContentArea from "@/common/Organisms/ContentArea";
-import CommentArea, { TComment } from "@/common/Templates/CommentArea";
-import LinkedStudyCard from "./_components/LinkedStudyCard";
+import CommentArea from "@/common/Templates/CommentArea";
 import ShareIconButton from "../../_components/ShareIconButton";
+import { getSession } from "@/auth";
+import ReturnToListButton from "../_components/ReturnToListButton";
+import LinkedStudyCard from "../_components/LinkedStudyCard";
 
-export default function PostDetail({
+export default async function PostDetail({
   params: { postId },
 }: {
   params: { postId: string };
 }) {
+  const session = await getSession();
   const post = getPost(postId);
-  const comments: TComment[] = [];
   return (
-    <div className="mt-20">
-      <Link
-        href="/post"
-        className="flex flex-row gap-2 mb-8 text-body-600 hover:text-main-600 [&:hover_path]:stroke-main-600"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 19L8 12L15 5"
-            stroke="#202020"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <span>목록으로 돌아가기</span>
-      </Link>
+    <div>
+      <ReturnToListButton />
       <article>
         <div className="post-header border-y border-y-line-normal">
           <div>
             <p className="text-label-assist text-body-400 pt-6 pb-2">
               {post.category.label}
             </p>
-            <h2 className="text-H2">
-              {post.contents.title} #{postId}
-            </h2>
+            <h2 className="text-H2">{post.contents.title}</h2>
           </div>
           <div className="flex gap-6 items-center py-6">
             <Profile user={post.writer} size="large" />
             <p className="text-label-400 text-label-dimmed flex flex-row gap-2 items-center">
               <span>1일 전</span>
               {/* 본인이 작성한 글이라면 수정하기 버튼 show */}
-              <LinkButton
-                href="/post/write"
-                variation="text"
-                colors={{ bg: "", text: "text-label-dimmed" }}
-                className="ml-2 text-label-400 font-normal"
-              >
-                수정하기
-              </LinkButton>
+              {session?.user.id === post.writer.userId && (
+                <LinkButton
+                  href="/post/write"
+                  variation="text"
+                  colors={{ bg: "", text: "text-label-dimmed" }}
+                  className="ml-2 text-label-400 font-normal"
+                >
+                  수정하기
+                </LinkButton>
+              )}
             </p>
             <div className="flex gap-4 items-center ml-auto">
               <ShareIconButton />
@@ -85,15 +67,19 @@ export default function PostDetail({
             </div>
           </div>
         </div>
-        <ContentArea html={post.contents.body} />
-        {/* TODO: 추후 Link 추가 필요 */}
+        <div className="px-4">
+          <ContentArea html={post.contents.body} />
+        </div>
         {post.contents.linkedStudyId && (
           <Link href={`/study/${post.contents.linkedStudyId}`}>
             <LinkedStudyCard studyId={post.contents.linkedStudyId || "0"} />
           </Link>
         )}
       </article>
-      <CommentArea comments={comments} />
+      <CommentArea
+        comments={post.comments}
+        sessionId={session?.user.id || ""}
+      />
     </div>
   );
 }

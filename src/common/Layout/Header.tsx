@@ -1,14 +1,5 @@
 import Link from "next/link";
-import {
-  AlarmIcon,
-  CreateStudyIcon,
-  Logo,
-  LogoutIcon,
-  PostIcon,
-  SaveHeartIcon,
-  SettingProfileIcon,
-  StudyIcon,
-} from "@public/icons";
+import { Logo } from "@public/icons";
 import Image from "next/image";
 import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
