@@ -3,10 +3,11 @@ import { getPosts } from "@/dummies/posts";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import Dropdown from "@/common/Molecules/Dropdown";
 import LinkButton from "@/common/Atoms/LinkButton";
-import PostListItem from "@/common/Organisms/PostListItem";
 import NotFound from "@/app/not-found";
 import PostListWithPagination from "@/common/Templates/PostListWithPagination";
 import { WriteIcon } from "@/common/Atoms/Image/Icon";
+import { TPost } from "@/types/model/PostItem";
+import NonePostItem from "../../post/_components/NonePostItem";
 
 const POST_FROM = [
   { key: "community", label: "커뮤니티" },
@@ -16,19 +17,19 @@ const POST_FROM = [
 type TQuery = { from?: string };
 
 export default function MyPost({ searchParams }: { searchParams: TQuery }) {
-  const posts = getPosts();
+  const posts: TPost[] = []; //getPosts();
   const from = searchParams?.from || "community";
   const postFrom = POST_FROM.find((item) => item.key === from);
   if (postFrom === undefined) {
     return <NotFound />;
   }
   return (
-    <>
+    <div className="w-full lg:w-[calc(100vw-240px-30px-2rem)] xl:w-[calc(1200px-280px-30px-2rem)]">
       <SectionTitle size="md" className="mb-6">
         찜한 스터디
       </SectionTitle>
       <div className="flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
-        <Dropdown
+        {/* <Dropdown
           buttonLabel={postFrom.label}
           items={POST_FROM.map((item) => (
             <li
@@ -41,16 +42,20 @@ export default function MyPost({ searchParams }: { searchParams: TQuery }) {
             </li>
           ))}
         />
-        {postFrom.key === "community" && (
-          <LinkButton href="/post/write">
-            <WriteIcon />
-            <span className="text-body-600">커뮤니티 글 작성하기</span>
-          </LinkButton>
-        )}
+        {postFrom.key === "community" && ( */}
+        <LinkButton href="/post/write" className="self-end ml-auto">
+          <WriteIcon />
+          <span className="text-body-600">커뮤니티 글 작성하기</span>
+        </LinkButton>
+        {/* )} */}
       </div>
-      <div className="flex flex-col gap-0">
-        <PostListWithPagination posts={posts} />
-      </div>
-    </>
+      {posts.length > 0 ? (
+        <div className="flex flex-col gap-0">
+          <PostListWithPagination posts={posts.slice(0, 1)} />
+        </div>
+      ) : (
+        <NonePostItem />
+      )}
+    </div>
   );
 }

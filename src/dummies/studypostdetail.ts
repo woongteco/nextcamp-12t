@@ -82,7 +82,7 @@ export function getComments() {
         user: {
           userType: "user",
           nickname: "김지현",
-          image: getImageUrl("nature", 268, 180),
+          image: getImageUrl("nature", 268, 180, 10),
         },
         content: "디자인 초보도 참여 가능할까요?",
         createdAt: "2024.11.21 11:02",
@@ -92,7 +92,7 @@ export function getComments() {
             user: {
               userType: "pro",
               nickname: "UXUI 디자이너 이선형",
-              image: getImageUrl("animal", 48, 48),
+              image: getImageUrl("animal", 48, 48, 10),
             },
             content:
               "네, 가능합니다. 서로 공유하면서 배워나가는 스터디 모임입니다!",
@@ -103,7 +103,7 @@ export function getComments() {
             user: {
               userType: "pro",
               nickname: "UXUI 디자이너 이선형",
-              image: getImageUrl("animal", 48, 48),
+              image: getImageUrl("animal", 48, 48, 10),
             },
             content:
               "네, 가능합니다. 서로 공유하면서 배워나가는 스터디 모임입니다!",
@@ -116,7 +116,7 @@ export function getComments() {
         user: {
           userType: "user",
           nickname: "신지우",
-          image: getImageUrl("nature", 268, 180),
+          image: getImageUrl("nature", 268, 180, 11),
         },
         content: "저도 참여하고 싶어요! 진행중인데 참여 가능할까요?",
         createdAt: "2024.11.21 11:05",

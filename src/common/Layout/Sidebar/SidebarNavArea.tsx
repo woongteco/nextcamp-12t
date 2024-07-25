@@ -8,7 +8,7 @@ export default function SidebarNavArea({ children }: TProps) {
     <>
       <ul
         data-name="sidebar-layout__nav_desktop"
-        className="hidden lg:flex flex-col gap-1"
+        className="hidden lg:flex flex-col gap-1 xl:sticky xl:top-20"
       >
         {children}
       </ul>

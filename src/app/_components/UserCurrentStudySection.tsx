@@ -46,7 +46,7 @@ export default function UserCurrentStudySection() {
             </div>
           </CurrentStudyBox>
         </Link>
-        <Link href="/my/study">
+        <Link href="/my/post">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6">
               <ChevronRightIcon />
@@ -55,7 +55,7 @@ export default function UserCurrentStudySection() {
               <div>
                 <p className="text-H4 text-label-dimmed">작성한 글</p>
                 {/* {작성한 글 수} */}
-                <p className="text-[36px] font-bold text-normal mt-2">1개</p>
+                <p className="text-[36px] font-bold text-normal mt-2">0개</p>
               </div>
             </div>
           </CurrentStudyBox>
