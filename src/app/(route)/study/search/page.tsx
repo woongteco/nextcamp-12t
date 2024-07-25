@@ -35,12 +35,10 @@ export default function StudySearchPage({
           <div className="flex justify-between text-[#C2C3C4]">
             <StudyCategoryTabButtonList
               queryKey="c"
-              queryKey="c"
               categoryName={GOALS}
               categoryIcons={categoryIconsName}
             />
             <StudyCategoryTabButtonList
-              queryKey="l"
               queryKey="l"
               categoryName={ONOFF}
               categoryIcons={onOffIconsName}
