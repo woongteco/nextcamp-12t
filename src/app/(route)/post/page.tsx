@@ -18,7 +18,7 @@ import { getPosts } from "@/dummies/posts";
 
 type TQuery = { category?: string; sort?: string };
 
-export default function CommunityPostList({
+export default async function CommunityPostList({
   searchParams,
 }: {
   searchParams: TQuery;

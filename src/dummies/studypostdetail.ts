@@ -54,11 +54,12 @@ export function getStudyPostDetail() {
         label: "취업/면접",
         value: "cate_",
       },
-      expense: "10,000원",
+      expense: "10,000원", // number로
       recruitmentPeople: "20명",
       recruitmentPeriod: ["2024.11.21", "2024.11.30"],
       studyPeriod: ["2024.12.01", "2024.12.11"],
       onoff: "오프라인",
+      // place: "장소",
       heartStatus: false,
       heartCount: 262,
     },

@@ -16,9 +16,6 @@ async function getProfile(userId: string) {
 export default async function MyProfilePage() {
   const session = await getSession();
 
-  // 소셜로그인 id 값 이슈로 다시 확인
-  // console.log(session?.user.id);
-
   if (session === null) {
     return <NotFound />;
   }
@@ -27,6 +24,10 @@ export default async function MyProfilePage() {
     session?.user.id as string
   );
   console.log("profile", profile);
+
+  // const data: string = await useGetProfile();
+
+  // console.log("profile data 가져오기" + data);
 
   return (
     <>

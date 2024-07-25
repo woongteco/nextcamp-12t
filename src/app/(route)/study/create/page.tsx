@@ -14,14 +14,30 @@ import Thumbnail from "@/common/Atoms/Image/Thumbnail";
 import { DefaultThumbnailImg } from "@public/images";
 import Image from "next/image";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
+import { studyAction } from "@/lib/action";
+import { FormEvent } from "react";
+import handleAlert from "@/app/(auth)/_components/ErrorAlert";
 
 export default function page() {
+  async function study(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      await studyAction(formData);
+      handleAlert("success", "스터디가 개설 되었습니다.");
+    } catch (error: any) {
+      handleAlert("error", error.message);
+    }
+  }
+
   return (
     <>
       <SectionTitle size="lg" className="pb-6 border-b border-black">
         스터디 개설하기
       </SectionTitle>
-      <form action="" className="flex flex-col gap-[36px] mt-14">
+      <form action={studyAction} className="flex flex-col gap-[36px] mt-14">
         <div className="mb-8">
           <SectionTitle size="md">개설자의 역량을 펼쳐주세요</SectionTitle>
           <span className="text-sm text-label-dimmed">
@@ -68,8 +84,8 @@ export default function page() {
             스터디 카테고리
           </LabelText>
           <div className="flex gap-3">
-            <Input.Select required placeholder="직무 카테고리" />
-            <Input.Select required placeholder="목표 카테고리" />
+            <Input.Select placeholder="직무 카테고리" />
+            <Input.Select placeholder="목표 카테고리" />
           </div>
         </GridField>
         <GridField>
