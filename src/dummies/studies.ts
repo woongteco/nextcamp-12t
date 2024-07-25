@@ -217,7 +217,7 @@ const studyCards = [
       userId: "8",
       name: "장재우",
       role: "user",
-      position: "백엔드개발 재우짱",
+      position: "백엔드개발",
       profileUrl: getImageUrl("tech", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("desk", 268, 180, 6),
