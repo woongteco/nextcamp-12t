@@ -12,17 +12,19 @@ export default async function useGetProfile() {
     const userId = session.account.providerAccountId;
     const profile = await Profile.findOne({ userId });
 
+    console.log("테스테스테ㅡ" + userId);
+    console.log("유저 프로필" + profile);
     if (profile) {
-      const user = await User.findOne({
-        providerAccountId: session.account.providerAccountId,
-      });
+      const user = await User.findOne({ userId });
+
+      console.log("유저" + user);
 
       data = {
-        id: user.providerAccountId,
-        userId: user,
+        id: userId,
         position_tag: profile.position_tag,
         introduce: profile.introduce,
         my_category: profile.my_category,
+        user,
       };
     }
   }
