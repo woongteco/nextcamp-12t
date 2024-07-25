@@ -23,7 +23,8 @@
     "react-hot-toast": "^2.4.1",
     "react-quill": "^2.0.0",
     "react-select": "^5.8.0",
-    "swiper": "^11.1.4"
+    "swiper": "^11.1.4",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",

@@ -7,6 +7,7 @@ import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./_components/SelectCategory";
 import { getSession } from "@/auth";
 import NotFound from "@/app/not-found";
+import { communityAction } from "@/lib/action";
 
 export default async function PostWrite() {
   const session = await getSession();
@@ -17,7 +18,10 @@ export default async function PostWrite() {
 
   return (
     <>
-      <form action="" className="mt-20 mb-100 flex flex-col gap-[36px]">
+      <form
+        action={communityAction}
+        className="mb-100 flex flex-col gap-[30px]"
+      >
         <SelectCategory />
         <GridField>
           <LabelText form required>
@@ -30,7 +34,7 @@ export default async function PostWrite() {
             글 내용
           </LabelText>
           <TextEditor
-            className="h-[580px]"
+            className="w-full h-[580px]"
             placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
           />
         </GridField>
@@ -38,7 +42,7 @@ export default async function PostWrite() {
           <LabelText form>관련 스터디 링크</LabelText>
           <Input.Text />
         </GridField>
-        <div className="flex gap-gutter-xl items-center justify-center mt-40">
+        <div className="flex gap-gutter-xl items-center justify-center mt-24">
           <LinkButton
             href="/post"
             variation="outline"

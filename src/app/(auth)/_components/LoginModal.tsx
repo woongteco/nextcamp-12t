@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { SocialLogin, Google, Kakao, Logo } from "@public/icons";
+import { SocialLogin, Google, Kakao, Logo, Github } from "@public/icons";
 import { useEffect, useState, useRef } from "react";
 import ModalBackdrop from "@/common/Molecules/ModalPortal/ModalBackdrop";
 import LoginForm from "./LoginForm";
 import AuthWrap from "./AuthWrap";
-import { loginGoogle, loginKakao } from "@/lib/action";
+import { loginGithub, loginGoogle, loginKakao } from "@/lib/action";
 
 export default function LoginModal() {
   const [open, setOpen] = useState(false);
@@ -67,6 +67,11 @@ export default function LoginModal() {
                   <form action={loginGoogle}>
                     <button>
                       <Image src={Google} alt="구글 로그인" />
+                    </button>
+                  </form>
+                  <form action={loginGithub}>
+                    <button>
+                      <Image src={Github} alt="깃헙 로그인" />
                     </button>
                   </form>
                 </div>

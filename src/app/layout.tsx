@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
@@ -22,6 +22,18 @@ export const metadata: Metadata = {
   },
 };
 
+export const generateViewport = (): Viewport => {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    // Also supported by less commonly used
+    interactiveWidget: "resizes-visual",
+    themeColor: "#2A7FFE",
+  };
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,7 +43,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={notosans.className}>
         <Toaster position="bottom-center" />
-        <AuthSession>{children}</AuthSession>
+        {children}
       </body>
     </html>
   );

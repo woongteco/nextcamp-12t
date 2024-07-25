@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function UserCurrentStudySection() {
   return (
     <>
-      <div className="grid grid-cols-3 gap-gutter-xl">
+      <div className="flex flex-col md:grid md:grid-cols-3 gap-gutter-md lg:gap-gutter-lg xl:gap-gutter-xl">
         <Link href="/my/study">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6 flex items-start leading-[22px] text-main-600 font-semibold">
@@ -46,7 +46,7 @@ export default function UserCurrentStudySection() {
             </div>
           </CurrentStudyBox>
         </Link>
-        <Link href="/my/study">
+        <Link href="/my/post">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6">
               <ChevronRightIcon />
@@ -55,7 +55,7 @@ export default function UserCurrentStudySection() {
               <div>
                 <p className="text-H4 text-label-dimmed">작성한 글</p>
                 {/* {작성한 글 수} */}
-                <p className="text-[36px] font-bold text-normal mt-2">1개</p>
+                <p className="text-[36px] font-bold text-normal mt-2">0개</p>
               </div>
             </div>
           </CurrentStudyBox>

@@ -3,22 +3,6 @@ import { getImageUrl } from "./getImages";
 import { TThumbnailInfo } from "@/app/(route)/study/[studyPostId]/_components/StudyDetailThumbnail";
 import { TContents } from "@/app/(route)/study/[studyPostId]/_components/StudyDetailContent";
 
-// 스터디 상세게시글 규칙
-export const Rule = [
-  { accordionId: 1, content: "⏰ 집중 작업 시간 [ PM 14:00 - PM 17:00 ] ⏰" },
-  { accordionId: 2, content: "개인사정 및 불참 시 미리 공지하기" },
-  { accordionId: 3, content: "모르는 부분은 바로바로 질문하기" },
-  { accordionId: 4, content: "공유 및 대화 환영하기" },
-];
-
-// 스터디 상세게시글 커리큘럼
-export const Curriculum = [
-  { accordionId: 1, content: "1주차 : 유튜브 뮤직앱 클론피그마 도전" },
-  { accordionId: 2, content: "2주차 : 강의 시청 및 과제 부가" },
-  { accordionId: 3, content: "3주차 : 클론피그마 활용 TIP" },
-  { accordionId: 4, content: "4주차 : 유튜브 뮤직앱 클론피그마 완성" },
-];
-
 // 스터디 게시글 상세 : 스터디장 프로필
 export function getStudyLeaderUser() {
   return {
@@ -38,11 +22,12 @@ export function getStudyLeaderUser() {
 // 스터디 상세 더미
 export function getStudyPostDetail() {
   const result: {
-    postId: number;
+    studyPostId: number;
     thumbnailInfo: TThumbnailInfo;
     contents: TContents;
   } = {
-    postId: 1,
+    // 스터디 상세페이지
+    studyPostId: 1,
     thumbnailInfo: {
       thumbnailUrl: getImageUrl("desk", 268, 180),
       title: "웹디자인 마스터 하기!",
@@ -54,11 +39,12 @@ export function getStudyPostDetail() {
         label: "취업/면접",
         value: "cate_",
       },
-      expense: "10,000원",
+      expense: 10000,
       recruitmentPeople: "20명",
       recruitmentPeriod: ["2024.11.21", "2024.11.30"],
       studyPeriod: ["2024.12.01", "2024.12.11"],
       onoff: "오프라인",
+      place: "오프 사무실",
       heartStatus: false,
       heartCount: 262,
     },
@@ -83,6 +69,7 @@ export function getStudyPostDetail() {
     },
   };
   return result;
+  return result;
 }
 
 // 댓글 더미
@@ -96,7 +83,7 @@ export function getComments() {
         user: {
           userType: "user",
           nickname: "김지현",
-          image: getImageUrl("nature", 268, 180),
+          image: getImageUrl("nature", 268, 180, 10),
         },
         content: "디자인 초보도 참여 가능할까요?",
         createdAt: "2024.11.21 11:02",
@@ -106,7 +93,7 @@ export function getComments() {
             user: {
               userType: "pro",
               nickname: "UXUI 디자이너 이선형",
-              image: getImageUrl("animal", 48, 48),
+              image: getImageUrl("animal", 48, 48, 10),
             },
             content:
               "네, 가능합니다. 서로 공유하면서 배워나가는 스터디 모임입니다!",
@@ -117,7 +104,7 @@ export function getComments() {
             user: {
               userType: "pro",
               nickname: "UXUI 디자이너 이선형",
-              image: getImageUrl("animal", 48, 48),
+              image: getImageUrl("animal", 48, 48, 10),
             },
             content:
               "네, 가능합니다. 서로 공유하면서 배워나가는 스터디 모임입니다!",
@@ -130,7 +117,7 @@ export function getComments() {
         user: {
           userType: "user",
           nickname: "신지우",
-          image: getImageUrl("nature", 268, 180),
+          image: getImageUrl("nature", 268, 180, 11),
         },
         content: "저도 참여하고 싶어요! 진행중인데 참여 가능할까요?",
         createdAt: "2024.11.21 11:05",

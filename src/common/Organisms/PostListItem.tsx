@@ -60,7 +60,8 @@ export default function PostListItem({ item }: { item: TPost }) {
           <div className="flex justify-between items-center">
             <Profile size="small" user={item.writer} />
             <span className="text-label-400 text-label-dimmed">
-              {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개
+              {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개 ·
+              댓글 {item.comments.length}개
             </span>
           </div>
           {(item.category.value === "study" ||

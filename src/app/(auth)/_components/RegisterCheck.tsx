@@ -38,8 +38,6 @@ export default function RegisterCheck() {
     }
   };
 
-  console.log(checkItem);
-
   return (
     <>
       <div className="self-start text-sm">
@@ -56,7 +54,7 @@ export default function RegisterCheck() {
             전체 동의
           </label>
         </div>
-        <ul className="flex flex-col gap-1 mt-3">
+        <ul className="flex flex-col gap-1 mt-2">
           {serviceCheck.map(({ id, service }) => (
             <li key={id} className="flex items-center gap-[5px]">
               <input

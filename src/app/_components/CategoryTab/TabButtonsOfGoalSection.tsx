@@ -1,11 +1,13 @@
 "use client";
 import { GOALS } from "@/constants/categories/study_goal";
-import { TStudyCard, getStudiesData } from "@/dummies/studies";
 
 import { useEffect, useState } from "react";
 import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
 import { CategoryTabIcon, categoryIconsName } from "./TabIcons";
+import { TStudyCard } from "@/types/model/StudyCard";
+import { getStudyCards } from "@/dummies/studies";
+import NoneContentItemBase from "../NoneContentItemBase";
 
 const GOALS_TAB = GOALS.map((goal, index) => ({
   ...goal,
@@ -13,16 +15,19 @@ const GOALS_TAB = GOALS.map((goal, index) => ({
 }));
 
 export default function TabButtonsOfGoalSection() {
-  const [selected, setSelected] = useState(GOALS[0].value);
-  const [proStudies, setStudies] = useState<TStudyCard[]>([]);
+  const initGoal = GOALS[0].value;
+  const init = getStudyCards();
+  const initStudies = init.filter((s) => s.targetCategory.value === initGoal);
+  const [selected, setSelected] = useState(initGoal);
+  const [proStudies, setStudies] = useState<TStudyCard[]>(initStudies);
 
   useEffect(() => {
-    setStudies(() => getStudiesData());
+    setStudies(() => init.filter((s) => s.targetCategory.value === selected));
   }, [selected]);
 
   return (
     <>
-      <div className="flex flex-row gap-4 w-fit mx-auto mb-11">
+      <div className="flex flex-wrap xl:flex-row gap-4 w-fit mx-auto mb-11">
         {GOALS_TAB.map(({ label, value, iconName }) => {
           const active = selected === value;
           return (
@@ -40,7 +45,22 @@ export default function TabButtonsOfGoalSection() {
           );
         })}
       </div>
-      <StudyCardList studyCards={proStudies} count={8} />
+      {proStudies.length > 0 ? (
+        <StudyCardList studyCards={proStudies} count={8} />
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          <StudyCardSkelton />
+          <StudyCardSkelton />
+          <StudyCardSkelton />
+          <StudyCardSkelton />
+        </div>
+      )}
     </>
+  );
+}
+
+function StudyCardSkelton() {
+  return (
+    <div className="rounded-twenty border border-line-neutral bg-line-neutral/80 hover:shadow-normal h-[338px] animate-pulse"></div>
   );
 }

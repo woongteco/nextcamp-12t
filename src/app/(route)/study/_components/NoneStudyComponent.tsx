@@ -1,8 +1,9 @@
 import Link from "next/link";
+import NoneContentItemBase from "@/app/_components/NoneContentItemBase";
 
 export default function NoneStudyComponent() {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full h-[19rem] border border-main-500	rounded-3xl text-center">
+    <NoneContentItemBase>
       <p className="text-main-500 font-semibold">
         모집 중인 스터디가 없습니다.
         <br />첫 스터디를 만들어보세요!
@@ -13,6 +14,6 @@ export default function NoneStudyComponent() {
       >
         스터디 개설하기
       </Link>
-    </div>
+    </NoneContentItemBase>
   );
 }

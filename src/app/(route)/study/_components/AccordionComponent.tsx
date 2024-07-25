@@ -25,7 +25,6 @@ export default function AccordionComponent({
           aria-label="button"
           onClick={() => {
             setIsOpen((isOpen) => !isOpen);
-            console.log("isOpen", isOpen);
           }}
           className="flex items-center gap-4 py-6 w-full"
         >

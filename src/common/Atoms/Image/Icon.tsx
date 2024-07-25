@@ -223,7 +223,7 @@ export function OfflineIcon(props: TIconStylingProps) {
   );
 }
 
-export function CloseIcon() {
+export function CloseIcon({ stroke = "#171719" }: { stroke?: string }) {
   return (
     <svg
       width="24"
@@ -235,7 +235,7 @@ export function CloseIcon() {
       <rect width="24" height="24" fill="transparent" />
       <path
         d="M21 21L12 12M12 12L3 3M12 12L21.0001 3M12 12L3 21.0001"
-        stroke="#171719"
+        stroke={stroke}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -370,6 +370,46 @@ export function RadioUncheckedIcon() {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function MenuIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 17H19M5 12H19M5 7H19"
+        stroke="black"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function AdditionIcon({ color }: { color: string }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6 10H10M10 10H14M10 10V14M10 10V6M10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10C19 14.9706 14.9706 19 10 19Z"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </svg>
   );
