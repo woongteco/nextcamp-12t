@@ -16,7 +16,7 @@ const SidePopup = forwardRef(
     return (
       <dialog
         ref={ref}
-        className="fixed top-0 left-0 w-screen h-screen flex items-center justify-end lg:px-[96px] lg:py-[94px] bg-transparent z-modal"
+        className="fixed top-0 left-0 w-screen h-screen lg:hidden flex items-center justify-end lg:px-[96px] lg:py-[94px] bg-transparent z-modal"
         onClick={onClose}
       >
         <ModalBackdrop></ModalBackdrop>

@@ -1,3 +1,4 @@
+"use client";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import useModal from "@/hooks/useModal";
@@ -5,11 +6,7 @@ import ProfileImagePreviewModal from "./ProfileImagePreviewModal";
 import Button from "@/common/Atoms/Form/Button";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 
-export default function ProfileImageInput({
-  setProfileImage,
-}: {
-  setProfileImage: (image: string) => void;
-}) {
+export default function ProfileImageInput() {
   const [imageUrl, setImageUrl] = useState("");
   const { Modal, open, close } = useModal({
     children: (
@@ -47,8 +44,11 @@ export default function ProfileImageInput({
 
   function onSave() {
     // TODO: DB에 저장
-    setProfileImage(imageUrl);
     close();
+  }
+
+  function onDelete() {
+    setImageUrl("");
   }
 
   return (
@@ -68,13 +68,13 @@ export default function ProfileImageInput({
           >
             이미지 변경하기
           </ImageInputWithButton>
-          {/* <Button
+          <Button
             variation="text"
             colors={{ bg: "bg-label-neutral", text: "text-label-neutral" }}
-            onClick={() => setImageUrl("")}
+            onClick={onDelete}
           >
             이미지 제거
-          </Button> */}
+          </Button>
         </div>
         <p className="text-label-400 text-label-alt mt-2">
           *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하
