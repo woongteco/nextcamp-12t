@@ -42,10 +42,7 @@ export default function StudyCardFilter({
           <span>좋아요 순</span>
         </div>
       </div>
-      <StudyCardList
-        studyCards={filteredStudyCards}
-        count={filteredStudyCards.length}
-      />
+      <StudyCardList studyCards={filteredStudyCards} />
     </>
   );
 }
