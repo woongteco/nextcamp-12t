@@ -24,7 +24,7 @@ export default function MyPost({ searchParams }: { searchParams: TQuery }) {
     return <NotFound />;
   }
   return (
-    <>
+    <div className="w-full lg:w-[calc(100vw-240px-30px-2rem)] xl:w-[calc(1200px-280px-30px-2rem)]">
       <SectionTitle size="md" className="mb-6">
         찜한 스터디
       </SectionTitle>
@@ -56,6 +56,6 @@ export default function MyPost({ searchParams }: { searchParams: TQuery }) {
       ) : (
         <NonePostItem />
       )}
-    </>
+    </div>
   );
 }
