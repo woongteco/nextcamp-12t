@@ -253,7 +253,7 @@ export async function replyAction(
   console.log("답글 추가 완료 post 업데이트" + dbSaveReply);
 }
 
-// 스터디
+// 스터디 및 스터디 리스트
 export async function studyAction(formData: FormData) {
   const studyId = uuidv4();
   const thumbnailUrl = formData.get("thumbnailUrl") as string;
@@ -288,10 +288,10 @@ export async function studyAction(formData: FormData) {
   }
 
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
     await connectDB();
+    session.startTransaction();
 
     const study = new Study({
       studyId,
@@ -317,9 +317,6 @@ export async function studyAction(formData: FormData) {
       createdAt: new Date(),
     });
 
-    const dbSaveStudy = await study.save({ session });
-    console.log("스터디 개설 완료" + dbSaveStudy);
-
     const studyList = new StudyList({
       studyId,
       thumbnailUrl,
@@ -334,10 +331,10 @@ export async function studyAction(formData: FormData) {
       createdAt: new Date(),
     });
 
-    console.log(studyList);
-
+    const dbSaveStudy = await study.save({ session });
     const dbSaveStudyList = await studyList.save({ session });
 
+    console.log("스터디 개설 완료" + dbSaveStudy);
     console.log("개설된 스터디 리스트 저장 완료" + dbSaveStudyList);
 
     await session.commitTransaction();
