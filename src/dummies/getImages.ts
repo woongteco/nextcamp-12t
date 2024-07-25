@@ -17,10 +17,10 @@ type IdTypes =
   | "all";
 
 export function getImageUrl(
-  type?: IdTypes,
-  width = 200,
-  height = 200,
-  index?: number
+  type: IdTypes,
+  width: number,
+  height: number,
+  index: number
 ): string {
   const key = type || "all";
   const idsByKey =
@@ -34,9 +34,9 @@ export function getImageUrl(
 }
 
 export function getImageUrls(
-  type?: IdTypes,
-  width = 200,
-  height = 200
+  type: IdTypes,
+  width: number,
+  height: number
 ): string[] {
   const key = type || "all";
   const idsByKey =
