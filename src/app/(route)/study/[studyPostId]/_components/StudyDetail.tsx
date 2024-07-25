@@ -9,7 +9,7 @@ import { comments } from "@/dummies/comments";
 
 export default function StudyDetail() {
   const user = getStudyLeaderUser();
-  const { postId, thumbnailInfo, contents } = getStudyPostDetail();
+  const { studyPostId: postId, thumbnailInfo, contents } = getStudyPostDetail();
 
   return (
     <div>

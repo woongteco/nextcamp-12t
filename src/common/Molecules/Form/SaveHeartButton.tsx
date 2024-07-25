@@ -10,7 +10,6 @@ export default function SaveHeartButton({
   heartCount: number;
 }) {
   const [saveHeart, setSaveHeart] = useState<boolean>(false);
-  console.log("saveHeart", saveHeart);
 
   return (
     <>

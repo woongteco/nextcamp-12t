@@ -4,7 +4,7 @@ type TKeywordProps = React.ComponentProps<"span"> & {
   bg?: string;
 
   text: string;
-  children: string | string[];
+  children: any;
 };
 export default function Keyword(props: TKeywordProps) {
   const { bg, text, className, children } = props;

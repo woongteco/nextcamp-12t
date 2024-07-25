@@ -1,259 +1,537 @@
+import { TUserBase } from "@/types/model/User";
 import { getImageUrl } from "./getImages";
+import { TStudyCard } from "@/types/model/StudyCard";
 
-export type TStudy = {
-  studyId: string;
-  thumbnailUrl: string;
-  category: {
-    value: string;
-    label: string;
-  };
-  contents: {
-    title: string;
-    body: string;
-    rule?: string[];
-    curriculum?: string[];
-  };
-  writerId: string;
-};
+export type TStudyCreatData = {};
 
-const tempStudyData = {
-  studyId: "0",
-  thumbnailUrl: "",
-  category: {
-    value: "cate_1",
-    label: "개발",
-  },
-  contents: {
-    title: "개발에 필요한 지식들",
-    body: "",
-  },
-  writerId: "hanyoojun",
-};
+const studyCreateData = {};
 
-// 리스트
-// const tempStudyDatas = [
-//   {
-//     studyPostId: 0,
-//     thumbnamilUrl: "",
-//     title: "",
-//     jobCategory: {
-//       label: "cate_1",
-//       vaule: "개발",
-//     },
-//     targetCategory: {
-//       label: "취업/면접",
-//       vaule: "cate_",
-//     },
-//     recruitmentPeople: 1,
-//     recruitmentPeriod: ["", ""],
-//     location: "오프라인",
-//     place: "서울특별시 성수동 2022-1번지",
-//     heartCount: 0,
-//     createAt: "",
-//   },
-// ];
-
-// 개설
-// const defaultStudyDetailData = {
-//   thumbnailInfo: {
-//     thumbnailUrl: null,
-//     title: "",
-//     jobCategory: {
-//       label: "",
-//       value: "",
-//     },
-//     targetCategory: {
-//       label: "",
-//       value: "",
-//     },
-//     expense: 13450,
-//     recruitmentPeople: 1,
-//     recruitmentPeriod: ["", ""],
-//     studyPeriod: ["", ""],
-//     location: "온라인",
-//     place: null,
-//   },
-//   contents: {
-//     content: "",
-//     rule: [
-//       { listId: 1, content: "집중작업시간" },
-//       { listId: 2, content: "집중작업시간" },
-//     ],
-//     curriculum: [
-//       { listId: 1, content: "1주차:강의" },
-//       { listId: 2, content: "2주차:강의 활용" },
-//     ],
-//   },
-// };
-
-export function getStudyData(studyId: string): TStudy {
-  return tempStudyData;
-}
-
-export type TStudyCard = {
-  id: number;
-  user: {
-    userType: "user" | "pro";
-    nickname: string;
-    image: string;
-  };
-  study: {
-    title: string;
-    categoryJob: string;
-    people: string;
-    deadline: string;
-    RecruitmentStatus: string;
-    image: string;
-  };
-};
-
-const studyCards: TStudyCard[] = [
+// 스터디카드 리스트
+const studyCards = [
   {
-    id: 1,
+    studyId: "0",
     user: {
-      userType: "user",
-      nickname: "디자이너 이수빈",
-      image: getImageUrl("animal", 48, 48, 0),
+      userId: "1",
+      name: "한지민",
+      role: "user",
+      position: "개발자",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    study: {
-      title: "내가 디자인한 앱을 출시하기까지",
-      categoryJob: "UIUX 디자인 스터디",
-      people: "모집 8명",
-      deadline: "8/13 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("tech", 268, 180, 4),
+    thumbnailUrl: getImageUrl("art", 268, 180, 12),
+    title: "앱을 만들어보는 재밌는 개발 스터디",
+    jobCategory: {
+      label: "cate_1",
+      value: "개발",
     },
+    targetCategory: {
+      label: "개념학습",
+      value: "goal_1",
+    },
+    recruitmentPeople: 1,
+    recruitmentPeriod: ["2024-09-01", "2024-10-12"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: "서울특별시 성수동 2022-1번지",
+    heartCount: 0,
+    createAt: "2024-07-23",
   },
   {
-    id: 2,
+    studyId: "1",
     user: {
-      userType: "pro",
-      nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48, 11),
+      userId: "2",
+      name: "한민",
+      role: "user",
+      position: "개발",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    study: {
-      title: "재밌는 생명과학 실험 스터디",
-      categoryJob: "과학스터디",
-      people: "모집 12명",
-      deadline: "8/23 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180, 7),
+    thumbnailUrl: getImageUrl("architect", 268, 180, 12),
+    title: "비즈니스의 꿀팁",
+    jobCategory: {
+      label: "cate_2",
+      value: "비즈니스",
     },
+    targetCategory: {
+      label: "프로젝트",
+      value: "goal_3",
+    },
+    recruitmentPeople: 144,
+    recruitmentPeriod: ["2024-07-11", "2024-07-23"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 3,
+    createAt: "2024-07-24",
   },
   {
-    id: 3,
+    studyId: "2",
     user: {
-      userType: "pro",
-      nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48, 12),
+      userId: "3",
+      name: "한지",
+      role: "pro",
+      position: "개발자",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    study: {
-      title: "재밌는 생명과학 실험 스터디",
-      categoryJob: "과학스터디",
-      people: "모집 12명",
-      deadline: "8/23 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180, 4),
+    thumbnailUrl: getImageUrl("animal", 268, 180, 11),
+    title: "인프라 같이 공부하실 분",
+    jobCategory: {
+      label: "cate_4",
+      value: "IT 및 소프트웨어",
     },
+    targetCategory: {
+      label: "챌린지",
+      value: "goal_6",
+    },
+    recruitmentPeople: 23,
+    recruitmentPeriod: ["2024-07-11", "2024-09-10"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 42,
+    createAt: "2024-07-11",
   },
   {
-    id: 4,
+    studyId: "3",
     user: {
-      userType: "user",
-      nickname: "디자이너 이수빈",
-      image: getImageUrl("animal", 48, 48, 8),
+      userId: "4",
+      name: "호호호지민",
+      role: "user",
+      position: "호호호",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    study: {
-      title: "내가 디자인한 앱을 출시하기까지",
-      categoryJob: "UIUX 디자인 스터디",
-      people: "모집 8명",
-      deadline: "8/13 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("desk", 268, 180, 7),
+    thumbnailUrl: getImageUrl("art", 268, 180, 10),
+    title: "앱을 만들어보는 재밌는 개발 스터디",
+    jobCategory: {
+      label: "cate_1",
+      value: "개발",
     },
+    targetCategory: {
+      label: "취미",
+      value: "goal_8",
+    },
+    recruitmentPeople: 1,
+    recruitmentPeriod: ["2024-09-01", "2024-10-12"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: "서울특별시 성수동 2022-1번지",
+    heartCount: 0,
+    createAt: "2024-07-23",
   },
   {
-    id: 5,
+    studyId: "4",
     user: {
-      userType: "pro",
-      nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48, 9),
+      userId: "5",
+      name: "농농농",
+      role: "user",
+      position: "개발",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    study: {
-      title: "재밌는 생명과학 실험 스터디",
-      categoryJob: "과학스터디",
-      people: "모집 12명",
-      deadline: "8/23 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180, 10),
+    thumbnailUrl: getImageUrl("architect", 268, 180, 9),
+    title: "비즈니스의 꿀팁",
+    jobCategory: {
+      label: "cate_2",
+      value: "비즈니스",
     },
+    targetCategory: {
+      label: "취업/면접",
+      value: "goal_5",
+    },
+    recruitmentPeople: 144,
+    recruitmentPeriod: ["2024-09-11", "2024-10-22"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 3,
+    createAt: "2024-07-24",
   },
   {
-    id: 6,
+    studyId: "5",
     user: {
-      userType: "pro",
-      nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48, 11),
+      userId: "6",
+      name: "한지미",
+      role: "user",
+      position: "개발자",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    study: {
-      title: "재밌는 생명과학 실험 스터디",
-      categoryJob: "과학스터디",
-      people: "모집 12명",
-      deadline: "8/23 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180, 5),
+    thumbnailUrl: getImageUrl("animal", 268, 180, 8),
+    title: "인프라 스터디 모집해요!",
+    jobCategory: {
+      label: "cate_4",
+      value: "IT 및 소프트웨어",
     },
+    targetCategory: {
+      label: "특강",
+      value: "goal_7",
+    },
+    recruitmentPeople: 23,
+    recruitmentPeriod: ["2024-07-11", "2024-07-23"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 42,
+    createAt: "2024-07-11",
   },
   {
-    id: 7,
+    studyId: "6",
     user: {
-      userType: "user",
-      nickname: "디자이너 이수빈",
-      image: getImageUrl("animal", 48, 48, 6),
+      userId: "7",
+      name: "이나연",
+      role: "user",
+      position: "프론트개발자",
+      profileUrl: getImageUrl("all", 48, 48, 0),
     },
-    study: {
-      title: "내가 디자인한 앱을 출시하기까지",
-      categoryJob: "UIUX 디자인 스터디",
-      people: "모집 8명",
-      deadline: "8/13 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("desk", 268, 180, 1),
+    thumbnailUrl: getImageUrl("nature", 268, 180, 7),
+    title: "nextjs 그것이란,,",
+    jobCategory: {
+      label: "cate_4",
+      value: "IT 및 소프트웨어",
     },
+    targetCategory: {
+      label: "특강",
+      value: "goal_7",
+    },
+    recruitmentPeople: 5,
+    recruitmentPeriod: ["2024-07-11", "2024-07-27"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: null,
+    heartCount: 421,
+    createAt: "2024-07-19",
   },
   {
-    id: 8,
+    studyId: "7",
     user: {
-      userType: "pro",
-      nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48, 11),
+      userId: "8",
+      name: "장재우",
+      role: "user",
+      position: "백엔드개발",
+      profileUrl: getImageUrl("tech", 48, 48, 0),
     },
-    study: {
-      title: "재밌는 생명과학 실험 스터디",
-      categoryJob: "과학스터디",
-      people: "모집 12명",
-      deadline: "8/23 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180, 4),
+    thumbnailUrl: getImageUrl("desk", 268, 180, 6),
+    title: "음악 작사작곡 꿀팁",
+    jobCategory: {
+      label: "cate_12",
+      value: "음악",
     },
+    targetCategory: {
+      label: "취미",
+      value: "goal_8",
+    },
+    recruitmentPeople: 144,
+    recruitmentPeriod: ["2024-07-11", "2024-07-22"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 20,
+    createAt: "2024-06-24",
   },
   {
-    id: 9,
+    studyId: "8",
     user: {
-      userType: "pro",
-      nickname: "과학자 김민수",
-      image: getImageUrl("animal", 48, 48, 11),
+      userId: "9",
+      name: "양씨",
+      role: "user",
+      position: "자연인",
+      profileUrl: getImageUrl("art", 48, 48, 0),
     },
-    study: {
-      title: "재밌는 생명과학 실험 스터디",
-      categoryJob: "과학스터디",
-      people: "모집 12명",
-      deadline: "8/23 마감",
-      RecruitmentStatus: "모집중",
-      image: getImageUrl("nature", 268, 180, 4),
+    thumbnailUrl: getImageUrl("art", 268, 180, 5),
+    title: "영상편집 초급 스터디 같이 하실분 !",
+    jobCategory: {
+      label: "cate_10",
+      value: "사진 및 영상",
     },
+    targetCategory: {
+      label: "응용/활용",
+      value: "goal_2",
+    },
+    recruitmentPeople: 23,
+    recruitmentPeriod: ["2024-08-01", "2024-08-12"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: null,
+    heartCount: 3,
+    createAt: "2024-07-28",
+  },
+  {
+    studyId: "9",
+    user: {
+      userId: "10",
+      name: "김철수",
+      role: "user",
+      position: "개발자",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("art", 268, 180, 4),
+    title: "앱을 만들어보는 재밌는 개발 스터디",
+    jobCategory: {
+      label: "cate_1",
+      value: "개발",
+    },
+    targetCategory: {
+      label: "개념학습",
+      value: "goal_1",
+    },
+    recruitmentPeople: 1,
+    recruitmentPeriod: ["2024-09-01", "2024-10-12"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: "서울특별시 성수동 2022-1번지",
+    heartCount: 0,
+    createAt: "2024-07-23",
+  },
+  {
+    studyId: "10",
+    user: {
+      userId: "11",
+      name: "김민지",
+      role: "user",
+      position: "마케터",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("architect", 268, 180, 3),
+    title: "비즈니스의 꿀팁",
+    jobCategory: {
+      label: "cate_8",
+      value: "마케팅",
+    },
+    targetCategory: {
+      label: "프로젝트",
+      value: "goal_3",
+    },
+    recruitmentPeople: 144,
+    recruitmentPeriod: ["2024-07-11", "2024-07-23"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 3,
+    createAt: "2024-07-24",
+  },
+  {
+    studyId: "11",
+    user: {
+      userId: "12",
+      name: "한지",
+      role: "pro",
+      position: "개발자",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("animal", 268, 180, 2),
+    title: "인프라 같이 공부하실 분",
+    jobCategory: {
+      label: "cate_4",
+      value: "IT 및 소프트웨어",
+    },
+    targetCategory: {
+      label: "챌린지",
+      value: "goal_6",
+    },
+    recruitmentPeople: 23,
+    recruitmentPeriod: ["2024-07-11", "2024-09-10"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 42,
+    createAt: "2024-07-11",
+  },
+  {
+    studyId: "12",
+    user: {
+      userId: "13",
+      name: "호호호지민",
+      role: "user",
+      position: "호호호",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("art", 268, 180, 1),
+    title: "앱을 만들어보는 재밌는 개발 스터디",
+    jobCategory: {
+      label: "cate_1",
+      value: "개발",
+    },
+    targetCategory: {
+      label: "취미",
+      value: "goal_8",
+    },
+    recruitmentPeople: 1,
+    recruitmentPeriod: ["2024-09-01", "2024-10-12"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: "서울특별시 성수동 2022-1번지",
+    heartCount: 0,
+    createAt: "2024-07-23",
+  },
+  {
+    studyId: "13",
+    user: {
+      userId: "14",
+      name: "농농농",
+      role: "user",
+      position: "개발",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("architect", 268, 180, 1),
+    title: "비즈니스의 꿀팁",
+    jobCategory: {
+      label: "cate_2",
+      value: "비즈니스",
+    },
+    targetCategory: {
+      label: "취업/면접",
+      value: "goal_5",
+    },
+    recruitmentPeople: 144,
+    recruitmentPeriod: ["2024-09-11", "2024-10-22"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 3,
+    createAt: "2024-07-24",
+  },
+  {
+    studyId: "14",
+    user: {
+      userId: "15",
+      name: "한지민미미미",
+      role: "user",
+      position: "개발자",
+      profileUrl: getImageUrl("architect", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("animal", 268, 180, 1),
+    title: "인프라 스터디 모집해요!",
+    jobCategory: {
+      label: "cate_4",
+      value: "IT 및 소프트웨어",
+    },
+    targetCategory: {
+      label: "특강",
+      value: "goal_7",
+    },
+    recruitmentPeople: 23,
+    recruitmentPeriod: ["2024-07-11", "2024-07-23"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 42,
+    createAt: "2024-07-11",
+  },
+  {
+    studyId: "15",
+    user: {
+      userId: "16",
+      name: "김나영",
+      role: "user",
+      position: "프론트개발자",
+      profileUrl: getImageUrl("all", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("nature", 268, 180, 1),
+    title: "nextjs 그것이란,,",
+    jobCategory: {
+      label: "cate_4",
+      value: "IT 및 소프트웨어",
+    },
+    targetCategory: {
+      label: "특강",
+      value: "goal_7",
+    },
+    recruitmentPeople: 5,
+    recruitmentPeriod: ["2024-07-11", "2024-07-27"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: null,
+    heartCount: 421,
+    createAt: "2024-07-19",
+  },
+  {
+    studyId: "16",
+    user: {
+      userId: "17",
+      name: "장재우",
+      role: "user",
+      position: "백엔드개발",
+      profileUrl: getImageUrl("tech", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("desk", 268, 180, 1),
+    title: "프로듀싱 작곡 스터디 모집합니다.",
+    jobCategory: {
+      label: "cate_12",
+      value: "음악",
+    },
+    targetCategory: {
+      label: "취미",
+      value: "goal_8",
+    },
+    recruitmentPeople: 144,
+    recruitmentPeriod: ["2024-07-11", "2024-07-22"],
+    location: {
+      label: "online",
+      value: "온라인",
+    },
+    place: null,
+    heartCount: 20,
+    createAt: "2024-06-24",
+  },
+  {
+    studyId: "17",
+    user: {
+      userId: "18",
+      name: "양씨",
+      role: "user",
+      position: "자연인",
+      profileUrl: getImageUrl("art", 48, 48, 0),
+    },
+    thumbnailUrl: getImageUrl("art", 268, 180, 1),
+    title: "영상편집 초급 스터디 같이 하실분 !",
+    jobCategory: {
+      label: "cate_10",
+      value: "사진 및 영상",
+    },
+    targetCategory: {
+      label: "응용/활용",
+      value: "goal_2",
+    },
+    recruitmentPeople: 23,
+    recruitmentPeriod: ["2024-08-01", "2024-08-12"],
+    location: {
+      label: "offline",
+      value: "오프라인",
+    },
+    place: null,
+    heartCount: 3,
+    createAt: "2024-07-28",
   },
 ];
 
-export function getStudiesData(): TStudyCard[] {
+export function getStudyCards(): TStudyCard[] {
   return studyCards;
 }
