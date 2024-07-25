@@ -3,18 +3,24 @@ import mongoose from "mongoose";
 // 유저
 const user = new mongoose.Schema(
   {
-    email: { type: String, required: true },
+    email: { type: String },
     password: { type: String },
     name: { type: String, required: true },
     profile_img: { type: String, default: null },
-    phone: { type: String, required: true },
+    phone: { type: String },
     role: { type: String, enum: ["user", "pro", "admin"], default: "user" },
-    provider: { type: String, required: false },
-    providerAccountId: { type: String, required: false },
-    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+    provider: { type: String },
+    providerAccountId: { type: String },
   },
   { timestamps: true }
 );
+
+// 마이페이지
+const mypage = new mongoose.Schema({
+  myStudy: [{ type: [String], default: [] }],
+  likeStudy: [{ type: [String], default: [] }],
+  myPost: [{ type: [String], default: [] }],
+});
 
 // 프로필 등록
 const profile = new mongoose.Schema({
@@ -22,14 +28,12 @@ const profile = new mongoose.Schema({
   position_tag: { type: String, default: null },
   introduce: { type: String, default: null },
   my_category: { type: [String], default: [] },
-  providerAccountId: { type: String },
 });
 
 // 커뮤니티 작성 및 댓글
 const subWriter = new mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
-  role: { type: String, required: true },
   position: { type: String, default: null },
   profileUrl: { type: String, default: null },
 });
@@ -84,7 +88,7 @@ const subStudyInfo = new mongoose.Schema({
   recruitmentPeople: { type: Number, required: true },
   recruitmentPeriod: { type: [String], default: [] },
   studyPeriod: { type: [String], default: [] },
-  location: { type: String, default: "온라인", required: true },
+  location: { type: subCategory, required: true },
   place: { type: String, default: null, required: true },
 });
 
@@ -103,30 +107,15 @@ const study = new mongoose.Schema({
   studyId: { type: String },
   thumbnailInfo: { type: subStudyInfo, required: true },
   contents: { type: subContents, required: true },
-  heartStatus: { type: Boolean, default: false },
-  heartCount: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// 스터디 리스트
-const studyList = new mongoose.Schema({
-  studyId: { type: String },
-  thumbnailUrl: { type: String, default: null },
-  title: { type: String, required: true },
-  jobCategory: { type: subCategory, required: true },
-  targetCategory: { type: subCategory, required: true },
-  recruitmentPeople: { type: Number, required: true },
-  recruitmentPeriod: { type: [String], default: [] },
-  location: { type: String, default: "온라인", required: true },
-  place: { type: String, default: null, required: true },
+  writer: { type: subWriter, required: true },
   heartCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 
 export const User = mongoose.models?.User || mongoose.model("User", user);
+export const Mypage =
+  mongoose.models?.Mypage || mongoose.model("Mypage", mypage);
 export const Profile =
   mongoose.models?.Profile || mongoose.model("Profile", profile);
 export const Post = mongoose.models?.Post || mongoose.model("Post", post);
 export const Study = mongoose.models?.Study || mongoose.model("Study", study);
-export const StudyList =
-  mongoose.models?.StudyList || mongoose.model("StudyList", studyList);

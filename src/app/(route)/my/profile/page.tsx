@@ -5,6 +5,7 @@ import { Profile } from "@/lib/schema";
 import connectDB from "@/lib/db";
 import { ProfileSchema } from "@/types/model/Profile";
 import NotFound from "@/app/not-found";
+import useGetProfile from "@/hooks/useGetProfile";
 
 async function getProfile(userId: string) {
   await connectDB();
@@ -35,7 +36,7 @@ export default async function MyProfilePage() {
         프로필 수정
       </SectionTitle>
       <ProfileForms
-        userId={session.user.id}
+        userId={session.account.providerAccountId}
         sessionProvider={session?.account.provider || ""}
         profile={profile}
       />
