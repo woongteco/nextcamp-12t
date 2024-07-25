@@ -40,5 +40,6 @@ export { default as PeopleIcon } from "./details/people.svg";
 
 export { default as ShareIcon } from "./share.svg";
 export { default as ArrowIcon } from "./Arrow.svg";
+export { default as ImageCheckIcon } from "./whiteCheck.svg";
 
 export { default as QandAIcon } from "./QandAIcon.svg";
