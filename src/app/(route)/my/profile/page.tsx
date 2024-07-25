@@ -26,9 +26,9 @@ export default async function MyProfilePage() {
   );
   console.log("profile", profile);
 
-  const data: string = await useGetProfile();
+  // const data: string = await useGetProfile();
 
-  console.log("profile data 가져오기" + data);
+  // console.log("profile data 가져오기" + data);
 
   return (
     <>
