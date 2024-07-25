@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Image from "next/image";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import ThumbnailInfoList from "./ThumbnailInfoLabel";
 import Link from "next/link";
@@ -36,24 +35,15 @@ export default function StudyDetailThumbnail({
   const {
     thumbnailUrl,
     title,
-    title,
     jobCategory,
     targetCategory,
     expense,
     recruitmentPeople,
     recruitmentPeriod,
-    recruitmentPeople,
-    recruitmentPeriod,
     studyPeriod,
     onoff,
     heartStatus,
-    heartStatus,
     heartCount,
-  } = thumbnailInfo;
-
-  const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
-  const recruitmentDay = dayjs(recruitmentPeriod[1]);
-  const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");
   } = thumbnailInfo;
 
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
