@@ -50,10 +50,10 @@ export default function ProfileForms({
   };
   console.log({ profile, profileData });
 
-  // const [data, setData] = useState<TProfileData>(defaultData);
-  // const setProfileImage = (image: string) => {
-  //   setData((prev) => ({ ...prev, profileUrl: image }));
-  // };
+  const [data, setData] = useState<TProfileData>(profileData);
+  const setProfileImage = (image: string) => {
+    setData((prev) => ({ ...prev, profileUrl: image }));
+  };
 
   return (
     <>

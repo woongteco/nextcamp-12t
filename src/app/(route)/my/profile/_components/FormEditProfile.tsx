@@ -41,6 +41,7 @@ export default function FormEditProfile({
   //   // console.log({ newValue });
   //   if (Array.isArray(newValue)) setData((p) => ({ ...p, interest: newValue }));
   // };
+  console.log("?" + userId);
 
   async function save(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
