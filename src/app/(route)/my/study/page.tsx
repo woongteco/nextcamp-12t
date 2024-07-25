@@ -52,7 +52,7 @@ export default async function MyStudyPage() {
         </SectionTitle>
         <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(0, 1).map((card) => (
-            <StudyCardItem key={card.id} card={card} />
+            <StudyCardItem key={card.studyId} card={card} />
           ))}
         </ul>
       </section>
@@ -62,7 +62,7 @@ export default async function MyStudyPage() {
         </SectionTitle>
         <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(1, 3).map((card) => (
-            <StudyCardItem key={card.id} card={card} />
+            <StudyCardItem key={card.studyId} card={card} />
           ))}
         </ul>
       </section>
@@ -72,7 +72,7 @@ export default async function MyStudyPage() {
         </SectionTitle>
         <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(3, 5).map((card) => (
-            <StudyCardItem key={card.id} card={card} />
+            <StudyCardItem key={card.studyId} card={card} />
           ))}
         </ul>
       </section>
