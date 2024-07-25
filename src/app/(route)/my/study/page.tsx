@@ -1,14 +1,14 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
-import { getStudiesData } from "@/dummies/studies";
 import { getUser } from "@/dummies/user";
 import CircleProgressGraph from "../_components/CircleProgressGraph";
 import { getSession } from "@/auth";
+import { getStudyCards } from "@/dummies/studies";
 
 export default async function MyStudyPage() {
   const session = await getSession();
   const user = getUser();
-  const studyCard = getStudiesData();
+  const studyCard = getStudyCards();
   const mission = { total: 5, done: 4 };
   return (
     <div className="flex flex-col gap-100">
