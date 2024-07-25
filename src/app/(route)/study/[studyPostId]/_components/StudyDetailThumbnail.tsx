@@ -18,11 +18,12 @@ export type TThumbnailInfo = {
     label: string;
     value: string;
   };
-  expense: string;
+  expense: number;
   recruitmentPeople: string;
   recruitmentPeriod: string[];
   studyPeriod: string[];
   onoff: string;
+  place: string;
   heartStatus: boolean;
   heartCount: number;
 };

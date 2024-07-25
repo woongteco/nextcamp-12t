@@ -2,10 +2,11 @@ import Link from "next/link";
 import NoneContentItemBase from "@/app/_components/NoneContentItemBase";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
-import { getStudiesData, TStudyCard } from "@/dummies/studies";
+import { TStudyCard } from "@/types/model/StudyCard";
+import { getStudyCards } from "@/dummies/studies";
 
 export default function MyStudyLiked() {
-  const studyCards: TStudyCard[] = getStudiesData();
+  const studyCards: TStudyCard[] = getStudyCards();
   return (
     <>
       <SectionTitle size="md" className="mb-6">
@@ -28,7 +29,7 @@ export default function MyStudyLiked() {
         ) : (
           <ul className="grid grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
             {studyCards.map((card) => (
-              <StudyCardItem key={card.id} card={card} />
+              <StudyCardItem key={card.studyId} card={card} />
             ))}
           </ul>
         )}

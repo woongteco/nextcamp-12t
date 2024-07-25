@@ -1,14 +1,14 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
-import { getStudiesData } from "@/dummies/studies";
 import { getUser } from "@/dummies/user";
 import CircleProgressGraph from "../_components/CircleProgressGraph";
 import { getSession } from "@/auth";
+import { getStudyCards } from "@/dummies/studies";
 
 export default async function MyStudyPage() {
   const session = await getSession();
   const user = getUser();
-  const studyCard = getStudiesData();
+  const studyCard = getStudyCards();
   const mission = { total: 5, done: 4 };
   return (
     <div className="flex flex-col gap-100">
@@ -52,7 +52,7 @@ export default async function MyStudyPage() {
         </SectionTitle>
         <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(0, 1).map((card) => (
-            <StudyCardItem key={card.id} card={card} />
+            <StudyCardItem key={card.studyId} card={card} />
           ))}
         </ul>
       </section>
@@ -62,7 +62,7 @@ export default async function MyStudyPage() {
         </SectionTitle>
         <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(1, 3).map((card) => (
-            <StudyCardItem key={card.id} card={card} />
+            <StudyCardItem key={card.studyId} card={card} />
           ))}
         </ul>
       </section>
@@ -72,7 +72,7 @@ export default async function MyStudyPage() {
         </SectionTitle>
         <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           {studyCard.slice(3, 5).map((card) => (
-            <StudyCardItem key={card.id} card={card} />
+            <StudyCardItem key={card.studyId} card={card} />
           ))}
         </ul>
       </section>

@@ -55,7 +55,7 @@ export default function UserCurrentStudySection() {
               <div>
                 <p className="text-H4 text-label-dimmed">작성한 글</p>
                 {/* {작성한 글 수} */}
-                <p className="text-[36px] font-bold text-normal mt-2">1개</p>
+                <p className="text-[36px] font-bold text-normal mt-2">0개</p>
               </div>
             </div>
           </CurrentStudyBox>
