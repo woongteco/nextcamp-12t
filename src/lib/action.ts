@@ -1,40 +1,15 @@
 "use server";
 
-import { getSession, signIn } from "@/auth";
+import { signIn } from "@/auth";
 import { hash } from "bcryptjs";
 import connectDB from "./db";
-import { Post, Profile, Study, StudyList, User } from "./schema";
+import { Post, Profile, Study, User } from "./schema";
 import { redirect } from "next/navigation";
-import mongoose from "mongoose";
 const { v4: uuidv4 } = require("uuid");
 
 const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
 const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
 const nameValid = /^[가-힣]{2,4}$/;
-
-export const handleValidate = (
-  email: string,
-  password: string,
-  pwCheck: string,
-  name: string,
-  phone: string
-) => {
-  if (!emailValid.test(email)) {
-    throw new Error("이메일 유형에 알맞게 입력해주세요.");
-  }
-  if (!passwordValid.test(password)) {
-    throw new Error("조건에 맞는 비밀번호를 입력해주세요.");
-  }
-  if (!nameValid.test(name)) {
-    throw new Error("조건에 맞는 이름을 입력해주세요.");
-  }
-  if (password !== pwCheck) {
-    throw new Error("입력한 비밀번호와 일치하지 않습니다.");
-  }
-  if (phone.length !== 11) {
-    throw new Error("휴대폰 번호 숫자 11자리를 입력해주세요.");
-  }
-};
 
 // 회원가입
 export async function authAction(formData: FormData) {
@@ -44,7 +19,21 @@ export async function authAction(formData: FormData) {
   const name = formData.get("name") as string;
   const phone = formData.get("phone") as string;
 
-  handleValidate(email, password, pwCheck, name, phone);
+  if (!emailValid.test(email)) {
+    return "이메일 유형에 알맞게 입력해주세요.";
+  }
+  if (!passwordValid.test(password)) {
+    return "조건에 맞는 비밀번호를 입력해주세요.";
+  }
+  if (!nameValid.test(name)) {
+    return "조건에 맞는 이름을 입력해주세요.";
+  }
+  if (password !== pwCheck) {
+    return "입력한 비밀번호와 일치하지 않습니다.";
+  }
+  if (phone.length !== 11) {
+    return "휴대폰 번호 숫자 11자리를 입력해주세요.";
+  }
 
   await connectDB();
 
@@ -73,12 +62,14 @@ export async function authAction(formData: FormData) {
   redirect("/");
 }
 
+// 마이페이지
+
 // 프로필 등록
-export async function profileAction(session: any, formData: FormData) {
-  const userId = session.account.providerAccountId;
-  const position_tag = formData.get("positionTag") as string;
-  const introduce = formData.get("introduce") as string;
-  const my_category = formData.get("interest") as string;
+export async function profileAction(id: string, formData: FormData) {
+  const userId = id;
+  const position_tag = "ㅎㅎ";
+  const introduce = "ㅎㅎ";
+  const my_category = "ㅎㅎㄴㅇ";
   let profile;
 
   if (!userId) {
@@ -267,9 +258,13 @@ export async function studyAction(formData: FormData) {
   const location = formData.get("location") as string;
   const place = formData.get("place") as string;
   const content = formData.get("content") as string;
+  const userId = formData.get("userId") as string;
+  const name = formData.get("name") as string;
+  const role = formData.get("role") as string;
+  const position = formData.get("position") as string;
+  const profileUrl = formData.get("profileUrl") as string;
   const rule = formData.get("rule");
   const curriculum = formData.get("curriculum");
-  const heartStatus = formData.get("heartStatus");
   const heartCount = Number(formData.get("heartCount"));
 
   if (
@@ -287,63 +282,40 @@ export async function studyAction(formData: FormData) {
     throw new Error("스터디 개설하려면 필수 정보를 입력해주세요.");
   }
 
-  const session = await mongoose.startSession();
+  await connectDB();
 
-  try {
-    await connectDB();
-    session.startTransaction();
-
-    const study = new Study({
-      studyId,
-      thumbnailInfo: {
-        thumbnailUrl,
-        title,
-        jobCategory,
-        targetCategory,
-        recruitmentPeople,
-        recruitmentPeriod,
-        studyPeriod,
-        location,
-        expense,
-        place,
-      },
-      contents: {
-        content,
-        rule,
-        curriculum,
-      },
-      heartStatus,
-      heartCount,
-      createdAt: new Date(),
-    });
-
-    const studyList = new StudyList({
-      studyId,
+  const study = new Study({
+    studyId,
+    thumbnailInfo: {
       thumbnailUrl,
       title,
       jobCategory,
       targetCategory,
       recruitmentPeople,
       recruitmentPeriod,
+      studyPeriod,
       location,
+      expense,
       place,
-      heartCount,
-      createdAt: new Date(),
-    });
+    },
+    contents: {
+      content,
+      rule,
+      curriculum,
+    },
+    writer: {
+      userId,
+      name,
+      role,
+      position,
+      profileUrl,
+    },
+    heartCount,
+    createdAt: new Date(),
+  });
 
-    const dbSaveStudy = await study.save({ session });
-    const dbSaveStudyList = await studyList.save({ session });
-
-    console.log("스터디 개설 완료" + dbSaveStudy);
-    console.log("개설된 스터디 리스트 저장 완료" + dbSaveStudyList);
-
-    await session.commitTransaction();
-    session.endSession();
-  } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
-    throw new Error("스터디 개설에 실패했습니다.");
-  }
+  const dbSaveStudy = await study.save();
+  console.log("스터디 개설 완료" + dbSaveStudy);
 }
 
 export async function loginGoogle() {

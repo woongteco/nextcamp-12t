@@ -12,7 +12,7 @@ export function getStudyLeaderUser() {
     nickname: "UXUI 디자이너 이선형",
     email: "jisoo.sin@chemeet.com",
     jobcategory: "디자인, 마케팅",
-    profileUrl: getImageUrl("animal", 48, 48),
+    profileUrl: getImageUrl("animal", 48, 48, 8),
     content:
       "상명대학교 졸업 후 많은 이직 끝에 네이버에 입사하여 쌓은 기술들과 카카오로 이직하며 얻은 노하우를 여러분들과 함께 나누며 같이 성장하고 싶습니다.",
     tags: ["#디자인8년차", "#전)네이버디자이너", "#현)카카오디자이너"],
@@ -29,7 +29,7 @@ export function getStudyPostDetail() {
     // 스터디 상세페이지
     studyPostId: 1,
     thumbnailInfo: {
-      thumbnailUrl: getImageUrl("desk", 268, 180),
+      thumbnailUrl: getImageUrl("desk", 268, 180, 4),
       title: "웹디자인 마스터 하기!",
       jobCategory: {
         label: "UXUI 디자인",
@@ -68,6 +68,7 @@ export function getStudyPostDetail() {
       ],
     },
   };
+  return result;
   return result;
 }
 
