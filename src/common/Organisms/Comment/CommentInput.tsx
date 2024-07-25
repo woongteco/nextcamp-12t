@@ -1,15 +1,19 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { MouseEventHandler, useRef, useState } from "react";
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
 
 export default function CommentInput({
   init = false,
   placeholder = "댓글을 작성해보세요",
+  onCancel,
+  onSubmit,
 }: {
   init?: boolean;
   placeholder?: string;
+  onCancel?: () => void;
+  onSubmit?: () => void;
 }) {
   const [focus, setFocus] = useState<boolean>(init);
   const commentRef = useRef<HTMLFormElement>(null);
@@ -29,11 +33,19 @@ export default function CommentInput({
             commentRef.current.reset();
           }
           setFocus(false);
+          onCancel && onCancel();
         }}
       >
         취소
       </Button>
-      <Button variation="solid" className="my-[6px]" type="submit">
+      <Button
+        variation="solid"
+        className="my-[6px]"
+        type="submit"
+        onClick={() => {
+          onSubmit && onSubmit();
+        }}
+      >
         등록
       </Button>
     </form>

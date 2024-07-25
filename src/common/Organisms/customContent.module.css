@@ -2,6 +2,21 @@
   padding-block-start: 2.5rem;
   padding-block-end: 3.74rem;
 }
+.postBody p,
+.postBody ol,
+.postBody ul,
+.postBody pre,
+.postBody blockquote,
+.postBody h1,
+.postBody h2,
+.postBody h3,
+.postBody h4,
+.postBody h5,
+.postBody h6 {
+  margin: 0;
+  padding: 0;
+  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
 .postBody > * {
   display: block;
   color: black;
@@ -49,4 +64,117 @@
 }
 .postBody .ql-align-right {
   text-align: right;
+}
+.postBody ul,
+.postBody ol {
+  padding-left: 0.5rem;
+}
+.postBody ul li {
+  list-style: disc;
+}
+.postBody ul li,
+.postBody ol li {
+  padding-left: 0;
+  list-style-position: inside;
+}
+.postBody ul li[class="ql-indent-1"],
+.postBody ol li[class="ql-indent-1"] {
+  padding-left: 1rem;
+}
+.postBody ul li[class="ql-indent-2"],
+.postBody ol li[class="ql-indent-2"] {
+  padding-left: 2rem;
+}
+.postBody ul li[class="ql-indent-3"],
+.postBody ol li[class="ql-indent-3"] {
+  padding-left: 3rem;
+}
+.postBody ul li[class="ql-indent-4"],
+.postBody ol li[class="ql-indent-4"] {
+  padding-left: 4rem;
+}
+.postBody ul li[class="ql-indent-5"],
+.postBody ol li[class="ql-indent-5"] {
+  padding-left: 5rem;
+}
+.postBody ul li[class="ql-indent-6"],
+.postBody ol li[class="ql-indent-6"] {
+  padding-left: 6rem;
+}
+.postBody ul li[class="ql-indent-7"],
+.postBody ol li[class="ql-indent-7"] {
+  padding-left: 7rem;
+}
+.postBody ul li[class="ql-indent-8"],
+.postBody ol li[class="ql-indent-8"] {
+  padding-left: 8rem;
+}
+.postBody ol li {
+  counter-increment: list-0;
+  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.postBody ol li:before {
+  content: counter(list-0, decimal) ". ";
+}
+.postBody ol li[class="ql-indent-1"] {
+  counter-increment: list-1;
+  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.postBody ol li[class="ql-indent-1"]::before {
+  content: counter(list-1, lower-alpha) ". ";
+}
+.postBody ol li[class="ql-indent-2"] {
+  counter-increment: list-2;
+  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.postBody ol li[class="ql-indent-2"]::before {
+  content: counter(list-2, lower-roman) ". ";
+}
+.postBody ol li[class="ql-indent-3"] {
+  counter-increment: list-3;
+  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;
+}
+.postBody ol li[class="ql-indent-3"]:before {
+  content: counter(list-3, decimal) ". ";
+}
+.postBody ol li[class="ql-indent-4"] {
+  counter-increment: list-4;
+  counter-reset: list-5 list-6 list-7 list-8 list-9;
+}
+.postBody ol li[class="ql-indent-4"]::before {
+  content: counter(list-4, lower-alpha) ". ";
+}
+.postBody ol li[class="ql-indent-5"] {
+  counter-increment: list-5;
+  counter-reset: list-6 list-7 list-8 list-9;
+}
+.postBody ol li[class="ql-indent-5"]::before {
+  content: counter(list-5, lower-roman) ". ";
+}
+.postBody ol li[class="ql-indent-6"] {
+  counter-increment: list-6;
+  counter-reset: list-7 list-8 list-9;
+}
+.postBody ol li[class="ql-indent-6"]:before {
+  content: counter(list-6, decimal) ". ";
+}
+.postBody ol li[class="ql-indent-7"] {
+  counter-increment: list-7;
+  counter-reset: list-8 list-9;
+}
+.postBody ol li[class="ql-indent-7"]::before {
+  content: counter(list-7, lower-alpha) ". ";
+}
+.postBody ol li[class="ql-indent-8"] {
+  counter-increment: list-8;
+  counter-reset: list-9;
+}
+.postBody ol li[class="ql-indent-8"]::before {
+  content: counter(list-8, lower-roman) ". ";
+}
+.postBody ol li[class="ql-indent-9"] {
+  counter-increment: list-9;
+}
+.postBody ol li[class="ql-indent-9"]:before {
+  content: counter(list-9, decimal) ". ";
 }

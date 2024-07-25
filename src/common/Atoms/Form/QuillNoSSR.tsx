@@ -74,6 +74,32 @@ const QuillNoSSR = dynamic(
 <path d="M20 18H4M20 14H4M20 10H4M20 6H4" stroke="black" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 `;
+    icons["list"][
+      "ordered"
+    ] = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 17H20M4 15.6853V15.5C4 14.6716 4.67157 14 5.5 14H5.54054C6.34658 14 7.00021 14.6534 7.00021 15.4595C7.00021 15.8103 6.8862 16.1519 6.67568 16.4326L4 20.0002L7 20M10 12H20M10 7H20M4 5L6 4V10" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+`;
+    icons["list"][
+      "bullet"
+    ] = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 17H19M9 12H19M9 7H19M5.00195 17V17.002L5 17.002V17H5.00195ZM5.00195 12V12.002L5 12.002V12H5.00195ZM5.00195 7V7.002L5 7.00195V7H5.00195Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+`;
+    icons["indent"][
+      "-1"
+    ] = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 17H10M4 12H13M4 7H16" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M19 15L14 15M14 15L17 18M14 15L17 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+`;
+    icons["indent"][
+      "+1"
+    ] = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 17H10M4 12H13M4 7H16" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M12 15L20 15M20 15L17 12M20 15L17 18" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+`;
     const Quill = ({
       forwardedRef,
       className = "",
@@ -106,6 +132,8 @@ const modules = {
       { align: "center" },
       { align: "right" },
     ],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }],
   ],
   clipboard: {
     // toggle to add extra line breaks when pasting HTML:
@@ -123,6 +151,8 @@ const formats = [
   "link",
   "image",
   "align",
+  "list",
+  "indent",
 ];
 
 QuillNoSSR.defaultProps = {

@@ -18,50 +18,38 @@ import { profileAction } from "@/lib/action";
 import handleAlert from "@/app/(auth)/_components/ErrorAlert";
 
 export default function FormEditProfile({
-  data,
-  setData,
-  session,
+  userId,
+  profile,
+  sessionProvider,
 }: {
-  data: TProfileData;
-  setData: Dispatch<SetStateAction<TProfileData>>;
-  session: Session | null;
+  userId: string;
+  profile: TProfileData;
+  sessionProvider: string;
 }) {
-  const changeData = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    console.log(e.target.name);
-    const name = e.target.name;
-    const value = e.target.value;
-    setData((p) => ({ ...p, [name]: value }));
-  };
-  const changeMultiSelect: (
-    newValue: unknown,
-    actionMeta: ActionMeta<unknown>
-  ) => void = (newValue) => {
-    // console.log({ newValue });
-    if (Array.isArray(newValue)) setData((p) => ({ ...p, interest: newValue }));
-  };
+  // const changeData = (
+  //   e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  // ) => {
+  //   console.log(e.target.name);
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   setData((p) => ({ ...p, [name]: value }));
+  // };
+  // const changeMultiSelect: (
+  //   newValue: unknown,
+  //   actionMeta: ActionMeta<unknown>
+  // ) => void = (newValue) => {
+  //   // console.log({ newValue });
+  //   if (Array.isArray(newValue)) setData((p) => ({ ...p, interest: newValue }));
+  // };
 
   async function save(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    // const userId = profile?.userId._id as string;
     const formData = new FormData(e.currentTarget);
 
-    if (!session) {
-      handleAlert("error", "유효한 id가 필요합니다.");
-      return;
-    }
-
-    let id;
-    const provider = session?.account.provider;
-
-    if (provider === "provider") {
-      id = session?.user.id;
-    } else {
-      id = session?.account.providerAccountId;
-    }
-
     try {
-      await profileAction(session, formData);
+      await profileAction(userId, formData);
       handleAlert("success", "프로필 정보가 저장되었습니다.");
     } catch (error: any) {
       handleAlert("error", error.message);
@@ -74,25 +62,26 @@ export default function FormEditProfile({
         <Input.Text
           name="positionTag"
           placeholder="이름 앞에 추가될 포지션 태그를 추가하세요"
-          value={data.positionTag}
-          onChange={changeData}
+          // value={data.positionTag}
+          // onChange={changeData}
         />
       </ProfileInputArea>
       <ProfileInputArea label="내 소개">
         <Input.Textarea
           name="introduce"
           placeholder="나를 소개할 말을 추가하세요"
-          onChange={changeData}
+          // onChange={changeData}
         />
       </ProfileInputArea>
-      {session?.account.provider === "credentials" && (
-        <ProfileInputArea label="이메일">
-          <Input.Email
-            name="email"
-            value={data.email}
-            onChange={changeData}
-            placeholder="이메일 주소를 입력하세요"
-          />
+      <ProfileInputArea label="이메일">
+        <Input.Email
+          name="email"
+          // value={data.email}
+          // onChange={changeData}
+          placeholder="이메일 주소를 입력하세요"
+          readOnly={sessionProvider !== "credentials"}
+        />
+        {false && (
           <div className="flex gap-4 items-center">
             <Button
               variation="outline"
@@ -104,19 +93,20 @@ export default function FormEditProfile({
               *변경 후 재인증이 필요합니다.
             </span>
           </div>
-        </ProfileInputArea>
-      )}
+        )}
+      </ProfileInputArea>
       <ProfileInputArea label="관심 카테고리">
         <Input.Select
           name="interest"
           placeholder="관심 카테고리를 추가하세요"
           isMulti
           options={CATEGORIES}
-          value={data.interest}
-          onChange={changeMultiSelect}
+          defaultValue={profile.interest}
+          // value={data.interest}
+          // onChange={changeMultiSelect}
         />
       </ProfileInputArea>
-      <Button type="submit" variation="solid" className="self-start">
+      <Button type="submit" variation="solid" className="self-end">
         프로필 저장
       </Button>
     </form>

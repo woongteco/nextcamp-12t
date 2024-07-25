@@ -1,4 +1,4 @@
-import { CategoryGroup } from "@/types/model/Category";
+import { CategoryGroup, CategoryOption } from "@/types/model/Category";
 
 export const CATEGORIES: CategoryGroup[] = [
   {
@@ -208,3 +208,10 @@ export const CATEGORIES: CategoryGroup[] = [
     ],
   },
 ];
+
+export const CATEGORIES_ALL_OPTIONS: CategoryOption[] = CATEGORIES.reduce(
+  (prev: CategoryOption[], curr: CategoryGroup) => {
+    return [...prev, ...curr.options];
+  },
+  []
+);

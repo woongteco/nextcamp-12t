@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { getSession, signIn } from "@/auth";
 import { hash } from "bcryptjs";
 import connectDB from "./db";
 import { Post, Profile, Study, StudyList, User } from "./schema";

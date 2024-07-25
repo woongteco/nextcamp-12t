@@ -43,7 +43,7 @@ export default function MobileMenu({ profileImage }: TProfileImage) {
   }, []);
 
   return (
-    <div className="lg:hidden [&>*]:invisible">
+    <div className="lg:hidden lg:[&>*]:invisible">
       <button onClick={open}>
         <MenuIcon />
       </button>

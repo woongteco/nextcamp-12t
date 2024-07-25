@@ -3,10 +3,10 @@
 import useQueryString from "@/hooks/useQueryString";
 import { FormEvent } from "react";
 
-export default function SearchInput() {
+export default function SearchInput({ origin = "study" }: { origin?: string }) {
   const onChangeQuery = useQueryString({
     paramsKey: "q",
-    queryInclude: "search",
+    queryInclude: origin === "study" ? "search" : origin,
   });
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
