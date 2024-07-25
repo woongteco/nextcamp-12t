@@ -21,6 +21,7 @@
   border-color: #b2b2b4;
 }
 .editor .ql-container.ql-snow {
+  font-size: 1rem;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -45,7 +46,7 @@
 }
 .editor .ql-editor.ql-blank::before {
   font-style: 400;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   color: var(--color-label-assist);
 }
@@ -98,6 +99,42 @@
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
   font-weight: 600;
+}
+.ql-editor ol li:not(.ql-direction-rtl),
+.ql-editor ul li:not(.ql-direction-rtl) {
+  padding-left: 0;
+}
+.editor .ql-editor ol li.ql-indent-1:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-1:not(.ql-direction-rtl) {
+  padding-left: 1rem;
+}
+.editor .ql-editor ol li.ql-indent-2:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-2:not(.ql-direction-rtl) {
+  padding-left: 2rem;
+}
+.editor .ql-editor ol li.ql-indent-3:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-3:not(.ql-direction-rtl) {
+  padding-left: 3rem;
+}
+.editor .ql-editor ol li.ql-indent-4:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-4:not(.ql-direction-rtl) {
+  padding-left: 4rem;
+}
+.editor .ql-editor ol li.ql-indent-5:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-5:not(.ql-direction-rtl) {
+  padding-left: 5rem;
+}
+.editor .ql-editor ol li.ql-indent-6:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-6:not(.ql-direction-rtl) {
+  padding-left: 6rem;
+}
+.editor .ql-editor ol li.ql-indent-7:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-7:not(.ql-direction-rtl) {
+  padding-left: 7rem;
+}
+.editor .ql-editor ol li.ql-indent-8:not(.ql-direction-rtl),
+.editor .ql-editor ul li.ql-indent-8:not(.ql-direction-rtl) {
+  padding-left: 8rem;
 }
 .editor .ql-toolbar.ql-snow .ql-formats button:hover path,
 .editor .ql-toolbar.ql-snow .ql-formats .ql-picker-label:hover .ql-stroke {

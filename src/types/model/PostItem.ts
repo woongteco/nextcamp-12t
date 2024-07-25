@@ -1,3 +1,4 @@
+import { CommentSchema } from "./Comment";
 import { TUserBase } from "./User";
 
 export type TPost = {
@@ -16,4 +17,5 @@ export type TPost = {
   createdAt: string;
   view: number;
   like: number;
+  comments: CommentSchema[];
 };

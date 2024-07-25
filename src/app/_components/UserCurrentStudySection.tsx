@@ -46,7 +46,7 @@ export default function UserCurrentStudySection() {
             </div>
           </CurrentStudyBox>
         </Link>
-        <Link href="/my/study">
+        <Link href="/my/post">
           <CurrentStudyBox>
             <div className="absolute right-6 top-6">
               <ChevronRightIcon />

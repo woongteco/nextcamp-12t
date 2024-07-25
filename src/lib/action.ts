@@ -89,19 +89,28 @@ export async function profileAction(id: string, formData: FormData) {
 
   await connectDB();
 
-  const profile = new Profile({
-    userId,
-    position_tag,
-    introduce,
-    my_category,
-  });
+  const isExistProfile = await Profile.findOne({ userId });
 
-  await profile.save();
-  const populatedProfile = await Profile.findById(profile._id).populate(
-    "userId"
-  );
+  if (isExistProfile) {
+    console.log("update profile");
+    return;
+  }
 
-  console.log(populatedProfile);
+  console.log("insert new profile");
+
+  //   const profile = new Profile({
+  //     userId,
+  //     position_tag,
+  //     introduce,
+  //     my_category,
+  //   });
+  //
+  //   await profile.save();
+  //   const populatedProfile = await Profile.findById(profile._id).populate(
+  //     "userId"
+  //   );
+  //
+  //   console.log(populatedProfile);
 }
 
 // 커뮤니티 등록

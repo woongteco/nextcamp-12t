@@ -15,3 +15,17 @@ type UserInfo = UserIntroduce & {
   phone: string;
   interest: { categoryId: string; label: string }[];
 };
+
+export type UserSchema = {
+  _id: string;
+  email: string;
+  password: string;
+  name: string;
+  profile_img: string;
+  phone: string;
+  role: string;
+  createdAt: object;
+  updatedAt: object;
+};
+
+export type WriterSchema = TUserBase;

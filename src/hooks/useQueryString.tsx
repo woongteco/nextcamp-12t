@@ -12,7 +12,9 @@ const useQueryString = ({
 
   const router = useRouter();
   const pathname = usePathname();
-  const url = pathname?.includes(queryInclude) ? pathname : `${pathname}/search`;
+  const url = pathname?.includes(queryInclude)
+    ? pathname
+    : `${pathname}/search`;
 
   const onEventQueryString = (value: string) => {
     newSearchParams.set(paramsKey, value);
