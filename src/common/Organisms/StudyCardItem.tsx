@@ -73,5 +73,6 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
         </div>
       </Link>
     </li>
+    </li>
   );
 }

@@ -2,6 +2,10 @@ import {
   getStudyLeaderUser,
   getStudyPostDetail,
 } from "@/dummies/studypostdetail";
+import {
+  getStudyLeaderUser,
+  getStudyPostDetail,
+} from "@/dummies/studypostdetail";
 import StudyDetailContent from "./StudyDetailContent";
 import StudyDetailThumbnail from "./StudyDetailThumbnail";
 import CommentArea from "@/common/Templates/CommentArea";

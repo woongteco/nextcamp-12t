@@ -69,6 +69,7 @@ export function getStudyPostDetail() {
     },
   };
   return result;
+  return result;
 }
 
 // 댓글 더미
