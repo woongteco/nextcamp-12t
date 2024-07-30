@@ -1,29 +1,60 @@
 "use client";
 
-import { MouseEventHandler, useRef, useState } from "react";
+import { FormEvent, MouseEventHandler, useRef, useState } from "react";
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
+import { commentAction } from "@/lib/action";
+import handleAlert from "@/app/(auth)/_components/ErrorAlert";
+import { useParams, useRouter } from "next/navigation";
 
 export default function CommentInput({
   init = false,
   placeholder = "댓글을 작성해보세요",
+  sessionId,
   onCancel,
   onSubmit,
 }: {
   init?: boolean;
   placeholder?: string;
+  sessionId?: string;
   onCancel?: () => void;
   onSubmit?: () => void;
 }) {
   const [focus, setFocus] = useState<boolean>(init);
   const commentRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const params = useParams<{ postId?: string | string[] }>();
+
+  async function comment(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!sessionId) {
+      return;
+    }
+
+    const formData = new FormData(e.currentTarget);
+    const postId = Array.isArray(params.postId)
+      ? params.postId[0]
+      : params.postId || "";
+
+    try {
+      await commentAction(sessionId, postId, formData);
+      handleAlert("success", "커뮤니티 작성이 완료되었습니다.");
+      router.replace(`/post/${postId}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        handleAlert("error", error.message);
+      }
+    }
+  }
+
   return focus ? (
     <form
-      action=""
+      onSubmit={comment}
       ref={commentRef}
       className="flex flex-row items-start w-full gap-4"
     >
-      <Input.Textarea name="comment" placeholder={placeholder} />
+      <Input.Textarea name="content" placeholder={placeholder} />
       <Button
         variation="outline"
         className="my-[6px]"

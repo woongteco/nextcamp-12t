@@ -2,16 +2,21 @@ import ProfileImg from "../Atoms/Image/ProfileImg";
 import CommentItem from "../Organisms/Comment/CommentItem";
 import CommentInput from "../Organisms/Comment/CommentInput";
 import { CommentSchema } from "@/types/model/Comment";
+import { getComment } from "@/lib/actions/commentAction";
 
-export default function CommentArea({
+export default async function CommentArea({
+  postId,
   titleText = "댓글",
-  comments,
   sessionId,
 }: {
+  postId?: string;
   titleText?: string;
-  comments: CommentSchema[];
+  // comments: CommentSchema[];
   sessionId: string;
 }) {
+  // const findPost = await getComment(postId);
+  // const comments = findPost.data;
+
   return (
     <section className="flex flex-col gap-8 mt-5 px-10 py-8 rounded-twenty border border-line-normal">
       <p className="flex flex-row items-center gap-1 text-H4">
@@ -31,7 +36,7 @@ export default function CommentArea({
           />
         </svg>
         <span>{titleText}</span>
-        <span className="text-main-600">{comments?.length || 0}</span>
+        <span className="text-main-600">{comments.length || 0}</span>
       </p>
       <div>
         {comments.length === 0 ? (
@@ -43,7 +48,7 @@ export default function CommentArea({
             <CommentItem
               key={c.commentId}
               comment={c}
-              canEdit={sessionId === c.writer.userId}
+              canEdit={sessionId === c.writer._id}
             />
           ))
         )}
@@ -55,7 +60,7 @@ export default function CommentArea({
           alt="프로필 이미지"
           className="my-[6px]"
         />
-        <CommentInput init={false} />
+        <CommentInput init={false} sessionId={sessionId} />
       </div>
     </section>
   );
