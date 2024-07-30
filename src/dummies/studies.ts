@@ -17,7 +17,7 @@ const studyCards = [
       position: "개발자",
       profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    thumbnailUrl: getImageUrl("art", 268, 180, 12),
+    thumbnailUrl: getImageUrl("desk", 268, 180, 12),
     title: "앱을 만들어보는 재밌는 개발 스터디",
     jobCategory: {
       label: "cate_1",
@@ -75,7 +75,7 @@ const studyCards = [
       position: "개발자",
       profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    thumbnailUrl: getImageUrl("animal", 268, 180, 11),
+    thumbnailUrl: getImageUrl("desk", 268, 180, 11),
     title: "인프라 같이 공부하실 분",
     jobCategory: {
       label: "cate_4",
@@ -104,7 +104,7 @@ const studyCards = [
       position: "호호호",
       profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    thumbnailUrl: getImageUrl("art", 268, 180, 10),
+    thumbnailUrl: getImageUrl("tech", 268, 180, 10),
     title: "앱을 만들어보는 재밌는 개발 스터디",
     jobCategory: {
       label: "cate_1",
@@ -162,7 +162,7 @@ const studyCards = [
       position: "개발자",
       profileUrl: getImageUrl("architect", 48, 48, 0),
     },
-    thumbnailUrl: getImageUrl("animal", 268, 180, 8),
+    thumbnailUrl: getImageUrl("tech", 268, 180, 4),
     title: "인프라 스터디 모집해요!",
     jobCategory: {
       label: "cate_4",
@@ -513,8 +513,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("art", 268, 180, 1),
     title: "영상편집 초급 스터디 같이 하실분 !",
     jobCategory: {
-      label: "cate_10",
-      value: "사진 및 영상",
+      label: "사진 및 영상",
+      value: "cate_10",
     },
     targetCategory: {
       label: "응용/활용",
@@ -523,8 +523,8 @@ const studyCards = [
     recruitmentPeople: 23,
     recruitmentPeriod: ["2024-08-01", "2024-08-12"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: null,
     heartCount: 3,

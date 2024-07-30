@@ -13,13 +13,14 @@ export default function Button(props: TIconButtonProps | TButtonProps) {
         children,
         ...restProps
       } = props;
+      const color = `${colors.bg}/0 hover:${colors.bg}/15`;
       const square = `w-[${size}px] h-[${size}px]`;
       return (
         <button
           className={clsx(
             className,
             "flex items-center justify-center rounded-lg",
-            `${colors.bg}/0 hover:${colors.bg}/15`,
+            color,
             square,
             "disabled:border-label-assist disabled:text-label-assist disabled:cursor-not-allowed disabled:opacity-35"
           )}

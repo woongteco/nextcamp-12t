@@ -3,9 +3,8 @@ import ProfileForms from "./_components/ProfileForms";
 import { getSession } from "@/auth";
 import { Profile } from "@/lib/schema";
 import connectDB from "@/lib/db";
-import { ProfileSchema } from "@/types/model/Profile";
+import { ProfileFullDataSchema } from "@/types/model/Profile";
 import NotFound from "@/app/not-found";
-import useGetProfile from "@/hooks/useGetProfile";
 
 async function getProfile(userId: string) {
   await connectDB();
@@ -21,25 +20,21 @@ export default async function MyProfilePage() {
     return <NotFound />;
   }
 
-  const profile: ProfileSchema | null = await getProfile(
+  const profile: ProfileFullDataSchema | null = await getProfile(
     session?.user.id as string
   );
   console.log("profile", profile);
 
-  // const data: string = await useGetProfile();
-
-  // console.log("profile data 가져오기" + data);
+  const profileData: ProfileFullDataSchema = JSON.parse(
+    JSON.stringify(profile)
+  );
 
   return (
     <>
       <SectionTitle size="md" className="mb-6">
         프로필 수정
       </SectionTitle>
-      <ProfileForms
-        userId={session.account.providerAccountId}
-        sessionProvider={session?.account.provider || ""}
-        profile={profile}
-      />
+      <ProfileForms session={session} profile={profileData} />
     </>
   );
 }

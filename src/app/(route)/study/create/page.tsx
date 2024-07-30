@@ -1,11 +1,10 @@
 "use client";
 
-import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import { studyAction } from "@/lib/action";
 import { FormEvent } from "react";
-import handleAlert from "@/app/(auth)/_components/ErrorAlert";
+import { studyAction } from "@/lib/action";
+import SectionTitle from "@/common/Atoms/Text/SectionTitle";
+import handleAlert from "@/common/Molecules/handleAlert";
 import StudyForms from "./_components/StudyForms";
-import { useFormState, useFormStatus } from "react-dom";
 
 export default function page() {
   // const [state, formAction] = useFormState(studyAction, { message: null })

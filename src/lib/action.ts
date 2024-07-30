@@ -5,6 +5,7 @@ import { hash } from "bcryptjs";
 import connectDB from "./db";
 import { Post, Profile, Study, User } from "./schema";
 import { redirect } from "next/navigation";
+import { ProfileSchema } from "@/types/model/Profile";
 const { v4: uuidv4 } = require("uuid");
 
 const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
@@ -59,36 +60,49 @@ export async function authAction(formData: FormData) {
     password,
   });
 
-  redirect("/");
+  // redirect("/");
 }
 
 // 마이페이지
 
 // 프로필 등록
-export async function profileAction(id: string, formData: FormData) {
-  const userId = id;
-  const position_tag = "ㅎㅎ";
-  const introduce = "ㅎㅎ";
-  const my_category = "ㅎㅎㄴㅇ";
-  let profile;
-
+export async function profileAction(userId: string, formData: FormData) {
   if (!userId) {
     throw new Error("유효한 id가 필요합니다.");
   }
 
   console.log("프로필 쪽 고유아이디" + userId);
 
-  if (!position_tag || !introduce || !my_category) {
+  /* if (!position_tag || !introduce || !my_category) {
     throw new Error("포지션 태그, 소개, 카테고리 모두 입력해주세요.");
-  }
+  } */
 
   await connectDB();
 
-  const profileCheck = await Profile.findOne({ userId });
-  // 일단 계속 등록되니 막아둠
+  const profileCheck: ProfileSchema | null = await Profile.findOne({ userId });
+
   if (profileCheck) {
-    throw new Error("작성된 프로필을 수정해주세요.");
+    // throw new Error("작성된 프로필을 수정해주세요.");
+    const position_tag =
+      formData.get("position_tag") || profileCheck.position_tag;
+    const introduce = formData.get("introduce") || profileCheck.introduce;
+    const my_category = formData.get("my_category") || profileCheck.my_category;
+    const newProfile = await Profile.findOneAndUpdate(
+      { userId },
+      {
+        position_tag,
+        introduce,
+        my_category,
+      }
+    );
+
+    console.log("newProfile:", newProfile);
+    return newProfile;
   }
+  const position_tag = "";
+  const introduce = "";
+  const my_category: string[] = [];
+  let profile;
 
   profile = new Profile({
     userId,

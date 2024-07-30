@@ -1,10 +1,10 @@
 import Input from "@/common/Molecules/Form/Input";
 import Button from "@/common/Atoms/Form/Button";
-import ProfileInputArea from "./ProfileInputArea";
+import ProfileInputArea from "../ProfileInputArea";
 
 export default function FormUpdatePassword() {
   return (
-    <form action="">
+    <form>
       <ProfileInputArea>
         <Input.Password
           name="password"

@@ -1,48 +1,21 @@
-import { ActionMeta } from "react-select";
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-} from "react";
+"use client";
+import { FormEvent } from "react";
 import Input from "@/common/Molecules/Form/Input";
-import ProfileImageInput from "./ProfileImageInput";
 import ProfileInputArea from "./ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
 import { CATEGORIES } from "@/constants/categories/job_category";
-import { Session } from "next-auth";
 
 import { TProfileData } from "./ProfileForms";
 import { profileAction } from "@/lib/action";
-import handleAlert from "@/app/(auth)/_components/ErrorAlert";
+import handleAlert from "@/common/Molecules/handleAlert";
 
 export default function FormEditProfile({
   userId,
   profile,
-  sessionProvider,
 }: {
   userId: string;
   profile: TProfileData;
-  sessionProvider: string;
 }) {
-  // const changeData = (
-  //   e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  // ) => {
-  //   console.log(e.target.name);
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   setData((p) => ({ ...p, [name]: value }));
-  // };
-  // const changeMultiSelect: (
-  //   newValue: unknown,
-  //   actionMeta: ActionMeta<unknown>
-  // ) => void = (newValue) => {
-  //   // console.log({ newValue });
-  //   if (Array.isArray(newValue)) setData((p) => ({ ...p, interest: newValue }));
-  // };
-  console.log("?" + userId);
-
   async function save(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -79,8 +52,7 @@ export default function FormEditProfile({
           name="email"
           // value={data.email}
           // onChange={changeData}
-          placeholder="이메일 주소를 입력하세요"
-          readOnly={sessionProvider !== "credentials"}
+          readOnly
         />
         {false && (
           <div className="flex gap-4 items-center">
