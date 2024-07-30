@@ -18,7 +18,6 @@ export default function StudyPostComponent() {
           비슷한 스터디들
         </SectionTitle>
         <StudyCardList studyCards={studyCards} count={4} />
-        <StudyCardList studyCards={studyCards} count={4} />
       </div>
     </div>
   );
