@@ -1,9 +1,9 @@
 export type TUserBase = {
-  _id?: string;
+  userId?: string;
   name: string;
   role: string | "user" | "pro";
   position: string | null;
-  profile_img: string;
+  profile_img?: string;
 };
 
 type UserIntroduce = TUserBase & {

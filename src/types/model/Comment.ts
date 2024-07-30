@@ -1,16 +1,20 @@
 import { WriterSchema } from "./User";
 
 type CommentBase = {
-  commentId: string;
   postId: string;
+  commentId: string;
   content: string;
   writer: WriterSchema;
   reply: ReplySchema[];
   createdAt: string;
 };
 
-export type ReplySchema = CommentBase & {
-  originId: string;
+export type ReplySchema = {
+  replyId: string;
+  commentId: string;
+  content: string;
+  writer: WriterSchema;
+  createdAt: string;
 };
 
 export type CommentSchema = CommentBase & {
