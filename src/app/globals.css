@@ -64,3 +64,15 @@ details > summary {
 .swiper-pagination-bullet-active {
   background-color: var(--color-label-strong);
 }
+
+/* input number 화살표 없애기 */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox  */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

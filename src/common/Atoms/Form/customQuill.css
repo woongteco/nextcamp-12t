@@ -28,7 +28,7 @@
 .editor .ql-toolbar.ql-snow {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding: 24px;
+  padding: 18px 14px;
   display: flex;
   flex-direction: row;
   gap: 40px;
@@ -44,8 +44,11 @@
   width: 24px;
   height: 24px;
 }
+.editor .ql-editor.ql-blank {
+  padding: 18px 14px;
+}
 .editor .ql-editor.ql-blank::before {
-  font-style: 400;
+  font-weight: 400;
   font-size: 1rem;
   font-style: normal;
   color: var(--color-label-assist);
