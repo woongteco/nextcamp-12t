@@ -35,7 +35,7 @@ export default function LargeStudyItem({ card }: { card: TStudyCard }) {
         >
           <div className="flex items-center">
             <Image
-              src={card.user.profileUrl}
+              src={card.user.profile_img}
               width={56}
               height={56}
               className="w-14 h-14 mr-5 rounded-full"
