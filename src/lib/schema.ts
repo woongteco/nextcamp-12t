@@ -15,6 +15,11 @@ const user = new mongoose.Schema(
   { timestamps: true }
 );
 
+const subLabelValue = new mongoose.Schema({
+  label: { type: String, required: true },
+  value: { type: String, required: true },
+});
+
 // 마이페이지
 const mypage = new mongoose.Schema({
   myStudy: [{ type: [String], default: [] }],
@@ -22,38 +27,32 @@ const mypage = new mongoose.Schema({
   myPost: [{ type: [String], default: [] }],
 });
 
-// 프로필 등록
+// 프로필
 const profile = new mongoose.Schema({
-  userId: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   position_tag: { type: String, default: null },
   introduce: { type: String, default: null },
-  my_category: { type: [String], default: [] },
-});
-
-// 커뮤니티 작성 및 댓글
-const subWriter = new mongoose.Schema({
-  userId: { type: String, required: true },
-  name: { type: String, required: true },
-  position: { type: String, default: null },
-  profileUrl: { type: String, default: null },
+  my_category: { type: [subLabelValue], default: [] },
 });
 
 const subReply = new mongoose.Schema({
   commentId: { type: String, required: true },
   replyId: { type: String, required: true },
   content: { type: String, required: true },
-  writer: { type: subWriter, required: true },
+  writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
 const subComment = new mongoose.Schema({
   commentId: { type: String, required: true },
+  postId: { type: String, required: true },
   content: { type: String, required: true },
-  writer: { type: subWriter, required: true },
+  writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
   reply: [subReply],
 });
 
+// 커뮤니티
 const post = new mongoose.Schema({
   postId: { type: String },
   category: {
@@ -66,30 +65,25 @@ const post = new mongoose.Schema({
     body: { type: String, required: true },
     linkedStudyId: { type: String, default: null },
   },
-  writer: { type: subWriter, required: true },
+  writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   view: { type: Number, default: 0 },
   like: { type: Number, default: 0 },
   comments: [subComment],
   createdAt: { type: Date, default: Date.now },
 });
 
-// 스터디 개설
-const subCategory = new mongoose.Schema({
-  label: { type: String, required: true },
-  value: { type: String, required: true },
-});
-
 const subStudyInfo = new mongoose.Schema({
   thumbnailUrl: { type: String, default: null },
   title: { type: String, required: true },
-  jobCategory: { type: subCategory, required: true },
-  targetCategory: { type: subCategory, required: true },
+  jobCategory: { type: subLabelValue, required: true },
+  targetCategory: { type: subLabelValue, required: true },
   expense: { type: Number, required: true },
   recruitmentPeople: { type: Number, required: true },
   recruitmentPeriod: { type: [String], default: [] },
   studyPeriod: { type: [String], default: [] },
-  location: { type: subCategory, required: true },
+  location: { type: subLabelValue, required: true },
   place: { type: String, default: null, required: true },
+  heartCount: { type: Number, default: 0 },
 });
 
 const subContentDetail = new mongoose.Schema({
@@ -103,12 +97,12 @@ const subContents = new mongoose.Schema({
   curriculum: [subContentDetail],
 });
 
+// 스터디
 const study = new mongoose.Schema({
   studyId: { type: String },
   thumbnailInfo: { type: subStudyInfo, required: true },
   contents: { type: subContents, required: true },
-  writer: { type: subWriter, required: true },
-  heartCount: { type: Number, default: 0 },
+  writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
