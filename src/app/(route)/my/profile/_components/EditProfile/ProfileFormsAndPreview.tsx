@@ -2,7 +2,7 @@ import Input from "@/common/Molecules/Form/Input";
 import ProfileInputArea from "../ProfileInputArea";
 import { CATEGORIES } from "@/constants/categories/job_category";
 import { CategoryOption } from "@/types/model/Category";
-import { TProfileData } from "../ProfileForms";
+import { TProfileData } from "@/types/model/Profile";
 import ProfilePreview from "./ProfilePreview";
 
 export default function ProfileFormsAndPreview({
@@ -31,7 +31,7 @@ export default function ProfileFormsAndPreview({
         <ProfileInputArea label="이메일">
           <Input.Email
             name="email"
-            defaultValue={defaultValue?.email}
+            defaultValue={defaultValue?.userId.email}
             // value={data.email}
             // onChange={changeData}
             placeholder="이메일 주소를 입력하세요"
@@ -57,7 +57,7 @@ export default function ProfileFormsAndPreview({
             placeholder="관심 카테고리를 추가하세요"
             isMulti
             options={CATEGORIES}
-            defaultValue={defaultValue?.interest}
+            defaultValue={defaultValue?.my_category}
             // value={data.interest}
             // onChange={changeMultiSelect}
           />

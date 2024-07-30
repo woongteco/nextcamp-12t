@@ -36,10 +36,10 @@ export default async function CommentArea({
           />
         </svg>
         <span>{titleText}</span>
-        <span className="text-main-600">{comments.length || 0}</span>
+        {/* <span className="text-main-600">{comments.length || 0}</span> */}
       </p>
       <div>
-        {comments.length === 0 ? (
+        {/* {comments.length === 0 ? (
           <span className="flex items-center justify-center text-H4 text-label-assist bg-alt rounded-twenty h-20">
             첫번째로 댓글을 남겨보세요!
           </span>
@@ -51,7 +51,7 @@ export default async function CommentArea({
               canEdit={sessionId === c.writer._id}
             />
           ))
-        )}
+        )} */}
       </div>
       <div className="flex flex-row gap-8 items-start w-full">
         <ProfileImg
