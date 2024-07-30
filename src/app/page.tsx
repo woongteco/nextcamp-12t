@@ -20,7 +20,7 @@ export default async function Home() {
           {session?.user && <MainStatusBoard name={session?.user.name} />}
           <section>
             <SectionTitle size="md" className="mb-6">
-              인기 많은 프로 스터디 추천
+              인기 많은 스터디 추천
             </SectionTitle>
             <RecommendProStudies />
           </section>

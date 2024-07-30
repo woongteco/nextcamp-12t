@@ -65,13 +65,12 @@ export default async function CommunityPostList({
           <SideNavItem key={key} {...item} active={key === category} />
         ))}
       </SidebarNavArea>
-      <section className="lg:w-[calc(100vw-2rem-240px-30px)] xl:w-auto">
-        <div className="w-full flex flex-row items-start justify-between pb-9">
+      <section className="w-full lg:w-[calc(100vw-2rem-240px-30px)] xl:w-[890px]">
+        <div className="flex flex-row items-start justify-between pb-9">
           <p className="text-H2">{filteredMenu.label} 글</p>
-          {/* <ContentSearchBar /> */}
           <SearchInput origin="post" />
         </div>
-        <div className="w-full flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
+        <div className="flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
           <Dropdown
             buttonLabel={sortedBy.label}
             items={POST_SORT_BY.map((item) => (
@@ -102,7 +101,9 @@ export default async function CommunityPostList({
             <PostListWithPagination posts={sortedPosts} />
           </div>
         ) : (
-          <NonePostItem />
+          <div className="pt-8">
+            <NonePostItem />
+          </div>
         )}
       </section>
     </SidebarAsideContentArea>

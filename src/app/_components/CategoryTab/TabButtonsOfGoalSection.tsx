@@ -7,7 +7,7 @@ import StudyCardList from "@/common/Templates/CardList";
 import { CategoryTabIcon, categoryIconsName } from "./TabIcons";
 import { TStudyCard } from "@/types/model/StudyCard";
 import { getStudyCards } from "@/dummies/studies";
-import NoneContentItemBase from "../NoneContentItemBase";
+import Skeleton from "@/common/Atoms/Skeleton";
 
 const GOALS_TAB = GOALS.map((goal, index) => ({
   ...goal,
@@ -49,18 +49,16 @@ export default function TabButtonsOfGoalSection() {
         <StudyCardList studyCards={proStudies} count={8} />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          <StudyCardSkelton />
-          <StudyCardSkelton />
-          <StudyCardSkelton />
-          <StudyCardSkelton />
+          <StudyCardSkeleton />
+          <StudyCardSkeleton />
+          <StudyCardSkeleton />
+          <StudyCardSkeleton />
         </div>
       )}
     </>
   );
 }
 
-function StudyCardSkelton() {
-  return (
-    <div className="rounded-twenty border border-line-neutral bg-line-neutral/80 hover:shadow-normal h-[338px] animate-pulse"></div>
-  );
+function StudyCardSkeleton() {
+  return <Skeleton className="rounded-twenty hover:shadow-normal h-[338px]" />;
 }
