@@ -1,32 +1,16 @@
 "use client";
 
-import { ActionMeta } from "react-select";
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent } from "react";
 import Input from "@/common/Molecules/Form/Input";
-import ProfileImageInput from "./ProfileImageInput";
 import ProfileInputArea from "./ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
 import { CATEGORIES } from "@/constants/categories/job_category";
-import { Session } from "next-auth";
-
-// import { TProfileData } from "./ProfileForms";
-
-import handleAlert from "@/app/(auth)/_components/ErrorAlert";
 import { useRouter } from "next/navigation";
-import {
-  getProfile,
-  profileAction,
-  updateProfile,
-} from "@/lib/actions/profileAction";
+import { profileAction, updateProfile } from "@/lib/actions/profileAction";
 import { TProfileData } from "@/types/model/Profile";
 import { CategoryOption } from "@/types/model/Category";
+import { Session } from "next-auth";
+import handleAlert from "@/common/Molecules/handleAlert";
 
 type TProfileType = {
   position_tag: string;
@@ -38,13 +22,9 @@ type TProfileType = {
 export default function FormEditProfile({
   session,
   profile,
-}: // userId,
-// sessionProvider,
-{
+}: {
   session: Session | null;
   profile: TProfileData;
-  // userId: string;
-  // sessionProvider: string;
 }) {
   const changeData = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -56,7 +36,7 @@ export default function FormEditProfile({
   };
 
   const router = useRouter();
-  console.log(profile);
+
   // const changeMultiSelect: (
   //   newValue: unknown,
   //   actionMeta: ActionMeta<unknown>

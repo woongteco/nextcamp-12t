@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Logo } from "@public/icons";
 import AuthWrap from "../_components/AuthWrap";
 import { Input } from "../_components/UserInput";
+import Button from "@/common/Atoms/Form/Button";
 
 export default function PWresetPage() {
   return (
@@ -18,9 +19,9 @@ export default function PWresetPage() {
         title="이메일"
         placeholder="example@chemeet.com"
       />
-      <button className="w-full rounded-md py-2 text-white bg-main-600">
+      <Button variation="solid" className="w-full">
         비밀번호 변경 링크 전송하기
-      </button>
+      </Button>
     </AuthWrap>
   );
 }

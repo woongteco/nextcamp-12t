@@ -1,12 +1,16 @@
 import { ReactQuillProps } from "react-quill";
 import QuillNoSSR from "./QuillNoSSR";
+import { Suspense } from "react";
+import Skeleton from "../Skeleton";
 
 // type TEditorProps = Partial<React.ComponentProps<"textarea">>;
 type TEditorProps = ReactQuillProps;
 export default function TextEditor(props: TEditorProps) {
   return (
-    <div className="editor w-full">
-      <QuillNoSSR forwardedRef={null} {...props} />
-    </div>
+    <Suspense fallback={<Skeleton className="w-full h-96 rounded-ten" />}>
+      <div className="editor w-full">
+        <QuillNoSSR forwardedRef={null} {...props} />
+      </div>
+    </Suspense>
   );
 }

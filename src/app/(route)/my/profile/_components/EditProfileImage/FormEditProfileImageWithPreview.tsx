@@ -1,13 +1,24 @@
 "use client";
 import { ChangeEvent, useEffect, useState } from "react";
-
+import ProfileInputArea from "../ProfileInputArea";
 import useModal from "@/hooks/useModal";
 import ProfileImagePreviewModal from "./ProfileImagePreviewModal";
-import Button from "@/common/Atoms/Form/Button";
+import handleAlert from "@/common/Molecules/handleAlert";
+import ProfileImg from "@/common/Atoms/Image/ProfileImg";
+import { DummyProfileImg } from "@public/images";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
+import Button from "@/common/Atoms/Form/Button";
 
-export default function ProfileImageInput() {
-  const [imageUrl, setImageUrl] = useState("");
+export type ProfileImageFormProps = {
+  initProfileUrl?: string;
+  saveImage?: (imageUrl: string) => any;
+};
+
+export default function FormEditProfileImageWithPreview({
+  initProfileUrl,
+  saveImage,
+}: ProfileImageFormProps) {
+  const [imageUrl, setImageUrl] = useState<string>(initProfileUrl || "");
   const { Modal, open, close } = useModal({
     children: (
       <ProfileImagePreviewModal
@@ -42,19 +53,32 @@ export default function ProfileImageInput() {
 
   // console.log(imageUrl);
 
-  function onSave() {
+  async function onSave() {
     // TODO: DB에 저장
-    close();
+    try {
+      // const updated = await saveImage(imageUrl);
+      close();
+      handleAlert("success", "프로필 이미지가 저장되었습니다.");
+      // console.log({ updated });
+    } catch (error: any) {
+      handleAlert("error", error.message);
+    }
   }
 
-  function onDelete() {
+  async function onDelete() {
+    // await saveImage("");
     setImageUrl("");
   }
 
   return (
-    <>
+    <ProfileInputArea label="아바타 이미지">
       <div>
         <div className="flex items-center gap-4">
+          <ProfileImg
+            size="xlarge"
+            src={imageUrl || DummyProfileImg}
+            alt="프로필 이미지 미리보기"
+          />
           <ImageInputWithButton
             name="profileImage"
             buttonProps={{
@@ -81,6 +105,6 @@ export default function ProfileImageInput() {
         </p>
       </div>
       {Modal}
-    </>
+    </ProfileInputArea>
   );
 }

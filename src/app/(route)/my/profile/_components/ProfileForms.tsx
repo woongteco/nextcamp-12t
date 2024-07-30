@@ -1,13 +1,13 @@
 import ProfileInputArea from "./ProfileInputArea";
-import ProfileImageInput from "./ProfileImageInput";
 import FormEditProfile from "./FormEditProfile";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import FormUpdatePassword from "./FormUpdatePassword";
-import FormUpdatePhoneNumber from "./FormUpdatePhoneNumber";
+import FormUpdatePassword from "./UpdatePassword/FormUpdatePassword";
+import FormUpdatePhoneNumber from "./UpdatePhoneNumber/FormUpdatePhoneNumber";
 import DeleteAccountConfirm from "./DeleteAccountConfirm";
-import ProfilePreview from "./ProfilePreview";
+import ProfilePreview from "./EditProfile/ProfilePreview";
 import { getProfile } from "@/lib/actions/profileAction";
 import { getSession } from "@/auth";
+import FormEditProfileImageWithPreview from "./EditProfileImage/FormEditProfileImageWithPreview";
 
 export default async function ProfileForms({
   userId,
@@ -28,16 +28,9 @@ export default async function ProfileForms({
       <div className="grid xl:grid-cols-[5fr_4fr] xl:items-start gap-gutter-xl">
         <div className="flex flex-col gap-8">
           <p className="text-H2 text-label-dimmed">{session?.user.name}</p>
-          <ProfileInputArea label="아바타 이미지">
-            <ProfileImageInput />
-          </ProfileInputArea>
+          <FormEditProfileImageWithPreview />
           <div className="w-full h-[1px] border-t border-t-line-normal"></div>
-          <FormEditProfile
-            // userId={userId}
-            // sessionProvider={sessionProvider}
-            session={session}
-            profile={clientProfile}
-          />
+          <FormEditProfile session={session} profile={clientProfile} />
           {sessionProvider === "credentials" && (
             <>
               <div className="w-full h-[1px] border-t border-t-line-normal"></div>

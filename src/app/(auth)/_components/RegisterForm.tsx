@@ -3,13 +3,32 @@
 import { Input } from "./UserInput";
 import { ChangeEvent, FormEvent, useState } from "react";
 import RegisterCheck from "./RegisterCheck";
-import handleAlert from "./ErrorAlert";
+import handleAlert from "@/common/Molecules/handleAlert";
 import { authAction } from "@/lib/actions/authAction";
 import { useRouter } from "next/navigation";
+import useModal from "@/hooks/useModal";
+import SetCategoryFavor from "../../_components/SetCategoryFavor";
 
 export default function RegisterForm() {
-  const [phoneData, setPhoneData] = useState<string>("");
   const router = useRouter();
+  const [phoneData, setPhoneData] = useState<string>("");
+  const { Modal, open, close } = useModal({
+    // defaultValue: true,
+    children: (
+      <SetCategoryFavor
+        skipThis={closeAndRedirect}
+        saveCategory={saveCategory}
+      />
+    ),
+  });
+  function closeAndRedirect() {
+    close();
+    router.push("/");
+  }
+  function saveCategory() {
+    // DB에 저장
+    closeAndRedirect();
+  }
 
   async function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,6 +41,7 @@ export default function RegisterForm() {
       if (result.state) {
         handleAlert("success", result.message);
         router.replace("/");
+        open();
       } else {
         handleAlert("error", result.message);
       }
@@ -78,6 +98,7 @@ export default function RegisterForm() {
           가입하기
         </button>
       </form>
+      {Modal}
     </>
   );
 }

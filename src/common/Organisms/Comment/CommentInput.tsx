@@ -1,11 +1,11 @@
 "use client";
 
-import { FormEvent, MouseEventHandler, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
-import { commentAction } from "@/lib/action";
-import handleAlert from "@/app/(auth)/_components/ErrorAlert";
 import { useParams, useRouter } from "next/navigation";
+import { commentAction } from "@/lib/actions/commentAction";
+import handleAlert from "@/common/Molecules/handleAlert";
 
 export default function CommentInput({
   init = false,
