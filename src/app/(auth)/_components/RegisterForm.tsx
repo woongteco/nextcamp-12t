@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 export default function RegisterForm() {
   const router = useRouter();
   const { Modal, open, close } = useModal({
-    defaultValue: true,
+    // defaultValue: true,
     children: (
       <SetCategoryFavor
         skipThis={closeAndRedirect}
