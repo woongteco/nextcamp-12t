@@ -1,5 +1,6 @@
 export type TUserBase = {
   userId?: string;
+  _id?: string;
   name: string;
   role: string | "user" | "pro";
   position: string | null;
