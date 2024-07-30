@@ -1,11 +1,10 @@
-"use client";
-
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import handleAlert from "./ErrorAlert";
+import connectDB from "@/lib/db";
 
 export default function LoginForm() {
   const router = useRouter();

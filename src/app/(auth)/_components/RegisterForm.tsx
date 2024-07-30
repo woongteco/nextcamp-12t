@@ -4,10 +4,12 @@ import { Input } from "./UserInput";
 import { ChangeEvent, FormEvent, useState } from "react";
 import RegisterCheck from "./RegisterCheck";
 import handleAlert from "./ErrorAlert";
-import { authAction } from "@/lib/action";
+import { authAction } from "@/lib/actions/authAction";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const [phoneData, setPhoneData] = useState<string>("");
+  const router = useRouter();
 
   async function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,10 +17,16 @@ export default function RegisterForm() {
     const formData = new FormData(e.currentTarget);
 
     try {
-      await authAction(formData);
-      handleAlert("success", "회원가입 완료되어 로그인 되었습니다.");
-    } catch (error: any) {
-      handleAlert("error", error.message);
+      const result = await authAction(formData);
+
+      if (result.state) {
+        handleAlert("success", result.message);
+        router.replace("/");
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -61,7 +69,7 @@ export default function RegisterForm() {
           id="phone"
           type="tel"
           title="휴대폰 번호"
-          placeholder="01012345678 (- 제외 숫자만 가능)"
+          placeholder="휴대폰 번호 입력 (- 제외)"
           onChange={handlePhoneInput}
           value={phoneData}
         />
