@@ -267,19 +267,32 @@ export async function studyAction(formData: FormData) {
   const curriculum = formData.get("curriculum");
   const heartCount = Number(formData.get("heartCount"));
 
-  if (
-    !thumbnailUrl ||
-    !jobCategory ||
-    !targetCategory ||
-    !expense ||
-    !recruitmentPeople ||
-    !recruitmentPeriod ||
-    !studyPeriod ||
-    !location ||
-    !place ||
-    !content
-  ) {
-    throw new Error("스터디 개설하려면 필수 정보를 입력해주세요.");
+  if (!title) {
+    throw new Error("스터디 제목을 입력해주세요.");
+  }
+  if (!jobCategory) {
+    throw new Error("직무 카테고리를 선택해주세요.");
+  }
+  if (!targetCategory) {
+    throw new Error("목표 카테고리를 선택해주세요.");
+  }
+  if (!expense) {
+    throw new Error("참가비용을 입력해주세요.");
+  }
+  if (!recruitmentPeople) {
+    throw new Error("스터디인원을 지정해주세요.");
+  }
+  if (!recruitmentPeriod) {
+    throw new Error("모집기간을 선택해주세요.");
+  }
+  if (!studyPeriod) {
+    throw new Error("스터디기간을 선택해주세요.");
+  }
+  if (!location) {
+    throw new Error("온오프여부를 선택해주세요.");
+  }
+  if (!content) {
+    throw new Error("내용을 입력해주세요.");
   }
 
   await connectDB();
