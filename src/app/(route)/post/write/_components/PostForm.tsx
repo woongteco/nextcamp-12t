@@ -7,11 +7,11 @@ import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./SelectCategory";
-import { communityAction } from "@/lib/action";
-import handleAlert from "@/app/(auth)/_components/ErrorAlert";
 import { FormEvent, useState } from "react";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import { communityAction } from "@/lib/actions/communityAction";
+import handleAlert from "@/common/Molecules/handleAlert";
 
 type Option = {
   readonly label: string;
