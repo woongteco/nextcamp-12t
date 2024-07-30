@@ -37,10 +37,10 @@ export default function StudyCardFilter({
         <SectionTitle size="md">
           전체 검색 결과 {filteredStudyCards.length}개
         </SectionTitle>
-        <div className="flex gap-3 font-semibold text-sm text-[#c2c3c4]">
+        {/* <div className="flex gap-3 font-semibold text-sm text-[#c2c3c4]">
           <span>최신 순</span>
           <span>좋아요 순</span>
-        </div>
+        </div> */}
       </div>
       <StudyCardList studyCards={filteredStudyCards} />
     </>
