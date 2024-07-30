@@ -1,7 +1,5 @@
-import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import Keyword from "@/common/Atoms/Text/Keyword";
-import { DummyProfileImg } from "@public/images";
-import { TProfileData } from "./ProfileForms";
+import { TProfileData } from "../ProfileForms";
 
 type TProfilePreviewProps = {
   name: string | null | undefined;
@@ -13,11 +11,6 @@ export default function ProfilePreview({ name, data }: TProfilePreviewProps) {
     <>
       {/* TODO: 프로필 미리보기 */}
       <div className="flex flex-col items-center py-4 gap-4">
-        <ProfileImg
-          size="xxlarge"
-          src={data.profileUrl || DummyProfileImg}
-          alt={name + "프로필 이미지"}
-        />
         <p className="text-H3 text-label-normal">
           {data.positionTag ? data.positionTag + " " : ""}
           {name}

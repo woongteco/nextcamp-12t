@@ -1,5 +1,5 @@
 import Input from "@/common/Molecules/Form/Input";
-import ProfileInputArea from "./ProfileInputArea";
+import ProfileInputArea from "../ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
 
 export default function FormUpdatePhoneNumber({

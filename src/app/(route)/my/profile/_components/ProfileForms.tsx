@@ -1,36 +1,32 @@
-"use client";
-import ProfileInputArea from "./ProfileInputArea";
-import ProfileImageInput from "./ProfileImageInput";
-import FormEditProfile from "./FormEditProfile";
-import { getUser } from "@/dummies/user";
-import { useEffect, useState } from "react";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import FormUpdatePassword from "./FormUpdatePassword";
-import FormUpdatePhoneNumber from "./FormUpdatePhoneNumber";
+import FormUpdatePassword from "./UpdatePassword/FormUpdatePassword";
+import FormUpdatePhoneNumber from "./UpdatePhoneNumber/FormUpdatePhoneNumber";
 import DeleteAccountConfirm from "./DeleteAccountConfirm";
-import ProfilePreview from "./ProfilePreview";
-import { Session } from "next-auth";
 import { CategoryOption } from "@/types/model/Category";
-import { ProfileSchema } from "@/types/model/Profile";
+import { ProfileFullDataSchema } from "@/types/model/Profile";
 import { CATEGORIES_ALL_OPTIONS } from "@/constants/categories/job_category";
+import FormEditProfileImageWithPreview from "./EditProfileImage/FormEditProfileImageWithPreview";
+import FormEditProfile from "./FormEditProfile";
+import connectDB from "@/lib/db";
+import { User } from "@/lib/schema";
+import { Session } from "next-auth";
 
 export type TProfileData = {
-  profileUrl: string;
   positionTag: string;
   introduce: string;
   email: string;
   interest: Array<CategoryOption>;
 };
 
-export default function ProfileForms({
-  userId,
+export default async function ProfileForms({
+  session,
   profile,
-  sessionProvider,
 }: {
-  userId: string;
-  profile: ProfileSchema | null;
-  sessionProvider: string;
+  session: Session | null;
+  profile: ProfileFullDataSchema | null;
 }) {
+  const userId = session?.user.id as string;
+  const sessionProvider = session?.account.provider as string;
   // const user = getUser();
   const interestCategory: CategoryOption[] =
     profile?.my_category && profile.my_category.length > 0
@@ -41,8 +37,8 @@ export default function ProfileForms({
             ) as CategoryOption
         )
       : [];
+  const initProfileUrl = profile?.userId.profile_img || "";
   const profileData = {
-    profileUrl: profile?.userId.profile_img || "",
     positionTag: profile?.position_tag || "",
     introduce: profile?.introduce || "",
     email: profile?.userId.email || "",
@@ -50,47 +46,53 @@ export default function ProfileForms({
   };
   console.log({ profile, profileData });
 
-  const [data, setData] = useState<TProfileData>(profileData);
-  const setProfileImage = (image: string) => {
-    setData((prev) => ({ ...prev, profileUrl: image }));
-  };
+  async function saveImage(imageUrl: string) {
+    "use server";
+    await connectDB();
+
+    try {
+      const updated = await User.findOneAndUpdate(
+        { userId },
+        { image: imageUrl }
+      );
+      return updated;
+      // handleAlert("success", "프로필 이미지가 저장되었습니다.");
+    } catch (error: any) {
+      // handleAlert("error", error.message);
+    }
+  }
 
   return (
     <>
-      <div className="grid xl:grid-cols-[5fr_4fr] xl:items-start gap-gutter-xl">
-        <div className="flex flex-col gap-8">
-          <p className="text-H2 text-label-dimmed">{profile?.userId.name}</p>
-          <ProfileInputArea label="아바타 이미지">
-            <ProfileImageInput />
-          </ProfileInputArea>
-          <div className="w-full h-[1px] border-t border-t-line-normal"></div>
-          <FormEditProfile
-            userId={userId}
-            profile={profileData}
-            sessionProvider={sessionProvider}
-          />
-          {sessionProvider === "credentials" && (
-            <>
-              <div className="w-full h-[1px] border-t border-t-line-normal"></div>
-              <SectionTitle size="md" className="mb-2">
-                비밀번호 수정
-              </SectionTitle>
-              <FormUpdatePassword />
-            </>
-          )}
-          <div className="w-full h-[1px] border-t border-t-line-normal"></div>
-          <SectionTitle size="md" className="mb-2">
-            연락처 수정
-          </SectionTitle>
-          <FormUpdatePhoneNumber defaultValue={profile?.userId.phone} />
-          <div className="w-full h-[1px] border-t border-t-line-normal"></div>
-          <DeleteAccountConfirm />
-        </div>
+      <div className="flex flex-col gap-8">
+        <p className="text-H2 text-label-dimmed">{session?.user.name}</p>
+        <FormEditProfileImageWithPreview
+          saveImage={saveImage}
+          initProfileUrl={initProfileUrl}
+        />
+        <div className="w-full h-[1px] border-t border-t-line-normal"></div>
+        <FormEditProfile userId={userId} profile={profileData} />
+        {sessionProvider === "credentials" && (
+          <>
+            <div className="w-full h-[1px] border-t border-t-line-normal"></div>
+            <SectionTitle size="md" className="mb-2">
+              비밀번호 수정
+            </SectionTitle>
+            <FormUpdatePassword />
+          </>
+        )}
+        <div className="w-full h-[1px] border-t border-t-line-normal"></div>
+        <SectionTitle size="md" className="mb-2">
+          연락처 수정
+        </SectionTitle>
+        <FormUpdatePhoneNumber defaultValue={profile?.userId.phone} />
+        <div className="w-full h-[1px] border-t border-t-line-normal"></div>
+        <DeleteAccountConfirm />
+      </div>
 
-        {/* <div className="previewBox rounded-2xl hidden xl:sticky xl:top-20 p-6 border border-line-normal xl:flex flex-col gap-4">
+      {/* <div className="previewBox rounded-2xl hidden xl:sticky xl:top-20 p-6 border border-line-normal xl:flex flex-col gap-4">
           <ProfilePreview name={profile?.userId.name} data={profileData} />
         </div> */}
-      </div>
     </>
   );
 }
