@@ -9,6 +9,8 @@ import ShareIconButton from "../../_components/ShareIconButton";
 import { getSession } from "@/auth";
 import ReturnToListButton from "../_components/ReturnToListButton";
 import LinkedStudyCard from "../_components/LinkedStudyCard";
+import { Post } from "@/lib/schema";
+import { getCommunity } from "@/lib/actions/communityAction";
 
 export default async function PostDetail({
   params: { postId },
@@ -16,7 +18,12 @@ export default async function PostDetail({
   params: { postId: string };
 }) {
   const session = await getSession();
-  const post = getPost(postId);
+
+  const postDetail = await getCommunity(postId);
+  const post = postDetail.data;
+
+  console.log("포스트 상세 데이터" + post);
+
   return (
     <div>
       <ReturnToListButton />
@@ -33,7 +40,7 @@ export default async function PostDetail({
             <p className="text-label-400 text-label-dimmed flex flex-row gap-2 items-center">
               <span>1일 전</span>
               {/* 본인이 작성한 글이라면 수정하기 버튼 show */}
-              {session?.user.id === post.writer.userId && (
+              {session?.user.id === post.writer._id && (
                 <LinkButton
                   href="/post/write"
                   variation="text"
@@ -76,10 +83,11 @@ export default async function PostDetail({
           </Link>
         )}
       </article>
-      <CommentArea
-        comments={post.comments}
+      {/* <CommentArea
+        // comments={post.comments}
+        postId={postId}
         sessionId={session?.user.id || ""}
-      />
+      /> */}
     </div>
   );
 }

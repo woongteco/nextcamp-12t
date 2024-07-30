@@ -13,8 +13,9 @@ import SearchInput from "../_components/SearchInput";
 import NonePostItem from "./_components/NonePostItem";
 
 import { Post } from "@/lib/schema";
-import connectDB from "@/lib/db";
+
 import { getPosts } from "@/dummies/posts";
+import { getCommunity } from "@/lib/actions/communityAction";
 
 type TQuery = { category?: string; sort?: string };
 
@@ -36,13 +37,13 @@ export default async function CommunityPostList({
    * - 글 리스트 데이터 가져오기 : TPost[]
    */
 
-  //   await connectDB();
-  //
-  //   const posts = await Post.find();
+  const postList = await getCommunity();
+  const postListData: any = postList.data;
+  const clientPostList = JSON.parse(JSON.stringify(postListData));
 
-  const posts = getPosts(category);
+  console.log("get postlist" + postListData);
 
-  const sortedPosts = posts.sort((a, b) => {
+  const sortedPosts = postListData.sort((a: any, b: any) => {
     switch (sortedBy.key) {
       case "latest":
         return Date.parse(b.createdAt) - Date.parse(a.createdAt);
@@ -56,7 +57,8 @@ export default async function CommunityPostList({
         throw new Error("잘못된 정렬 기준입니다.");
     }
   });
-  console.log("posts", posts);
+
+  console.log("정렬 post 리스트" + sortedPosts);
 
   return (
     <SidebarAsideContentArea>
@@ -99,7 +101,7 @@ export default async function CommunityPostList({
         </div>
         {sortedPosts.length > 0 ? (
           <div className="flex flex-col gap-0">
-            <PostListWithPagination posts={sortedPosts} />
+            <PostListWithPagination posts={clientPostList} />
           </div>
         ) : (
           <NonePostItem />

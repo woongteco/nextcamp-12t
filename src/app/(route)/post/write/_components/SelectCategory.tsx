@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { POST_CATEGORY } from "@/constants/menu/community_posts";
 import Field from "@/common/Atoms/Form/Field";
@@ -12,12 +12,25 @@ type Option = {
   readonly value: string;
 };
 
-export default function SelectCategory() {
+export default function SelectCategory({
+  setData,
+}: {
+  setData: Dispatch<SetStateAction<{}>>;
+}) {
   const categoryOptions = POST_CATEGORY.filter((m) => m.key !== "all").map(
     (m) => ({ value: m.key, label: m.label })
   );
   const defaultCategory = categoryOptions[0];
   const [category, setCategory] = useState<Option | null>(defaultCategory);
+
+  console.log(category);
+
+  if (category) {
+    setData(category);
+  }
+
+  console.log("커뮤니티 개설 카테고리" + JSON.stringify(category));
+
   return (
     <>
       <Field>
