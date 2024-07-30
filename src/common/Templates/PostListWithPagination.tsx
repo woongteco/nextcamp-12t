@@ -20,6 +20,9 @@ export default function PostListWithPagination({ posts }: { posts: TPost[] }) {
   const startPost = (current - 1) * POSTS_PER_PAGE;
   const endPost = current * POSTS_PER_PAGE + 1;
   const currentPosts = postsData.slice(startPost, endPost);
+
+  console.log(currentPosts);
+
   return postsData.length > 0 ? (
     <>
       <PostList posts={currentPosts} />

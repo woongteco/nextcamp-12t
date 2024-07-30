@@ -8,7 +8,7 @@ import { getStudyCards } from "@/dummies/studies";
 export default function LinkedStudyCard({ studyId }: { studyId: string }) {
   const studies: TStudyCard[] = getStudyCards();
   const study = studies[0];
-  const writer = getWriter(study.user.userId);
+  const writer = getWriter(study.user._id);
   return (
     <div className="overflow-hidden flex gap-6 justify-stretch items-center rounded-twenty border border-line-normal">
       <div className="study-thumbnail bg-main-600 relative w-[200px] h-[132px]">

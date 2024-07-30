@@ -50,8 +50,7 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           <div className="flex items-center gap-[.25rem] pt-2">
             <Profile
               user={{
-                profileUrl: card.user.profileUrl,
-                userId: card.user.name,
+                profile_img: card.user.profile_img,
                 name: card.user.name,
                 position: card.user.position,
                 role: card.user.role,

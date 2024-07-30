@@ -10,15 +10,15 @@ import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 import Button from "@/common/Atoms/Form/Button";
 
 export type ProfileImageFormProps = {
-  initProfileUrl: string;
-  saveImage: (imageUrl: string) => any;
+  initProfileUrl?: string;
+  saveImage?: (imageUrl: string) => any;
 };
 
 export default function FormEditProfileImageWithPreview({
   initProfileUrl,
   saveImage,
 }: ProfileImageFormProps) {
-  const [imageUrl, setImageUrl] = useState<string>(initProfileUrl);
+  const [imageUrl, setImageUrl] = useState<string>(initProfileUrl || "");
   const { Modal, open, close } = useModal({
     children: (
       <ProfileImagePreviewModal
@@ -56,17 +56,17 @@ export default function FormEditProfileImageWithPreview({
   async function onSave() {
     // TODO: DB에 저장
     try {
-      const updated = await saveImage(imageUrl);
+      // const updated = await saveImage(imageUrl);
       close();
       handleAlert("success", "프로필 이미지가 저장되었습니다.");
-      console.log({ updated });
+      // console.log({ updated });
     } catch (error: any) {
       handleAlert("error", error.message);
     }
   }
 
   async function onDelete() {
-    await saveImage("");
+    // await saveImage("");
     setImageUrl("");
   }
 

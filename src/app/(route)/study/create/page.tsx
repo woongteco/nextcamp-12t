@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent } from "react";
-import { studyAction } from "@/lib/action";
+import { studyAction } from "@/lib/actions/studyAction";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import handleAlert from "@/common/Molecules/handleAlert";
 import StudyForms from "./_components/StudyForms";

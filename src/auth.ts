@@ -16,7 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("크레덴셜", credentials);
         const { email, password } = credentials;
 
         if (!email || !password) {
@@ -73,18 +72,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async signIn({ user, account }: { user: any; account: any }) {
-      console.log("확인", user, account);
-
       if (account?.provider !== "credentials") {
         const { name } = user;
         const { providerAccountId, provider } = account;
 
+        if (!providerAccountId) {
+          throw new CredentialsSignin(
+            "로그인에 실패했습니다. 다시 시도해주세요."
+          );
+        }
+
         await connectDB();
 
-        const socialUserCheck = await User.findOne({
-          providerAccountId,
-          provider,
-        });
+        let socialUserCheck = await User.findOne({ providerAccountId });
 
         if (!socialUserCheck) {
           const user = await new User({
@@ -92,9 +92,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             providerAccountId,
             provider,
           });
-          const dbSave = await user.save();
-          console.log("소셜회원정보 저장 완료" + dbSave);
+          socialUserCheck = await user.save();
+          console.log("소셜회원정보 저장 완료" + socialUserCheck);
         }
+
+        user.id = socialUserCheck._id;
       }
 
       return true;
@@ -112,7 +114,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       console.log("JWT", token, "USER", user, "ACCOUNT", account);
 
       if (user) {
-        token.user = user;
+        token.id = user.id;
         token.account = account;
       }
 
@@ -120,7 +122,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ session, token }: { session: any; token: any }) {
-      session.user = token.user;
+      session.user.id = token.id;
       session.account = token.account;
 
       return session;
