@@ -1,7 +1,8 @@
-import { TButtonProps, TIconButtonProps } from "@/types/component/props";
+"use client";
+import { Dispatch, SetStateAction, useId } from "react";
 import Button from "../Atoms/Form/Button";
 import { PaginationChevronIcon } from "../Atoms/Image/Icon";
-import { Dispatch, SetStateAction, useId } from "react";
+import { TButtonProps, TIconButtonProps } from "@/types/component/props";
 
 type TPages = {
   length: number;

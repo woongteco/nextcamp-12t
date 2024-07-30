@@ -94,9 +94,7 @@ export default function Notification(props: {
           )}
           <div
             className={`ml-3 flex gap-1 ${
-              status === "error" || status === "success"
-                ? "w-full justify-center flex-row"
-                : "flex flex-col"
+              message?.text ? "flex flex-col" : "w-full justify-center flex-row"
             }`}
           >
             {message?.title && (

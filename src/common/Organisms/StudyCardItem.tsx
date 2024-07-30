@@ -52,8 +52,8 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
               user={{
                 profileUrl: card.user.profileUrl,
                 userId: card.user.name,
-                name: card.user.name.split(" ")[1],
-                position: card.user.position.split(" ")[0],
+                name: card.user.name,
+                position: card.user.position,
                 role: card.user.role,
               }}
               size="small"
