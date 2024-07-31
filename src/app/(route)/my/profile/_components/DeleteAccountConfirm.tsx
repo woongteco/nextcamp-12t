@@ -1,11 +1,29 @@
 "use client";
+import { useState } from "react";
+import { signOut } from "next-auth/react";
 import Button from "@/common/Atoms/Form/Button";
 import Label from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
-import { useState } from "react";
+import handleAlert from "@/common/Molecules/handleAlert";
+import { unregisterAction } from "@/lib/actions/authAction";
 
-export default function DeleteAccountConfirm() {
+export default function DeleteAccountConfirm({ email }: { email: string }) {
   const [checked, setChecked] = useState<boolean>(false);
+  async function unregister() {
+    try {
+      const result = await unregisterAction(email);
+
+      if (result.state) {
+        signOut({ callbackUrl: "/" });
+        handleAlert("success", result.message);
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
       <div className="flex flex-row gap-2 items-start mb-4">
@@ -28,6 +46,7 @@ export default function DeleteAccountConfirm() {
         colors={{ bg: "bg-status-danger", text: "text-status-danger" }}
         className="border-status-danger"
         disabled={!checked}
+        onClick={unregister}
       >
         회원 탈퇴
       </Button>
