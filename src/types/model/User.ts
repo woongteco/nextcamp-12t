@@ -4,6 +4,7 @@ export type TUserBase = {
   name: string;
   role: string | "user" | "pro";
   position: string | null;
+  phone?: string;
   profile_img?: string;
 };
 

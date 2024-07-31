@@ -59,6 +59,7 @@ export default function LoginForm() {
           </button>
           <Link
             href="/register"
+            scroll={false}
             className="w-full text-center rounded-md py-2 bg-main-25"
           >
             회원가입
