@@ -4,6 +4,7 @@ import Link from "next/link";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
 import { TStudyCard } from "@/types/model/StudyCard";
+import { DummyProfileImg } from "@public/images";
 
 export default function WideStudyItem({ card }: { card: TStudyCard }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
@@ -30,13 +31,23 @@ export default function WideStudyItem({ card }: { card: TStudyCard }) {
         </Keyword>
         <div className="absolute bottom-5 flex items-end justify-between px-5 w-full">
           <div className="flex items-center gap-[.25rem]">
-            <Image
-              src={card.thumbnailUrl}
-              width={40}
-              height={40}
-              className="w-10 h-10 rounded-full"
-              alt="프로필 이미지"
-            />
+            {!card.user.profile_img ? (
+              <Image
+                src={DummyProfileImg}
+                width={40}
+                height={40}
+                className="w-10 h-10 rounded-full"
+                alt="프로필 이미지"
+              />
+            ) : (
+              <Image
+                src={card.user.profile_img}
+                width={40}
+                height={40}
+                className="w-10 h-10 rounded-full"
+                alt="프로필 이미지"
+              />
+            )}
             <span className="font-semibold text-subtitle text-white">
               {card.user.name}
             </span>
@@ -46,7 +57,7 @@ export default function WideStudyItem({ card }: { card: TStudyCard }) {
           </div>
           <div className="flex flex-col w-1/2">
             <span className="text-label-400 font-light text-white">
-              {card.jobCategory.value}
+              {card.jobCategory.label}
             </span>
             <p className="text-lg font-semibold text-white line-clamp-2">
               {card.title}

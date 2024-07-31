@@ -1,10 +1,10 @@
-import { faker } from "@faker-js/faker";
 import Image from "next/image";
-import { BadgeIcon, PostCardHeart } from "@public/icons";
+import { BadgeIcon } from "@public/icons";
 import Link from "next/link";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
 import { TStudyCard } from "@/types/model/StudyCard";
+import { DummyProfileImg } from "@public/images";
 
 export default function LargeStudyItem({ card }: { card: TStudyCard }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
@@ -34,13 +34,23 @@ export default function LargeStudyItem({ card }: { card: TStudyCard }) {
           className="absolute bottom-10 px-7 w-full"
         >
           <div className="flex items-center">
-            <Image
-              src={card.user.profile_img || ""}
-              width={56}
-              height={56}
-              className="w-14 h-14 mr-5 rounded-full"
-              alt="user image"
-            />
+            {!card.user.profile_img ? (
+              <Image
+                src={DummyProfileImg}
+                width={56}
+                height={56}
+                className="w-14 h-14 mr-5 rounded-full"
+                alt="user image"
+              />
+            ) : (
+              <Image
+                src={card.user.profile_img || ""}
+                width={56}
+                height={56}
+                className="w-14 h-14 mr-5 rounded-full"
+                alt="user image"
+              />
+            )}
             <span className="font-semibold text-subtitle text-white">
               {card.user.name}
             </span>
@@ -51,7 +61,7 @@ export default function LargeStudyItem({ card }: { card: TStudyCard }) {
           <div className="w-full my-4 border border-primary-heavy2"></div>
           <div>
             <span className="text-label-400 font-light text-white">
-              {card.jobCategory.value}
+              {card.jobCategory.label}
             </span>
             <p className="text-lg font-semibold text-white">{card.title}</p>
 

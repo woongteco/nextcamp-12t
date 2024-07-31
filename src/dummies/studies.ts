@@ -20,8 +20,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("desk", 268, 180, 12),
     title: "앱을 만들어보는 재밌는 개발 스터디",
     jobCategory: {
-      label: "cate_1",
-      value: "개발",
+      label: "개발",
+      value: "cate_1",
     },
     targetCategory: {
       label: "개념학습",
@@ -30,8 +30,8 @@ const studyCards = [
     recruitmentPeople: 1,
     recruitmentPeriod: ["2024-09-01", "2024-10-12"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: "서울특별시 성수동 2022-1번지",
     heartCount: 0,
@@ -49,8 +49,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("architect", 268, 180, 12),
     title: "비즈니스의 꿀팁",
     jobCategory: {
-      label: "cate_2",
-      value: "비즈니스",
+      label: "비즈니스",
+      value: "cate_2",
     },
     targetCategory: {
       label: "프로젝트",
@@ -59,8 +59,8 @@ const studyCards = [
     recruitmentPeople: 144,
     recruitmentPeriod: ["2024-07-11", "2024-07-23"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 3,
@@ -78,8 +78,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("desk", 268, 180, 11),
     title: "인프라 같이 공부하실 분",
     jobCategory: {
-      label: "cate_4",
-      value: "IT 및 소프트웨어",
+      label: "IT 및 소프트웨어",
+      value: "cate_4",
     },
     targetCategory: {
       label: "챌린지",
@@ -88,8 +88,8 @@ const studyCards = [
     recruitmentPeople: 23,
     recruitmentPeriod: ["2024-07-11", "2024-09-10"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 42,
@@ -107,8 +107,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("tech", 268, 180, 10),
     title: "앱을 만들어보는 재밌는 개발 스터디",
     jobCategory: {
-      label: "cate_1",
-      value: "개발",
+      label: "개발",
+      value: "cate_1",
     },
     targetCategory: {
       label: "취미",
@@ -117,8 +117,8 @@ const studyCards = [
     recruitmentPeople: 1,
     recruitmentPeriod: ["2024-09-01", "2024-10-12"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: "서울특별시 성수동 2022-1번지",
     heartCount: 0,
@@ -136,8 +136,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("architect", 268, 180, 9),
     title: "비즈니스의 꿀팁",
     jobCategory: {
-      label: "cate_2",
-      value: "비즈니스",
+      label: "비즈니스",
+      value: "cate_2",
     },
     targetCategory: {
       label: "취업/면접",
@@ -146,8 +146,8 @@ const studyCards = [
     recruitmentPeople: 144,
     recruitmentPeriod: ["2024-09-11", "2024-10-22"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 3,
@@ -165,8 +165,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("tech", 268, 180, 4),
     title: "인프라 스터디 모집해요!",
     jobCategory: {
-      label: "cate_4",
-      value: "IT 및 소프트웨어",
+      label: "IT 및 소프트웨어",
+      value: "cate_4",
     },
     targetCategory: {
       label: "특강",
@@ -175,8 +175,8 @@ const studyCards = [
     recruitmentPeople: 23,
     recruitmentPeriod: ["2024-07-11", "2024-07-23"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 42,
@@ -194,8 +194,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("nature", 268, 180, 7),
     title: "nextjs 그것이란,,",
     jobCategory: {
-      label: "cate_4",
-      value: "IT 및 소프트웨어",
+      label: "IT 및 소프트웨어",
+      value: "cate_4",
     },
     targetCategory: {
       label: "특강",
@@ -204,8 +204,8 @@ const studyCards = [
     recruitmentPeople: 5,
     recruitmentPeriod: ["2024-07-11", "2024-07-27"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: null,
     heartCount: 421,
@@ -223,8 +223,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("desk", 268, 180, 6),
     title: "음악 작사작곡 꿀팁",
     jobCategory: {
-      label: "cate_12",
-      value: "음악",
+      label: "음악",
+      value: "cate_12",
     },
     targetCategory: {
       label: "취미",
@@ -233,8 +233,8 @@ const studyCards = [
     recruitmentPeople: 144,
     recruitmentPeriod: ["2024-07-11", "2024-07-22"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 20,
@@ -252,8 +252,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("art", 268, 180, 5),
     title: "영상편집 초급 스터디 같이 하실분 !",
     jobCategory: {
-      label: "cate_10",
-      value: "사진 및 영상",
+      label: "사진 및 영상",
+      value: "cate_10",
     },
     targetCategory: {
       label: "응용/활용",
@@ -262,8 +262,8 @@ const studyCards = [
     recruitmentPeople: 23,
     recruitmentPeriod: ["2024-08-01", "2024-08-12"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: null,
     heartCount: 3,
@@ -281,8 +281,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("art", 268, 180, 4),
     title: "앱을 만들어보는 재밌는 개발 스터디",
     jobCategory: {
-      label: "cate_1",
-      value: "개발",
+      label: "개발",
+      value: "cate_1",
     },
     targetCategory: {
       label: "개념학습",
@@ -291,8 +291,8 @@ const studyCards = [
     recruitmentPeople: 1,
     recruitmentPeriod: ["2024-09-01", "2024-10-12"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: "서울특별시 성수동 2022-1번지",
     heartCount: 0,
@@ -310,8 +310,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("architect", 268, 180, 3),
     title: "비즈니스의 꿀팁",
     jobCategory: {
-      label: "cate_8",
-      value: "마케팅",
+      label: "마케팅",
+      value: "cate_8",
     },
     targetCategory: {
       label: "프로젝트",
@@ -320,8 +320,8 @@ const studyCards = [
     recruitmentPeople: 144,
     recruitmentPeriod: ["2024-07-11", "2024-07-23"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 3,
@@ -339,8 +339,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("animal", 268, 180, 2),
     title: "인프라 같이 공부하실 분",
     jobCategory: {
-      label: "cate_4",
-      value: "IT 및 소프트웨어",
+      label: "IT 및 소프트웨어",
+      value: "cate_4",
     },
     targetCategory: {
       label: "챌린지",
@@ -349,8 +349,8 @@ const studyCards = [
     recruitmentPeople: 23,
     recruitmentPeriod: ["2024-07-11", "2024-09-10"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 42,
@@ -368,8 +368,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("art", 268, 180, 1),
     title: "앱을 만들어보는 재밌는 개발 스터디",
     jobCategory: {
-      label: "cate_1",
-      value: "개발",
+      label: "개발",
+      value: "cate_1",
     },
     targetCategory: {
       label: "취미",
@@ -378,8 +378,8 @@ const studyCards = [
     recruitmentPeople: 1,
     recruitmentPeriod: ["2024-09-01", "2024-10-12"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: "서울특별시 성수동 2022-1번지",
     heartCount: 0,
@@ -397,8 +397,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("architect", 268, 180, 1),
     title: "비즈니스의 꿀팁",
     jobCategory: {
-      label: "cate_2",
-      value: "비즈니스",
+      label: "비즈니스",
+      value: "cate_2",
     },
     targetCategory: {
       label: "취업/면접",
@@ -407,8 +407,8 @@ const studyCards = [
     recruitmentPeople: 144,
     recruitmentPeriod: ["2024-09-11", "2024-10-22"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 3,
@@ -426,8 +426,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("animal", 268, 180, 1),
     title: "인프라 스터디 모집해요!",
     jobCategory: {
-      label: "cate_4",
-      value: "IT 및 소프트웨어",
+      label: "IT 및 소프트웨어",
+      value: "cate_4",
     },
     targetCategory: {
       label: "특강",
@@ -436,8 +436,8 @@ const studyCards = [
     recruitmentPeople: 23,
     recruitmentPeriod: ["2024-07-11", "2024-07-23"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 42,
@@ -455,8 +455,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("nature", 268, 180, 1),
     title: "nextjs 그것이란,,",
     jobCategory: {
-      label: "cate_4",
-      value: "IT 및 소프트웨어",
+      label: "IT 및 소프트웨어",
+      value: "cate_4",
     },
     targetCategory: {
       label: "특강",
@@ -465,8 +465,8 @@ const studyCards = [
     recruitmentPeople: 5,
     recruitmentPeriod: ["2024-07-11", "2024-07-27"],
     location: {
-      label: "offline",
-      value: "오프라인",
+      label: "오프라인",
+      value: "offline",
     },
     place: null,
     heartCount: 421,
@@ -484,8 +484,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("desk", 268, 180, 1),
     title: "프로듀싱 작곡 스터디 모집합니다.",
     jobCategory: {
-      label: "cate_12",
-      value: "음악",
+      label: "음악",
+      value: "cate_12",
     },
     targetCategory: {
       label: "취미",
@@ -494,8 +494,8 @@ const studyCards = [
     recruitmentPeople: 144,
     recruitmentPeriod: ["2024-07-11", "2024-07-22"],
     location: {
-      label: "online",
-      value: "온라인",
+      label: "온라인",
+      value: "online",
     },
     place: null,
     heartCount: 20,
@@ -513,8 +513,8 @@ const studyCards = [
     thumbnailUrl: getImageUrl("art", 268, 180, 1),
     title: "영상편집 초급 스터디 같이 하실분 !",
     jobCategory: {
-      label: "사진 및 영상",
-      value: "cate_10",
+      label: "cate_10",
+      value: "사진 및 영상",
     },
     targetCategory: {
       label: "응용/활용",
