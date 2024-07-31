@@ -12,7 +12,7 @@ export default function RegisterForm() {
 
   const [phoneData, setPhoneData] = useState<string>("");
 
-  async function register(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -39,7 +39,7 @@ export default function RegisterForm() {
   return (
     <>
       <form
-        onSubmit={register}
+        onSubmit={handleSubmit}
         className="flex flex-col w-full gap-4 xxl:gap-6 duration-300"
       >
         <Input

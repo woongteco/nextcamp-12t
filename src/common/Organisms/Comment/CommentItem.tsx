@@ -1,6 +1,6 @@
 "use client";
 import Profile from "@/common/Molecules/Profile";
-import { CommentSchema } from "@/types/model/Comment";
+import { CommentSchema, ReplySchema } from "@/types/model/Comment";
 import { useState } from "react";
 import CommentInput from "./CommentInput";
 
@@ -9,7 +9,7 @@ function CommentBodyLayout({
   canEdit,
   canReply = true,
 }: {
-  comment: Omit<CommentSchema, "reply">;
+  comment: CommentSchema | ReplySchema;
   canEdit: boolean;
   canReply?: boolean;
 }) {
@@ -18,6 +18,7 @@ function CommentBodyLayout({
     dateStyle: "medium",
     timeStyle: "medium",
   });
+
   return (
     <>
       <p className="text-body-400 text-label-normal">{comment.content}</p>
@@ -47,7 +48,7 @@ export default function CommentItem({
 }) {
   return (
     <div className="flex flex-col gap-5 border-t py-6 border-t-line-normal">
-      <Profile size="default" user={comment.writer!} />
+      <Profile size="default" user={comment.writer} />
       <div className="flex flex-col gap-5 pl-14">
         <CommentBodyLayout comment={comment} canEdit={canEdit} />
         {comment?.reply &&
@@ -56,11 +57,11 @@ export default function CommentItem({
             <div className="flex flex-col gap-5 pt-6" key={reply.commentId}>
               <Profile size="default" user={reply.writer} />
               <div className="flex flex-col gap-5 pl-14">
-                {/* <CommentBodyLayout
+                <CommentBodyLayout
                   comment={reply}
                   canReply={false}
                   canEdit={canEdit}
-                /> */}
+                />
               </div>
             </div>
           ))}

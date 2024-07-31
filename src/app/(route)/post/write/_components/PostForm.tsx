@@ -9,8 +9,8 @@ import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./SelectCategory";
 import { FormEvent, useState } from "react";
 import { Session } from "next-auth";
-import { redirect, useRouter } from "next/navigation";
 import { communityAction } from "@/lib/actions/communityAction";
+import { redirect, useRouter } from "next/navigation";
 import handleAlert from "@/common/Molecules/handleAlert";
 import SelectLinkedStudy from "./SelectLinkedStudy";
 
@@ -23,7 +23,7 @@ export default function PostForm({ session }: { session: Session }) {
   // const [data, setData] = useState<Option | any>({ value: "", label: "" });
   // const router = useRouter();
 
-  async function action(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!session) {
@@ -37,25 +37,29 @@ export default function PostForm({ session }: { session: Session }) {
       console.log({ key, value });
     }
 
-    // if (data) {
-    //   formData.append("categoryValue", data.value);
-    //   formData.append("categoryLabel", data.label);
-    // }
-
-    // try {
-    //   await communityAction(id, formData);
-    //   handleAlert("success", "커뮤니티 작성이 완료되었습니다.");
-    //   redirect("/post");
-    // } catch (error) {
-    //   if (error instanceof Error) {
-    //     handleAlert("error", error.message);
-    //   }
-    // }
+    // 필수정보 넘겨주기
+    //     if (data) {
+    //       formData.append("categoryValue", data.value);
+    //       formData.append("categoryLabel", data.label);
+    //     }
+    //
+    //     try {
+    //       const result = await communityAction(id, formData);
+    //
+    //       if (result.state) {
+    //         handleAlert("success", result.message);
+    //         router.replace("/post");
+    //       } else {
+    //         handleAlert("error", result.message);
+    //       }
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
   }
 
   return (
     <>
-      <form onSubmit={action} className="mb-100 flex flex-col gap-[30px]">
+      <form onSubmit={handleSubmit} className="mb-100 flex flex-col gap-[30px]">
         <SelectCategory /* setData={setData} */ />
         <GridField>
           <LabelText form required>

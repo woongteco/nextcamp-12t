@@ -5,7 +5,7 @@ import { Study } from "../schema";
 const { v4: uuidv4 } = require("uuid");
 
 // post
-export async function studyAction(formData: FormData) {
+export async function studyAction(id: string, formData: FormData) {
   const studyId = uuidv4();
   const thumbnailUrl = formData.get("thumbnailUrl") as string;
   const title = formData.get("title") as string;
@@ -18,11 +18,6 @@ export async function studyAction(formData: FormData) {
   const location = formData.get("location") as string;
   const place = formData.get("place") as string;
   const content = formData.get("content") as string;
-  const userId = formData.get("userId") as string;
-  const name = formData.get("name") as string;
-  const role = formData.get("role") as string;
-  const position = formData.get("position") as string;
-  const profileUrl = formData.get("profileUrl") as string;
   const rule = formData.get("rule");
   const curriculum = formData.get("curriculum");
   const heartCount = Number(formData.get("heartCount"));
@@ -67,19 +62,13 @@ export async function studyAction(formData: FormData) {
         rule,
         curriculum,
       },
-      writer: {
-        userId,
-        name,
-        role,
-        position,
-        profileUrl,
-      },
+      writer: id,
       heartCount,
       createdAt: new Date(),
     });
 
     await study.save();
-    return { state: true, message: "스터디 개설이 되었습니다." };
+    return { state: true, message: "스터디 개설이 완료되었습니다." };
   } catch (error) {
     console.log("post study error" + error);
     return { state: false, message: "스터디 개설에 실패했습니다." };
@@ -87,10 +76,88 @@ export async function studyAction(formData: FormData) {
 }
 
 // get
-export async function getStudy() {}
+export async function getStudy(studyId: string | null = null) {
+  try {
+    if (studyId) {
+      const study = await Study.findOne({ studyId }).populate("writer");
+      if (!study) {
+        return { state: false, message: "해당 스터디를 찾을 수 없습니다." };
+      }
+    } else {
+      const studyList = await Study.find().populate("writer");
+      return { state: true, message: studyList };
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // update
-export async function updateStudy(studyId: string, formData: FormData) {}
+export async function updateStudy(studyId: string, formData: FormData) {
+  const thumbnailUrl = formData.get("thumbnailUrl") as string;
+  const title = formData.get("title") as string;
+  const jobCategory = formData.get("jobCategory") as string;
+  const targetCategory = formData.get("targetCategory") as string;
+  const expense = Number(formData.get("expense"));
+  const recruitmentPeople = Number(formData.get("recruitmentPeople"));
+  const recruitmentPeriod = formData.get("recruitmentPeriod");
+  const studyPeriod = formData.get("studyPeriod") as string;
+  const location = formData.get("location") as string;
+  const place = formData.get("place") as string;
+  const content = formData.get("content") as string;
+  const rule = formData.get("rule");
+  const curriculum = formData.get("curriculum");
+  const heartCount = Number(formData.get("heartCount"));
+
+  await connectDB();
+
+  try {
+    const update = await Study.findOneAndUpdate(
+      { studyId },
+      {
+        $set: {
+          thumbnailInfo: {
+            thumbnailUrl,
+            title,
+            jobCategory,
+            targetCategory,
+            recruitmentPeople,
+            recruitmentPeriod,
+            studyPeriod,
+            location,
+            expense,
+            place,
+          },
+          contents: {
+            content,
+            rule,
+            curriculum,
+          },
+          heartCount,
+        },
+      },
+      { new: true }
+    );
+
+    if (!update) {
+      return { state: false, message: "해당 스터디를 찾을 수 없습니다." };
+    }
+    return { state: true, message: "스터디가 수정 되었습니다." };
+  } catch (error) {
+    console.log("update study error" + error);
+    return { state: false, message: "스터디 수정에 실패했습니다." };
+  }
+}
 
 // delete
-export async function deleteStudy(studyId: string) {}
+export async function deleteStudy(id: string) {
+  await connectDB();
+
+  try {
+    await Study.findOneAndDelete({ studyId: id });
+    return { state: true, message: "스터디가 삭제 되었습니다." };
+  } catch (error) {
+    console.log("delete study error" + error);
+    return { state: false, message: "스터디 삭제가 실패했습니다." };
+  }
+}

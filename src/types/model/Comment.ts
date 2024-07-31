@@ -1,11 +1,10 @@
 import { WriterSchema } from "./User";
 
-type CommentBase = {
+export type CommentBase = {
   postId: string;
   commentId: string;
   content: string;
   writer: WriterSchema;
-  reply: ReplySchema[];
   createdAt: string;
 };
 
