@@ -1,26 +1,9 @@
-"use client";
-
-import { FormEvent } from "react";
-import { studyAction } from "@/lib/actions/studyAction";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import handleAlert from "@/common/Molecules/handleAlert";
 import StudyForms from "./_components/StudyForms";
+import { getSession } from "@/auth";
 
-export default function page() {
-  // const [state, formAction] = useFormState(studyAction, { message: null })
-  // const { pending} = useFormStatus()
-  async function study(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-
-    try {
-      await studyAction(formData);
-      handleAlert("success", "스터디가 개설 되었습니다.");
-    } catch (error: any) {
-      handleAlert("error", error.message);
-    }
-  }
+export default async function page() {
+  const session = await getSession();
 
   return (
     <>
@@ -35,7 +18,7 @@ export default function page() {
         </span>
       </div>
 
-      <StudyForms />
+      <StudyForms session={session} />
     </>
   );
 }

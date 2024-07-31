@@ -1,6 +1,5 @@
 "use server";
 
-import { comment } from "postcss";
 import connectDB from "../db";
 import { Post } from "../schema";
 import { revalidatePath } from "next/cache";
@@ -57,10 +56,10 @@ export async function getComment(postId: string) {
 
   try {
     const comment = await Post.findOne({ postId })
-      .populate("writer")
-      .select("comments");
+      .select("comments")
+      .populate("comments.writer");
 
-    return { state: true, data: comment.comments };
+    return { state: true, data: comment };
   } catch (error) {
     console.log("get comment error" + error);
     return {
@@ -71,7 +70,34 @@ export async function getComment(postId: string) {
 }
 
 // update
-export async function updateComment(formData: FormData) {}
+export async function updateComment(commentId: string, formData: FormData) {
+  const content = formData.get("content") as string;
+
+  await connectDB();
+
+  try {
+    const update = await Post.findOneAndUpdate(
+      { "comments.commentId": commentId },
+      {
+        $set: {
+          comments: {
+            "comments.$.content": content,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!update) {
+      return { state: false, message: "해당 댓글을 찾을 수 없습니다." };
+    }
+
+    return { state: true, message: "댓글 수정이 완료되었습니다." };
+  } catch (error) {
+    console.log("update comment error" + error);
+    return { state: false, message: "댓글 수정에 실패했습니다." };
+  }
+}
 
 // delete
 export async function deleteComment(postId: string, commentId: string) {
