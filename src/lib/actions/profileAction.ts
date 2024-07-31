@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { Profile } from "../schema";
 
@@ -91,8 +90,6 @@ export async function updateProfile(id: string, formData: FormData) {
     if (!update) {
       return { state: false, message: "해당 프로필을 찾을 수 없습니다." };
     }
-
-    revalidatePath("/my/profile");
 
     return {
       state: true,

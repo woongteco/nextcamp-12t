@@ -1,5 +1,6 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyForm from "./_components/StudyForm";
+// import StudyForms from "./_components/StudyForms";
 import { getSession } from "@/auth";
 
 export default async function page() {

@@ -58,8 +58,6 @@ export default async function CommunityPostList({
     }
   });
 
-  console.log("정렬 post 리스트" + sortedPosts);
-
   return (
     <SidebarAsideContentArea>
       <SidebarNavArea>

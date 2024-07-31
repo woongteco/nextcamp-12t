@@ -35,6 +35,8 @@ export default function FormEditProfile({
     // setData((p: any) => ({ ...p, [name]: value }));
   };
 
+  console.log(profile);
+
   const router = useRouter();
 
   // const changeMultiSelect: (

@@ -7,6 +7,7 @@ import ReturnToListButton from "../_components/ReturnToListButton";
 import LinkedStudyCard from "../_components/LinkedStudyCard";
 import { getCommunity } from "@/lib/actions/communityAction";
 import IconButtonActionsInDetail from "../_components/IconButtonActionsInDetail";
+import CommentArea from "@/common/Templates/CommentArea";
 
 export default async function PostDetail({
   params: { postId },
@@ -62,11 +63,7 @@ export default async function PostDetail({
           </Link>
         )}
       </article>
-      {/* <CommentArea
-        // comments={post.comments}
-        postId={postId}
-        sessionId={session?.user.id || ""}
-      /> */}
+      <CommentArea postId={post.postId} sessionId={session?.user.id || ""} />
     </div>
   );
 }
