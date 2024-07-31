@@ -14,6 +14,10 @@ export async function communityAction(id: string, formData: FormData) {
   const body = formData.get("body") as string;
   const linkedStudyId = formData.get("linkedStudyId") as string;
 
+  if (!id) {
+    return { state: false, message: "유효한 id가 필요합니다." };
+  }
+
   if (!categoryValue || !categoryLabel || !title || !body) {
     return {
       state: false,
@@ -37,12 +41,14 @@ export async function communityAction(id: string, formData: FormData) {
         linkedStudyId,
       },
       writer: id,
+      comments: [],
       createdAt: new Date(),
       view: 0,
       like: 0,
     });
 
     await post.save();
+
     return {
       state: true,
       message: "커뮤니티 글이 등록되었습니다.",
@@ -64,7 +70,7 @@ export async function getCommunity(postId: string | null = null) {
     if (postId) {
       const post = await Post.findOne({ postId }).populate("writer");
       if (!post) {
-        return { state: false, message: "게시글을 찾을 수 없습니다." };
+        return { state: false, message: "해당 게시글을 찾을 수 없습니다." };
       }
       return { state: true, data: post };
     } else {
@@ -78,7 +84,46 @@ export async function getCommunity(postId: string | null = null) {
 }
 
 // update
-export async function updateCommunity(id: string, formData: FormData) {}
+export async function updateCommunity(postId: string, formData: FormData) {
+  const categoryValue = formData.get("categoryValue") as string;
+  const categoryLabel = formData.get("categoryLabel") as string;
+  const isRecruiting = formData.get("isRecruiting") === "true";
+  const title = formData.get("title") as string;
+  const body = formData.get("body") as string;
+  const linkedStudyId = formData.get("linkedStudyId") as string;
+
+  try {
+    const update = await Post.findOneAndUpdate(
+      { postId },
+      {
+        $set: {
+          category: {
+            value: categoryValue,
+            label: categoryLabel,
+            isRecruiting,
+          },
+          contents: {
+            title,
+            body,
+            linkedStudyId,
+          },
+          createdAt: new Date(),
+          view: 0,
+          like: 0,
+        },
+      },
+      { new: true }
+    );
+
+    if (!update) {
+      return { state: false, message: "해당 커뮤니티 글을 찾을 수 없습니다." };
+    }
+    return { state: true, message: "커뮤니티 글이 수정되었습니다." };
+  } catch (error) {
+    console.log("update post error " + error);
+    return { state: false, message: "커뮤니티 글을 수정하는데 실패했습니다." };
+  }
+}
 
 // delete
 export async function deleteCommunity(id: string) {
