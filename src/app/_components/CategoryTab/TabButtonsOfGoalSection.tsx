@@ -26,12 +26,8 @@ export default function TabButtonsOfGoalSection() {
   }, [selected]);
 
   function clickHandler(value: string) {
-    setSelected((prev) => {
-      // if (prev === value) {
-      //   return initGoal;
-      // }
-      return value;
-    });
+    // 다시 클릭 시 빈 값으로 돌아갈 필요 없음
+    setSelected(value);
   }
 
   return (
