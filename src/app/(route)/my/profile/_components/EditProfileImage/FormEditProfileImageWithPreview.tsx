@@ -8,7 +8,7 @@ import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import { DummyProfileImg } from "@public/images";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 import Button from "@/common/Atoms/Form/Button";
-import { saveProfileImage } from "@/lib/actions/profileAction";
+import { updateUserInfo } from "@/lib/actions/profileAction";
 
 export type ProfileImageFormProps = {
   id: string;
@@ -20,7 +20,13 @@ export default function FormEditProfileImageWithPreview({
   initProfileUrl,
 }: ProfileImageFormProps) {
   const [imageUrl, setImageUrl] = useState<string>(initProfileUrl);
+  const modalClose = () => {
+    setImageUrl(initProfileUrl);
+  };
+
   const { Modal, open, close } = useModal({
+    defaultValue: false,
+    onClose: modalClose,
     children: (
       <ProfileImagePreviewModal
         imageUrl={imageUrl}
@@ -31,9 +37,17 @@ export default function FormEditProfileImageWithPreview({
   });
 
   useEffect(() => {
-    if (imageUrl) {
+    if (initProfileUrl !== imageUrl) {
+      if (!imageUrl) {
+        close();
+        return;
+      }
       open();
     }
+
+    return () => {
+      close();
+    };
   }, [imageUrl]);
 
   function getImage(e: ChangeEvent<HTMLInputElement>) {
@@ -52,12 +66,9 @@ export default function FormEditProfileImageWithPreview({
     }
   }
 
-  // console.log(imageUrl);
-
   async function onSave() {
-    // TODO: DB에 저장
     try {
-      const result = await saveProfileImage(id, imageUrl);
+      const result = await updateUserInfo(id, { profile_img: imageUrl });
 
       if (result.state) {
         close();
@@ -71,8 +82,13 @@ export default function FormEditProfileImageWithPreview({
   }
 
   async function onDelete() {
+    if (!imageUrl) {
+      handleAlert("error", "저장된 프로필 이미지가 없습니다.");
+      return;
+    }
+
     try {
-      const result = await saveProfileImage(id, "");
+      const result = await updateUserInfo(id, { profile_img: "" });
       setImageUrl("");
 
       if (result.state) {

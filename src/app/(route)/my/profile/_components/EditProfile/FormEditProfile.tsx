@@ -4,7 +4,10 @@ import { ChangeEvent, FormEvent } from "react";
 import Input from "@/common/Molecules/Form/Input";
 import ProfileInputArea from "../ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
-import { CATEGORIES } from "@/constants/categories/job_category";
+import {
+  CATEGORIES,
+  CATEGORIES_ALL_OPTIONS,
+} from "@/constants/categories/job_category";
 import { useRouter } from "next/navigation";
 import { profileAction, updateProfile } from "@/lib/actions/profileAction";
 import { TProfileData } from "@/types/model/Profile";
@@ -31,6 +34,17 @@ export default function FormEditProfile({
       return;
     }
 
+    const my_category = [];
+    for (const [key, value] of formData) {
+      if (key === "my_category") {
+        my_category.push(
+          CATEGORIES_ALL_OPTIONS.find((opt) => opt.value === value)
+        );
+      }
+    }
+
+    formData.set("my_category", JSON.stringify(my_category));
+
     try {
       const result = profile
         ? await updateProfile(id, formData)
@@ -54,7 +68,7 @@ export default function FormEditProfile({
     <form onSubmit={handleSubmit} className="flex flex-col gap-8">
       <ProfileInputArea label="포지션 태그">
         <Input.Text
-          name="positionTag"
+          name="position_tag"
           placeholder="이름 앞에 추가될 포지션 태그를 추가하세요"
           defaultValue={profile.position_tag}
         />
@@ -72,8 +86,9 @@ export default function FormEditProfile({
             name="email"
             defaultValue={session?.user.email || ""}
             placeholder="이메일 주소를 입력하세요"
+            readOnly
           />
-          <div className="flex gap-4 items-center">
+          {/* <div className="flex gap-4 items-center">
             <Button
               variation="outline"
               colors={{ bg: "bg-main-600", text: "text-main-600" }}
@@ -83,12 +98,12 @@ export default function FormEditProfile({
             <span className="text-label-400 text-main-600">
               *변경 후 재인증이 필요합니다.
             </span>
-          </div>
+          </div> */}
         </ProfileInputArea>
       )}
       <ProfileInputArea label="관심 카테고리">
         <Input.Select
-          name="interest"
+          name="my_category"
           placeholder="관심 카테고리를 추가하세요"
           isMulti
           options={CATEGORIES}

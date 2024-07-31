@@ -7,6 +7,7 @@ import { getProfile } from "@/lib/actions/profileAction";
 import { getSession } from "@/auth";
 import FormEditProfileImageWithPreview from "./EditProfileImage/FormEditProfileImageWithPreview";
 import NotFound from "@/app/not-found";
+import { TProfileData } from "@/types/model/Profile";
 
 export default async function ProfileForms() {
   const session = await getSession();
@@ -18,10 +19,10 @@ export default async function ProfileForms() {
   const userId = session.user.id;
   const sessionProvider = session.account.provider;
   const userProfile = await getProfile(userId);
-  let profile = userProfile.data;
+  let profile: TProfileData = userProfile.data;
   let clientProfile = JSON.parse(JSON.stringify(profile));
 
-  console.log("id", session?.user.id);
+  console.log("[ session.user.id ]", session.user.id);
 
   console.log("get 프로필 데이터" + JSON.stringify(profile));
 
@@ -31,7 +32,7 @@ export default async function ProfileForms() {
         <p className="text-H2 text-label-dimmed">{session.user.name}</p>
         <FormEditProfileImageWithPreview
           id={session.user.id}
-          initProfileUrl={profile.userId.id}
+          initProfileUrl={profile.userId.profile_img}
         />
         <div className="w-full h-[1px] border-t border-t-line-normal"></div>
         <FormEditProfile session={session} profile={clientProfile} />
