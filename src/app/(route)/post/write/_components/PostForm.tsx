@@ -9,9 +9,10 @@ import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./SelectCategory";
 import { FormEvent, useState } from "react";
 import { Session } from "next-auth";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { communityAction } from "@/lib/actions/communityAction";
 import handleAlert from "@/common/Molecules/handleAlert";
+import SelectLinkedStudy from "./SelectLinkedStudy";
 
 type Option = {
   readonly label: string;
@@ -19,8 +20,8 @@ type Option = {
 };
 
 export default function PostForm({ session }: { session: Session }) {
-  const [data, setData] = useState<Option | any>({ value: "", label: "" });
-  const router = useRouter();
+  // const [data, setData] = useState<Option | any>({ value: "", label: "" });
+  // const router = useRouter();
 
   async function action(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,45 +33,57 @@ export default function PostForm({ session }: { session: Session }) {
     const formData = new FormData(e.currentTarget);
     const id = session?.user.id;
 
-    if (data) {
-      formData.append("categoryValue", data.value);
-      formData.append("categoryLabel", data.label);
+    for (const [key, value] of formData) {
+      console.log({ key, value });
     }
 
-    try {
-      await communityAction(id, formData);
-      handleAlert("success", "커뮤니티 작성이 완료되었습니다.");
-      router.replace("/post");
-    } catch (error) {
-      if (error instanceof Error) {
-        handleAlert("error", error.message);
-      }
-    }
+    // if (data) {
+    //   formData.append("categoryValue", data.value);
+    //   formData.append("categoryLabel", data.label);
+    // }
+
+    // try {
+    //   await communityAction(id, formData);
+    //   handleAlert("success", "커뮤니티 작성이 완료되었습니다.");
+    //   redirect("/post");
+    // } catch (error) {
+    //   if (error instanceof Error) {
+    //     handleAlert("error", error.message);
+    //   }
+    // }
   }
 
   return (
     <>
       <form onSubmit={action} className="mb-100 flex flex-col gap-[30px]">
-        <SelectCategory setData={setData} />
+        <SelectCategory /* setData={setData} */ />
         <GridField>
           <LabelText form required>
             글 제목
           </LabelText>
-          <Input.Text placeholder="제목을 입력하세요" name="title" required />
+          <Input.Text
+            placeholder="제목을 입력하세요"
+            name="title"
+            required
+            className="gridContent"
+          />
         </GridField>
         <GridField>
           <LabelText form required>
             글 내용
           </LabelText>
-          <TextEditor
-            className="w-full h-[580px]"
-            placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
-          />
+          <div className="gridContent">
+            <TextEditor
+              className="h-[580px]"
+              placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
+            />
+          </div>
         </GridField>
         <GridField>
           <LabelText form>관련 스터디 링크</LabelText>
           <Input.Text name="linkedStudyId" />
         </GridField>
+        {/* <SelectLinkedStudy /> */}
         <div className="flex gap-gutter-xl items-center justify-center mt-24">
           <LinkButton
             href="/post"

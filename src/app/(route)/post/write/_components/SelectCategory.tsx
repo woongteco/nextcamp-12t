@@ -12,22 +12,18 @@ type Option = {
   readonly value: string;
 };
 
-export default function SelectCategory({
-  setData,
-}: {
-  setData: Dispatch<SetStateAction<{}>>;
-}) {
+export default function SelectCategory() {
   const categoryOptions = POST_CATEGORY.filter((m) => m.key !== "all").map(
     (m) => ({ value: m.key, label: m.label })
   );
   const defaultCategory = categoryOptions[0];
   const [category, setCategory] = useState<Option | null>(defaultCategory);
 
-  console.log(category);
-
-  if (category) {
-    setData(category);
-  }
+  //   console.log(category);
+  //
+  //   if (category) {
+  //     setData(category);
+  //   }
 
   console.log("커뮤니티 개설 카테고리" + JSON.stringify(category));
 
@@ -42,10 +38,7 @@ export default function SelectCategory({
           options={categoryOptions}
           defaultValue={defaultCategory}
           value={category}
-          onChange={(newValue: Option | null) =>
-            // onChange: https://react-select.com/typescript#onchange
-            setCategory(newValue)
-          }
+          onChange={(newValue: Option | null) => setCategory(newValue)}
         />
       </Field>
       {(category?.value === "study" || category?.value === "project") && (
