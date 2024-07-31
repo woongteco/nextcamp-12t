@@ -27,7 +27,7 @@ export default async function ProfileForms() {
   console.log("get 프로필 데이터" + JSON.stringify(profile));
 
   return (
-    <div className="w-full lg:w-[calc(100vw-2rem-240px-30px)] xl:w-[calc(1200px-280px-30px)] grid xl:grid-cols-[5fr_4fr] xl:items-start gap-gutter-xl">
+    <div className="gridContent grid xl:grid-cols-[5fr_4fr] xl:items-start gap-gutter-xl">
       <div className="flex flex-col gap-8">
         <p className="text-H2 text-label-dimmed">{session.user.name}</p>
         <FormEditProfileImageWithPreview
