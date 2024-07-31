@@ -4,52 +4,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "./UserInput";
 import RegisterCheck from "./RegisterCheck";
-import useModal from "@/hooks/useModal";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { authAction } from "@/lib/actions/authAction";
-import SetCategoryFavor from "../../_components/SetCategoryFavor";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const { Modal, open, close } = useModal({
-    // defaultValue: true,
-    children: (
-      <SetCategoryFavor
-        skipThis={closeAndRedirect}
-        saveCategory={saveCategory}
-      />
-    ),
-  });
-  function closeAndRedirect() {
-    close();
-    router.push("/");
-  }
-  function saveCategory() {
-    // DB에 저장
-    closeAndRedirect();
-  }
 
-
-export default function RegisterForm() {
-  const router = useRouter();
   const [phoneData, setPhoneData] = useState<string>("");
-  const { Modal, open, close } = useModal({
-    // defaultValue: true,
-    children: (
-      <SetCategoryFavor
-        skipThis={closeAndRedirect}
-        saveCategory={saveCategory}
-      />
-    ),
-  });
-  function closeAndRedirect() {
-    close();
-    router.push("/");
-  }
-  function saveCategory() {
-    // DB에 저장
-    closeAndRedirect();
-  }
 
   async function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -60,9 +21,8 @@ export default function RegisterForm() {
       const result = await authAction(formData);
 
       if (result.state) {
+        router.replace("/set-category");
         handleAlert("success", result.message);
-        router.replace("/");
-        open();
       } else {
         handleAlert("error", result.message);
       }
@@ -119,7 +79,6 @@ export default function RegisterForm() {
           가입하기
         </button>
       </form>
-      {Modal}
     </>
   );
 }
