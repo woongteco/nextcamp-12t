@@ -77,3 +77,25 @@ export async function loginKakao() {
 export async function loginGithub() {
   await signIn("github");
 }
+
+/**
+ * 회원탈퇴: email 값을 전달받아 사용자 데이터 삭제.
+ * 로그인한 사용자 중 이메일로 가입한 사용자만 회원탈퇴 기능 사용 가능
+ */
+export async function unregisterAction(email: string) {
+  await connectDB();
+
+  const userCheck = await User.findOne({ email });
+  console.log({ userCheck });
+  if (!userCheck) {
+    return { state: false, message: "잘못된 email입니다." };
+  }
+
+  try {
+    await User.findOneAndDelete({ email });
+    return { state: true, message: "데이터가 삭제되었습니다." };
+  } catch (error) {
+    console.log("auth error" + error);
+    return { state: false, message: "데이터 삭제에 실패했습니다." };
+  }
+}
