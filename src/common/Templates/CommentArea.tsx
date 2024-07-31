@@ -1,7 +1,6 @@
 import ProfileImg from "../Atoms/Image/ProfileImg";
 import CommentItem from "../Organisms/Comment/CommentItem";
 import CommentInput from "../Organisms/Comment/CommentInput";
-import { CommentSchema } from "@/types/model/Comment";
 import { getComment } from "@/lib/actions/commentAction";
 
 export default async function CommentArea({
@@ -9,12 +8,16 @@ export default async function CommentArea({
   titleText = "댓글",
   sessionId,
 }: {
-  postId: string;
+  postId?: string;
   titleText?: string;
   sessionId: string;
 }) {
-  const findPost = await getComment(postId);
-  const data = findPost.data;
+  let data;
+
+  if (postId) {
+    const findPost = await getComment(postId);
+    data = findPost.data;
+  }
 
   console.log("get comment" + data);
 
