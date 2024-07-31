@@ -9,13 +9,14 @@ export default async function CommentArea({
   titleText = "댓글",
   sessionId,
 }: {
-  postId?: string;
+  postId: string;
   titleText?: string;
-  // comments: CommentSchema[];
   sessionId: string;
 }) {
-  // const findPost = await getComment(postId);
-  // const comments = findPost.data;
+  const findPost = await getComment(postId);
+  const data = findPost.data;
+
+  console.log("get comment" + data);
 
   return (
     <section className="flex flex-col gap-8 mt-5 px-10 py-8 rounded-twenty border border-line-normal">
@@ -36,22 +37,22 @@ export default async function CommentArea({
           />
         </svg>
         <span>{titleText}</span>
-        {/* <span className="text-main-600">{comments.length || 0}</span> */}
+        <span className="text-main-600">{data.comments.length || 0}</span>
       </p>
       <div>
-        {/* {comments.length === 0 ? (
+        {data.comments.length === 0 ? (
           <span className="flex items-center justify-center text-H4 text-label-assist bg-alt rounded-twenty h-20">
             첫번째로 댓글을 남겨보세요!
           </span>
         ) : (
-          comments.map((c) => (
+          data.comments.map((c: any) => (
             <CommentItem
               key={c.commentId}
-              comment={c}
-              canEdit={sessionId === c.writer._id}
+              comment={JSON.parse(JSON.stringify(c))}
+              canEdit={sessionId === (c.writer ? c.writer._id : null)}
             />
           ))
-        )} */}
+        )}
       </div>
       <div className="flex flex-row gap-8 items-start w-full">
         <ProfileImg

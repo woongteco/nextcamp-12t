@@ -4,7 +4,7 @@ import { BadgeIcon } from "@public/icons";
 import { TUserBase } from "@/types/model/User";
 import clsx from "clsx";
 
-export default function Profile({
+export default function xProfile({
   user,
   size,
 }: {
@@ -22,14 +22,14 @@ export default function Profile({
     small: "text-label-600 text-label-dimmed",
   };
 
-  const src = user.profile_img || "/images/profile/DummyProfileImg.jpg";
+  const src = user?.profile_img || "/images/profile/DummyProfileImg.jpg";
   return (
     <div className={clsx("flex flex-row flex-nowrap items-center", gap[size])}>
-      <ProfileImg size={size} src={src} alt={`${user.name} 프로필 이미지`} />
+      <ProfileImg size={size} src={src} alt={`${user?.name} 프로필 이미지`} />
       <span className={style[size]}>
-        {user.position && null} {user.name}
+        {user?.position && null} {user?.name}
       </span>
-      {user.role === "pro" && <Image src={BadgeIcon} alt="pro" />}
+      {user?.role === "pro" && <Image src={BadgeIcon} alt="pro" />}
     </div>
   );
 }

@@ -1,26 +1,28 @@
 "use client";
 
-import { ChangeEvent, useRef, useState } from "react";
-import Image from "next/image";
-import { DefaultThumbnailImg } from "@public/images";
-
+import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "@/common/Atoms/Form/Button";
 import GridField from "@/common/Atoms/Form/Field";
 import TextEditor from "@/common/Atoms/Form/TextEditor";
 import LinkButton from "@/common/Atoms/LinkButton";
 import Label, { LabelText } from "@/common/Atoms/Form/Label";
 import { AdditionIcon } from "@/common/Atoms/Image/Icon";
-
 import ButtonCheck from "@/common/Molecules/Form/ButtonCheck";
 import Input from "@/common/Molecules/Form/Input";
 import { CATEGORIES } from "@/constants/categories/job_category";
 import { GOALS } from "@/constants/categories/study_goal";
-import { ImageCheckIcon } from "@public/icons";
 import { ONOFF } from "@/constants/categories/study_type";
 import ThumbnailInput from "./ThumbnailInput";
 import { studyAction } from "@/lib/actions/studyAction";
+import { Session } from "next-auth";
+import handleAlert from "@/common/Molecules/handleAlert";
+import { useRouter } from "next/navigation";
 
-export default function FormComponent() {
+export default function FormComponent({
+  session,
+}: {
+  session: Session | null;
+}) {
   // 스터디 생성
   const defaultStudyDetailData = {
     thumbnailInfo: {
@@ -51,6 +53,7 @@ export default function FormComponent() {
     },
   };
   const [data, setData] = useState(defaultStudyDetailData);
+  const router = useRouter();
 
   const onChangeData = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -73,9 +76,32 @@ export default function FormComponent() {
     //   }
     // }
   };
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    if (!session) {
+      return;
+    }
+    const id = session?.user.id;
+
+    try {
+      const result = await studyAction(id, formData);
+      if (result.state) {
+        handleAlert("success", result.message);
+        router.replace("/study");
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    // onsubmit으로
-    <form action={""} className="flex flex-col gap-[36px]">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-[36px]">
       <GridField>
         <Label htmlFor="title" required>
           스터디 제목
