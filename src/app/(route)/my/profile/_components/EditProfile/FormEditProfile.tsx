@@ -1,8 +1,7 @@
 import Button from "@/common/Atoms/Form/Button";
-
-import { TProfileData } from "../ProfileForms";
-import { profileAction } from "@/lib/action";
 import ProfileFormsAndPreview from "./ProfileFormsAndPreview";
+import { profileAction } from "@/lib/actions/profileAction";
+import { TProfileData } from "@/types/model/Profile";
 
 type FormEditProfileProps = {
   userId: string;

@@ -34,7 +34,7 @@ const example: TPost[] = [
       name: "한유준",
       role: "user",
       position: "개발자",
-      profileUrl: "",
+      profile_img: "",
     },
     createdAt: "2024-07-24 22:10:00",
     view: 22,
@@ -58,13 +58,14 @@ const example: TPost[] = [
       name: "한유준",
       role: "user",
       position: "개발자",
-      profileUrl: "",
+      profile_img: "",
     },
     createdAt: "2024-06-29 20:00:00",
     view: 20,
     like: 5,
     comments: [
       {
+        postId: "11212",
         commentId: "comment-12345",
         content: "초보도 참여 가능할까요?",
         writer: {
@@ -72,7 +73,7 @@ const example: TPost[] = [
           name: "김지현",
           role: "user",
           position: "",
-          profileUrl: "",
+          profile_img: "",
         },
         createdAt: "2024-07-01 11:02",
         reply: [],
@@ -97,7 +98,7 @@ const example: TPost[] = [
       name: "한유준",
       role: "user",
       position: "개발자",
-      profileUrl: "",
+      profile_img: "",
     },
     createdAt: "2024-06-29 00:00:00",
     view: 12,
@@ -121,13 +122,14 @@ const example: TPost[] = [
       name: "한유준",
       role: "user",
       position: "개발자",
-      profileUrl: "",
+      profile_img: "",
     },
     createdAt: "2024-06-25 00:00:00",
     view: 18,
     like: 6,
     comments: [
       {
+        postId: "11212",
         commentId: "comment-1",
         content: "This is comment number 1",
         writer: {
@@ -135,12 +137,12 @@ const example: TPost[] = [
           name: "한유준",
           role: "user",
           position: "개발자",
-          profileUrl: "",
+          profile_img: "",
         },
         createdAt: "2024-07-24T14:08:54.101Z",
         reply: [
           {
-            originId: "origin-1",
+            replyId: "origin-1",
             commentId: "reply-1",
             content: "Reply to comment number 1",
             writer: {
@@ -148,13 +150,14 @@ const example: TPost[] = [
               name: "한유준",
               role: "user",
               position: "개발자",
-              profileUrl: "",
+              profile_img: "",
             },
             createdAt: "2024-07-24T14:08:54.101Z",
           },
         ],
       },
       {
+        postId: "11212",
         commentId: "comment-2",
         content: "This is comment number 2",
         writer: {
@@ -162,7 +165,7 @@ const example: TPost[] = [
           name: "김지현",
           role: "user",
           position: "",
-          profileUrl: "",
+          profile_img: "",
         },
         createdAt: "2024-07-24T14:08:54.101Z",
         reply: [],

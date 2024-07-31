@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import ModalBackdrop from "@/common/Molecules/ModalPortal/ModalBackdrop";
 import LoginForm from "./LoginForm";
 import AuthWrap from "./AuthWrap";
-import { loginGithub, loginGoogle, loginKakao } from "@/lib/action";
+import { loginGithub, loginGoogle, loginKakao } from "@/lib/actions/authAction";
 
 export default function LoginModal() {
   const [open, setOpen] = useState(false);

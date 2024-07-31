@@ -56,11 +56,11 @@ export default function CommentItem({
             <div className="flex flex-col gap-5 pt-6" key={reply.commentId}>
               <Profile size="default" user={reply.writer} />
               <div className="flex flex-col gap-5 pl-14">
-                <CommentBodyLayout
+                {/* <CommentBodyLayout
                   comment={reply}
                   canReply={false}
                   canEdit={canEdit}
-                />
+                /> */}
               </div>
             </div>
           ))}

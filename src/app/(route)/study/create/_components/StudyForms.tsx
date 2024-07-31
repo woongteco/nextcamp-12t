@@ -18,7 +18,7 @@ import { GOALS } from "@/constants/categories/study_goal";
 import { ImageCheckIcon } from "@public/icons";
 import { ONOFF } from "@/constants/categories/study_type";
 import ThumbnailInput from "./ThumbnailInput";
-import { studyAction } from "@/lib/action";
+import { studyAction } from "@/lib/actions/studyAction";
 
 export default function FormComponent() {
   // 스터디 생성
@@ -74,7 +74,8 @@ export default function FormComponent() {
     // }
   };
   return (
-    <form action={studyAction} className="flex flex-col gap-[36px]">
+    // onsubmit으로
+    <form action={""} className="flex flex-col gap-[36px]">
       <GridField>
         <Label htmlFor="title" required>
           스터디 제목

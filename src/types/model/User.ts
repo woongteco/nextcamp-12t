@@ -1,9 +1,10 @@
 export type TUserBase = {
-  userId: string;
+  userId?: string;
+  _id?: string;
   name: string;
   role: string | "user" | "pro";
-  position: string;
-  profileUrl: string;
+  position: string | null;
+  profile_img?: string;
 };
 
 type UserIntroduce = TUserBase & {
@@ -19,13 +20,10 @@ type UserInfo = UserIntroduce & {
 export type UserSchema = {
   _id: string;
   email: string;
-  password: string;
   name: string;
   profile_img: string;
   phone: string;
   role: string;
-  createdAt: object;
-  updatedAt: object;
 };
 
 export type WriterSchema = TUserBase;
