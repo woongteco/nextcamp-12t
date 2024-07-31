@@ -25,6 +25,15 @@ export default function TabButtonsOfGoalSection() {
     setStudies(() => init.filter((s) => s.targetCategory.value === selected));
   }, [selected]);
 
+  function clickHandler(value: string) {
+    setSelected((prev) => {
+      // if (prev === value) {
+      //   return initGoal;
+      // }
+      return value;
+    });
+  }
+
   return (
     <>
       <div className="flex flex-wrap xl:flex-row gap-4 w-fit mx-auto mb-11">
@@ -35,7 +44,7 @@ export default function TabButtonsOfGoalSection() {
               key={value}
               label={label}
               active={active}
-              onClick={() => setSelected(value)}
+              onClick={() => clickHandler(value)}
             >
               <CategoryTabIcon
                 name={iconName}
