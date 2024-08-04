@@ -1,3 +1,5 @@
+"use client";
+
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
@@ -33,7 +35,7 @@ export default function LoginForm() {
       return;
     }
 
-    router.refresh();
+    router.replace("/");
   }
 
   return (

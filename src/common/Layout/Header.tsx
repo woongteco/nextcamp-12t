@@ -1,11 +1,10 @@
-import Link from "next/link";
 import { Logo } from "@public/icons";
 import Image from "next/image";
 import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
-import LoginModal from "@/app/(auth)/_components/LoginModal";
 import { getSession } from "@/auth";
 import ResponsiveMenu from "./ProfileMenu/ResponsiveMenu";
+import Link from "next/link";
 
 export default async function Header() {
   const session = await getSession();
@@ -34,7 +33,7 @@ export default async function Header() {
               </ul>
             </nav>
           </div>
-          {session ? (
+          {session?.user ? (
             <div data-name="header__right-side__profile">
               <ResponsiveMenu
                 profileImage={
@@ -50,7 +49,13 @@ export default async function Header() {
               />
             </div>
           ) : (
-            <LoginModal />
+            <Link
+              href="/login"
+              type="button"
+              className="py-2 px-4 border border-solid border-main-600 rounded-[.6rem] text-main-600 font-semibold"
+            >
+              로그인
+            </Link>
           )}
         </div>
       </Container>
