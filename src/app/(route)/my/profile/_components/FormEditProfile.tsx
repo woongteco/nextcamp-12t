@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect } from "react";
 import Input from "@/common/Molecules/Form/Input";
 import ProfileInputArea from "./ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
@@ -79,7 +79,6 @@ export default function FormEditProfile({
   }
 
   return (
-    // 기존에 profile 정보가 없다면 등록 정보가 있다면 수정 state
     <form onSubmit={handleSubmit} className="flex flex-col gap-8">
       <ProfileInputArea label="포지션 태그">
         <Input.Text

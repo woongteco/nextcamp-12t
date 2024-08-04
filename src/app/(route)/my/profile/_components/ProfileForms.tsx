@@ -21,6 +21,7 @@ export default async function ProfileForms({
   let profile = userProfile.data;
   let clientProfile = JSON.parse(JSON.stringify(profile));
 
+  // 프로필이 없는 사람이면 따로 처리
   console.log("get 프로필 데이터" + profile);
 
   return (
