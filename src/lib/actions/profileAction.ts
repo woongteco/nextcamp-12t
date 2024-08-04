@@ -51,20 +51,7 @@ export async function getProfile(userId: string) {
     let profile = await Profile.findOne({ userId }).populate("userId");
 
     if (!profile) {
-      profile = {
-        position_tag: "",
-        introduce: "",
-        my_category: [],
-        userId: {
-          email: "",
-          name: "",
-          profile_img: "",
-          role: "",
-          provider: "",
-        },
-      };
-    } else {
-      profile = profile;
+      return { state: false };
     }
 
     return { state: true, data: profile };

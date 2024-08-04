@@ -1,12 +1,12 @@
 "use server";
 
+import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Study } from "../schema";
-const { v4: uuidv4 } = require("uuid");
 
 // post
 export async function studyAction(id: string, formData: FormData) {
-  const studyId = uuidv4();
+  const studyId = nanoid();
   const thumbnailUrl = formData.get("thumbnailUrl") as string;
   const title = formData.get("title") as string;
   const jobCategory = formData.get("jobCategory") as string;

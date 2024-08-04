@@ -1,9 +1,9 @@
 "use server";
 
+import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post } from "../schema";
 import { revalidatePath } from "next/cache";
-const { v4: uuidv4 } = require("uuid");
 
 // post
 export async function commentAction(
@@ -11,7 +11,7 @@ export async function commentAction(
   postId: string,
   formData: FormData
 ) {
-  const commentId = uuidv4();
+  const commentId = nanoid();
   const content = formData.get("content") as string;
 
   if (!content) {

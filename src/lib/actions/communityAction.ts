@@ -1,12 +1,12 @@
 "use server";
 
+import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post } from "../schema";
-const { v4: uuidv4 } = require("uuid");
 
 // post
 export async function communityAction(id: string, formData: FormData) {
-  const postId = uuidv4();
+  const postId = nanoid();
   const categoryValue = formData.get("categoryValue") as string;
   const categoryLabel = formData.get("categoryLabel") as string;
   const isRecruiting = formData.get("isRecruiting") === "true";
