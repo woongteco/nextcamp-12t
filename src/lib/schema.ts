@@ -29,7 +29,7 @@ const mypage = new mongoose.Schema({
 
 // 프로필
 const profile = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   position_tag: { type: String, default: null },
   introduce: { type: String, default: null },
   my_category: { type: [subLabelValue], default: [] },
