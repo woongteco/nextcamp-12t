@@ -5,7 +5,7 @@ import LoginForm from "../_components/LoginForm";
 import AuthWrap from "../_components/AuthWrap";
 import { loginGithub, loginGoogle, loginKakao } from "@/lib/actions/authAction";
 
-export default function LoginModal() {
+export default function Login() {
   return (
     <AuthWrap>
       <Image src={Logo} alt="logo" />
