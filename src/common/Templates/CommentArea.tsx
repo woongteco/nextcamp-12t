@@ -2,6 +2,7 @@ import ProfileImg from "../Atoms/Image/ProfileImg";
 import CommentItem from "../Organisms/Comment/CommentItem";
 import CommentInput from "../Organisms/Comment/CommentInput";
 import { CommentSchema } from "@/types/model/Comment";
+import { getUserData } from "@/lib/actions/userAction";
 
 export default async function CommentArea({
   comments,
@@ -12,6 +13,12 @@ export default async function CommentArea({
   sessionId: string;
   titleText?: string;
 }) {
+  const result = await getUserData(sessionId);
+  let user;
+
+  if (result.state === true) {
+    user = result.data;
+  }
   //   let data;
   //
   //   if (postId) {
@@ -60,7 +67,11 @@ export default async function CommentArea({
       <div className="flex flex-row gap-8 items-start w-full">
         <ProfileImg
           size="large"
-          src="/images/profile/DummyProfileImg.jpg"
+          src={
+            sessionId
+              ? user?.profile_img
+              : "/images/profile/DummyProfileImg.jpg"
+          }
           alt="프로필 이미지"
           className="my-[6px]"
         />
