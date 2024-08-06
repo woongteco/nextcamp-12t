@@ -22,7 +22,7 @@ export default function StudyCardFilter({
       ? card.targetCategory.value === targetKey
       : true;
     const matchesLocationKey = locationKey
-      ? card.location.label === locationKey
+      ? card.location.value === locationKey
       : true;
     const matchesQueryKey = queryKey ? card.title.includes(queryKey) : true;
 

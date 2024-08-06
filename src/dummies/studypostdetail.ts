@@ -43,7 +43,10 @@ export function getStudyPostDetail() {
       recruitmentPeople: "20명",
       recruitmentPeriod: ["2024.11.21", "2024.11.30"],
       studyPeriod: ["2024.12.01", "2024.12.11"],
-      onoff: "오프라인",
+      location: {
+        label: "오프라인",
+        value: "offline",
+      },
       place: "오프 사무실",
       heartStatus: false,
       heartCount: 262,
@@ -68,7 +71,6 @@ export function getStudyPostDetail() {
       ],
     },
   };
-  return result;
   return result;
 }
 
