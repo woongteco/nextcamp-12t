@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { Post } from "../schema";
-const { v4: uuidv4 } = require("uuid");
+import { nanoid } from "nanoid";
 
 // post
 export async function replyAction(
@@ -12,7 +12,7 @@ export async function replyAction(
   commentId: string,
   formData: FormData
 ) {
-  const replyId = uuidv4();
+  const replyId = nanoid();
   const content = formData.get("content") as string;
 
   if (!content) {

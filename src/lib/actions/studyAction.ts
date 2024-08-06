@@ -1,14 +1,14 @@
 "use server";
 
+import { nanoid } from "nanoid";
 import { delay } from "@/dummies/utils";
 import connectDB from "../db";
 import { Study } from "../schema";
 import { getStudyCards } from "@/dummies/studies";
-const { v4: uuidv4 } = require("uuid");
 
 // post
 export async function studyAction(id: string, formData: FormData) {
-  const studyId = uuidv4();
+  const studyId = nanoid();
   const thumbnailUrl = formData.get("thumbnailUrl") as string;
   const title = formData.get("title") as string;
   const jobCategory = formData.get("jobCategory") as string;
@@ -152,11 +152,11 @@ export async function updateStudy(studyId: string, formData: FormData) {
 }
 
 // delete
-export async function deleteStudy(id: string) {
+export async function deleteStudy(studyId: string) {
   await connectDB();
 
   try {
-    await Study.findOneAndDelete({ studyId: id });
+    await Study.findOneAndDelete({ studyId });
     return { state: true, message: "스터디가 삭제 되었습니다." };
   } catch (error) {
     console.log("delete study error" + error);
