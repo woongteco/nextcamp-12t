@@ -26,7 +26,7 @@ export default async function RecommendProStudies({
   const result = await getFavorStudies(userId);
 
   if (result.state === false) {
-    throw new Error(result.mesasge);
+    throw new Error("관심 카테고리의 스터디 정보 가져오기 실패");
   }
 
   const recommend = result.data;
