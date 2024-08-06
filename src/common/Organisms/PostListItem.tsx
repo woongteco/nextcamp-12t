@@ -61,7 +61,8 @@ export default function PostListItem({ item }: { item: TPost }) {
             <Profile size="small" user={item.writer} />
             <span className="text-label-400 text-label-dimmed">
               {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개 ·
-              댓글 {item.comments.length}개
+              {/* 댓글 스키마 변경으로 맞춰서 수정하기 */}
+              {/* 댓글 {item.comments.length}개 */}
             </span>
           </div>
           {(item.category.value === "study" ||
