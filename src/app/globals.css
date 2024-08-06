@@ -46,6 +46,9 @@ body {
   .inputWrap {
     @apply flex flex-col gap-2 w-full text-sm;
   }
+  .gridContent {
+    @apply lg:w-[calc(100vw-2rem-240px-30px)] xl:w-[calc(1200px-280px-30px)];
+  }
 }
 
 button,

@@ -1,20 +1,19 @@
 "use client";
-import { MouseEventHandler, useRef, useState } from "react";
-import Button from "@/common/Atoms/Form/Button";
-import { CATEGORIES } from "@/constants/categories/job_category";
+import { FormEvent, MouseEventHandler, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import Button from "@/common/Atoms/Form/Button";
+import {
+  CATEGORIES,
+  CATEGORIES_ALL_OPTIONS,
+} from "@/constants/categories/job_category";
 import Input from "@/common/Molecules/Form/Input";
 import { RefreshIcon } from "@/common/Atoms/Image/Icon";
+import { saveMyCategory } from "@/lib/actions/profileAction";
+import handleAlert from "@/common/Molecules/handleAlert";
 
-export type SetCategoryFavorProps = {
-  skipThis: MouseEventHandler<HTMLButtonElement>;
-  saveCategory: MouseEventHandler<HTMLButtonElement>;
-};
-
-export default function SetCategoryFavor({
-  skipThis,
-  saveCategory,
-}: SetCategoryFavorProps) {
+export default function SetCategoryFavor() {
+  const router = useRouter();
   const categoryGroup = CATEGORIES.map(({ value, label }) => ({
     value,
     label,
@@ -22,8 +21,42 @@ export default function SetCategoryFavor({
   const [shown, setShown] = useState<number>(0);
   const categoryRef = useRef<HTMLFormElement>(null);
 
+  const skipThis: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    router.replace("/");
+  };
+
+  async function saveCategory(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const checkedData = new FormData(e.currentTarget);
+    const formData = new FormData();
+    const my_category = [];
+
+    for (const [key, value] of checkedData) {
+      if (key !== "category_group") {
+        my_category.push(
+          CATEGORIES_ALL_OPTIONS.find((opt) => opt.value === value)
+        );
+      }
+    }
+
+    formData.append("my_category", JSON.stringify(my_category));
+
+    try {
+      const result = await saveMyCategory(formData);
+      if (result.state) {
+        router.replace("/");
+        handleAlert("success", result.message);
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <div className="flex flex-col gap-6 p-2">
+    <div className="flex flex-col gap-6 shadow-emphasize rounded-twenty p-10">
       <div className="flex items-center justify-between">
         <p>
           <span className="text-H3 text-label-normal block">
@@ -45,26 +78,30 @@ export default function SetCategoryFavor({
           <RefreshIcon />
         </Button>
       </div>
-      <div className="flex gap-2 items-start justify-center min-h-full overflow-hidden [&>ul]:max-h-[400px]">
-        <ul className="w-[200px] h-full overflow-y-auto">
-          {categoryGroup.map((group, index) => (
-            <li key={group.value}>
-              <label className="flex items-center justify-start [&>input]:hidden [&>input:checked+span]:bg-main-25 [&>input:checked+span]:text-body-600 [&>input:checked+span]:text-main-600">
-                <input
-                  name="category_group"
-                  type="radio"
-                  checked={shown === index}
-                  onChange={() => setShown(index)}
-                />
-                <span className="block w-full px-8 py-4 rounded-xl">
-                  {group.label}
-                </span>
-              </label>
-            </li>
-          ))}
-        </ul>
-        <ul className="w-[320px] h-full overflow-y-auto">
-          <form action="" ref={categoryRef}>
+      <form
+        onSubmit={saveCategory}
+        ref={categoryRef}
+        className="flex flex-col gap-6 p-2"
+      >
+        <div className="flex gap-2 items-start justify-center min-h-full overflow-hidden [&>ul]:max-h-[400px]">
+          <ul className="w-[200px] h-full overflow-y-auto">
+            {categoryGroup.map((group, index) => (
+              <li key={group.value}>
+                <label className="flex items-center justify-start [&>input]:hidden [&>input:checked+span]:bg-main-25 [&>input:checked+span]:text-body-600 [&>input:checked+span]:text-main-600">
+                  <input
+                    name="category_group"
+                    type="radio"
+                    checked={shown === index}
+                    onChange={() => setShown(index)}
+                  />
+                  <span className="block w-full px-8 py-4 rounded-xl">
+                    {group.label}
+                  </span>
+                </label>
+              </li>
+            ))}
+          </ul>
+          <ul className="w-[320px] h-full overflow-y-auto">
             {CATEGORIES.map(({ value, options }, index) => (
               <div
                 key={`${value}-option-${index}`}
@@ -87,22 +124,22 @@ export default function SetCategoryFavor({
                 ))}
               </div>
             ))}
-          </form>
-        </ul>
-      </div>
-      <div className="w-full h-0 border-t border-t-line-neutral"></div>
-      <div className="flex gap-4 justify-between">
-        <Button
-          variation="outline"
-          colors={{ bg: "bg-main-600", text: "text-main-600" }}
-          onClick={skipThis}
-        >
-          건너뛰기
-        </Button>
-        <Button variation="solid" onClick={saveCategory}>
-          관심 카테고리 저장
-        </Button>
-      </div>
+          </ul>
+        </div>
+        <div className="w-full h-0 border-t border-t-line-neutral"></div>
+        <div className="flex gap-4 justify-between">
+          <Button
+            variation="outline"
+            colors={{ bg: "bg-main-600", text: "text-main-600" }}
+            onClick={skipThis}
+          >
+            건너뛰기
+          </Button>
+          <Button type="submit" variation="solid">
+            관심 카테고리 저장
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { Logo } from "@public/icons";
 import Image from "next/image";
-import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
 import LoginModal from "@/app/(auth)/_components/LoginModal";
 import { getSession } from "@/auth";
-import ResponsiveMenu from "./ProfileMenu/ResponsiveMenu";
+import SessionedHeader from "./SessionedHeader";
 
 export default async function Header() {
   const session = await getSession();
@@ -35,20 +34,7 @@ export default async function Header() {
             </nav>
           </div>
           {session ? (
-            <div data-name="header__right-side__profile">
-              <ResponsiveMenu
-                profileImage={
-                  <div className="flex items-center">
-                    <Image
-                      src={DummyProfileImg}
-                      alt="profile img"
-                      className="py-3"
-                    />
-                    <span className="pl-4 lg:hidden">{session.user.name}</span>
-                  </div>
-                }
-              />
-            </div>
+            <SessionedHeader sessionId={session.user.id} />
           ) : (
             <LoginModal />
           )}

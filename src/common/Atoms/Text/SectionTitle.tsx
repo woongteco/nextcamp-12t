@@ -10,8 +10,11 @@ export default function SectionTitle(
     lg: "text-H2",
   };
   return (
-    <p className={clsx(className, "font-bold", fontSize[size])} {...restProps}>
+    <div
+      className={clsx(className, "font-bold", fontSize[size])}
+      {...restProps}
+    >
       {children}
-    </p>
+    </div>
   );
 }
