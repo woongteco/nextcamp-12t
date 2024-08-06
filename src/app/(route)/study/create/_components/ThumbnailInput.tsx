@@ -1,14 +1,11 @@
 import GridField from "@/common/Atoms/Form/Field";
-import Label from "@/common/Atoms/Form/Label";
+import { LabelText } from "@/common/Atoms/Form/Label";
 import { AdditionIcon } from "@/common/Atoms/Image/Icon";
-import { TStudyCreatData } from "@/dummies/studies";
 import { DefaultThumbnailImg } from "@public/images";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-export default function ThumbnailInput({ url }: { url: string | null }) {
-  console.log("url", url);
-
+export default function ThumbnailInput() {
   const [preview, setPreview] = useState<string>("");
   const fileInput = useRef<HTMLInputElement>(null);
   const onUloadImage = (e: any) => {
@@ -34,7 +31,7 @@ export default function ThumbnailInput({ url }: { url: string | null }) {
 
   return (
     <GridField>
-      <Label htmlFor="thumbnailUrl">썸네일 이미지</Label>
+      <LabelText form>썸네일 이미지</LabelText>
       <div className="flex flex-col">
         <div className="flex items-start gap-8">
           <div>
@@ -42,7 +39,7 @@ export default function ThumbnailInput({ url }: { url: string | null }) {
               <Image
                 width={280}
                 height={180}
-                className="w-[280px] h-[180px] rounded-ten"
+                className="w-[280px] h-[180px] rounded-ten object-cover"
                 src={preview}
                 alt="썸네일 이미지"
               />
@@ -50,7 +47,6 @@ export default function ThumbnailInput({ url }: { url: string | null }) {
               <>
                 <input
                   type="file"
-                  id="thumbnailUrl"
                   name="thumbnailUrl"
                   accept="image/*"
                   ref={fileInput}
@@ -70,7 +66,7 @@ export default function ThumbnailInput({ url }: { url: string | null }) {
           </div>
           <div className="relative">
             <Image
-              className="w-[280px] h-[180px] rounded-ten"
+              className="w-[280px] h-[180px] rounded-ten object-cover"
               src={DefaultThumbnailImg}
               alt="썸네일 이미지"
               width={280}
