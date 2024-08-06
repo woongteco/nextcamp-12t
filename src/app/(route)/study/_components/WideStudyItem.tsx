@@ -31,23 +31,13 @@ export default function WideStudyItem({ card }: { card: TStudyCard }) {
         </Keyword>
         <div className="absolute bottom-5 flex items-end justify-between px-5 w-full">
           <div className="flex items-center gap-[.25rem]">
-            {!card.user.profile_img ? (
-              <Image
-                src={DummyProfileImg}
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-full"
-                alt="프로필 이미지"
-              />
-            ) : (
-              <Image
-                src={card.user.profile_img}
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-full"
-                alt="프로필 이미지"
-              />
-            )}
+            <Image
+              src={card.user.profile_img || DummyProfileImg}
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-full"
+              alt="프로필 이미지"
+            />
             <span className="font-semibold text-subtitle text-white">
               {card.user.name}
             </span>
