@@ -7,12 +7,10 @@ import { getStudyCards } from "@/dummies/studies";
 
 export default async function MyStudyPage() {
   const session = await getSession();
-  const user = getUser();
   const studyCard = getStudyCards();
-  const mission = { total: 5, done: 4 };
   return (
     <div className="flex flex-col gap-100">
-      <section>
+      {/* <section>
         <SectionTitle size="lg" className="mb-6">
           {session?.user.name}님, 오늘 하루도 달려봐요!
         </SectionTitle>
@@ -45,6 +43,16 @@ export default async function MyStudyPage() {
             <p className="text-[2.5rem] font-bold">X{user.badges}</p>
           </div>
         </div>
+      </section> */}
+      <section>
+        <SectionTitle size="md" className="mb-6">
+          참여 신청한 스터디
+        </SectionTitle>
+        <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
+          {studyCard.slice(9, 10).map((card) => (
+            <StudyCardItem key={card.studyId} card={card} />
+          ))}
+        </ul>
       </section>
       <section>
         <SectionTitle size="md" className="mb-6">
