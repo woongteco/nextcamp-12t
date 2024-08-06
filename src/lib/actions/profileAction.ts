@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { Profile, User } from "../schema";
 import { getSession } from "@/auth";
@@ -8,23 +9,23 @@ import { TUserBase } from "@/types/model/User";
 /**
  * userId 값을 이용하여 새로운 사용자 프로필 데이터 추가
  */
-export async function profileAction(id: string, formData: FormData) {
+export async function createProfile(id: string, formData: FormData) {
   const position_tag = formData.get("positionTag") as string;
   const introduce = formData.get("introduce") as string;
-  const my_category = JSON.parse(formData.get("interest") as string);
+  const my_category = JSON.parse(formData.get("myCategory") as string);
 
   if (!id) {
     return { state: false, message: "유효한 id가 필요합니다." };
   }
 
-  console.log({ position_tag, introduce, my_category });
+  console.log("create", { position_tag, introduce, my_category });
 
-  if (!position_tag || !introduce || !my_category) {
-    return {
-      state: false,
-      message: "포지션 태그, 소개, 카테고리 모두 입력해주세요.",
-    };
-  }
+  // if (!position_tag || !introduce || !my_category) {
+  //   return {
+  //     state: false,
+  //     message: "포지션 태그, 소개, 카테고리 모두 입력해주세요.",
+  //   };
+  // }
 
   await connectDB();
 
@@ -86,11 +87,11 @@ export async function getProfile(userId: string) {
  * 사용자 프로필 정보 업데이트
  */
 export async function updateProfile(id: string, formData: FormData) {
-  const position_tag = formData.get("position_tag") as string;
+  const position_tag = formData.get("positionTag") as string;
   const introduce = formData.get("introduce") as string;
-  const my_category = JSON.parse(formData.get("my_category") as string);
+  const my_category = JSON.parse(formData.get("myCategory") as string);
 
-  console.log({ position_tag, introduce, my_category });
+  console.log("update", { position_tag, introduce, my_category });
 
   try {
     const update = await Profile.findOneAndUpdate(
@@ -189,7 +190,8 @@ export async function updateUserInfo(id: string, updateDoc: UpdateDocument) {
     }
     console.log("update", { update });
 
-    revalidatePath("/my/profile");
+    revalidatePath("/my/profile", "page");
+    // revalidatePath("/", "layout");
 
     return {
       state: true,
