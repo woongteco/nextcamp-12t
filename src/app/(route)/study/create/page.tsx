@@ -1,14 +1,15 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyForm from "./_components/StudyForm";
-// import StudyForms from "./_components/StudyForms";
 import { getSession } from "@/auth";
+import LoginModal from "@/app/(auth)/_components/LoginModal";
 
 export default async function page() {
   const session = await getSession();
+  const id = session?.user.id as string;
 
-  if (!session) {
-    return alert("로그인 모달창");
-  }
+  // if (!session) {
+  //   return <LoginModal />;
+  // }
 
   return (
     <>
@@ -23,7 +24,7 @@ export default async function page() {
         </span>
       </div>
 
-      <StudyForm session={session} />
+      <StudyForm id={id} />
     </>
   );
 }

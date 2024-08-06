@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import Button from "@/common/Atoms/Form/Button";
 import GridField from "@/common/Atoms/Form/Field";
@@ -16,13 +16,20 @@ import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 import ThumbnailInput from "./ThumbnailInput";
 import { studyAction } from "@/lib/actions/studyAction";
-import { Session } from "next-auth";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
+import { SingleValue } from "react-select";
+import { CategoryOption } from "@/types/model/Category";
 
-export default function StudyForm({ session }: { session: Session }) {
+type Option = {
+  readonly label: string;
+  readonly value: string;
+};
+
+export default function StudyForm({ id }: { id: string }) {
   const router = useRouter();
 
+  // Input 타입이 Number일 경우 (maxlength적용, 숫자만입력되게 적용)
   const onNumberInputFilter = (e: FormEvent<HTMLInputElement>) => {
     e.currentTarget.value = e.currentTarget.value
       .replace(/[^0-9.]/g, "")
@@ -34,25 +41,43 @@ export default function StudyForm({ session }: { session: Session }) {
       );
   };
 
-  // 참가비 무료버튼
-  const [checked, setChecked] = useState<boolean>(false);
-  const [free, setFree] = useState(0);
-  const checkedHandler = () => {
-    setChecked((checked) => !checked);
-    checked === false && setFree(0);
-    // : setFree(free);
-    console.log("checked", checked);
-  };
+  // 참가비용
+  const [freeChecked, setFreeChecked] = useState<boolean>(false);
+  const [free, setFree] = useState<number>(0);
+  useEffect(() => {
+    if (freeChecked === true) setFree(0);
+  }, [freeChecked]);
 
+  const FreeCheckedHandler = () =>
+    setFreeChecked((freeChecked) => !freeChecked);
+
+  // 스터디방식
+  const locationCategoryOption = ONOFF.map((l) => ({
+    value: l.value,
+    label: l.label,
+  }));
+  const defaultLocationCategory = locationCategoryOption[0];
+  const [locationCategory, setLocationCategory] = useState<Option | null>(
+    defaultLocationCategory
+  );
+  const [placeChecked, setPlaceChecked] = useState<boolean>(false);
+  const [place, setPlace] = useState<string>("");
+  useEffect(() => {
+    if (placeChecked === true) setPlace("");
+  }, [placeChecked]);
+  const PlaceCheckedHandler = () =>
+    setPlaceChecked((placeChecked) => !placeChecked);
+
+  console.log("location", locationCategory);
+
+  // action
   async function action(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    if (!session) return;
 
     const formData = new FormData(e.currentTarget);
 
     try {
-      await studyAction(formData);
+      await studyAction(id, formData);
       handleAlert("success", "스터디가 개설 되었습니다.");
       router.replace("/study");
     } catch (error) {
@@ -134,14 +159,16 @@ export default function StudyForm({ session }: { session: Session }) {
               required
               placeholder="0"
               className="w-32 text-right"
-              onChange={checkedHandler}
+              onChange={(e) => setFree(parseInt(e.target.value))}
+              value={free}
+              disabled={freeChecked}
             />
             <span>원</span>
           </div>
           <ButtonCheck>
             <ButtonCheck.Radio
-              onClick={checkedHandler}
-              checked={checked}
+              onClick={FreeCheckedHandler}
+              checked={freeChecked}
               name="free"
               id="free"
               label="참가비 무료"
@@ -155,24 +182,34 @@ export default function StudyForm({ session }: { session: Session }) {
         </LabelText>
         <div className="flex flex-col gap-6">
           <Input.Select
+            className="w-[510px]"
             name="location"
-            options={ONOFF}
+            options={locationCategoryOption}
+            defaultValue={defaultLocationCategory}
+            value={locationCategory}
             placeholder="스터디 방식"
+            onChange={(newValue) => setLocationCategory(newValue)}
           />
-          <div className="flex items-center gap-3">
-            <Input.Text
-              name="place"
-              className="w-[380px]"
-              placeholder="주소를 입력해주세요."
-            />
-            <ButtonCheck>
-              <ButtonCheck.Radio
-                id="place"
-                label="장소 미정"
-                defaultChecked={false}
+          {locationCategory?.value === "offline" && (
+            <div className="flex items-center gap-3">
+              <Input.Text
+                name="place"
+                className="w-[380px]"
+                placeholder="주소를 입력해주세요."
+                onChange={(e) => setPlace(e.target.value)}
+                value={place}
+                disabled={placeChecked}
               />
-            </ButtonCheck>
-          </div>
+              <ButtonCheck>
+                <ButtonCheck.Radio
+                  id="place-whether"
+                  onClick={PlaceCheckedHandler}
+                  checked={placeChecked}
+                  label="장소 미정"
+                />
+              </ButtonCheck>
+            </div>
+          )}
         </div>
       </GridField>
       <GridField>

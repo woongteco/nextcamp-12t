@@ -39,7 +39,7 @@ export default function ThumbnailInput() {
               <Image
                 width={280}
                 height={180}
-                className="w-[280px] h-[180px] rounded-ten"
+                className="w-[280px] h-[180px] rounded-ten object-cover"
                 src={preview}
                 alt="썸네일 이미지"
               />
@@ -66,7 +66,7 @@ export default function ThumbnailInput() {
           </div>
           <div className="relative">
             <Image
-              className="w-[280px] h-[180px] rounded-ten"
+              className="w-[280px] h-[180px] rounded-ten object-cover"
               src={DefaultThumbnailImg}
               alt="썸네일 이미지"
               width={280}
