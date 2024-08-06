@@ -4,14 +4,16 @@ import CustomizedStudySelect, {
 } from "./CustomizedStudySelect";
 import { Suspense } from "react";
 import Skeleton from "@/common/Atoms/Skeleton";
+import { delay } from "@/dummies/utils";
 
 async function getStuides(): Promise<StudyCardSelectOption[]> {
+  // const result = await
   const studies: StudyCardSelectOption[] = getStudyCards().map((study) => ({
     ...study,
     value: `https://chemeet.vercel.app/study/${study.studyId}`,
     label: study.title,
   }));
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await delay(1000);
   console.log(studies);
   return studies;
 }
