@@ -9,7 +9,7 @@ import {
   CATEGORIES_ALL_OPTIONS,
 } from "@/constants/categories/job_category";
 import { useRouter } from "next/navigation";
-import { profileAction, updateProfile } from "@/lib/actions/profileAction";
+import { createProfile, updateProfile } from "@/lib/actions/profileAction";
 import { TProfileData } from "@/types/model/Profile";
 import { Session } from "next-auth";
 import handleAlert from "@/common/Molecules/handleAlert";
@@ -36,24 +36,24 @@ export default function FormEditProfile({
 
     const my_category = [];
     for (const [key, value] of formData) {
-      if (key === "my_category") {
+      if (key === "myCategory") {
         my_category.push(
           CATEGORIES_ALL_OPTIONS.find((opt) => opt.value === value)
         );
       }
     }
 
-    formData.set("my_category", JSON.stringify(my_category));
+    formData.set("myCategory", JSON.stringify(my_category));
 
     try {
-      const result = profile
+      const result = profile.userId._id
         ? await updateProfile(id, formData)
-        : await profileAction(id, formData);
+        : await createProfile(id, formData);
 
       if (result.state) {
         handleAlert("success", result.message);
 
-        if (!profile) {
+        if (!profile.userId._id) {
           router.replace("/my/profile");
         }
       } else {
@@ -68,7 +68,7 @@ export default function FormEditProfile({
     <form onSubmit={handleSubmit} className="flex flex-col gap-8">
       <ProfileInputArea label="포지션 태그">
         <Input.Text
-          name="position_tag"
+          name="positionTag"
           placeholder="이름 앞에 추가될 포지션 태그를 추가하세요"
           defaultValue={profile.position_tag}
         />
@@ -103,7 +103,7 @@ export default function FormEditProfile({
       )}
       <ProfileInputArea label="관심 카테고리">
         <Input.Select
-          name="my_category"
+          name="myCategory"
           placeholder="관심 카테고리를 추가하세요"
           isMulti
           options={CATEGORIES}
