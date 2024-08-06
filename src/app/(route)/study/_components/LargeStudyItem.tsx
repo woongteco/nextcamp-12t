@@ -34,23 +34,13 @@ export default function LargeStudyItem({ card }: { card: TStudyCard }) {
           className="absolute bottom-10 px-7 w-full"
         >
           <div className="flex items-center">
-            {!card.user.profile_img ? (
-              <Image
-                src={DummyProfileImg}
-                width={56}
-                height={56}
-                className="w-14 h-14 mr-5 rounded-full"
-                alt="user image"
-              />
-            ) : (
-              <Image
-                src={card.user.profile_img || ""}
-                width={56}
-                height={56}
-                className="w-14 h-14 mr-5 rounded-full"
-                alt="user image"
-              />
-            )}
+            <Image
+              src={card.user.profile_img || DummyProfileImg}
+              width={56}
+              height={56}
+              className="w-14 h-14 mr-5 rounded-full"
+              alt="user image"
+            />
             <span className="font-semibold text-subtitle text-white">
               {card.user.name}
             </span>
