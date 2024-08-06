@@ -36,16 +36,16 @@ const profile = new mongoose.Schema({
 });
 
 const subReply = new mongoose.Schema({
-  commentId: { type: String, required: true },
   replyId: { type: String, required: true },
   content: { type: String, required: true },
   writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
-const subComment = new mongoose.Schema({
-  commentId: { type: String, required: true },
+// 댓글
+const comment = new mongoose.Schema({
   postId: { type: String, required: true },
+  commentId: { type: String, required: true },
   content: { type: String, required: true },
   writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
@@ -66,9 +66,11 @@ const post = new mongoose.Schema({
     linkedStudyId: { type: String, default: null },
   },
   writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  comments: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Comment", required: true },
+  ],
   view: { type: Number, default: 0 },
   like: { type: Number, default: 0 },
-  comments: [subComment],
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -113,3 +115,5 @@ export const Profile =
   mongoose.models?.Profile || mongoose.model("Profile", profile);
 export const Post = mongoose.models?.Post || mongoose.model("Post", post);
 export const Study = mongoose.models?.Study || mongoose.model("Study", study);
+export const Comment =
+  mongoose.models?.Comment || mongoose.model("Comment", comment);
