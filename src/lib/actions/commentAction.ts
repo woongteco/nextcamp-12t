@@ -1,17 +1,17 @@
 "use server";
 
+import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Post } from "../schema";
+import { Comment, Post } from "../schema";
 import { revalidatePath } from "next/cache";
-const { v4: uuidv4 } = require("uuid");
 
 // post
 export async function commentAction(
-  id: string,
+  userId: string,
   postId: string,
   formData: FormData
 ) {
-  const commentId = uuidv4();
+  const commentId = nanoid();
   const content = formData.get("content") as string;
 
   if (!content) {
@@ -21,27 +21,16 @@ export async function commentAction(
   await connectDB();
 
   try {
-    const postComment = await Post.findOneAndUpdate(
-      { postId },
-      {
-        $push: {
-          comments: {
-            commentId,
-            postId,
-            content,
-            writer: id,
-            createdAt: new Date(),
-            reply: [],
-          },
-        },
-      }
-    );
+    const comment = new Comment({
+      postId,
+      commentId,
+      content,
+      writer: userId,
+      createdAt: new Date(),
+      reply: [],
+    });
 
-    if (!postComment) {
-      return { state: false, message: "해당 포스트를 찾을 수 없습니다." };
-    }
-
-    revalidatePath(`/post/${postId}`);
+    await comment.save();
 
     return { state: true, message: "댓글이 등록 되었습니다." };
   } catch (error) {
@@ -55,9 +44,7 @@ export async function getComment(postId: string) {
   await connectDB();
 
   try {
-    const comment = await Post.findOne({ postId })
-      .select("comments")
-      .populate("comments.writer");
+    const comment = await Comment.findOne({ postId }).populate("writer");
 
     return { state: true, data: comment };
   } catch (error) {
@@ -76,16 +63,9 @@ export async function updateComment(commentId: string, formData: FormData) {
   await connectDB();
 
   try {
-    const update = await Post.findOneAndUpdate(
-      { "comments.commentId": commentId },
-      {
-        $set: {
-          comments: {
-            "comments.$.content": content,
-          },
-        },
-      },
-      { new: true }
+    const update = await Comment.findOneAndUpdate(
+      { commentId },
+      { content, createdAt: new Date() }
     );
 
     if (!update) {
@@ -100,14 +80,11 @@ export async function updateComment(commentId: string, formData: FormData) {
 }
 
 // delete
-export async function deleteComment(postId: string, commentId: string) {
+export async function deleteComment(commentId: string) {
   await connectDB();
 
   try {
-    await Post.updateOne(
-      { postId },
-      { $pull: { comments: { commentId: commentId } } }
-    );
+    await Comment.findOneAndDelete({ commentId });
     return { success: true, message: "댓글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete comment error", error);
