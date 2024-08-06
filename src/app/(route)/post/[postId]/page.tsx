@@ -12,7 +12,6 @@ import { TPost } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { getPost } from "@/dummies/posts";
 import { delay } from "@/dummies/utils";
-// import IconButtonActionsInDetail from "../_components/IconButtonActionsInDetail";
 
 async function getPostData(postId: string) {
   await delay(1000);
@@ -56,12 +55,10 @@ export default async function PostDetail({
             <Profile user={post.writer} size="large" />
             <p className="text-label-400 text-label-dimmed flex flex-row gap-2 items-center">
               <span>{getCreatedBefore(post.createdAt)}</span>
-              {/* 본인이 작성한 글이라면 수정하기 버튼 show */}
               {session?.user.id === post.writer._id && (
                 <LinkButton
                   href={`/post/write/${post.postId}`}
                   variation="text"
-                  colors={{ bg: "", text: "text-label-dimmed" }}
                   className="ml-2 text-label-400 font-normal"
                 >
                   수정하기
@@ -69,7 +66,6 @@ export default async function PostDetail({
               )}
             </p>
             <div className="flex gap-4 items-center ml-auto">
-              {/* <IconButtonActionsInDetail postId={post.postId} /> */}
               <ShareIconButton width="32" height="32" />
               <LikeIconButton liked={false} /* toggleLike={toggleLike} */ />
               <span className="text-H4">{post.like}</span>
@@ -81,7 +77,10 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      <CommentArea postId={post.postId} sessionId={session?.user.id || ""} />
+      <CommentArea
+        sessionId={session?.user.id || ""}
+        comments={post.comments}
+      />
     </div>
   );
 }
