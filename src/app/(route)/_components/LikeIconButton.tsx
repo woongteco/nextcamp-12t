@@ -3,8 +3,8 @@ import { LikeThumbIcon } from "@/common/Atoms/Image/Icon";
 
 export default function LikeIconButton({ liked = false }: { liked: boolean }) {
   return (
-    <Button variation="icon">
+    <Button.Icon>
       <LikeThumbIcon active={liked} />
-    </Button>
+    </Button.Icon>
   );
 }

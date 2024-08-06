@@ -91,15 +91,10 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
           </div>
         </GridField>
         <div className="flex gap-gutter-xl items-center justify-center mt-24">
-          <LinkButton
-            href="/post"
-            variation="outline"
-            colors={{ bg: "bg-main-600", text: "text-main-600" }}
-            className="w-[278px]"
-          >
+          <LinkButton href="/post" variation="outline" size="form">
             작성 취소
           </LinkButton>
-          <Button variation="solid" className="w-[278px]">
+          <Button variation="solid" size="form">
             작성 완료
           </Button>
         </div>

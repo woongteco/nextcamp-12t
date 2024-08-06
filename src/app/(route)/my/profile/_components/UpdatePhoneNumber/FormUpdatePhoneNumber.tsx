@@ -20,7 +20,6 @@ export default function FormUpdatePhoneNumber({
           />
           {/* <Button
             variation="outline"
-            colors={{ bg: "bg-main-600", text: "text-main-600" }}
           >
             인증하기
           </Button> */}

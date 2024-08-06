@@ -15,12 +15,7 @@ export default function DeleteAccountConfirm({ email }: { email: string }) {
       <div className="flex flex-col gap-6">
         <p className="text-H3 text-label-normal">정말로 데이터를 삭제할까요?</p>
         <div className="flex items-center justify-center gap-4">
-          <Button
-            variation="solid"
-            colors={{ bg: "bg-status-danger", text: "text-white" }}
-            className="border-status-danger"
-            onClick={unregister}
-          >
+          <Button variation="solid" color="danger" onClick={unregister}>
             계정 삭제
           </Button>
         </div>
@@ -63,8 +58,7 @@ export default function DeleteAccountConfirm({ email }: { email: string }) {
       </div>
       <Button
         variation="outline"
-        colors={{ bg: "bg-status-danger", text: "text-status-danger" }}
-        className="border-status-danger"
+        color="danger"
         disabled={!checked}
         onClick={open}
       >

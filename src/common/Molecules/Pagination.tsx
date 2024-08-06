@@ -1,8 +1,8 @@
 "use client";
 import { Dispatch, SetStateAction, useId } from "react";
-import Button from "../Atoms/Form/Button";
+import Button, { TButtonProps } from "../Atoms/Form/Button";
 import { PaginationChevronIcon } from "../Atoms/Image/Icon";
-import { TButtonProps, TIconButtonProps } from "@/types/component/props";
+import { TIconButtonProps } from "@/types/component/props";
 
 type TPages = {
   length: number;
@@ -19,8 +19,7 @@ export default function Pagination(props: TPages) {
   const isEnd = current === length;
   return (
     <div className="mt-20 flex gap-8 items-center justify-center">
-      <PageButton
-        variation="icon"
+      <PageButtonIcon
         disabled={isStart}
         onClick={() => {
           if (!isStart) {
@@ -29,7 +28,7 @@ export default function Pagination(props: TPages) {
         }}
       >
         <PaginationChevronIcon direction="prev" />
-      </PageButton>
+      </PageButtonIcon>
       <div className="flex items-center justify-center">
         {pageNums.map((page) => (
           <PageButton
@@ -41,8 +40,7 @@ export default function Pagination(props: TPages) {
           </PageButton>
         ))}
       </div>
-      <PageButton
-        variation="icon"
+      <PageButtonIcon
         disabled={isEnd}
         onClick={() => {
           if (!isEnd) {
@@ -51,32 +49,37 @@ export default function Pagination(props: TPages) {
         }}
       >
         <PaginationChevronIcon direction="next" />
-      </PageButton>
+      </PageButtonIcon>
     </div>
   );
 }
 
-function PageButton(
-  props: Partial<TIconButtonProps | TButtonProps> & { active?: boolean }
-) {
-  const {
-    active = false,
-    variation = "text",
-    onClick,
-    children,
-    ...restProps
-  } = props;
+function PageButton(props: Partial<TButtonProps> & { active?: boolean }) {
+  const { active = false, onClick, children, ...restProps } = props;
   return (
     <Button
-      variation={"text"}
+      variation="text"
       onClick={onClick}
-      colors={{
-        bg: "bg-label-assist",
-        text: active ? "text-label-strong" : "text-label-assist",
-      }}
+      color="assist"
+      className={active ? "text-label-strong" : "text-label-assist"}
       {...restProps}
     >
       {children}
     </Button>
+  );
+}
+
+function PageButtonIcon(
+  props: Partial<TIconButtonProps> & { active?: boolean }
+) {
+  const { active = false, onClick, children, ...restProps } = props;
+  return (
+    <Button.Icon
+      onClick={onClick}
+      className={active ? "text-label-strong" : "text-label-assist"}
+      {...restProps}
+    >
+      {children}
+    </Button.Icon>
   );
 }
