@@ -150,11 +150,11 @@ export async function updateStudy(studyId: string, formData: FormData) {
 }
 
 // delete
-export async function deleteStudy(id: string) {
+export async function deleteStudy(studyId: string) {
   await connectDB();
 
   try {
-    await Study.findOneAndDelete({ studyId: id });
+    await Study.findOneAndDelete({ studyId });
     return { state: true, message: "스터디가 삭제 되었습니다." };
   } catch (error) {
     console.log("delete study error" + error);

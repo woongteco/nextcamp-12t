@@ -2,7 +2,7 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Post } from "../schema";
+import { Post, Comment } from "../schema";
 
 // post
 export async function communityAction(id: string, formData: FormData) {
@@ -68,7 +68,10 @@ export async function getCommunity(postId: string | null = null) {
 
   try {
     if (postId) {
-      const post = await Post.findOne({ postId }).populate("writer");
+      const post = await Post.findOne({ postId })
+        .populate("writer")
+        .populate("comments");
+
       if (!post) {
         return { state: false, message: "해당 게시글을 찾을 수 없습니다." };
       }
@@ -126,11 +129,13 @@ export async function updateCommunity(postId: string, formData: FormData) {
 }
 
 // delete
-export async function deleteCommunity(id: string) {
+export async function deleteCommunity(postId: string) {
   await connectDB();
 
   try {
-    await Post.findOneAndDelete({ postId: id });
+    await Post.findOneAndDelete({ postId });
+    await Comment.deleteMany({ postId });
+
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete post error", error);
