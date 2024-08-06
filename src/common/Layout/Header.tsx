@@ -1,8 +1,8 @@
 import { Logo } from "@public/icons";
 import Image from "next/image";
-import { DummyProfileImg } from "@public/images";
 import Container from "./Container";
 import { getSession } from "@/auth";
+import SessionedHeader from "./SessionedHeader";
 import ResponsiveMenu from "./ProfileMenu/ResponsiveMenu";
 import Link from "next/link";
 
@@ -33,21 +33,8 @@ export default async function Header() {
               </ul>
             </nav>
           </div>
-          {session?.user ? (
-            <div data-name="header__right-side__profile">
-              <ResponsiveMenu
-                profileImage={
-                  <div className="flex items-center">
-                    <Image
-                      src={DummyProfileImg}
-                      alt="profile img"
-                      className="py-3"
-                    />
-                    <span className="pl-4 lg:hidden">{session.user.name}</span>
-                  </div>
-                }
-              />
-            </div>
+          {session ? (
+            <SessionedHeader sessionId={session.user.id} />
           ) : (
             <Link
               href="/login"

@@ -1,8 +1,10 @@
 "use server";
 
 import { nanoid } from "nanoid";
+import { delay } from "@/dummies/utils";
 import connectDB from "../db";
 import { Study } from "../schema";
+import { getStudyCards } from "@/dummies/studies";
 
 // post
 export async function studyAction(id: string, formData: FormData) {
@@ -160,4 +162,17 @@ export async function deleteStudy(studyId: string) {
     console.log("delete study error" + error);
     return { state: false, message: "스터디 삭제가 실패했습니다." };
   }
+}
+
+export async function getAllStudies() {
+  await delay(1000);
+  const data = getStudyCards();
+  return { state: true, data };
+}
+
+export async function filterStudies(option: object) {
+  await delay(1000);
+  console.log("filterStudies options", option);
+  const data = getStudyCards();
+  return { state: true, data };
 }

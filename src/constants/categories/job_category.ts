@@ -209,6 +209,10 @@ export const CATEGORIES: CategoryGroup[] = [
   },
 ];
 
+export const CATEGORIES_GROUPS: CategoryOption[] = CATEGORIES.map(
+  ({ value, label }) => ({ value, label })
+);
+
 export const CATEGORIES_ALL_OPTIONS: CategoryOption[] = CATEGORIES.reduce(
   (prev: CategoryOption[], curr: CategoryGroup) => {
     return [...prev, ...curr.options];

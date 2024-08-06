@@ -44,7 +44,7 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
         </div>
         <div className="block my-4 px-3 h-[7.75rem]">
           <span className="text-label-400 text-label-dimmed line-clamp-1">
-            {card.jobCategory.value}
+            {card.jobCategory.label}
           </span>
           <p className="text-lg font-semibold line-clamp-1">{card.title}</p>
           <div className="flex items-center gap-[.25rem] pt-2">

@@ -22,7 +22,7 @@ export default async function Home() {
             <SectionTitle size="md" className="mb-6">
               인기 많은 스터디 추천
             </SectionTitle>
-            <RecommendProStudies />
+            <RecommendProStudies userId={session?.user.id || ""} />
           </section>
           <section>
             <SectionTitle size="md" className="mb-6">

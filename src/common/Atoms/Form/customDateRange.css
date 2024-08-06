@@ -16,6 +16,7 @@
   border-top-left-radius: 0;
   padding: 16px 12px;
   box-shadow: var(--shadow-heavy);
+  z-index: 1;
 }
 .react-datepicker__triangle {
   fill: white;

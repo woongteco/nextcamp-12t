@@ -16,13 +16,14 @@ export default function FormUpdatePhoneNumber({
             placeholder="핸드폰 번호를 입력하세요"
             className="w-full"
             defaultValue={defaultValue}
+            readOnly
           />
-          <Button
+          {/* <Button
             variation="outline"
             colors={{ bg: "bg-main-600", text: "text-main-600" }}
           >
             인증하기
-          </Button>
+          </Button> */}
         </div>
       </ProfileInputArea>
     </>

@@ -8,18 +8,25 @@ import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import { DummyProfileImg } from "@public/images";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 import Button from "@/common/Atoms/Form/Button";
+import { updateUserInfo } from "@/lib/actions/profileAction";
 
 export type ProfileImageFormProps = {
-  initProfileUrl?: string;
-  saveImage?: (imageUrl: string) => any;
+  id: string;
+  initProfileUrl: string;
 };
 
 export default function FormEditProfileImageWithPreview({
+  id,
   initProfileUrl,
-  saveImage,
 }: ProfileImageFormProps) {
-  const [imageUrl, setImageUrl] = useState<string>(initProfileUrl || "");
+  const [imageUrl, setImageUrl] = useState<string>(initProfileUrl);
+  const modalClose = () => {
+    setImageUrl(initProfileUrl);
+  };
+
   const { Modal, open, close } = useModal({
+    defaultValue: false,
+    onClose: modalClose,
     children: (
       <ProfileImagePreviewModal
         imageUrl={imageUrl}
@@ -30,9 +37,17 @@ export default function FormEditProfileImageWithPreview({
   });
 
   useEffect(() => {
-    if (imageUrl) {
+    if (initProfileUrl !== imageUrl) {
+      if (!imageUrl) {
+        close();
+        return;
+      }
       open();
     }
+
+    return () => {
+      close();
+    };
   }, [imageUrl]);
 
   function getImage(e: ChangeEvent<HTMLInputElement>) {
@@ -51,27 +66,43 @@ export default function FormEditProfileImageWithPreview({
     }
   }
 
-  // console.log(imageUrl);
-
   async function onSave() {
-    // TODO: DB에 저장
     try {
-      // const updated = await saveImage(imageUrl);
-      close();
-      handleAlert("success", "프로필 이미지가 저장되었습니다.");
-      // console.log({ updated });
-    } catch (error: any) {
-      handleAlert("error", error.message);
+      const result = await updateUserInfo(id, { profile_img: imageUrl });
+
+      if (result.state) {
+        close();
+        handleAlert("success", result.message);
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
   async function onDelete() {
-    // await saveImage("");
-    setImageUrl("");
+    if (!imageUrl) {
+      handleAlert("error", "저장된 프로필 이미지가 없습니다.");
+      return;
+    }
+
+    try {
+      const result = await updateUserInfo(id, { profile_img: "" });
+      setImageUrl("");
+
+      if (result.state) {
+        handleAlert("success", result.message);
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
-    <ProfileInputArea label="아바타 이미지">
+    <ProfileInputArea label="프로필 이미지">
       <div>
         <div className="flex items-center gap-4">
           <ProfileImg

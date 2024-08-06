@@ -43,16 +43,3 @@ const ModalPortal = forwardRef(
 ModalPortal.displayName = "ModalPortal";
 
 export default ModalPortal;
-
-// export default function ModalPortal(
-//   props: TModalPortalProps<
-//     HTMLButtonElement | HTMLDivElement | HTMLDialogElement
-//   >
-// ) {
-//   return (
-//     <>
-//       {/* <ModalBackdrop onClick={props.onClose}></ModalBackdrop> */}
-//       <ModalLayer {...props} />
-//     </>
-//   );
-// }

@@ -16,8 +16,16 @@ import { Post } from "@/lib/schema";
 
 import { getPosts } from "@/dummies/posts";
 import { getCommunity } from "@/lib/actions/communityAction";
+import { delay } from "@/dummies/utils";
+import { TPost } from "@/types/model/PostItem";
 
 type TQuery = { category?: string; sort?: string };
+
+async function getPostsData() {
+  await delay(1000);
+  const posts = getPosts();
+  return { state: true, data: posts };
+}
 
 export default async function CommunityPostList({
   searchParams,
@@ -37,8 +45,8 @@ export default async function CommunityPostList({
    * - 글 리스트 데이터 가져오기 : TPost[]
    */
 
-  const postList = await getCommunity();
-  const postListData: any = postList.data;
+  const postList = await getPostsData(); // getCommunity();
+  const postListData: TPost[] = postList.data;
   const clientPostList = JSON.parse(JSON.stringify(postListData));
 
   console.log("get postlist" + postListData);
@@ -48,6 +56,8 @@ export default async function CommunityPostList({
       case "latest":
         return Date.parse(b.createdAt) - Date.parse(a.createdAt);
       case "comments":
+        // 대댓글 수까지 계산 X
+        // TODO: comments 배열 flatten, 대댓글 수까지 합해서 총 댓글 수 계산
         return b.comments.length - a.comments.length;
       case "likes":
         return b.like - a.like;

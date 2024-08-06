@@ -25,7 +25,7 @@ function RadioButton(
       />
       <label
         htmlFor={id}
-        className="border border-black/50 text-black/50 rounded-full px-[27px] py-2 cursor-pointer"
+        className="border border-black/35 text-black/35 rounded-full px-[27px] py-2 cursor-pointer"
       >
         {label}
       </label>
@@ -46,7 +46,7 @@ function CheckboxButton(
       />
       <label
         htmlFor="location-off"
-        className="border border-black/50 text-black/50 rounded-full px-[27px] py-2"
+        className="border border-black/35 text-black/35 rounded-full px-[27px] py-2"
       >
         {label}
       </label>

@@ -1,12 +1,14 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+
 import Button from "@/common/Atoms/Form/Button";
 import GridField from "@/common/Atoms/Form/Field";
 import TextEditor from "@/common/Atoms/Form/TextEditor";
 import LinkButton from "@/common/Atoms/LinkButton";
-import Label, { LabelText } from "@/common/Atoms/Form/Label";
+import { LabelText } from "@/common/Atoms/Form/Label";
 import { AdditionIcon } from "@/common/Atoms/Image/Icon";
+
 import ButtonCheck from "@/common/Molecules/Form/ButtonCheck";
 import Input from "@/common/Molecules/Form/Input";
 import { CATEGORIES } from "@/constants/categories/job_category";
@@ -14,121 +16,102 @@ import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 import ThumbnailInput from "./ThumbnailInput";
 import { studyAction } from "@/lib/actions/studyAction";
-import { Session } from "next-auth";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
+import { SingleValue } from "react-select";
+import { CategoryOption } from "@/types/model/Category";
 
-export default function FormComponent({
-  session,
-}: {
-  session: Session | null;
-}) {
-  // 스터디 생성
-  const defaultStudyDetailData = {
-    thumbnailInfo: {
-      thumbnailUrl: null,
-      title: "",
-      jobCategory: {
-        label: "",
-        value: "",
-      },
-      targetCategory: {
-        label: "",
-        value: "",
-      },
-      expense: 0,
-      recruitmentPeople: 1,
-      recruitmentPeriod: ["", ""],
-      studyPeriod: ["", ""],
-      location: {
-        label: "",
-        value: "",
-      },
-      place: null,
-    },
-    contents: {
-      content: "",
-      rule: [{}, {}],
-      curriculum: [{}, {}],
-    },
-  };
-  const [data, setData] = useState(defaultStudyDetailData);
+type Option = {
+  readonly label: string;
+  readonly value: string;
+};
+
+export default function StudyForm({ id }: { id: string }) {
   const router = useRouter();
 
-  const onChangeData = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setData((data) => ({ ...data, [name]: value }));
+  // Input 타입이 Number일 경우 (maxlength적용, 숫자만입력되게 적용)
+  const onNumberInputFilter = (e: FormEvent<HTMLInputElement>) => {
+    e.currentTarget.value = e.currentTarget.value
+      .replace(/[^0-9.]/g, "")
+      .replace(/(\..*)\./g, "$1");
+    if (e.currentTarget.value.length > e.currentTarget.maxLength)
+      e.currentTarget.value = e.currentTarget.value.slice(
+        0,
+        e.currentTarget.maxLength
+      );
   };
 
-  // 참가비 무료버튼
-  const [expenseChecked, setExpenseChecked] = useState<boolean>(false);
-  const onClickFree = () => {
-    setExpenseChecked((expenseChecked) => !expenseChecked);
-    console.log("checked", expenseChecked);
+  // 참가비용
+  const [freeChecked, setFreeChecked] = useState<boolean>(false);
+  const [free, setFree] = useState<number>(0);
+  useEffect(() => {
+    if (freeChecked === true) setFree(0);
+  }, [freeChecked]);
 
-    // if (!expenseChecked) {
-    //   if (data.thumbnailInfo.expense !== 0) {
-    //     data.thumbnailInfo.expense === 0;
-    //     expenseChecked;
-    //   }
-    // }
-  };
+  const FreeCheckedHandler = () =>
+    setFreeChecked((freeChecked) => !freeChecked);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  // 스터디방식
+  const locationCategoryOption = ONOFF.map((l) => ({
+    value: l.value,
+    label: l.label,
+  }));
+  const defaultLocationCategory = locationCategoryOption[0];
+  const [locationCategory, setLocationCategory] = useState<Option | null>(
+    defaultLocationCategory
+  );
+  const [placeChecked, setPlaceChecked] = useState<boolean>(false);
+  const [place, setPlace] = useState<string>("");
+  useEffect(() => {
+    if (placeChecked === true) setPlace("");
+  }, [placeChecked]);
+  const PlaceCheckedHandler = () =>
+    setPlaceChecked((placeChecked) => !placeChecked);
+
+  console.log("location", locationCategory);
+
+  // action
+  async function action(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    if (!session) {
-      return;
-    }
-    const id = session?.user.id;
-
     try {
-      const result = await studyAction(id, formData);
-      if (result.state) {
-        handleAlert("success", result.message);
-        router.replace("/study");
-      } else {
-        handleAlert("error", result.message);
-      }
+      await studyAction(id, formData);
+      handleAlert("success", "스터디가 개설 되었습니다.");
+      router.replace("/study");
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        handleAlert("error", error.message);
+      }
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-[36px]">
+    <form onSubmit={action} className="flex flex-col gap-[36px]">
       <GridField>
-        <Label htmlFor="title" required>
+        <LabelText form required>
           스터디 제목
-        </Label>
+        </LabelText>
         <Input.Text
-          id="title"
           name="title"
           className="flex-1"
           placeholder="제목을 입력하세요."
-          onChange={onChangeData}
           required
         />
       </GridField>
-      <ThumbnailInput url={data.thumbnailInfo.thumbnailUrl} />
+      <ThumbnailInput />
       <GridField>
-        <Label htmlFor="category" required>
+        <LabelText form required>
           스터디 카테고리
-        </Label>
+        </LabelText>
         <div className="flex gap-3">
           <Input.Select
-            id="jobCategory"
             name="jobCategory"
             options={CATEGORIES}
             placeholder="직무 카테고리"
           />
           <Input.Select
-            id="targetCategory"
             name="targetCategory"
             options={GOALS}
             placeholder="목표 카테고리"
@@ -136,67 +119,56 @@ export default function FormComponent({
         </div>
       </GridField>
       <GridField>
-        <Label htmlFor="recruitmentPeople" required>
+        <LabelText form required>
           모집 인원
-        </Label>
+        </LabelText>
         <div className="flex items-center gap-3">
           <Input.Number
-            id="recruitmentPeople"
             name="recruitmentPeople"
-            onInput={(e) => {
-              if (e.currentTarget.value.length > e.currentTarget.maxLength)
-                e.currentTarget.value = e.currentTarget.value.slice(
-                  0,
-                  e.currentTarget.maxLength
-                );
-            }}
+            onInput={onNumberInputFilter}
             maxLength={3}
-            onChange={onChangeData}
             required
-            placeholder="선택"
-            className="w-32"
+            placeholder="0"
+            className="w-32 text-right"
           />
           <span>명</span>
         </div>
       </GridField>
       <GridField>
-        <Label htmlFor="recruitmentPeriod" required>
+        <LabelText form required>
           모집 기간
-        </Label>
+        </LabelText>
         <Input.DateRange id="recruitmentPeriod" />
       </GridField>
       <GridField>
-        <LabelText required>스터디 기간</LabelText>
+        <LabelText form required>
+          스터디 기간
+        </LabelText>
         <Input.DateRange id="studyPeriod" />
       </GridField>
       <GridField>
-        <Label htmlFor="expense" required>
+        <LabelText form required>
           참가 비용
-        </Label>
+        </LabelText>
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
             <Input.Number
-              onInput={(e) => {
-                if (e.currentTarget.value.length > e.currentTarget.maxLength)
-                  e.currentTarget.value = e.currentTarget.value.slice(
-                    0,
-                    e.currentTarget.maxLength
-                  );
-              }}
+              onInput={onNumberInputFilter}
               maxLength={7}
-              id="expense"
               name="expense"
-              onChange={onChangeData}
               required
               placeholder="0"
-              className="w-32"
+              className="w-32 text-right"
+              onChange={(e) => setFree(parseInt(e.target.value))}
+              value={free}
+              disabled={freeChecked}
             />
             <span>원</span>
           </div>
           <ButtonCheck>
             <ButtonCheck.Radio
-              onClick={onClickFree}
-              checked={expenseChecked}
+              onClick={FreeCheckedHandler}
+              checked={freeChecked}
               name="free"
               id="free"
               label="참가비 무료"
@@ -205,33 +177,47 @@ export default function FormComponent({
         </div>
       </GridField>
       <GridField>
-        <Label htmlFor="location" required>
+        <LabelText form required>
           스터디 방식
-        </Label>
+        </LabelText>
         <div className="flex flex-col gap-6">
           <Input.Select
-            id="location"
+            className="w-[510px]"
             name="location"
-            options={ONOFF}
+            options={locationCategoryOption}
+            defaultValue={defaultLocationCategory}
+            value={locationCategory}
             placeholder="스터디 방식"
+            onChange={(newValue) => setLocationCategory(newValue)}
           />
-          <div className="flex items-center gap-3">
-            <Input.Text
-              className="w-[380px]"
-              placeholder="주소를 입력해주세요."
-            />
-            <ButtonCheck>
-              <ButtonCheck.Radio name="place" id="place" label="장소 미정" />
-            </ButtonCheck>
-          </div>
+          {locationCategory?.value === "offline" && (
+            <div className="flex items-center gap-3">
+              <Input.Text
+                name="place"
+                className="w-[380px]"
+                placeholder="주소를 입력해주세요."
+                onChange={(e) => setPlace(e.target.value)}
+                value={place}
+                disabled={placeChecked}
+              />
+              <ButtonCheck>
+                <ButtonCheck.Radio
+                  id="place-whether"
+                  onClick={PlaceCheckedHandler}
+                  checked={placeChecked}
+                  label="장소 미정"
+                />
+              </ButtonCheck>
+            </div>
+          )}
         </div>
       </GridField>
       <GridField>
-        <Label htmlFor="content" required>
+        <LabelText form required>
           스터디 소개
-        </Label>
+        </LabelText>
         <TextEditor
-          id="content"
+          // name="content"
           className="h-[450px]"
           placeholder="스터디 소개, 스터디 규칙 등을 상세히 작성해 주세요."
         />

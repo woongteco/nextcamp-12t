@@ -25,6 +25,11 @@ export default function TabButtonsOfGoalSection() {
     setStudies(() => init.filter((s) => s.targetCategory.value === selected));
   }, [selected]);
 
+  function clickHandler(value: string) {
+    // 다시 클릭 시 빈 값으로 돌아갈 필요 없음
+    setSelected(value);
+  }
+
   return (
     <>
       <div className="flex flex-wrap xl:flex-row gap-4 w-fit mx-auto mb-11">
@@ -35,7 +40,7 @@ export default function TabButtonsOfGoalSection() {
               key={value}
               label={label}
               active={active}
-              onClick={() => setSelected(value)}
+              onClick={() => clickHandler(value)}
             >
               <CategoryTabIcon
                 name={iconName}

@@ -2,9 +2,8 @@
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
 import { usePathname } from "next/navigation";
-import toast, { Toast } from "react-hot-toast";
-import Notification from "@/common/Molecules/Notification";
 import useModal from "@/hooks/useModal";
+import handleAlert from "@/common/Molecules/handleAlert";
 
 export default function ShareIconButton({
   width = "38",
@@ -14,8 +13,7 @@ export default function ShareIconButton({
   height?: string;
 }) {
   const pathname = usePathname();
-  // TODO: 추후 도메인 수정
-  const fullPathname = "https://chemeet.com" + pathname;
+  const fullPathname = "https://chemeet.vercel.app" + pathname;
 
   const { Modal, open } = useModal({
     children: (
@@ -34,16 +32,11 @@ export default function ShareIconButton({
 
   function copyPathname() {
     navigator.clipboard.writeText(fullPathname);
-    toast.custom((t: Toast) => (
-      <Notification
-        t={t}
-        status="success"
-        message={{
-          title: "URL이 복사되었어요",
-          text: "원하는 곳에 붙여넣기 하여 케밋을 공유해보세요!",
-        }}
-      />
-    ));
+    handleAlert(
+      "success",
+      "URL이 복사되었어요",
+      "원하는 곳에 붙여넣기 하여 케밋을 공유해보세요!"
+    );
   }
   return (
     <>

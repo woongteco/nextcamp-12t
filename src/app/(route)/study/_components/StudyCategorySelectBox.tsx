@@ -12,11 +12,11 @@ export default function StudyCategorySelectBox({
 }: {
   searchParams: TQuery;
 }) {
-  const jobC = searchParams?.job_c || "default";
+  const jobC = searchParams?.job_c || "all";
   const categories: CategoryGroup[] = [
     {
-      value: "default",
-      label: "직무선택",
+      value: "all",
+      label: "전체",
       options: [],
     },
     ...CATEGORIES,
@@ -28,6 +28,10 @@ export default function StudyCategorySelectBox({
   });
 
   const onClickLink = (value: string) => {
+    if (value === "all") {
+      onChangeQuery("");
+      return;
+    }
     onChangeQuery(value);
   };
 
@@ -41,7 +45,7 @@ export default function StudyCategorySelectBox({
     <div className="mb-6 text-lg font-medium text-gray-950">
       <Dropdown
         buttonLabel={jobCategory.label}
-        items={CATEGORIES.map((item) => (
+        items={categories.map((item) => (
           <li
             key={item.value}
             className={`w-pull px-[12px] py-[6px] text-sm text-slate-700 font-normal hover:text-main-600

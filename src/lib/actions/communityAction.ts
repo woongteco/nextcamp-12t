@@ -82,7 +82,10 @@ export async function getCommunity(postId: string | null = null) {
     }
   } catch (error) {
     console.log("get profile" + error);
-    return { state: false, message: "프로필 정보 로딩에 실패했습니다." };
+    return {
+      state: false,
+      message: "게시글 데이터를 가져오는데 실패했습니다.",
+    };
   }
 }
 
