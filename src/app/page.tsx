@@ -8,11 +8,6 @@ import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 import MainStatusBoard from "./_components/MainStatusBoard";
 import { getSession } from "@/auth";
 
-/**
- * 혹은 모든 스터디 가져오기 후
- * 각 Studies/Section으로 스터디 데이터 전달
- */
-
 export default async function Home() {
   const session = await getSession();
 

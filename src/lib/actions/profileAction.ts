@@ -190,8 +190,7 @@ export async function updateUserInfo(id: string, updateDoc: UpdateDocument) {
     }
     console.log("update", { update });
 
-    revalidatePath("/my/profile", "page");
-    // revalidatePath("/", "layout");
+    revalidatePath("/my/profile");
 
     return {
       state: true,
