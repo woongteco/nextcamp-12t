@@ -9,8 +9,9 @@ import CommentArea from "@/common/Templates/CommentArea";
 import ShareIconButton from "../../_components/ShareIconButton";
 import LikeIconButton from "../../_components/LikeIconButton";
 import { TPost } from "@/types/model/PostItem";
-import { delay, getCreatedBefore } from "@/dummies/utils";
+import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { getPost } from "@/dummies/posts";
+import { delay } from "@/dummies/utils";
 // import IconButtonActionsInDetail from "../_components/IconButtonActionsInDetail";
 
 async function getPostData(postId: string) {
@@ -80,7 +81,7 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      {/* <CommentArea postId={post.postId} sessionId={session?.user.id || ""} /> */}
+      <CommentArea postId={post.postId} sessionId={session?.user.id || ""} />
     </div>
   );
 }
