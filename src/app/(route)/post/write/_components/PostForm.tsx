@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import TextEditor from "@/common/Atoms/Form/TextEditor";
 import LinkButton from "@/common/Atoms/LinkButton";
@@ -19,47 +19,46 @@ type Option = {
   readonly value: string;
 };
 
-export default function PostForm({ session }: { session: Session }) {
+export default function PostForm({ sessionId }: { sessionId: string }) {
   // const [data, setData] = useState<Option | any>({ value: "", label: "" });
   // const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!session) {
-      return;
-    }
-
     const formData = new FormData(e.currentTarget);
-    const id = session?.user.id;
+    const id = sessionId;
 
     for (const [key, value] of formData) {
       console.log({ key, value });
     }
 
     // 필수정보 넘겨주기
-    //     if (data) {
-    //       formData.append("categoryValue", data.value);
-    //       formData.append("categoryLabel", data.label);
-    //     }
-    //
-    //     try {
-    //       const result = await communityAction(id, formData);
-    //
-    //       if (result.state) {
-    //         handleAlert("success", result.message);
-    //         router.replace("/post");
-    //       } else {
-    //         handleAlert("error", result.message);
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
+    // if (data) {
+    //   formData.append("categoryValue", data.value);
+    //   formData.append("categoryLabel", data.label);
+    // }
+
+    // try {
+    //   const result = await communityAction(id, formData);
+
+    //   if (result.state) {
+    //     handleAlert("success", result.message);
+    //     router.replace("/post");
+    //   } else {
+    //     handleAlert("error", result.message);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="mb-100 flex flex-col gap-[30px]">
+      <form
+        // onSubmit={handleSubmit}
+        className="mb-100 flex flex-col gap-[30px]"
+      >
         <SelectCategory /* setData={setData} */ />
         <GridField>
           <LabelText form required>
@@ -85,9 +84,12 @@ export default function PostForm({ session }: { session: Session }) {
         </GridField>
         <GridField>
           <LabelText form>관련 스터디 링크</LabelText>
-          <Input.Text name="linkedStudyId" />
+          {/* <Input.Text name="linkedStudyId" /> */}
+          {/* 스터디 검색해서 링크 추가하기 */}
+          <div className="gridContent">
+            <SelectLinkedStudy />
+          </div>
         </GridField>
-        {/* <SelectLinkedStudy /> */}
         <div className="flex gap-gutter-xl items-center justify-center mt-24">
           <LinkButton
             href="/post"
