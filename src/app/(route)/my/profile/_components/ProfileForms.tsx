@@ -24,10 +24,6 @@ export default async function ProfileForms() {
   let profile: TProfileData = userProfile.data;
   let clientProfile = JSON.parse(JSON.stringify(profile));
 
-  console.log("[ session.user.id ]", session.user.id);
-
-  // console.log("get 프로필 데이터" + JSON.stringify(profile));
-
   return (
     <div className="gridContent grid xl:grid-cols-[5fr_4fr] xl:items-start gap-gutter-xl">
       <div className="flex flex-col gap-8">
