@@ -7,10 +7,10 @@ import Skeleton from "../Skeleton";
 type TEditorProps = ReactQuillProps;
 export default function TextEditor(props: TEditorProps) {
   return (
-    <Suspense fallback={<Skeleton className="w-full h-96 rounded-ten" />}>
-      <div className="editor w-full flex-1">
-        <QuillNoSSR forwardedRef={null} {...props} />
-      </div>
-    </Suspense>
+    // <Suspense fallback={<Skeleton className="w-full h-96 rounded-ten" />}>
+    <div className="editor w-full flex-1">
+      <QuillNoSSR forwardedRef={null} {...props} />
+    </div>
+    // </Suspense>
   );
 }
