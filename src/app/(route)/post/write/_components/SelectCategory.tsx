@@ -41,6 +41,7 @@ export default function SelectCategory({
         </LabelText>
         <Input.Select
           required
+          name="category"
           options={categoryOptions}
           defaultValue={defaultCategory}
           value={category}

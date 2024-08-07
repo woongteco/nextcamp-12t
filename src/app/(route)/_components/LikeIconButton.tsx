@@ -1,20 +1,23 @@
 "use client";
 import Button from "@/common/Atoms/Form/Button";
 import { LikeThumbIcon } from "@/common/Atoms/Image/Icon";
-import { MouseEventHandler } from "react";
+import { delay } from "@/dummies/utils";
 
 export default function LikeIconButton({
   liked = false,
-  toggleLike,
+  postId,
 }: {
   liked: boolean;
-  toggleLike: (formData?: FormData) => void;
+  postId: string;
 }) {
+  async function toggleLike() {
+    await delay(500);
+    console.log(postId);
+  }
+
   return (
-    <form action={toggleLike}>
-      <Button.Icon>
-        <LikeThumbIcon active={liked} />
-      </Button.Icon>
-    </form>
+    <Button.Icon onClick={toggleLike}>
+      <LikeThumbIcon active={liked} />
+    </Button.Icon>
   );
 }

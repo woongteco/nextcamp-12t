@@ -85,12 +85,14 @@ export async function getStudy(studyId: string | null = null) {
       if (!study) {
         return { state: false, message: "해당 스터디를 찾을 수 없습니다." };
       }
+      return { state: true, data: study };
     } else {
       const studyList = await Study.find().populate("writer");
-      return { state: true, message: studyList };
+      return { state: true, data: studyList };
     }
   } catch (error) {
     console.log(error);
+    return { state: false, message: "스터디 목록을 가져오는데 실패했습니다." };
   }
 }
 

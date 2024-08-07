@@ -31,9 +31,11 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
     const formData = new FormData(e.currentTarget);
     const id = sessionId;
 
-    for (const [key, value] of formData) {
-      console.log("form-data", { key, value });
-    }
+    // console.log("%c# check form-data----------start", "color:pink");
+    // for (const [key, value] of formData) {
+    //   console.log("form-data", { key, value });
+    // }
+    // console.log("%c# check form-data----------end", "color:pink");
 
     // 필수정보 넘겨주기
     if (data) {
@@ -44,10 +46,6 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
     if (content) {
       formData.append("body", content);
     }
-
-    const studyLink = formData.get("study-select");
-    console.log("## studyLink", studyLink);
-    // formData.append("linkedStudyId", studyLink)
 
     try {
       const result = await communityAction(id, formData);
@@ -94,8 +92,6 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
         {(data?.value === "study" || data?.value === "project") && (
           <GridField>
             <LabelText form>관련 스터디 링크</LabelText>
-            {/* <Input.Text name="linkedStudyId" /> */}
-            {/* 스터디 검색해서 링크 추가하기 */}
             <div className="gridContent">
               <SelectLinkedStudy />
             </div>

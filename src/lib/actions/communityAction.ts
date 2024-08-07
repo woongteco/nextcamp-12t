@@ -3,6 +3,7 @@
 import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post, Comment } from "../schema";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
 export async function communityAction(id: string, formData: FormData) {
@@ -141,6 +142,7 @@ export async function deleteCommunity(postId: string) {
     await Post.findOneAndDelete({ postId });
     await Comment.deleteMany({ postId });
 
+    revalidatePath("/my/post");
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete post error", error);

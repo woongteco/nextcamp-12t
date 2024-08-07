@@ -1,6 +1,9 @@
 "use client";
+import { getAllStudies, getStudy } from "@/lib/actions/studyAction";
 import { TStudyCard } from "@/types/model/StudyCard";
+import { useId } from "react";
 import Select, { StylesConfig } from "react-select";
+import AsyncSelect from "react-select/async";
 
 const card = (thumbnailUrl = "", creator = "") => ({
   alignItems: "center",
@@ -53,16 +56,46 @@ export type StudyCardSelectOption = TStudyCard & {
   label: string;
 };
 
+// DB 데이터 사용 시 `getAllStuies()` 대신 아래 함수(:62 `getStudy()`) 사용.
+// LinkedStudyCard에서도 DB에서 studyId를 탐색하도록 함께 수정
+// @\app\(route)\post\_components\LinkedStudyCard.tsx
+// getStudy()
+const loadOptions = (inputValue: string) =>
+  // 더미 데이터 액션으로 테스트
+  getAllStudies()
+    .then(({ data }) => {
+      // console.log({ inputValue });
+      return data.map((study: any) => ({
+        ...study,
+        // value: `https://chemeet.vercel.app/study/${study.studyId}`,
+        value: study.studyId,
+        label: study.title,
+      }));
+    })
+    .catch((error) => {
+      console.error(error.message);
+      return [];
+    });
+
 export default function CustomizedStudySelect({
-  options,
+  // options,
+  name,
   className = "",
 }: {
-  options: StudyCardSelectOption[];
+  // options: StudyCardSelectOption[];
+  name: string;
   className?: string;
 }) {
+  const thisId = useId();
   return (
-    <Select
-      options={options}
+    <AsyncSelect
+      id={thisId}
+      instanceId={thisId}
+      name={name}
+      cacheOptions
+      defaultOptions
+      loadOptions={loadOptions}
+      // options={options}
       styles={studyCardStyle}
       className={className}
       isSearchable
