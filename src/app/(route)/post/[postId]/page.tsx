@@ -6,17 +6,20 @@ import LinkedStudyCard from "../_components/LinkedStudyCard";
 import CommentArea from "@/common/Templates/CommentArea";
 import ShareIconButton from "../../_components/ShareIconButton";
 import LikeIconButton from "../../_components/LikeIconButton";
-import { TPost } from "@/types/model/PostItem";
+import { PostDataFull, PostSchema } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { Post } from "@/lib/schema";
 import { notFound } from "next/navigation";
 import { getProfile } from "@/lib/actions/profileAction";
 import DeletePostButton from "../../_components/DeletePostButton";
 import Link from "next/link";
+import { revalidatePath } from "next/cache";
 
-async function getPostData(postId: string) {
+async function getSinglePostData(postId: string) {
   try {
-    const data: TPost | null = await Post.findOne({ postId });
+    const data: PostDataFull | null = await Post.findOne({ postId })
+      .populate("writer")
+      .populate("comments");
     if (!data) {
       return {
         state: false,
@@ -33,9 +36,10 @@ async function increaseViewCount(postId: string) {
   try {
     const update = await Post.findOneAndUpdate(
       { postId },
-      { view: 1 },
+      { $inc: { view: 1 } },
       { new: true }
     );
+    revalidatePath("/post");
     return { state: true, data: update };
   } catch (error: any) {
     return { state: false, message: "Fail to update view count" };
@@ -47,10 +51,13 @@ export default async function PostDetail({
 }: {
   params: { postId: string };
 }) {
+  //
   await increaseViewCount(postId);
+
+  // TODO: 로그인한 사용자 정보 상태값으로 대체 필요
   const session = await getSession();
 
-  const postDetail = await getPostData(postId); // getCommunity(postId);
+  const postDetail = await getSinglePostData(postId); // getCommunity(postId);
 
   if (postDetail.state === false) {
     return notFound();
@@ -58,7 +65,7 @@ export default async function PostDetail({
     return notFound();
   }
 
-  const post: TPost = postDetail.data as TPost;
+  const post = postDetail.data as PostDataFull;
   const { data: writer } = await getProfile(post.writer as string);
 
   return (
