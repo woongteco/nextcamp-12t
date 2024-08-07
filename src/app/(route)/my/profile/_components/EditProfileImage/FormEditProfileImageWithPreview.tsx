@@ -114,20 +114,13 @@ export default function FormEditProfileImageWithPreview({
             name="profileImage"
             buttonProps={{
               variation: "outline",
-              colors: {
-                bg: "bg-main-600",
-                text: "text-main-600",
-              },
+              color: "main",
             }}
             onChange={(e) => getImage(e)}
           >
             이미지 변경하기
           </ImageInputWithButton>
-          <Button
-            variation="text"
-            colors={{ bg: "bg-label-neutral", text: "text-label-neutral" }}
-            onClick={onDelete}
-          >
+          <Button variation="text" color="default" onClick={onDelete}>
             이미지 제거
           </Button>
         </div>

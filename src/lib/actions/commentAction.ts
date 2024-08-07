@@ -2,9 +2,8 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Post } from "../schema";
+import { Comment, Post } from "../schema";
 import { revalidatePath } from "next/cache";
-import { Comment } from "../schema";
 
 // post
 export async function commentAction(
@@ -86,7 +85,6 @@ export async function deleteComment(commentId: string) {
 
   try {
     await Comment.findOneAndDelete({ commentId });
-
     return { success: true, message: "댓글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete comment error", error);

@@ -1,4 +1,5 @@
 import { CommentSchema } from "./Comment";
+import { ProfileSchema } from "./Profile";
 import { TUserBase } from "./User";
 
 export type TPost = {
@@ -13,7 +14,7 @@ export type TPost = {
     body: string;
     linkedStudyId: null | string;
   };
-  writer: TUserBase;
+  writer: string | ProfileSchema;
   createdAt: string;
   view: number;
   like: number;

@@ -24,13 +24,9 @@ const ModalPortal = forwardRef(
           className="relative w-full h-full lg:max-w-full lg:max-h-full lg:w-fit lg:h-fit lg:rounded-twenty bg-white p-14 overflow-hidden z-modal"
           onClick={stopPropagation}
         >
-          <Button
-            variation="icon"
-            className="absolute right-8 top-8"
-            onClick={onClose}
-          >
+          <Button.Icon className="absolute right-8 top-8" onClick={onClose}>
             <CloseIcon />
-          </Button>
+          </Button.Icon>
           <div className="h-full max-h-[calc(100vh-(94px+56px)*2)] overflow-auto">
             {children}
           </div>

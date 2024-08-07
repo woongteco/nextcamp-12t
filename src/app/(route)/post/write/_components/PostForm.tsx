@@ -7,12 +7,13 @@ import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./SelectCategory";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Session } from "next-auth";
 import { communityAction } from "@/lib/actions/communityAction";
 import { redirect, useRouter } from "next/navigation";
 import handleAlert from "@/common/Molecules/handleAlert";
 import SelectLinkedStudy from "./SelectLinkedStudy";
+import ReactQuill from "react-quill";
 
 type Option = {
   readonly label: string;
@@ -20,27 +21,34 @@ type Option = {
 };
 
 export default function PostForm({ sessionId }: { sessionId: string }) {
-  // const [data, setData] = useState<Option | any>({ value: "", label: "" });
-  // const router = useRouter();
+  const [data, setData] = useState<Option | any>({ value: "", label: "" });
+  const [content, setContent] = useState<string>("");
+  const router = useRouter();
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function submitPost(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const id = sessionId;
 
     for (const [key, value] of formData) {
+      console.log("form-data", { key, value });
+    }
+
+    for (const [key, value] of formData) {
       console.log({ key, value });
     }
 
-    // 필수정보 넘겨주기
-    // if (data) {
-    //   formData.append("categoryValue", data.value);
-    //   formData.append("categoryLabel", data.label);
-    // }
+    if (content) {
+      formData.append("body", content);
+    }
 
-    // try {
-    //   const result = await communityAction(id, formData);
+    const studyLink = formData.get("study-select");
+    console.log("## studyLink", studyLink);
+    // formData.append("linkedStudyId", studyLink)
+
+    try {
+      const result = await communityAction(id, formData);
 
     //   if (result.state) {
     //     handleAlert("success", result.message);
@@ -55,11 +63,8 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
 
   return (
     <>
-      <form
-        // onSubmit={handleSubmit}
-        className="mb-100 flex flex-col gap-[30px]"
-      >
-        <SelectCategory /* setData={setData} */ />
+      <form onSubmit={submitPost} className="mb-100 flex flex-col gap-[30px]">
+        <SelectCategory setData={setData} />
         <GridField>
           <LabelText form required>
             글 제목
@@ -77,29 +82,28 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
           </LabelText>
           <div className="gridContent">
             <TextEditor
+              id="post-body"
               className="h-[580px]"
               placeholder="글작성에 유의해주세요. 욕설 비방글은 서비스 정지와 같은 불이익을 받으실 수 있습니다"
+              onChange={(c: string) => setContent(c)}
             />
           </div>
         </GridField>
-        <GridField>
-          <LabelText form>관련 스터디 링크</LabelText>
-          {/* <Input.Text name="linkedStudyId" /> */}
-          {/* 스터디 검색해서 링크 추가하기 */}
-          <div className="gridContent">
-            <SelectLinkedStudy />
-          </div>
-        </GridField>
+        {(data?.value === "study" || data?.value === "project") && (
+          <GridField>
+            <LabelText form>관련 스터디 링크</LabelText>
+            {/* <Input.Text name="linkedStudyId" /> */}
+            {/* 스터디 검색해서 링크 추가하기 */}
+            <div className="gridContent">
+              <SelectLinkedStudy />
+            </div>
+          </GridField>
+        )}
         <div className="flex gap-gutter-xl items-center justify-center mt-24">
-          <LinkButton
-            href="/post"
-            variation="outline"
-            colors={{ bg: "bg-main-600", text: "text-main-600" }}
-            className="w-[278px]"
-          >
+          <LinkButton href="/post" variation="outline" size="form">
             작성 취소
           </LinkButton>
-          <Button variation="solid" className="w-[278px]">
+          <Button variation="solid" size="form">
             작성 완료
           </Button>
         </div>

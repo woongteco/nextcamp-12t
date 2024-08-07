@@ -19,7 +19,7 @@ export default function PWresetPage() {
         title="이메일"
         placeholder="example@chemeet.com"
       />
-      <Button variation="solid" className="w-full">
+      <Button variation="solid" color="main" size="full">
         비밀번호 변경 링크 전송하기
       </Button>
     </AuthWrap>

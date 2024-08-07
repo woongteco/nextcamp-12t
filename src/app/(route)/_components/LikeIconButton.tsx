@@ -1,10 +1,19 @@
+"use client";
 import Button from "@/common/Atoms/Form/Button";
 import { LikeThumbIcon } from "@/common/Atoms/Image/Icon";
 
-export default function LikeIconButton({ liked = false }: { liked: boolean }) {
+export default function LikeIconButton({
+  liked = false,
+  toggleLike,
+}: {
+  liked: boolean;
+  toggleLike: (formData?: FormData) => void;
+}) {
   return (
-    <Button variation="icon">
-      <LikeThumbIcon active={liked} />
-    </Button>
+    <form action={toggleLike}>
+      <Button.Icon>
+        <LikeThumbIcon active={liked} />
+      </Button.Icon>
+    </form>
   );
 }

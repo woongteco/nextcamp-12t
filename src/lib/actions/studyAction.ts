@@ -6,6 +6,7 @@ import connectDB from "../db";
 import { Study } from "../schema";
 import { getStudyCards } from "@/dummies/studies";
 
+
 // post
 export async function studyAction(id: string, formData: FormData) {
   const studyId = nanoid();

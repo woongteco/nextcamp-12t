@@ -40,7 +40,7 @@ export default function ShareIconButton({
   }
   return (
     <>
-      <Button variation="icon" onClick={open}>
+      <Button.Icon onClick={open}>
         <svg
           width={width}
           height={height}
@@ -53,7 +53,7 @@ export default function ShareIconButton({
             fill="#464748"
           />
         </svg>
-      </Button>
+      </Button.Icon>
       {Modal}
     </>
   );
