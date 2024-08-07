@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { Logo } from "@public/icons";
 import Image from "next/image";
 import Container from "./Container";
-import LoginModal from "@/app/(auth)/_components/LoginModal";
 import { getSession } from "@/auth";
 import SessionedHeader from "./SessionedHeader";
 
@@ -36,7 +34,13 @@ export default async function Header() {
           {session ? (
             <SessionedHeader sessionId={session.user.id} />
           ) : (
-            <LoginModal />
+            <Link
+              href="/login"
+              type="button"
+              className="py-2 px-4 border border-solid border-main-600 rounded-[.6rem] text-main-600 font-semibold"
+            >
+              로그인
+            </Link>
           )}
         </div>
       </Container>

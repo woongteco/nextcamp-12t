@@ -1,3 +1,5 @@
+"use client";
+
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
@@ -22,7 +24,8 @@ export default function LoginForm() {
     }
 
     const login = await signIn("credentials", {
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/",
       email,
       password,
     });
@@ -32,8 +35,6 @@ export default function LoginForm() {
       setPwData("");
       return;
     }
-
-    router.refresh();
   }
 
   return (

@@ -98,6 +98,15 @@ export default async function PostDetail({
     "use server";
   }
 
+  async function toggleLike() {
+    try {
+      // await toggle-like-action
+    } catch (error: any) {
+      console.error("error", error);
+      return { state: false, message: "상태 업데이트에 실패했습니다." };
+    }
+  }
+
   return (
     <div>
       <ReturnToListButton />

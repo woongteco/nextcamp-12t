@@ -12,11 +12,7 @@ type Option = {
   readonly value: string;
 };
 
-export default function SelectCategory({
-  setData,
-}: {
-  setData: Dispatch<SetStateAction<{}>>;
-}) {
+export default function SelectCategory() {
   const categoryOptions = POST_CATEGORY.filter((m) => m.key !== "all").map(
     (m) => ({ value: m.key, label: m.label })
   );

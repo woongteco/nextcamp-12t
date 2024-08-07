@@ -11,5 +11,5 @@ export async function middleware() {
 }
 
 export const config = {
-  matcher: ["/my/:path*", "/post/write/:path*", "/study/create"],
+  matcher: ["/my/:path*", "/post/write", "/study/create"],
 };
