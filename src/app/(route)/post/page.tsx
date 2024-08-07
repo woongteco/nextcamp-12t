@@ -11,7 +11,7 @@ import PostListWithPagination from "@/common/Templates/PostListWithPagination";
 import SearchInput from "../_components/SearchInput";
 import NonePostItem from "./_components/NonePostItem";
 import { getCommunity } from "@/lib/actions/communityAction";
-import { TPost } from "@/types/model/PostItem";
+import { PostDataFull } from "@/types/model/PostItem";
 
 type TQuery = { category?: string; sort?: string };
 
@@ -29,7 +29,7 @@ export default async function CommunityPostList({
   }
 
   const result = await getCommunity(); //getPostsData();
-  let postListData: TPost[];
+  let postListData: PostDataFull[];
 
   if (result.state === false) {
     postListData = [];
@@ -39,24 +39,24 @@ export default async function CommunityPostList({
 
   const clientPostList = JSON.parse(JSON.stringify(postListData));
 
-  console.log("get postlist" + postListData);
-
-  const sortedPosts = postListData.sort((a: any, b: any) => {
-    switch (sortedBy.key) {
-      case "latest":
-        return Date.parse(b.createdAt) - Date.parse(a.createdAt);
-      case "comments":
-        // AS_IS: 대댓글 수까지 계산 X
-        // TO_BE: comments 배열 flatten, 대댓글 수까지 합해서 총 댓글 수 계산
-        return b.comments.length - a.comments.length;
-      case "likes":
-        return b.like - a.like;
-      case "views":
-        return b.view - a.view;
-      default:
-        throw new Error("잘못된 정렬 기준입니다.");
+  const sortedPosts = clientPostList.sort(
+    (a: PostDataFull, b: PostDataFull) => {
+      switch (sortedBy.key) {
+        case "latest":
+          return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+        case "comments":
+          // AS_IS: 대댓글 수까지 계산 X
+          // TO_BE: comments 배열 flatten, 대댓글 수까지 합해서 총 댓글 수 계산
+          return b.comments.length - a.comments.length;
+        case "likes":
+          return b.like - a.like;
+        case "views":
+          return b.view - a.view;
+        default:
+          throw new Error("잘못된 정렬 기준입니다.");
+      }
     }
-  });
+  );
 
   return (
     <SidebarAsideContentArea>
@@ -98,7 +98,7 @@ export default async function CommunityPostList({
         </div>
         {sortedPosts.length > 0 ? (
           <div className="flex flex-col gap-0">
-            <PostListWithPagination posts={clientPostList} />
+            <PostListWithPagination posts={sortedPosts} />
           </div>
         ) : (
           <div className="pt-8">
