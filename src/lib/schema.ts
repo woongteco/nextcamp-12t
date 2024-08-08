@@ -66,9 +66,7 @@ const post = new mongoose.Schema({
     linkedStudyId: { type: String, default: null },
   },
   writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  comments: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Comment", required: true },
-  ],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   view: { type: Number, default: 0 },
   like: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },

@@ -7,7 +7,7 @@ import { Study } from "../schema";
 import { getStudyCards } from "@/dummies/studies";
 
 // post
-export async function studyAction(id: string, formData: FormData) {
+export async function createStudy(userId: string, formData: FormData) {
   const studyId = nanoid();
   const thumbnailUrl = formData.get("thumbnailUrl") as string;
   const title = formData.get("title") as string;
@@ -64,7 +64,7 @@ export async function studyAction(id: string, formData: FormData) {
         rule,
         curriculum,
       },
-      writer: id,
+      writer: userId,
       heartCount,
       createdAt: new Date(),
     });
@@ -156,11 +156,11 @@ export async function deleteStudy(studyId: string) {
   await connectDB();
 
   try {
-    await Study.findOneAndDelete({ studyId });
+    await Study.deleteOne({ studyId });
     return { state: true, message: "스터디가 삭제 되었습니다." };
   } catch (error) {
     console.log("delete study error" + error);
-    return { state: false, message: "스터디 삭제가 실패했습니다." };
+    return { state: false, message: "스터디 삭제에 실패했습니다." };
   }
 }
 

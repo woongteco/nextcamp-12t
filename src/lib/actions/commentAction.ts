@@ -2,18 +2,20 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Post } from "../schema";
-import { revalidatePath } from "next/cache";
 import { Comment } from "../schema";
 
 // post
-export async function commentAction(
+export async function createComment(
   userId: string,
   postId: string,
   formData: FormData
 ) {
   const commentId = nanoid();
   const content = formData.get("content") as string;
+
+  if (!userId || !postId) {
+    return { state: false, message: "유효한 userId와 postId가 필요합니다." };
+  }
 
   if (!content) {
     return { state: false, message: "댓글 내용을 입력해주세요." };
@@ -85,7 +87,7 @@ export async function deleteComment(commentId: string) {
   await connectDB();
 
   try {
-    await Comment.findOneAndDelete({ commentId });
+    await Comment.deleteOne({ commentId });
 
     return { success: true, message: "댓글이 삭제되었습니다." };
   } catch (error) {

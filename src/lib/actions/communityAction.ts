@@ -5,7 +5,7 @@ import connectDB from "../db";
 import { Post, Comment } from "../schema";
 
 // post
-export async function communityAction(id: string, formData: FormData) {
+export async function createCommunity(userId: string, formData: FormData) {
   const postId = nanoid();
   const categoryValue = formData.get("categoryValue") as string;
   const categoryLabel = formData.get("categoryLabel") as string;
@@ -14,7 +14,7 @@ export async function communityAction(id: string, formData: FormData) {
   const body = formData.get("body") as string;
   const linkedStudyId = formData.get("linkedStudyId") as string;
 
-  if (!id) {
+  if (!userId) {
     return { state: false, message: "유효한 id가 필요합니다." };
   }
 
@@ -40,8 +40,7 @@ export async function communityAction(id: string, formData: FormData) {
         body,
         linkedStudyId,
       },
-      writer: id,
-      comments: [],
+      writer: userId,
       createdAt: new Date(),
       view: 0,
       like: 0,
@@ -136,7 +135,7 @@ export async function deleteCommunity(postId: string) {
   await connectDB();
 
   try {
-    await Post.findOneAndDelete({ postId });
+    await Post.deleteOne({ postId });
     await Comment.deleteMany({ postId });
 
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };
