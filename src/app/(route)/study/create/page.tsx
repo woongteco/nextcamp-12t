@@ -1,7 +1,6 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyForm from "./_components/StudyForm";
 import { getSession } from "@/auth";
-import LoginModal from "@/app/(auth)/_components/LoginModal";
 
 export default async function page() {
   const session = await getSession();
@@ -23,7 +22,6 @@ export default async function page() {
           당신이 가진 직무 역량과 팁을 공유해주세요
         </span>
       </div>
-
       <StudyForm id={id} />
     </>
   );
