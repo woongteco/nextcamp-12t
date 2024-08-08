@@ -1,7 +1,5 @@
 import { getSession } from "@/auth";
 import { notFound } from "next/navigation";
-import { getProfile } from "@/lib/actions/profileAction";
-import { TProfileData } from "@/types/model/Profile";
 import FormEditProfileImageWithPreview from "./EditProfileImage/FormEditProfileImageWithPreview";
 import FormEditProfile from "./EditProfile/FormEditProfile";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
@@ -9,6 +7,7 @@ import FormUpdatePassword from "./UpdatePassword/FormUpdatePassword";
 import FormUpdatePhoneNumber from "./UpdatePhoneNumber/FormUpdatePhoneNumber";
 import DeleteAccountConfirm from "./DeleteAccountConfirm";
 import { getUserData } from "@/lib/actions/userAction";
+import { ProfileSchema } from "@/types/model/User";
 
 export default async function ProfileForms() {
   const session = await getSession();
@@ -19,9 +18,9 @@ export default async function ProfileForms() {
 
   const userId = session.user.id;
   const sessionProvider = session.account.provider;
-  const userProfileImg = await getUserData(session.user.id);
-  const userProfile = await getProfile(userId);
-  let profile: TProfileData = userProfile.data;
+  const userData = await getUserData(userId);
+  // const userProfile = await getProfile(userId);
+  let profile: ProfileSchema = userData.data;
   let clientProfile = JSON.parse(JSON.stringify(profile));
 
   return (
@@ -29,8 +28,8 @@ export default async function ProfileForms() {
       <div className="flex flex-col gap-8">
         <p className="text-H2 text-label-dimmed">{session.user.name}</p>
         <FormEditProfileImageWithPreview
-          id={session.user.id}
-          initProfileUrl={userProfileImg?.data.profile_img || ""}
+          id={userId}
+          initProfileUrl={profile.profile_img || ""}
         />
         <div className="w-full h-[1px] border-t border-t-line-normal"></div>
         <FormEditProfile session={session} profile={clientProfile} />
@@ -43,7 +42,7 @@ export default async function ProfileForms() {
             <SectionTitle size="md" className="mb-2">
               연락처 수정
             </SectionTitle>
-            <FormUpdatePhoneNumber defaultValue={profile.userId.phone} />
+            <FormUpdatePhoneNumber defaultValue={profile.phone} />
             <div className="w-full h-[1px] border-t border-t-line-normal"></div>
             <DeleteAccountConfirm email={session.user.email as string} />
           </>

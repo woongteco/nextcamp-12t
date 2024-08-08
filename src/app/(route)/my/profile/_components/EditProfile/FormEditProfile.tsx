@@ -9,8 +9,8 @@ import {
   CATEGORIES_ALL_OPTIONS,
 } from "@/constants/categories/job_category";
 import { useRouter } from "next/navigation";
-import { createProfile, updateProfile } from "@/lib/actions/profileAction";
-import { TProfileData } from "@/types/model/Profile";
+import { updateProfile } from "@/lib/actions/profileAction";
+import { ProfileSchema } from "@/types/model/User";
 import { Session } from "next-auth";
 import handleAlert from "@/common/Molecules/handleAlert";
 
@@ -19,7 +19,7 @@ export default function FormEditProfile({
   profile,
 }: {
   session: Session | null;
-  profile: TProfileData;
+  profile: ProfileSchema;
 }) {
   const router = useRouter();
 
@@ -46,14 +46,12 @@ export default function FormEditProfile({
     formData.set("myCategory", JSON.stringify(my_category));
 
     try {
-      const result = profile.userId._id
-        ? await updateProfile(id, formData)
-        : await createProfile(id, formData);
+      const result = await updateProfile(id, formData);
 
       if (result.state) {
         handleAlert("success", result.message);
 
-        if (!profile.userId._id) {
+        if (!profile._id) {
           router.replace("/my/profile");
         }
       } else {

@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         await connectDB();
 
         const user = await User.findOne({ email }).select(
-          "+id +name +image +phone +role"
+          "+id +name +image +phone +role +profile"
         );
 
         if (!user) {
@@ -45,6 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           image: user.profile_img,
           phone: user.phone,
           role: user.role,
+          profile: user.profile,
         };
       },
     }),

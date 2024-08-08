@@ -1,8 +1,8 @@
-import { TUserBase } from "./User";
+import { ProfileSchema } from "./User";
 
-export type TStudyCard = {
+export type StudySchema = {
   studyId: string;
-  user: TUserBase;
+  user: ProfileSchema;
   thumbnailUrl: string;
   title: string;
   jobCategory: {

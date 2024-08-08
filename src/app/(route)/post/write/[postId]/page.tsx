@@ -1,12 +1,12 @@
 import { getSession } from "@/auth";
 import { getPost } from "@/dummies/posts";
 import { delay } from "@/dummies/utils";
-import { TPost } from "@/types/model/PostItem";
+import { PostDataFull } from "@/types/model/PostItem";
 import { notFound } from "next/navigation";
 
 async function getPostDetail(postId: string) {
   await delay(1000);
-  const data: TPost = getPost(postId);
+  const data: PostDataFull = getPost(postId);
   return { state: true, data };
 }
 

@@ -10,15 +10,15 @@ import { PostDataFull, PostSchema } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { Post } from "@/lib/schema";
 import { notFound } from "next/navigation";
-import { getProfile } from "@/lib/actions/profileAction";
 import DeletePostButton from "../../_components/DeletePostButton";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
+import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
 
 async function getSinglePostData(postId: string) {
   try {
     const data: PostDataFull | null = await Post.findOne({ postId })
-      .populate("writer")
+      .populate("writer", "+name +email +role +profile_img +profile")
       .populate("comments");
     if (!data) {
       return {
@@ -61,12 +61,13 @@ export default async function PostDetail({
 
   if (postDetail.state === false) {
     return notFound();
-  } else if (postDetail === undefined) {
-    return notFound();
   }
-
+  //   else if (postDetail === undefined) {
+  //     return notFound();
+  //   }
+  //
   const post = postDetail.data as PostDataFull;
-  const { data: writer } = await getProfile(post.writer as string);
+  //   const { data: writer } = await getProfile(post.writer as string);
 
   return (
     <div>
@@ -80,10 +81,10 @@ export default async function PostDetail({
             <h2 className="text-H2">{post.contents.title}</h2>
           </div>
           <div className="flex gap-6 items-center py-6">
-            <Profile user={writer} size="large" />
+            <Profile user={post.writer ?? NULL_USER_FOR_PROFILE} size="large" />
             <p className="text-label-400 text-label-dimmed flex flex-row gap-8 items-center">
               <span>{getCreatedBefore(post.createdAt)}</span>
-              {String(session?.user.id) === String(writer.userId._id) && (
+              {String(session?.user.id) === String(post.writer?._id) && (
                 <>
                   <Link
                     href={`/post/write/${post.postId}`}

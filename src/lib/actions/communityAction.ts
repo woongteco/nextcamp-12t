@@ -2,7 +2,7 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Post, Comment } from "../schema";
+import { Post, Comment, Profile } from "../schema";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
@@ -52,6 +52,7 @@ export async function communityAction(id: string, formData: FormData) {
 
     await post.save();
 
+    revalidatePath("/post");
     return {
       state: true,
       message: "커뮤니티 글이 등록되었습니다.",
@@ -80,7 +81,11 @@ export async function getCommunity(postId: string | null = null) {
       }
       return { state: true, data: post };
     } else {
-      const postList = await Post.find().populate("writer");
+      const postList = await Post.find()
+        .populate("writer", "+name +email +role +profile_img +profile")
+        // .populate("profile", "+position_tag")
+        .sort({ createdAt: "desc" });
+      console.log("# 커뮤니티 글", postList);
       return { state: true, data: postList };
     }
   } catch (error) {

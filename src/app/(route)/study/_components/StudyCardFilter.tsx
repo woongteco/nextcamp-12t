@@ -2,14 +2,14 @@
 
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 import { includesSearchQuery } from "@/utils/includesSearchQuery";
 import { useSearchParams } from "next/navigation";
 
 export default function StudyCardFilter({
   studyCards,
 }: {
-  studyCards: TStudyCard[];
+  studyCards: StudySchema[];
 }) {
   const params = useSearchParams();
   const jobKey = params.get("job_c");

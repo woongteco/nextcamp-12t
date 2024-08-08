@@ -1,8 +1,8 @@
 "use client";
 import { getAllStudies, getStudy } from "@/lib/actions/studyAction";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 import { useId } from "react";
-import Select, { StylesConfig } from "react-select";
+import { StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
 
 const card = (thumbnailUrl = "", creator = "") => ({
@@ -28,7 +28,7 @@ const card = (thumbnailUrl = "", creator = "") => ({
   },
 });
 
-const studyCardStyle: StylesConfig<TStudyCard> = {
+const studyCardStyle: StylesConfig<StudyCardSelectOption> = {
   control: (baseStyles, state) => ({
     ...baseStyles,
     minHeight: "56px",
@@ -43,15 +43,15 @@ const studyCardStyle: StylesConfig<TStudyCard> = {
   }),
   option: (styles, { data }) => ({
     ...styles,
-    ...card(data.thumbnailUrl, `${data.user.position} ${data.user.name}`),
+    ...card(data.thumbnailUrl, `${data.user.position_tag} ${data.user.name}`),
   }),
   singleValue: (styles, { data }) => ({
     ...styles,
-    ...card(data.thumbnailUrl, `${data.user.position} ${data.user.name}`),
+    ...card(data.thumbnailUrl, `${data.user.position_tag} ${data.user.name}`),
   }),
 };
 
-export type StudyCardSelectOption = TStudyCard & {
+export type StudyCardSelectOption = StudySchema & {
   value: string;
   label: string;
 };
@@ -62,7 +62,7 @@ export type StudyCardSelectOption = TStudyCard & {
 // getStudy()
 const loadOptions = (inputValue: string) =>
   // 더미 데이터 액션으로 테스트
-  getAllStudies()
+  getStudy()
     .then(({ data }) => {
       // console.log({ inputValue });
       return data.map((study: any) => ({
