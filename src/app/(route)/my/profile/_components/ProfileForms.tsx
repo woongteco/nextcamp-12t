@@ -47,7 +47,7 @@ export default async function ProfileForms() {
             <SectionTitle size="md" className="mb-2">
               연락처 수정
             </SectionTitle>
-            <FormUpdatePhoneNumber defaultValue={profile.userId.phone} />
+            <FormUpdatePhoneNumber defaultValue={profile?.userId.phone} />
             <div className="w-full h-[1px] border-t border-t-line-normal"></div>
             <DeleteAccountConfirm email={session.user.email as string} />
           </>
