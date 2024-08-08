@@ -59,7 +59,6 @@ export default function CommentInput({
       <Button
         variation="outline"
         className="my-[6px]"
-        colors={{ bg: "bg-main-600", text: "text-main-600" }}
         onClick={() => {
           if (commentRef?.current) {
             commentRef.current.reset();
@@ -84,8 +83,9 @@ export default function CommentInput({
   ) : (
     <Button
       variation="outline"
-      colors={{ bg: "bg-line-input" }}
-      className="w-full border border-line-input h-[60px]"
+      color="assist"
+      size="full"
+      className="h-[60px]"
       onClick={() => setFocus(true)}
     >
       <p className="text-base text-label-assist font-medium w-full text-left">

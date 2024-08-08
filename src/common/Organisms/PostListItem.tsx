@@ -2,7 +2,9 @@ import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
 import Profile from "../Molecules/Profile";
 import { TPost } from "@/types/model/PostItem";
-import { getCreatedBefore } from "@/dummies/utils";
+import { getCreatedBefore } from "@/utils/getCreatedBefore";
+import { TUserBase } from "@/types/model/User";
+import { ProfileSchema } from "@/types/model/Profile";
 
 export default function PostListItem({ item }: { item: TPost }) {
   const createdBefore = getCreatedBefore(item.createdAt);

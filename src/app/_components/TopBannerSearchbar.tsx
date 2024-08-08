@@ -53,9 +53,9 @@ export default function TopBannerSearchbar() {
             placeholder="검색어를 입력하세요"
             className="border-none w-full md:w-[400px] px-2 py-4 rounded-ten focus-visible:outline-1 focus-visible:outline-main-400"
           />
-          <Button variation="icon" type="submit" size={24}>
+          <Button.Icon type="submit" size={24}>
             <SearchIconMain />
-          </Button>
+          </Button.Icon>
         </div>
       </div>
     </form>

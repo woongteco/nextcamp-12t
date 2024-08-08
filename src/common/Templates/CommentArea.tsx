@@ -1,25 +1,32 @@
 import ProfileImg from "../Atoms/Image/ProfileImg";
 import CommentItem from "../Organisms/Comment/CommentItem";
 import CommentInput from "../Organisms/Comment/CommentInput";
-import { getComment } from "@/lib/actions/commentAction";
+import { CommentSchema } from "@/types/model/Comment";
+import { getUserData } from "@/lib/actions/userAction";
 
 export default async function CommentArea({
-  postId,
-  titleText = "댓글",
+  comments,
   sessionId,
+  titleText = "댓글",
 }: {
-  postId?: string;
-  titleText?: string;
+  comments: CommentSchema[];
   sessionId: string;
+  titleText?: string;
 }) {
-  let data;
+  const result = await getUserData(sessionId);
+  let user;
 
-  if (postId) {
-    const findPost = await getComment(postId);
-    data = findPost.data;
+  if (result.state === true) {
+    user = result.data;
   }
-
-  console.log("get comment" + data);
+  //   let data;
+  //
+  //   if (postId) {
+  //     const findPost = await getComment(postId);
+  //     data = findPost.data;
+  //   }
+  //
+  //   console.log("get comment" + data);
 
   return (
     <section className="flex flex-col gap-8 mt-5 px-10 py-8 rounded-twenty border border-line-normal">
@@ -40,15 +47,15 @@ export default async function CommentArea({
           />
         </svg>
         <span>{titleText}</span>
-        <span className="text-main-600">{data.comments.length || 0}</span>
+        <span className="text-main-600">{comments.length || 0}</span>
       </p>
       <div>
-        {data.comments.length === 0 ? (
+        {comments.length === 0 ? (
           <span className="flex items-center justify-center text-H4 text-label-assist bg-alt rounded-twenty h-20">
             첫번째로 댓글을 남겨보세요!
           </span>
         ) : (
-          data.comments.map((c: any) => (
+          comments.map((c: any) => (
             <CommentItem
               key={c.commentId}
               comment={JSON.parse(JSON.stringify(c))}
@@ -60,7 +67,11 @@ export default async function CommentArea({
       <div className="flex flex-row gap-8 items-start w-full">
         <ProfileImg
           size="large"
-          src="/images/profile/DummyProfileImg.jpg"
+          src={
+            sessionId
+              ? user?.profile_img
+              : "/images/profile/DummyProfileImg.jpg"
+          }
           alt="프로필 이미지"
           className="my-[6px]"
         />

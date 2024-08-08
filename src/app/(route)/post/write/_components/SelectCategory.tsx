@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { POST_CATEGORY } from "@/constants/menu/community_posts";
 import Field from "@/common/Atoms/Form/Field";
@@ -19,13 +19,15 @@ export default function SelectCategory() {
   const defaultCategory = categoryOptions[0];
   const [category, setCategory] = useState<Option | null>(defaultCategory);
 
-  //   console.log(category);
-  //
-  //   if (category) {
-  //     setData(category);
-  //   }
+  useEffect(() => {
+    console.log(category);
 
-  console.log("커뮤니티 개설 카테고리" + JSON.stringify(category));
+    if (category) {
+      setData(category);
+    }
+
+    console.log("커뮤니티 개설 카테고리" + JSON.stringify(category));
+  }, [category]);
 
   return (
     <>

@@ -14,6 +14,8 @@ export async function createCommunity(userId: string, formData: FormData) {
   const body = formData.get("body") as string;
   const linkedStudyId = formData.get("linkedStudyId") as string;
 
+  // console.log("### linkedStudyId", linkedStudyId);
+
   if (!userId) {
     return { state: false, message: "유효한 id가 필요합니다." };
   }

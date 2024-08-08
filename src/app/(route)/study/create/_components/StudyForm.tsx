@@ -248,15 +248,10 @@ export default function StudyForm({ id }: { id: string }) {
       </GridField>
 
       <div className="flex gap-gutter-xl items-center justify-center mt-24">
-        <LinkButton
-          href="/study"
-          variation="outline"
-          colors={{ bg: "bg-main-600", text: "text-main-600" }}
-          className="w-[278px]"
-        >
+        <LinkButton href="/study" variation="outline" size="form">
           작성 취소
         </LinkButton>
-        <Button variation="solid" type="submit" className="w-[278px]">
+        <Button variation="solid" type="submit" size="form">
           작성 완료
         </Button>
       </div>

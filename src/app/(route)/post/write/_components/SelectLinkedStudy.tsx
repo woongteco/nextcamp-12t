@@ -13,8 +13,7 @@ async function getStuides(): Promise<StudyCardSelectOption[]> {
     value: `https://chemeet.vercel.app/study/${study.studyId}`,
     label: study.title,
   }));
-  await delay(1000);
-  console.log(studies);
+  await delay(500);
   return studies;
 }
 
@@ -22,7 +21,7 @@ export default async function SelectLinkedStudy() {
   const studies = await getStuides();
   return (
     <Suspense fallback={<Skeleton className="w-full" />}>
-      <CustomizedStudySelect options={studies} className="w-full" />
+      <CustomizedStudySelect options={studies} className="w-full gridContent" />
     </Suspense>
   );
 }
