@@ -1,3 +1,7 @@
+/* 
+ * 모듈 스타일을 지정하기 위한 클래스 표현(예: .postBody)이 아니라면
+ * `[class="*"]`와 같이 작성하여 기존의 클래스 선택
+ */
 .postBody {
   padding-block-start: 2.5rem;
   padding-block-end: 3.74rem;
@@ -53,16 +57,16 @@
 .postBody a {
   color: #2a7ffe;
 }
-.postBody .ql-align-justify {
+.postBody [class="ql-align-justify"] {
   text-align: justify;
 }
-.postBody .ql-align-left {
+.postBody [class="ql-align-left"] {
   text-align: left;
 }
-.postBody .ql-align-center {
+.postBody [class="ql-align-center"] {
   text-align: center;
 }
-.postBody .ql-align-right {
+.postBody [class="ql-align-right"] {
   text-align: right;
 }
 .postBody ul,
