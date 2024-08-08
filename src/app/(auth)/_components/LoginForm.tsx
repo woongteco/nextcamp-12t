@@ -1,17 +1,24 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
-import { signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import handleAlert from "@/common/Molecules/handleAlert";
 
 export default function LoginForm() {
   const router = useRouter();
   const [pwData, setPwData] = useState<string>("");
+  const { data: session, status } = useSession();
 
-  async function login(e: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/");
+    }
+  }, [status]);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -24,8 +31,7 @@ export default function LoginForm() {
     }
 
     const login = await signIn("credentials", {
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
       email,
       password,
     });
@@ -39,7 +45,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form onSubmit={login} className="flex flex-col w-full gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-5">
         <Input
           id="email"
           type="email"
