@@ -14,23 +14,7 @@ import DeletePostButton from "../../_components/DeletePostButton";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
-
-async function getSinglePostData(postId: string) {
-  try {
-    const data: PostDataFull | null = await Post.findOne({ postId })
-      .populate("writer", "+name +email +role +profile_img +profile")
-      .populate("comments");
-    if (!data) {
-      return {
-        state: false,
-        message: "해당 게시글을 찾을 수 없습니다.",
-      };
-    }
-    return { state: true, data };
-  } catch (error: any) {
-    return { state: false, message: "게시글 정보를 가져오는데 실패했습니다." };
-  }
-}
+import { getCommunity } from "@/lib/actions/communityAction";
 
 async function increaseViewCount(postId: string) {
   try {
@@ -57,7 +41,7 @@ export default async function PostDetail({
   // TODO: 로그인한 사용자 정보 상태값으로 대체 필요
   const session = await getSession();
 
-  const postDetail = await getSinglePostData(postId); // getCommunity(postId);
+  const postDetail = await getCommunity(postId);
 
   if (postDetail.state === false) {
     return notFound();
