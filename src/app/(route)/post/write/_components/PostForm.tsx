@@ -38,6 +38,10 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
     // console.log("%c# check form-data----------end", "color:pink");
 
     for (const [key, value] of formData) {
+      console.log("form-data", { key, value });
+    }
+
+    for (const [key, value] of formData) {
       console.log({ key, value });
     }
 

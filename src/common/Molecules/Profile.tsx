@@ -2,6 +2,7 @@ import Image from "next/image";
 import ProfileImg from "../Atoms/Image/ProfileImg";
 import { BadgeIcon } from "@public/icons";
 import clsx from "clsx";
+import { ProfileSchema } from "@/types/model/Profile";
 
 // Profile에 user 데이터 전달 시 형식에 맞게 필요한 값만 plain object로 전달
 export type TProfileUser = {
