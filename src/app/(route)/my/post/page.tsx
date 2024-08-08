@@ -39,6 +39,7 @@ export default async function MyPost() {
 
   const posts: PostDataFull[] = result.data;
   console.log("posts", posts);
+
   return (
     <div className="w-full lg:w-[calc(100vw-240px-30px-2rem)] xl:w-[calc(1200px-280px-30px-2rem)]">
       <SectionTitle size="md" className="mb-6">

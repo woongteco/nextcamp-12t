@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import TextEditor from "@/common/Atoms/Form/TextEditor";
 import LinkButton from "@/common/Atoms/LinkButton";
@@ -37,10 +37,8 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
     // }
     // console.log("%c# check form-data----------end", "color:pink");
 
-    // 필수정보 넘겨주기
-    if (data) {
-      formData.append("categoryValue", data.value);
-      formData.append("categoryLabel", data.label);
+    for (const [key, value] of formData) {
+      console.log({ key, value });
     }
 
     if (content) {
@@ -50,15 +48,15 @@ export default function PostForm({ sessionId }: { sessionId: string }) {
     try {
       const result = await communityAction(id, formData);
 
-      if (result.state) {
-        handleAlert("success", result.message);
-        router.replace("/post");
-      } else {
-        handleAlert("error", result.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    //   if (result.state) {
+    //     handleAlert("success", result.message);
+    //     router.replace("/post");
+    //   } else {
+    //     handleAlert("error", result.message);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   return (
