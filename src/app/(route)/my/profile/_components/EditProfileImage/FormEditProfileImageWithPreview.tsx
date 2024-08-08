@@ -8,7 +8,7 @@ import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import { DummyProfileImg } from "@public/images";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 import Button from "@/common/Atoms/Form/Button";
-import { updateUserInfo } from "@/lib/actions/profileAction";
+import { updateUserData } from "@/lib/actions/profileAction";
 
 export type ProfileImageFormProps = {
   id: string;
@@ -67,8 +67,9 @@ export default function FormEditProfileImageWithPreview({
   }
 
   async function onSave() {
+    console.log("save");
     try {
-      const result = await updateUserInfo(id, { profile_img: imageUrl });
+      const result = await updateUserData(id, { profile_img: imageUrl });
 
       if (result.state) {
         close();
@@ -88,7 +89,7 @@ export default function FormEditProfileImageWithPreview({
     }
 
     try {
-      const result = await updateUserInfo(id, { profile_img: "" });
+      const result = await updateUserData(id, { profile_img: "" });
       setImageUrl("");
 
       if (result.state) {

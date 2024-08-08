@@ -26,7 +26,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         <ImageInputWithButton
           buttonProps={{
             variation: "outline",
-            colors: { bg: "bg-main-600", text: "text-main-600" },
+            color: "main",
           }}
           onChange={getImage}
         >
