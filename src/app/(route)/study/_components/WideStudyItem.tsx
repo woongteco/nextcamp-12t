@@ -3,10 +3,10 @@ import { BadgeIcon } from "@public/icons";
 import Link from "next/link";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 import { DummyProfileImg } from "@public/images";
 
-export default function WideStudyItem({ card }: { card: TStudyCard }) {
+export default function WideStudyItem({ card }: { card: StudySchema }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
   const recruitmentDay = dayjs(card.recruitmentPeriod[1]);
   const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");

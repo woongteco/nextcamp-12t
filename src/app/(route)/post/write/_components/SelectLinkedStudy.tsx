@@ -1,28 +1,30 @@
-import { getStudyCards } from "@/dummies/studies";
-import CustomizedStudySelect, {
-  StudyCardSelectOption,
-} from "./CustomizedStudySelect";
+import CustomizedStudySelect from "./CustomizedStudySelect";
 import { Suspense } from "react";
 import Skeleton from "@/common/Atoms/Skeleton";
-import { delay } from "@/dummies/utils";
 
-async function getStuides(): Promise<StudyCardSelectOption[]> {
-  // const result = await
-  const studies: StudyCardSelectOption[] = getStudyCards().map((study) => ({
-    ...study,
-    value: `https://chemeet.vercel.app/study/${study.studyId}`,
-    label: study.title,
-  }));
-  await delay(1000);
-  console.log(studies);
-  return studies;
-}
+// async function getStuides(): Promise<StudyCardSelectOption[]> {
+//   const result = await getStudy();
+//
+//   if (result?.state === false) {
+//     return [];
+//   }
+//
+//   const studies: StudyCardSelectOption[] = result.data.map((study: any) => ({
+//     ...study,
+//     value: `https://chemeet.vercel.app/study/${study.studyId}`,
+//     label: study.title,
+//   }));
+//   return studies;
+// }
 
-export default async function SelectLinkedStudy() {
-  const studies = await getStuides();
+export default function SelectLinkedStudy() {
+  // const studies = await getStuides();
   return (
     <Suspense fallback={<Skeleton className="w-full" />}>
-      <CustomizedStudySelect options={studies} className="w-full" />
+      <CustomizedStudySelect
+        name="linkedStudyId"
+        className="w-full gridContent"
+      />
     </Suspense>
   );
 }

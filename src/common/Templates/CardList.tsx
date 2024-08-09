@@ -5,7 +5,7 @@
  * "2" : 스터디 탐색 페이지의 wide type 스터디 카드에만 사용합니다
  */
 
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 import StudyCardItem from "../Organisms/StudyCardItem";
 import NoneStudyComponent from "@/app/(route)/study/_components/NoneStudyComponent";
 
@@ -13,7 +13,7 @@ export default function StudyCardList({
   studyCards,
   count,
 }: {
-  studyCards: TStudyCard[];
+  studyCards: StudySchema[];
   count?: number;
 }) {
   if (!studyCards) {

@@ -24,9 +24,9 @@ const SidePopup = forwardRef(
           className="relative w-full h-full sm:w-[240px] sm:h-full bg-white p-4 overflow-hidden z-modal"
           onClick={stopPropagation}
         >
-          <Button variation="icon" className="" onClick={onClose}>
+          <Button.Icon onClick={onClose}>
             <CloseIcon stroke="#464748" />
-          </Button>
+          </Button.Icon>
           <div className="h-full overflow-auto p-4">{children}</div>
         </div>
       </dialog>

@@ -1,22 +1,33 @@
-import LinkButton from "@/common/Atoms/LinkButton";
 import Profile from "@/common/Molecules/Profile";
 import ContentArea from "@/common/Organisms/ContentArea";
 import { getSession } from "@/auth";
 import ReturnToListButton from "../_components/ReturnToListButton";
 import LinkedStudyCard from "../_components/LinkedStudyCard";
-import { getCommunity } from "@/lib/actions/communityAction";
 import CommentArea from "@/common/Templates/CommentArea";
 import ShareIconButton from "../../_components/ShareIconButton";
 import LikeIconButton from "../../_components/LikeIconButton";
-import { TPost } from "@/types/model/PostItem";
-import { delay, getCreatedBefore } from "@/dummies/utils";
-import { getPost } from "@/dummies/posts";
-// import IconButtonActionsInDetail from "../_components/IconButtonActionsInDetail";
+import { PostDataFull, PostSchema } from "@/types/model/PostItem";
+import { getCreatedBefore } from "@/utils/getCreatedBefore";
+import { Post } from "@/lib/schema";
+import { notFound } from "next/navigation";
+import DeletePostButton from "../../_components/DeletePostButton";
+import Link from "next/link";
+import { revalidatePath } from "next/cache";
+import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
+import { getCommunity } from "@/lib/actions/communityAction";
 
-async function getPostData(postId: string) {
-  await delay(1000);
-  const post = getPost(postId);
-  return { state: true, data: post };
+async function increaseViewCount(postId: string) {
+  try {
+    const update = await Post.findOneAndUpdate(
+      { postId },
+      { $inc: { view: 1 } },
+      { new: true }
+    );
+    revalidatePath("/post");
+    return { state: true, data: update };
+  } catch (error: any) {
+    return { state: false, message: "Fail to update view count" };
+  }
 }
 
 export default async function PostDetail({
@@ -24,12 +35,23 @@ export default async function PostDetail({
 }: {
   params: { postId: string };
 }) {
+  //
+  await increaseViewCount(postId);
+
+  // TODO: 로그인한 사용자 정보 상태값으로 대체 필요
   const session = await getSession();
 
-  const postDetail = await getPostData(postId); // getCommunity(postId);
-  const post: TPost = postDetail.data;
+  const postDetail = await getCommunity(postId);
 
-  console.log("포스트 상세 데이터" + post);
+  if (postDetail.state === false) {
+    return notFound();
+  }
+  //   else if (postDetail === undefined) {
+  //     return notFound();
+  //   }
+  //
+  const post = postDetail.data as PostDataFull;
+  //   const { data: writer } = await getProfile(post.writer as string);
 
   async function toggleLike() {
     try {
@@ -52,25 +74,24 @@ export default async function PostDetail({
             <h2 className="text-H2">{post.contents.title}</h2>
           </div>
           <div className="flex gap-6 items-center py-6">
-            <Profile user={post.writer} size="large" />
-            <p className="text-label-400 text-label-dimmed flex flex-row gap-2 items-center">
+            <Profile user={post.writer ?? NULL_USER_FOR_PROFILE} size="large" />
+            <p className="text-label-400 text-label-dimmed flex flex-row gap-8 items-center">
               <span>{getCreatedBefore(post.createdAt)}</span>
-              {/* 본인이 작성한 글이라면 수정하기 버튼 show */}
-              {session?.user.id === post.writer._id && (
-                <LinkButton
-                  href={`/post/write/${post.postId}`}
-                  variation="text"
-                  colors={{ bg: "", text: "text-label-dimmed" }}
-                  className="ml-2 text-label-400 font-normal"
-                >
-                  수정하기
-                </LinkButton>
+              {String(session?.user.id) === String(post.writer?._id) && (
+                <>
+                  <Link
+                    href={`/post/write/${post.postId}`}
+                    className="hover:underline hover:text-main-600"
+                  >
+                    수정하기
+                  </Link>
+                  <DeletePostButton postId={postId}>삭제하기</DeletePostButton>
+                </>
               )}
             </p>
             <div className="flex gap-4 items-center ml-auto">
-              {/* <IconButtonActionsInDetail postId={post.postId} /> */}
               <ShareIconButton width="32" height="32" />
-              <LikeIconButton liked={false} /* toggleLike={toggleLike} */ />
+              <LikeIconButton liked={false} postId={postId} />
               <span className="text-H4">{post.like}</span>
             </div>
           </div>
@@ -80,7 +101,10 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      {/* <CommentArea postId={post.postId} sessionId={session?.user.id || ""} /> */}
+      <CommentArea
+        sessionId={session?.user.id || ""}
+        comments={post.comments}
+      />
     </div>
   );
 }

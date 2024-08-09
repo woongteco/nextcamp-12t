@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { User } from "../schema";
+import { ProfileSchema } from "@/types/model/User";
 
 export async function getUserData(userId: string) {
   await connectDB();
@@ -12,6 +13,7 @@ export async function getUserData(userId: string) {
       return { state: false, message: "사용자 데이터를 찾을 수 없습니다." };
     }
 
+    console.log("userData", data);
     return { state: true, data };
   } catch (error: any) {
     console.error("error", error.message);

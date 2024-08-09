@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { TabButton } from "./TabButton";
 import StudyCardList from "@/common/Templates/CardList";
 import { CategoryTabIcon, categoryIconsName } from "./TabIcons";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 import { getStudyCards } from "@/dummies/studies";
 import Skeleton from "@/common/Atoms/Skeleton";
 
@@ -19,7 +19,7 @@ export default function TabButtonsOfGoalSection() {
   const init = getStudyCards();
   const initStudies = init.filter((s) => s.targetCategory.value === initGoal);
   const [selected, setSelected] = useState(initGoal);
-  const [proStudies, setStudies] = useState<TStudyCard[]>(initStudies);
+  const [proStudies, setStudies] = useState<StudySchema[]>(initStudies);
 
   useEffect(() => {
     setStudies(() => init.filter((s) => s.targetCategory.value === selected));

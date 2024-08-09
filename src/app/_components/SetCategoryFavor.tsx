@@ -67,8 +67,7 @@ export default function SetCategoryFavor() {
             선택하지 않고 건너뛰어 홈으로 이동할 수도 있습니다.
           </span>
         </p>
-        <Button
-          variation="icon"
+        <Button.Icon
           onClick={() => {
             if (categoryRef?.current) {
               categoryRef.current.reset();
@@ -76,7 +75,7 @@ export default function SetCategoryFavor() {
           }}
         >
           <RefreshIcon />
-        </Button>
+        </Button.Icon>
       </div>
       <form
         onSubmit={saveCategory}
@@ -128,11 +127,7 @@ export default function SetCategoryFavor() {
         </div>
         <div className="w-full h-0 border-t border-t-line-neutral"></div>
         <div className="flex gap-4 justify-between">
-          <Button
-            variation="outline"
-            colors={{ bg: "bg-main-600", text: "text-main-600" }}
-            onClick={skipThis}
-          >
+          <Button variation="outline" onClick={skipThis}>
             건너뛰기
           </Button>
           <Button type="submit" variation="solid">

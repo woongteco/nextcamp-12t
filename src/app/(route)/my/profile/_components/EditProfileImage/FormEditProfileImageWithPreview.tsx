@@ -8,7 +8,7 @@ import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import { DummyProfileImg } from "@public/images";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 import Button from "@/common/Atoms/Form/Button";
-import { updateUserInfo } from "@/lib/actions/profileAction";
+import { updateUserData } from "@/lib/actions/profileAction";
 
 export type ProfileImageFormProps = {
   id: string;
@@ -67,8 +67,9 @@ export default function FormEditProfileImageWithPreview({
   }
 
   async function onSave() {
+    console.log("save");
     try {
-      const result = await updateUserInfo(id, { profile_img: imageUrl });
+      const result = await updateUserData(id, { profile_img: imageUrl });
 
       if (result.state) {
         close();
@@ -88,7 +89,7 @@ export default function FormEditProfileImageWithPreview({
     }
 
     try {
-      const result = await updateUserInfo(id, { profile_img: "" });
+      const result = await updateUserData(id, { profile_img: "" });
       setImageUrl("");
 
       if (result.state) {
@@ -114,20 +115,13 @@ export default function FormEditProfileImageWithPreview({
             name="profileImage"
             buttonProps={{
               variation: "outline",
-              colors: {
-                bg: "bg-main-600",
-                text: "text-main-600",
-              },
+              color: "main",
             }}
             onChange={(e) => getImage(e)}
           >
             이미지 변경하기
           </ImageInputWithButton>
-          <Button
-            variation="text"
-            colors={{ bg: "bg-label-neutral", text: "text-label-neutral" }}
-            onClick={onDelete}
-          >
+          <Button variation="text" color="default" onClick={onDelete}>
             이미지 제거
           </Button>
         </div>

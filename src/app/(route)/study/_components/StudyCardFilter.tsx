@@ -2,13 +2,14 @@
 
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
+import { includesSearchQuery } from "@/utils/includesSearchQuery";
 import { useSearchParams } from "next/navigation";
 
 export default function StudyCardFilter({
   studyCards,
 }: {
-  studyCards: TStudyCard[];
+  studyCards: StudySchema[];
 }) {
   const params = useSearchParams();
   const jobKey = params.get("job_c");
@@ -24,7 +25,9 @@ export default function StudyCardFilter({
     const matchesLocationKey = locationKey
       ? card.location.value === locationKey
       : true;
-    const matchesQueryKey = queryKey ? card.title.includes(queryKey) : true;
+    const matchesQueryKey = queryKey
+      ? includesSearchQuery(card.title, queryKey)
+      : true;
 
     return (
       matchesJobKey && matchesTargetKey && matchesLocationKey && matchesQueryKey

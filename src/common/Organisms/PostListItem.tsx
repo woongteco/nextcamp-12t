@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
 import Profile from "../Molecules/Profile";
-import { TPost } from "@/types/model/PostItem";
-import { getCreatedBefore } from "@/dummies/utils";
+import { PostDataFull } from "@/types/model/PostItem";
+import { getCreatedBefore } from "@/utils/getCreatedBefore";
+import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
 
-export default function PostListItem({ item }: { item: TPost }) {
+export default function PostListItem({ item }: { item: PostDataFull }) {
   const createdBefore = getCreatedBefore(item.createdAt);
   return (
     <>
@@ -19,7 +20,19 @@ export default function PostListItem({ item }: { item: TPost }) {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <Profile size="small" user={item.writer} />
+            <Profile
+              size="small"
+              user={
+                item.writer
+                  ? {
+                      profile_img: item.writer.profile_img,
+                      name: item.writer.name,
+                      role: item.writer.role,
+                      position_tag: item.writer.position_tag,
+                    }
+                  : NULL_USER_FOR_PROFILE
+              }
+            />
             <span className="text-label-400 text-label-dimmed">
               {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개 ·
               {/* 댓글 스키마 변경으로 맞춰서 수정하기 */}

@@ -86,7 +86,6 @@ export default function FormUpdatePassword() {
         </div>
         <Button
           variation="outline"
-          colors={{ bg: "bg-main-600", text: "text-main-600" }}
           className="self-start"
           disabled={
             newPw.currentPassword === "" ||
