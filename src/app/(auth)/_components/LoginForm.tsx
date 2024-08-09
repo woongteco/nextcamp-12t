@@ -11,7 +11,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [pwData, setPwData] = useState<string>("");
 
-  async function login(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -24,8 +24,7 @@ export default function LoginForm() {
     }
 
     const login = await signIn("credentials", {
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
       email,
       password,
     });
@@ -35,11 +34,14 @@ export default function LoginForm() {
       setPwData("");
       return;
     }
+
+    // 클라이언트에서 로그인 후 서버 세션도 동기화를 해줘야함
+    // router.replace("/");
   }
 
   return (
     <>
-      <form onSubmit={login} className="flex flex-col w-full gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-5">
         <Input
           id="email"
           type="email"
