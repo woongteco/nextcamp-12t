@@ -1,15 +1,10 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyForm from "./_components/StudyForm";
 import { getSession } from "@/auth";
-import LoginModal from "@/app/(auth)/_components/LoginModal";
 
 export default async function page() {
   const session = await getSession();
   const id = session?.user.id as string;
-
-  // if (!session) {
-  //   return <LoginModal />;
-  // }
 
   return (
     <>
