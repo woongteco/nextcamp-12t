@@ -3,6 +3,7 @@ import Image from "next/image";
 import Container from "./Container";
 import { getSession } from "@/auth";
 import SessionedHeader from "./SessionedHeader";
+import Link from "next/link";
 
 export default async function Header() {
   const session = await getSession();

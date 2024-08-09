@@ -6,17 +6,26 @@ import Field from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
 import ButtonCheck from "@/common/Molecules/Form/ButtonCheck";
+import { PostValue } from "./PostForm";
 
 type Option = {
   readonly label: string;
   readonly value: string;
 };
 
-export default function SelectCategory() {
+export default function SelectCategory({
+  setData,
+  defaultValue,
+}: {
+  setData: Dispatch<Option>;
+  defaultValue?: PostValue["category"];
+}) {
   const categoryOptions = POST_CATEGORY.filter((m) => m.key !== "all").map(
     (m) => ({ value: m.key, label: m.label })
   );
-  const defaultCategory = categoryOptions[0];
+  const defaultCategory = defaultValue
+    ? { value: defaultValue.value, label: defaultValue.label }
+    : categoryOptions[0];
   const [category, setCategory] = useState<Option | null>(defaultCategory);
 
   useEffect(() => {
@@ -37,6 +46,7 @@ export default function SelectCategory() {
         </LabelText>
         <Input.Select
           required
+          name="category"
           options={categoryOptions}
           defaultValue={defaultCategory}
           value={category}
@@ -53,12 +63,13 @@ export default function SelectCategory() {
               name="recruitStatus"
               id="statusOpened"
               label="모집중"
-              defaultChecked
+              defaultChecked={defaultValue?.isRecruiting || true}
             />
             <ButtonCheck.Radio
               name="recruitStatus"
               id="statusClosed"
               label="모집완료"
+              defaultChecked={!defaultValue?.isRecruiting || false}
             />
           </ButtonCheck>
         </Field>

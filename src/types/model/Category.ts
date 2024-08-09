@@ -1,10 +1,10 @@
 export type CategoryGroup = {
   value: string;
   label: string;
-  options: CategoryOption[];
+  options: TSelectOption[];
 };
 
-export type CategoryOption = {
+export type TSelectOption = {
   value: string;
   label: string;
 };

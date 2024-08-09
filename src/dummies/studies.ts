@@ -1,21 +1,18 @@
-import { TUserBase } from "@/types/model/User";
 import { getImageUrl } from "./getImages";
-import { TStudyCard } from "@/types/model/StudyCard";
-
-export type TStudyCreatData = {};
-
-const studyCreateData = {};
+import { StudySchema } from "@/types/model/StudyCard";
 
 // 스터디카드 리스트
-const studyCards = [
+const studyCards: StudySchema[] = [
   {
     studyId: "0",
     user: {
-      userId: "1",
+      _id: "1",
+      email: "",
+      phone: "",
       name: "한지민",
       role: "user",
-      position: "개발자",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발자",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("desk", 268, 180, 12),
     title: "앱을 만들어보는 재밌는 개발 스터디",
@@ -40,11 +37,13 @@ const studyCards = [
   {
     studyId: "1",
     user: {
-      userId: "2",
+      _id: "2",
+      email: "",
+      phone: "",
       name: "한민",
       role: "user",
-      position: "개발",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("architect", 268, 180, 12),
     title: "비즈니스의 꿀팁",
@@ -69,11 +68,13 @@ const studyCards = [
   {
     studyId: "2",
     user: {
-      userId: "3",
+      _id: "3",
+      email: "",
+      phone: "",
       name: "한지",
       role: "pro",
-      position: "개발자",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발자",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("desk", 268, 180, 11),
     title: "인프라 같이 공부하실 분",
@@ -98,11 +99,13 @@ const studyCards = [
   {
     studyId: "3",
     user: {
-      userId: "4",
+      _id: "4",
+      email: "",
+      phone: "",
       name: "호호호지민",
       role: "user",
-      position: "호호호",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "호호호",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("tech", 268, 180, 10),
     title: "앱을 만들어보는 재밌는 개발 스터디",
@@ -127,11 +130,13 @@ const studyCards = [
   {
     studyId: "4",
     user: {
-      userId: "5",
+      _id: "5",
+      email: "",
+      phone: "",
       name: "농농농",
       role: "user",
-      position: "개발",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("architect", 268, 180, 9),
     title: "비즈니스의 꿀팁",
@@ -156,11 +161,13 @@ const studyCards = [
   {
     studyId: "5",
     user: {
-      userId: "6",
+      _id: "6",
+      email: "",
+      phone: "",
       name: "한지미",
       role: "user",
-      position: "개발자",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발자",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("tech", 268, 180, 4),
     title: "인프라 스터디 모집해요!",
@@ -185,11 +192,13 @@ const studyCards = [
   {
     studyId: "6",
     user: {
-      userId: "7",
+      _id: "7",
+      email: "",
+      phone: "",
       name: "이나연",
       role: "user",
-      position: "프론트개발자",
-      profileUrl: getImageUrl("all", 48, 48, 0),
+      // position: "프론트개발자",
+      profile_img: getImageUrl("all", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("nature", 268, 180, 7),
     title: "nextjs 그것이란,,",
@@ -214,11 +223,13 @@ const studyCards = [
   {
     studyId: "7",
     user: {
-      userId: "8",
+      _id: "8",
+      email: "",
+      phone: "",
       name: "장재우",
       role: "user",
-      position: "백엔드개발",
-      profileUrl: getImageUrl("tech", 48, 48, 0),
+      // position: "백엔드개발",
+      profile_img: getImageUrl("tech", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("desk", 268, 180, 6),
     title: "음악 작사작곡 꿀팁",
@@ -243,11 +254,13 @@ const studyCards = [
   {
     studyId: "8",
     user: {
-      userId: "9",
+      _id: "9",
+      email: "",
+      phone: "",
       name: "양씨",
       role: "user",
-      position: "자연인",
-      profileUrl: getImageUrl("art", 48, 48, 0),
+      // position: "자연인",
+      profile_img: getImageUrl("art", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("art", 268, 180, 5),
     title: "영상편집 초급 스터디 같이 하실분 !",
@@ -272,11 +285,13 @@ const studyCards = [
   {
     studyId: "9",
     user: {
-      userId: "10",
+      _id: "10",
+      email: "",
+      phone: "",
       name: "김철수",
       role: "user",
-      position: "개발자",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발자",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("art", 268, 180, 4),
     title: "앱을 만들어보는 재밌는 개발 스터디",
@@ -301,11 +316,13 @@ const studyCards = [
   {
     studyId: "10",
     user: {
-      userId: "11",
+      _id: "11",
+      email: "",
+      phone: "",
       name: "김민지",
       role: "user",
-      position: "마케터",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "마케터",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("architect", 268, 180, 3),
     title: "비즈니스의 꿀팁",
@@ -330,11 +347,13 @@ const studyCards = [
   {
     studyId: "11",
     user: {
-      userId: "12",
+      _id: "12",
+      email: "",
+      phone: "",
       name: "한지",
       role: "pro",
-      position: "개발자",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발자",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("animal", 268, 180, 2),
     title: "인프라 같이 공부하실 분",
@@ -359,11 +378,13 @@ const studyCards = [
   {
     studyId: "12",
     user: {
-      userId: "13",
+      _id: "13",
+      email: "",
+      phone: "",
       name: "호호호지민",
       role: "user",
-      position: "호호호",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "호호호",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("art", 268, 180, 1),
     title: "앱을 만들어보는 재밌는 개발 스터디",
@@ -388,11 +409,13 @@ const studyCards = [
   {
     studyId: "13",
     user: {
-      userId: "14",
+      _id: "14",
+      email: "",
+      phone: "",
       name: "농농농",
       role: "user",
-      position: "개발",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("architect", 268, 180, 1),
     title: "비즈니스의 꿀팁",
@@ -417,11 +440,13 @@ const studyCards = [
   {
     studyId: "14",
     user: {
-      userId: "15",
+      _id: "15",
+      email: "",
+      phone: "",
       name: "한지민미미미",
       role: "user",
-      position: "개발자",
-      profileUrl: getImageUrl("architect", 48, 48, 0),
+      // position: "개발자",
+      profile_img: getImageUrl("architect", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("animal", 268, 180, 1),
     title: "인프라 스터디 모집해요!",
@@ -446,11 +471,13 @@ const studyCards = [
   {
     studyId: "15",
     user: {
-      userId: "16",
+      _id: "16",
+      email: "",
+      phone: "",
       name: "김나영",
       role: "user",
-      position: "프론트개발자",
-      profileUrl: getImageUrl("all", 48, 48, 0),
+      // position: "프론트개발자",
+      profile_img: getImageUrl("all", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("nature", 268, 180, 1),
     title: "nextjs 그것이란,,",
@@ -475,11 +502,13 @@ const studyCards = [
   {
     studyId: "16",
     user: {
-      userId: "17",
+      _id: "17",
+      email: "",
+      phone: "",
       name: "장재우",
       role: "user",
-      position: "백엔드개발",
-      profileUrl: getImageUrl("tech", 48, 48, 0),
+      // position: "백엔드개발",
+      profile_img: getImageUrl("tech", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("desk", 268, 180, 1),
     title: "프로듀싱 작곡 스터디 모집합니다.",
@@ -504,11 +533,13 @@ const studyCards = [
   {
     studyId: "17",
     user: {
-      userId: "18",
+      _id: "18",
+      email: "",
+      phone: "",
       name: "양씨",
       role: "user",
-      position: "자연인",
-      profileUrl: getImageUrl("art", 48, 48, 0),
+      // position: "자연인",
+      profile_img: getImageUrl("art", 48, 48, 0),
     },
     thumbnailUrl: getImageUrl("art", 268, 180, 1),
     title: "영상편집 초급 스터디 같이 하실분 !",
@@ -532,6 +563,6 @@ const studyCards = [
   },
 ];
 
-export function getStudyCards(): TStudyCard[] {
+export function getStudyCards(): StudySchema[] {
   return studyCards;
 }

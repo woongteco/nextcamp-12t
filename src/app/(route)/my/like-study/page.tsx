@@ -2,11 +2,11 @@ import Link from "next/link";
 import NoneContentItemBase from "@/app/_components/NoneContentItemBase";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 import { getStudyCards } from "@/dummies/studies";
 
 export default function MyStudyLiked() {
-  const studyCards: TStudyCard[] = getStudyCards();
+  const studyCards: StudySchema[] = getStudyCards();
   return (
     <>
       <SectionTitle size="md" className="mb-6">

@@ -19,7 +19,7 @@ import { studyAction } from "@/lib/actions/studyAction";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
 import { SingleValue } from "react-select";
-import { CategoryOption } from "@/types/model/Category";
+import { TSelectOption } from "@/types/model/Category";
 
 type Option = {
   readonly label: string;

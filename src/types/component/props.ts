@@ -10,13 +10,6 @@ export type TIconButtonProps = ComponentProps<"button"> & {
   variation: "icon";
   size?: number;
 };
-export type TImageInputWithButtonProps = {
-  buttonProps: Omit<TButtonProps, "children">;
-  children: ReactNode; // be button's children
-} & Omit<
-  ComponentProps<"input">,
-  "type" | "accept" | "hidden" | "style" | "ref"
->;
 export type TLinkButtonProps = React.ComponentProps<"a"> &
   Omit<TButtonProps, "startIcon" | "endIcon"> & {
     href: string | object;

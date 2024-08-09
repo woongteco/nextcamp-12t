@@ -1,7 +1,14 @@
 "use client";
-import Button from "@/common/Atoms/Form/Button";
-import { TImageInputWithButtonProps } from "@/types/component/props";
-import { MouseEvent, useRef } from "react";
+import Button, { TButtonProps } from "@/common/Atoms/Form/Button";
+import { ComponentProps, MouseEvent, ReactNode, useRef } from "react";
+
+export type TImageInputWithButtonProps = {
+  buttonProps: Omit<TButtonProps, "children">;
+  children: ReactNode; // be button's children
+} & Omit<
+  ComponentProps<"input">,
+  "type" | "accept" | "hidden" | "style" | "ref"
+>;
 
 export default function ImageInputWithButton(
   props: TImageInputWithButtonProps
@@ -25,7 +32,7 @@ export default function ImageInputWithButton(
       <input
         ref={imageInput}
         type="file"
-        accept="image/*"
+        accept=".jpg,.jpeg,.png"
         hidden
         {...inputProps}
       />

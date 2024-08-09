@@ -49,7 +49,11 @@ export function Textarea(props: React.ComponentProps<"textarea">) {
   return (
     <>
       <textarea
-        className={clsx("h-[60px] w-full resize-none", inputStyle, className)}
+        className={clsx(
+          "min-h-[60px] w-full resize-none h-fit",
+          inputStyle,
+          className
+        )}
         {...restProps}
       />
     </>

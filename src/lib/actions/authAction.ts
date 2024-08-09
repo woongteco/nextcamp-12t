@@ -81,6 +81,9 @@ export async function loginGithub() {
 /**
  * 회원탈퇴: email 값을 전달받아 사용자 데이터 삭제.
  * 로그인한 사용자 중 이메일로 가입한 사용자만 회원탈퇴 기능 사용 가능
+ *
+ * 삭제된 사용자는 populate로 가져와도 null 처리됨.
+ * NULL_USER_FOR_PROFILE 데이터 대신 하여 익명 처리
  */
 export async function unregisterAction(email: string) {
   await connectDB();

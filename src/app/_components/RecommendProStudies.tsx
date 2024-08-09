@@ -1,12 +1,12 @@
 import StudyCardList from "@/common/Templates/CardList";
-import { getProfile } from "@/lib/actions/profileAction";
 import { filterStudies, getAllStudies } from "@/lib/actions/studyAction";
+import { getUserData } from "@/lib/actions/userAction";
 
 async function getFavorStudies(userId: string) {
   // 1. profile에서 관심 카테고리 가져오기
   // 2. 관심카테고리로 필터링하여 스터디 리스트 가져오기
 
-  const profile = await getProfile(userId);
+  const profile = await getUserData(userId);
 
   if (profile.state === false) {
     const result = await getAllStudies();

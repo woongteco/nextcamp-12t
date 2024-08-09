@@ -1,37 +1,27 @@
-import Link from "next/link";
-import { getPosts } from "@/dummies/posts";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import Dropdown from "@/common/Molecules/Dropdown";
 import LinkButton from "@/common/Atoms/LinkButton";
-import NotFound from "@/app/not-found";
 import PostListWithPagination from "@/common/Templates/PostListWithPagination";
 import { WriteIcon } from "@/common/Atoms/Image/Icon";
-import { TPost } from "@/types/model/PostItem";
+import { PostDataFull } from "@/types/model/PostItem";
 import NonePostItem from "../../post/_components/NonePostItem";
 import { getSession } from "@/auth";
 import connectDB from "@/lib/db";
 import { Post } from "@/lib/schema";
-import { delay } from "@/dummies/utils";
 import PostList from "@/common/Templates/PostList";
 import { notFound } from "next/navigation";
 
-const POST_FROM = [
-  { key: "community", label: "커뮤니티" },
-  { key: "study", label: "스터디" },
-];
-
-type TQuery = { from?: string };
-
-type State = { state: false; message: string } | { state: true; data: TPost[] };
+type State =
+  | { state: false; message: string }
+  | { state: true; data: PostDataFull[] };
 async function getPostsData(userId: string): Promise<State> {
   await connectDB();
 
-  // await delay(1000);
-  // const posts = getPosts();
-  // return { state: true, data: posts };
-
   try {
-    const posts = await Post.find({ writer: userId }).populate("writer");
+    const posts = await Post.find({ writer: userId })
+      .populate("writer")
+      .populate("comments")
+      .sort({ createdAt: "desc" });
     if (!posts) {
       return { state: false, message: "해당 게시글을 찾을 수 없습니다." };
     }
@@ -47,7 +37,7 @@ export default async function MyPost() {
 
   if (!result.state) return notFound();
 
-  const posts: TPost[] = result.data;
+  const posts: PostDataFull[] = result.data;
   console.log("posts", posts);
 
   return (
