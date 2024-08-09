@@ -3,20 +3,14 @@
 import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import handleAlert from "@/common/Molecules/handleAlert";
 
 export default function LoginForm() {
   const router = useRouter();
   const [pwData, setPwData] = useState<string>("");
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.replace("/");
-    }
-  }, [status]);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,18 +24,30 @@ export default function LoginForm() {
       return;
     }
 
-    const login = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    try {
+      const login = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
-    if (login?.error) {
-      handleAlert("error", "이메일 또는 비밀번호를 다시 확인해주세요.");
-      setPwData("");
-      return;
+      if (login?.error) {
+        handleAlert("error", "이메일 또는 비밀번호를 다시 확인해주세요.");
+        setPwData("");
+        return;
+      }
+
+      setLoginSuccess(true);
+    } catch (error) {
+      console.log(error);
     }
   }
+
+  useEffect(() => {
+    if (loginSuccess) {
+      router.replace("/");
+    }
+  }, [loginSuccess, router]);
 
   return (
     <>
