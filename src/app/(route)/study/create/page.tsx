@@ -18,7 +18,6 @@ export default async function page() {
           당신이 가진 직무 역량과 팁을 공유해주세요
         </span>
       </div>
-
       <StudyForm id={id} />
     </>
   );

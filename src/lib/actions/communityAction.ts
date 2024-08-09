@@ -6,7 +6,7 @@ import { Post, Comment } from "../schema";
 import { revalidatePath } from "next/cache";
 
 // post
-export async function communityAction(id: string, formData: FormData) {
+export async function createCommunity(userId: string, formData: FormData) {
   const postId = nanoid();
   const categoryValue = formData.get("categoryValue") as string;
   const categoryLabel = formData.get("categoryLabel") as string;
@@ -17,7 +17,7 @@ export async function communityAction(id: string, formData: FormData) {
 
   // console.log("### linkedStudyId", linkedStudyId);
 
-  if (!id) {
+  if (!userId) {
     return { state: false, message: "유효한 id가 필요합니다." };
   }
 
@@ -43,8 +43,7 @@ export async function communityAction(id: string, formData: FormData) {
         body,
         linkedStudyId,
       },
-      writer: id,
-      comments: [],
+      writer: userId,
       createdAt: new Date(),
       view: 0,
       like: 0,
@@ -145,7 +144,7 @@ export async function deleteCommunity(postId: string) {
   await connectDB();
 
   try {
-    await Post.findOneAndDelete({ postId });
+    await Post.deleteOne({ postId });
     await Comment.deleteMany({ postId });
 
     revalidatePath("/my/post");

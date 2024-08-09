@@ -68,14 +68,14 @@ export default function FormEditProfile({
         <Input.Text
           name="positionTag"
           placeholder="이름 앞에 추가될 포지션 태그를 추가하세요"
-          defaultValue={profile.position_tag}
+          defaultValue={profile?.position_tag}
         />
       </ProfileInputArea>
       <ProfileInputArea label="내 소개">
         <Input.Textarea
           name="introduce"
           placeholder="나를 소개할 말을 추가하세요"
-          defaultValue={profile.introduce}
+          defaultValue={profile?.introduce}
         />
       </ProfileInputArea>
       {session?.account.provider === "credentials" && (
@@ -105,7 +105,7 @@ export default function FormEditProfile({
           placeholder="관심 카테고리를 추가하세요"
           isMulti
           options={CATEGORIES}
-          defaultValue={profile.my_category}
+          defaultValue={profile?.my_category}
         />
       </ProfileInputArea>
       <Button type="submit" variation="solid" className="self-end">

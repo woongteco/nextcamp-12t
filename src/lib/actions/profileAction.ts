@@ -64,7 +64,7 @@ export async function getProfile(userId: string) {
     );
 
     if (!profile) {
-      return { state: false, message: "프로필 정보가 없습니다." };
+      return { state: false, data: null, message: "프로필 정보가 없습니다." };
     }
 
     return { state: true, data: profile };

@@ -2,13 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import connectDB from "../db";
-import { Post } from "../schema";
+import { Comment } from "../schema";
 import { nanoid } from "nanoid";
 
 // post
-export async function replyAction(
+export async function createReply(
   id: string,
-  postId: string,
   commentId: string,
   formData: FormData
 ) {
@@ -22,12 +21,11 @@ export async function replyAction(
   await connectDB();
 
   try {
-    const commentReply = await Post.findByIdAndUpdate(
-      { postId, "comments.commentId": commentId },
+    const commentReply = await Comment.findOneAndUpdate(
+      { commentId },
       {
         $push: {
-          "comments.$.reply": {
-            commentId,
+          reply: {
             replyId,
             content,
             writer: id,
@@ -41,7 +39,6 @@ export async function replyAction(
       return { state: false, message: "해당 댓글을 찾을 수 없습니다." };
     }
 
-    revalidatePath(`/post/${postId}`);
     return { state: true, message: "답글이 등록되었습니다." };
   } catch (error) {
     console.log("post reply error");
@@ -50,11 +47,11 @@ export async function replyAction(
 }
 
 // get
-export async function getReply(postId: string) {
+export async function getReply(commentId: string) {
   await connectDB();
 
   try {
-    const reply = await Post.findOne({ postId })
+    const reply = await Comment.findOne({ commentId })
       .select("comments")
       .populate("comments.reply.writer");
 
@@ -69,8 +66,7 @@ export async function getReply(postId: string) {
 }
 
 // update
-export async function updateComment(
-  postId: string,
+export async function updateReply(
   commentId: string,
   replyId: string,
   formData: FormData
@@ -80,22 +76,15 @@ export async function updateComment(
   await connectDB();
 
   try {
-    const update = await Post.findOneAndUpdate(
-      {
-        postId,
-        "comments.commentId": commentId,
-        "comments.reply.replyId": replyId,
-      },
+    const update = await Comment.findOneAndUpdate(
+      { commentId, "reply.replyId": replyId },
       {
         $set: {
-          "comments.$[comment].reply.$[reply].content": content,
+          "reply.$[reply].content": content,
         },
       },
       {
-        arrayFilters: [
-          { "comment.commentId": commentId },
-          { "reply.replyId": replyId },
-        ],
+        arrayFilters: [{ "reply.replyId": replyId }],
       }
     );
 
@@ -111,17 +100,13 @@ export async function updateComment(
 }
 
 // delete
-export async function deleteReply(
-  postId: string,
-  commentId: string,
-  replyId: string
-) {
+export async function deleteReply(commentId: string, replyId: string) {
   await connectDB();
 
   try {
-    await Post.updateOne(
-      { postId, "comments.commentId": commentId },
-      { $pull: { "comments.$.reply": { replyId } } }
+    await Comment.updateOne(
+      { commentId, "reply.replyId": replyId },
+      { $pull: { reply: { replyId } } }
     );
     return { success: true, message: "댓글이 삭제되었습니다." };
   } catch (error) {

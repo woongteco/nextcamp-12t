@@ -8,6 +8,8 @@ import Link from "next/link";
 export default async function Header() {
   const session = await getSession();
 
+  console.log("해더 서버 세션" + session);
+
   return (
     <header className="fixed top-0 w-full bg-white z-header border-b border-b-line-normal">
       <Container>
