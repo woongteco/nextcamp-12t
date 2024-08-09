@@ -1,6 +1,6 @@
-import { CategoryOption } from "@/types/model/Category";
+import { TSelectOption } from "@/types/model/Category";
 
-export const GOALS: CategoryOption[] = [
+export const GOALS: TSelectOption[] = [
   { label: "개념학습", value: "goal_1" },
   { label: "응용/활용", value: "goal_2" },
   { label: "프로젝트", value: "goal_3" },

@@ -1,15 +1,22 @@
 import Image from "next/image";
 import ProfileImg from "../Atoms/Image/ProfileImg";
 import { BadgeIcon } from "@public/icons";
-import { TUserBase } from "@/types/model/User";
 import clsx from "clsx";
 import { ProfileSchema } from "@/types/model/Profile";
+
+// Profile에 user 데이터 전달 시 형식에 맞게 필요한 값만 plain object로 전달
+export type TProfileUser = {
+  profile_img: string;
+  name: string;
+  position_tag: string;
+  role: string;
+};
 
 export default function Profile({
   user,
   size,
 }: {
-  user: TUserBase | ProfileSchema;
+  user: TProfileUser;
   size: "default" | "large" | "small";
 }) {
   const gap = {
@@ -23,24 +30,15 @@ export default function Profile({
     small: "text-label-600 text-label-dimmed",
   };
 
-  const src =
-    user?.userId?.profile_img ||
-    user?.profile_img ||
-    "/images/profile/DummyProfileImg.jpg";
+  const src = user.profile_img || "/images/profile/DummyProfileImg.jpg";
   return (
     <div className={clsx("flex flex-row flex-nowrap items-center", gap[size])}>
-      <ProfileImg
-        size={size}
-        src={src}
-        alt={`${user?.userId?.name || user?.name} 프로필 이미지`}
-      />
+      <ProfileImg size={size} src={src} alt={`${user.name} 프로필 이미지`} />
       <span className={style[size]}>
-        {user?.position_tag ? `${user?.position_tag} ` : null}
-        {user?.userId?.name || user?.name}
+        {user.position_tag ? `${user.position_tag} ` : null}
+        {user.name}
       </span>
-      {(user?.userId?.role === "pro" || user?.role === "pro") && (
-        <Image src={BadgeIcon} alt="pro" />
-      )}
+      {user.role === "pro" && <Image src={BadgeIcon} alt="pro" />}
     </div>
   );
 }

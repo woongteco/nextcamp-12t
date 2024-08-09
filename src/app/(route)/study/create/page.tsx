@@ -6,10 +6,6 @@ export default async function page() {
   const session = await getSession();
   const id = session?.user.id as string;
 
-  // if (!session) {
-  //   return <LoginModal />;
-  // }
-
   return (
     <>
       <SectionTitle size="lg" className="pb-6 border-b border-black">

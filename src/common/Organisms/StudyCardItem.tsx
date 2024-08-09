@@ -11,9 +11,9 @@ import Keyword from "../Atoms/Text/Keyword";
 import Profile from "../Molecules/Profile";
 import Thumbnail from "../Atoms/Image/Thumbnail";
 import dayjs from "dayjs";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudySchema } from "@/types/model/StudyCard";
 
-export default function StudyCardItem({ card }: { card: TStudyCard }) {
+export default function StudyCardItem({ card }: { card: StudySchema }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
   const recruitmentDay = dayjs(card.recruitmentPeriod[1]);
   const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");
@@ -50,9 +50,9 @@ export default function StudyCardItem({ card }: { card: TStudyCard }) {
           <div className="flex items-center gap-[.25rem] pt-2">
             <Profile
               user={{
-                profile_img: card.user.profile_img,
+                profile_img: card.user.profile_img || "",
                 name: card.user.name,
-                position: card.user.position,
+                position_tag: card.user.position_tag,
                 role: card.user.role,
               }}
               size="small"

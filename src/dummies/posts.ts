@@ -1,4 +1,4 @@
-import { TPost } from "@/types/model/PostItem";
+import { PostDataFull } from "@/types/model/PostItem";
 
 const alphabet =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-";
@@ -16,7 +16,7 @@ function encodeNumToStr(num: number): string {
   return encoded;
 }
 
-const example: TPost[] = [
+const example: PostDataFull[] = [
   {
     postId: encodeNumToStr(101355),
     category: {
@@ -30,10 +30,12 @@ const example: TPost[] = [
       linkedStudyId: null,
     },
     writer: {
-      userId: "hanyoojun",
+      _id: "hanyoojun",
       name: "한유준",
+      email: "",
+      phone: "",
       role: "user",
-      position: "개발자",
+      position_tag: "개발자",
       profile_img: "",
     },
     createdAt: "2024-07-24 22:10:00",
@@ -54,10 +56,12 @@ const example: TPost[] = [
       linkedStudyId: "1",
     },
     writer: {
-      userId: "hanyoojun",
+      _id: "hanyoojun",
       name: "한유준",
+      email: "",
+      phone: "",
       role: "user",
-      position: "개발자",
+      position_tag: "개발자",
       profile_img: "",
     },
     createdAt: "2024-06-29 20:00:00",
@@ -69,10 +73,12 @@ const example: TPost[] = [
         commentId: "comment-12345",
         content: "초보도 참여 가능할까요?",
         writer: {
-          userId: "kimjihyeon",
+          _id: "kimjihyeon",
           name: "김지현",
+          email: "",
+          phone: "",
           role: "user",
-          position: "",
+          position_tag: "",
           profile_img: "",
         },
         createdAt: "2024-07-01 11:02",
@@ -94,10 +100,12 @@ const example: TPost[] = [
       linkedStudyId: null,
     },
     writer: {
-      userId: "hanyoojun",
+      _id: "hanyoojun",
       name: "한유준",
+      email: "",
+      phone: "",
       role: "user",
-      position: "개발자",
+      position_tag: "개발자",
       profile_img: "",
     },
     createdAt: "2024-06-29 00:00:00",
@@ -118,10 +126,12 @@ const example: TPost[] = [
       linkedStudyId: null,
     },
     writer: {
-      userId: "hanyoojun",
+      _id: "hanyoojun",
       name: "한유준",
+      email: "",
+      phone: "",
       role: "user",
-      position: "개발자",
+      position_tag: "개발자",
       profile_img: "",
     },
     createdAt: "2024-06-25 00:00:00",
@@ -133,10 +143,12 @@ const example: TPost[] = [
         commentId: "comment-1",
         content: "This is comment number 1",
         writer: {
-          userId: "hanyoojun",
+          _id: "hanyoojun",
           name: "한유준",
+          email: "",
+          phone: "",
           role: "user",
-          position: "개발자",
+          position_tag: "개발자",
           profile_img: "",
         },
         createdAt: "2024-07-24T14:08:54.101Z",
@@ -146,10 +158,12 @@ const example: TPost[] = [
             commentId: "reply-1",
             content: "Reply to comment number 1",
             writer: {
-              userId: "hanyoojun",
+              _id: "hanyoojun",
               name: "한유준",
+              email: "",
+              phone: "",
               role: "user",
-              position: "개발자",
+              position_tag: "개발자",
               profile_img: "",
             },
             createdAt: "2024-07-24T14:08:54.101Z",
@@ -161,10 +175,12 @@ const example: TPost[] = [
         commentId: "comment-2",
         content: "This is comment number 2",
         writer: {
-          userId: "kimjihyeon",
+          _id: "kimjihyeon",
           name: "김지현",
+          email: "",
+          phone: "",
           role: "user",
-          position: "",
+          position_tag: "",
           profile_img: "",
         },
         createdAt: "2024-07-24T14:08:54.101Z",
@@ -174,14 +190,14 @@ const example: TPost[] = [
   },
 ];
 
-export function getPosts(category?: string): TPost[] {
+export function getPosts(category?: string): PostDataFull[] {
   if (category === undefined || category === "all") {
     return example;
   }
   return example.filter((post) => post.category.value === category);
 }
 
-export function getPost(id: string): TPost {
+export function getPost(id: string): PostDataFull {
   const filtered = example.find((post) => post.postId === id);
   if (filtered) {
     return filtered;

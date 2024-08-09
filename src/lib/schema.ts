@@ -1,5 +1,18 @@
 import mongoose from "mongoose";
 
+const subLabelValue = new mongoose.Schema({
+  label: { type: String, required: true },
+  value: { type: String, required: true },
+});
+
+// @deprecated 프로필
+const profile = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  position_tag: { type: String, default: "" },
+  introduce: { type: String, default: "" },
+  my_category: { type: [subLabelValue], default: [] },
+});
+
 // 유저
 const user = new mongoose.Schema(
   {
@@ -9,30 +22,20 @@ const user = new mongoose.Schema(
     profile_img: { type: String, default: null },
     phone: { type: String },
     role: { type: String, enum: ["user", "pro", "admin"], default: "user" },
+    position_tag: { type: String, default: "" },
+    introduce: { type: String, default: "" },
+    my_category: { type: [subLabelValue], default: [] },
     provider: { type: String },
     providerAccountId: { type: String },
   },
   { timestamps: true }
 );
 
-const subLabelValue = new mongoose.Schema({
-  label: { type: String, required: true },
-  value: { type: String, required: true },
-});
-
 // 마이페이지
 const mypage = new mongoose.Schema({
   myStudy: [{ type: [String], default: [] }],
   likeStudy: [{ type: [String], default: [] }],
   myPost: [{ type: [String], default: [] }],
-});
-
-// 프로필
-const profile = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  position_tag: { type: String, default: null },
-  introduce: { type: String, default: null },
-  my_category: { type: [subLabelValue], default: [] },
 });
 
 const subReply = new mongoose.Schema({

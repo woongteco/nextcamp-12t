@@ -1,8 +1,9 @@
 import { CommentSchema } from "./Comment";
-import { ProfileSchema } from "./Profile";
-import { TUserBase } from "./User";
+import { ProfileSchema } from "./User";
 
-export type TPost = {
+type CommentId = CommentSchema["commentId"];
+
+export type PostSchema = {
   postId: string;
   category: {
     value: string;
@@ -14,9 +15,14 @@ export type TPost = {
     body: string;
     linkedStudyId: null | string;
   };
-  writer: string | ProfileSchema;
+  writer: string;
   createdAt: string;
   view: number;
   like: number;
+  comments: CommentId[];
+};
+
+export type PostDataFull = Omit<PostSchema, "writer" | "comments"> & {
+  writer: ProfileSchema;
   comments: CommentSchema[];
 };

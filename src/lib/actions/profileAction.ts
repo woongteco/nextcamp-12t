@@ -4,10 +4,11 @@ import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { Profile, User } from "../schema";
 import { getSession } from "@/auth";
-import { TUserBase } from "@/types/model/User";
+import { UserSchema } from "@/types/model/User";
 
 /**
  * userId 값을 이용하여 새로운 사용자 프로필 데이터 추가
+ * @deprecated
  */
 export async function createProfile(id: string, formData: FormData) {
   const position_tag = formData.get("positionTag") as string;
@@ -52,12 +53,15 @@ export async function createProfile(id: string, formData: FormData) {
 
 /**
  * userId 값을 통해 프로필 정보 가져오기
+ * @deprecated `getUserData`로 대체
  */
 export async function getProfile(userId: string) {
   await connectDB();
 
   try {
-    let profile = await Profile.findOne({ userId }).populate("userId");
+    let profile = await User.findOne({ _id: userId }).select(
+      "+position_tag +introduce +my_category +phone +email"
+    );
 
     if (!profile) {
       return { state: false, data: null, message: "프로필 정보가 없습니다." };
@@ -81,8 +85,8 @@ export async function updateProfile(id: string, formData: FormData) {
   console.log("update", { position_tag, introduce, my_category });
 
   try {
-    const update = await Profile.findOneAndUpdate(
-      { userId: id },
+    const update = await User.findOneAndUpdate(
+      { _id: id },
       { position_tag, introduce, my_category },
       { new: true }
     );
@@ -120,25 +124,10 @@ export async function saveMyCategory(formData: FormData) {
 
   await connectDB();
 
-  const profileExist = await Profile.findOne({ userId });
-
-  const position_tag = "";
-  const introduce = "";
   const my_category = JSON.parse(formData.get("my_category") as string);
 
   try {
-    profileExist
-      ? await Profile.findOneAndUpdate(
-          { userId },
-          { position_tag, introduce, my_category },
-          { new: true }
-        )
-      : await new Profile({
-          userId,
-          position_tag,
-          introduce,
-          my_category,
-        }).save();
+    await User.findOneAndUpdate({ userId }, { my_category }, { new: true });
 
     return {
       state: true,
@@ -154,17 +143,15 @@ export async function saveMyCategory(formData: FormData) {
 }
 
 /**
- * 사용 경로: /my/profile
- *
  * `updateDoc`으로 업데이트할 사용자 정보를 타입에 맞게 전달하여
  * 사용자 정보 업데이트
  */
-type NonStaticUserData = Pick<TUserBase, "profile_img" | "phone" | "role">;
+type NonStaticUserData = Pick<UserSchema, "profile_img" | "phone" | "role">;
 type UpdateDocument = Partial<NonStaticUserData>;
-export async function updateUserInfo(id: string, updateDoc: UpdateDocument) {
+export async function updateUserData(id: string, updateDoc: UpdateDocument) {
   await connectDB();
 
-  const check = await User.findOne({ _id: id });
+  const check = await User.exists({ _id: id });
   console.log({ exist: check });
 
   try {

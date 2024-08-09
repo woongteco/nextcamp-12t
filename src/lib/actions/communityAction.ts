@@ -3,6 +3,7 @@
 import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post, Comment } from "../schema";
+import { revalidatePath } from "next/cache";
 
 // post
 export async function createCommunity(userId: string, formData: FormData) {
@@ -50,6 +51,7 @@ export async function createCommunity(userId: string, formData: FormData) {
 
     await post.save();
 
+    revalidatePath("/post");
     return {
       state: true,
       message: "커뮤니티 글이 등록되었습니다.",
@@ -70,7 +72,7 @@ export async function getCommunity(postId: string | null = null) {
   try {
     if (postId) {
       const post = await Post.findOne({ postId })
-        .populate("writer")
+        .populate("writer", "+name +email +role +profile_img +profile")
         .populate("comments");
 
       if (!post) {
@@ -78,7 +80,10 @@ export async function getCommunity(postId: string | null = null) {
       }
       return { state: true, data: post };
     } else {
-      const postList = await Post.find().populate("writer");
+      const postList = await Post.find()
+        .populate("writer", "+name +email +role +profile_img +profile")
+        .sort({ createdAt: "desc" });
+      console.log("# 커뮤니티 글", postList);
       return { state: true, data: postList };
     }
   } catch (error) {
@@ -125,6 +130,8 @@ export async function updateCommunity(postId: string, formData: FormData) {
     if (!update) {
       return { state: false, message: "해당 커뮤니티 글을 찾을 수 없습니다." };
     }
+    revalidatePath(`/post`);
+    revalidatePath(`/post/${postId}`);
     return { state: true, message: "커뮤니티 글이 수정되었습니다." };
   } catch (error) {
     console.log("update post error " + error);
@@ -140,6 +147,7 @@ export async function deleteCommunity(postId: string) {
     await Post.deleteOne({ postId });
     await Comment.deleteMany({ postId });
 
+    revalidatePath("/my/post");
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete post error", error);
