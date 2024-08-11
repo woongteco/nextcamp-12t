@@ -6,7 +6,7 @@ import LinkedStudyCard from "../_components/LinkedStudyCard";
 import CommentArea from "@/common/Templates/CommentArea";
 import ShareIconButton from "../../_components/ShareIconButton";
 import LikeIconButton from "../../_components/LikeIconButton";
-import { PostDataFull, PostSchema } from "@/types/model/PostItem";
+import { PostDataFull } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { Post } from "@/lib/schema";
 import { notFound } from "next/navigation";
@@ -15,6 +15,22 @@ import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
 import { getCommunity } from "@/lib/actions/communityAction";
+
+// 커뮤니티 상세 페이지 데이터 패칭
+async function detailPostDataTest(postId: string) {
+  console.log("data fetch" + postId);
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/api/community/${postId}`
+    );
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function increaseViewCount(postId: string) {
   try {
@@ -62,6 +78,9 @@ export default async function PostDetail({
     }
   }
 
+  const { data } = await detailPostDataTest(postId);
+  console.log("커뮤니티 상세 페이지 데이터 패칭" + JSON.stringify(data));
+
   return (
     <div>
       <ReturnToListButton />
@@ -101,10 +120,10 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      <CommentArea
+      {/* <CommentArea
         sessionId={session?.user.id || ""}
         comments={post.comments}
-      />
+      /> */}
     </div>
   );
 }

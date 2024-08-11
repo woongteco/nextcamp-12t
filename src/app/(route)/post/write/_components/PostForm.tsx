@@ -10,7 +10,7 @@ import SelectCategory from "./SelectCategory";
 import { FormEvent, useRef, useState } from "react";
 import { Session } from "next-auth";
 import {
-  communityAction,
+  createCommunity,
   updateCommunity,
 } from "@/lib/actions/communityAction";
 import { redirect, useRouter } from "next/navigation";
@@ -55,11 +55,15 @@ export default function PostForm({
     if (content) {
       formData.append("body", content);
     }
+    if (data) {
+      formData.append("categoryValue", data.value);
+      formData.append("categoryLabel", data.label);
+    }
 
     try {
       const result = defaultValue
         ? await updateCommunity(defaultValue.postId, formData)
-        : await communityAction(id, formData);
+        : await createCommunity(id, formData);
 
       if (result.state) {
         handleAlert("success", result.message);

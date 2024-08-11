@@ -1,36 +1,22 @@
 import {
   createReply,
   deleteReply,
-  getReply,
   updateReply,
 } from "@/lib/actions/replyAction";
 import { NextRequest } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
-  const postId = searchParams.get("postId");
-
-  if (!postId) {
-    return Response.json({ status: 400 });
-  }
-
-  try {
-    const data = await getReply(postId);
-    return Response.json({ data }, { status: 200 });
-  } catch (error) {
-    return Response.json({ error }, { status: 500 });
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.json();
     const { searchParams } = request.nextUrl;
     const userId = searchParams.get("userId");
     const commentId = searchParams.get("commentId");
+    const formData = await request.json();
 
     if (!userId || !commentId) {
-      return Response.json({ status: 400 });
+      return Response.json(
+        { error: "user 또는 comment id가 없습니다." },
+        { status: 400 }
+      );
     }
 
     const data = await createReply(userId, commentId, formData);
@@ -42,13 +28,16 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const formData = await request.json();
     const { searchParams } = request.nextUrl;
     const commentId = searchParams.get("commentId");
     const replyId = searchParams.get("replyId");
+    const formData = await request.json();
 
     if (!commentId || !replyId) {
-      return Response.json({ status: 400 });
+      return Response.json(
+        { error: "comment 또는 reply id가 없습니다." },
+        { status: 400 }
+      );
     }
 
     const data = await updateReply(commentId, replyId, formData);
@@ -65,7 +54,10 @@ export async function DELETE(request: NextRequest) {
     const replyId = searchParams.get("replyId");
 
     if (!commentId || !replyId) {
-      return Response.json({ status: 400 });
+      return Response.json(
+        { error: "comment 또는 reply id가 없습니다." },
+        { status: 400 }
+      );
     }
 
     const data = await deleteReply(commentId, replyId);

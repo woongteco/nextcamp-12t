@@ -72,18 +72,25 @@ export async function getCommunity(postId: string | null = null) {
   try {
     if (postId) {
       const post = await Post.findOne({ postId })
-        .populate("writer", "+name +email +role +profile_img +profile")
+        .populate(
+          "writer",
+          "name email role profile_img position_tag introduce my_category"
+        )
         .populate("comments");
 
       if (!post) {
         return { state: false, message: "해당 게시글을 찾을 수 없습니다." };
       }
+
       return { state: true, data: post };
     } else {
       const postList = await Post.find()
-        .populate("writer", "+name +email +role +profile_img +profile")
+        .populate(
+          "writer",
+          "name email role profile_img position_tag introduce my_category"
+        )
         .sort({ createdAt: "desc" });
-      console.log("# 커뮤니티 글", postList);
+      // console.log("# 커뮤니티 글", postList);
       return { state: true, data: postList };
     }
   } catch (error) {
