@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "./UserInput";
 import RegisterCheck from "./RegisterCheck";
 import handleAlert from "@/common/Molecules/handleAlert";
-import { authAction } from "@/lib/actions/authAction";
+import { register } from "@/lib/actions/authAction";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -18,11 +18,10 @@ export default function RegisterForm() {
     const formData = new FormData(e.currentTarget);
 
     try {
-      const result = await authAction(formData);
+      const result = await register(formData);
 
       if (result.state) {
         router.replace("/set-category");
-        handleAlert("success", result.message);
       } else {
         handleAlert("error", result.message);
       }
@@ -76,7 +75,7 @@ export default function RegisterForm() {
         />
         <RegisterCheck />
         <button className="w-full rounded-md py-2 text-white bg-main-600">
-          가입하기
+          다음 단계로
         </button>
       </form>
     </>

@@ -23,6 +23,7 @@ export default function SetCategoryFavor() {
 
   const skipThis: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
+    handleAlert("success", "회원가입이 완료되어 로그인 되었습니다.");
     router.replace("/");
   };
 

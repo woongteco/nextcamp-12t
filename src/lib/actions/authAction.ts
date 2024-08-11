@@ -9,12 +9,13 @@ const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
 const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
 const nameValid = /^[가-힣]{2,4}$/;
 
-export async function authAction(formData: FormData) {
+export async function register(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const pwCheck = formData.get("pwCheck") as string;
   const name = formData.get("name") as string;
   const phone = formData.get("phone") as string;
+  const hashedPassword = await hash(String(password), 10);
 
   if (!emailValid.test(email)) {
     return { state: false, message: "이메일 유형에 맞게 입력해주세요." };
@@ -41,7 +42,6 @@ export async function authAction(formData: FormData) {
   }
 
   try {
-    const hashedPassword = await hash(String(password), 10);
     const user = new User({
       name,
       email,
@@ -56,26 +56,41 @@ export async function authAction(formData: FormData) {
       email,
       password,
     });
-    return {
-      state: true,
-      message: "회원가입 완료되어 로그인 되었습니다.",
-    };
+
+    return { state: true };
   } catch (error) {
     console.log("auth error" + error);
     return { state: false, message: "회원가입에 실패했습니다." };
   }
 }
 
-export async function loginGoogle() {
-  await signIn("google");
-}
+export async function login(formData: FormData) {
+  const email = formData.get("email");
+  const password = formData.get("password");
 
-export async function loginKakao() {
-  await signIn("kakao");
-}
+  if (!email || !password) {
+    return { state: false, message: "입력한 정보를 다시 확인해주세요." };
+  }
 
-export async function loginGithub() {
-  await signIn("github");
+  try {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      return { state: false, message: "아이디와 비밀번호를 확인해주세요." };
+    } else {
+      return { state: true, message: "로그인 되었습니다." };
+    }
+  } catch (error) {
+    console.log("login error" + error);
+    return {
+      state: false,
+      message: "로그인중 문제가 발생하여 다시 시도해주세요.",
+    };
+  }
 }
 
 /**
