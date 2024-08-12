@@ -5,6 +5,7 @@ import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
 import { StudySchema } from "@/types/model/StudyCard";
 import { DummyProfileImg } from "@public/images";
+import Thumbnail from "@/common/Atoms/Image/Thumbnail";
 
 export default function WideStudyItem({ card }: { card: StudySchema }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
@@ -13,12 +14,11 @@ export default function WideStudyItem({ card }: { card: StudySchema }) {
 
   return (
     <Link href={`/study/${card.studyId}`} className="h-[11.25rem] relative">
-      <Image
+      <Thumbnail
         src={card.thumbnailUrl}
         className="absolute rounded-[1.25rem] h-full"
-        width={588}
-        height={180}
-        alt="스터디 썸네일 이미지"
+        useIn="wide"
+        alt={`${card.title} 스터디 썸네일 이미지`}
       />
 
       <div className="w-full h-full absolute bg-gradient-to-r from-black/30 to-black bg-no-repeat rounded-[1.25rem]">
