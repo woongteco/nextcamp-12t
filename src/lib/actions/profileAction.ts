@@ -8,7 +8,7 @@ import { UserSchema } from "@/types/model/User";
 
 /**
  * userId 값을 이용하여 새로운 사용자 프로필 데이터 추가
- * @deprecated
+ * @deprecated 회원가입 시 User 스키마에 빈 프로필 속성 생성, 더이상 사용하지 않음
  */
 export async function createProfile(id: string, formData: FormData) {
   const position_tag = formData.get("positionTag") as string;

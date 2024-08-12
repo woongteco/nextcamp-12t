@@ -1,5 +1,4 @@
 import { TButtonProps } from "@/common/Atoms/Form/Button";
-import { ImageProps } from "next/image";
 import { ComponentProps, MouseEventHandler, ReactNode, RefObject } from "react";
 
 export type TProps = {
@@ -28,11 +27,6 @@ export type TNavItemProps = {
   href: string;
   label: string;
   active: boolean;
-};
-export type TImageThumbnailProps = ImageProps & {
-  src: string;
-  alt: string;
-  useIn?: "list" | "specific" | "linked";
 };
 export type TModalPortalProps<T> = TProps & {
   onClose: MouseEventHandler<T>;

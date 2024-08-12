@@ -33,7 +33,7 @@ export default function StudyCardItem({ card }: { card: StudySchema }) {
             {resultDay > 0 ? "모집마감" : "모집중"}
           </Keyword>
           <Thumbnail
-            useIn="list"
+            useIn="default"
             loading="lazy"
             placeholder="blur"
             blurDataURL={card.thumbnailUrl + "?blur=2"}

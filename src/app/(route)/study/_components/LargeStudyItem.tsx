@@ -5,6 +5,7 @@ import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
 import { StudySchema } from "@/types/model/StudyCard";
 import { DummyProfileImg } from "@public/images";
+import Thumbnail from "@/common/Atoms/Image/Thumbnail";
 
 export default function LargeStudyItem({ card }: { card: StudySchema }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
@@ -13,12 +14,11 @@ export default function LargeStudyItem({ card }: { card: StudySchema }) {
 
   return (
     <div className="h-[28rem] relative">
-      <Image
+      <Thumbnail
         src={card.thumbnailUrl}
         className="absolute rounded-[1.25rem] h-full"
-        width={392}
-        height={448}
-        alt="스터디 썸네일 이미지"
+        useIn="large"
+        alt={`${card.title} 스터디 썸네일 이미지`}
       />
 
       <div className="w-full h-full absolute bg-gradient-to-t from-black to-black/30 bg-no-repeat rounded-[1.25rem]">
