@@ -3,7 +3,7 @@ import Notification from "@/common/Molecules/Notification";
 
 export default function handleAlert(
   type: "success" | "error",
-  content: string,
+  content?: string,
   message?: string
 ) {
   toast.custom((t: Toast) => (

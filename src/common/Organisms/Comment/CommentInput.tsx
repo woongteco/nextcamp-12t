@@ -4,7 +4,7 @@ import { FormEvent, useRef, useState } from "react";
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
 import { useParams, useRouter } from "next/navigation";
-import { commentAction, getComment } from "@/lib/actions/commentAction";
+import { createComment, getComment } from "@/lib/actions/commentAction";
 import handleAlert from "@/common/Molecules/handleAlert";
 
 export default function CommentInput({
@@ -36,7 +36,7 @@ export default function CommentInput({
     const postId = params.postId ? params.postId : params.postId || "";
 
     try {
-      const result = await commentAction(sessionId, postId, formData);
+      const result = await createComment(sessionId, postId, formData);
 
       if (result.state) {
         handleAlert("success", result.message);

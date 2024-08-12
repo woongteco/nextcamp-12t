@@ -2,77 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import connectDB from "../db";
-import { Profile, User } from "../schema";
+import { User } from "../schema";
 import { getSession } from "@/auth";
 import { UserSchema } from "@/types/model/User";
-
-/**
- * userId 값을 이용하여 새로운 사용자 프로필 데이터 추가
- * @deprecated 회원가입 시 User 스키마에 빈 프로필 속성 생성, 더이상 사용하지 않음
- */
-export async function createProfile(id: string, formData: FormData) {
-  const position_tag = formData.get("positionTag") as string;
-  const introduce = formData.get("introduce") as string;
-  const my_category = JSON.parse(formData.get("myCategory") as string);
-
-  if (!id) {
-    return { state: false, message: "유효한 id가 필요합니다." };
-  }
-
-  console.log("create", { position_tag, introduce, my_category });
-
-  // if (!position_tag || !introduce || !my_category) {
-  //   return {
-  //     state: false,
-  //     message: "포지션 태그, 소개, 카테고리 모두 입력해주세요.",
-  //   };
-  // }
-
-  await connectDB();
-
-  try {
-    const profile = new Profile({
-      userId: id,
-      position_tag,
-      introduce,
-      my_category,
-    });
-    await profile.save();
-    return {
-      state: true,
-      message: "프로필 정보가 저장되었습니다.",
-    };
-  } catch (error) {
-    console.log("profile error" + error);
-    return {
-      state: false,
-      message: "프로필 저장에 실패했습니다.",
-    };
-  }
-}
-
-/**
- * userId 값을 통해 프로필 정보 가져오기
- * @deprecated `getUserData`로 대체
- */
-export async function getProfile(userId: string) {
-  await connectDB();
-
-  try {
-    let profile = await User.findOne({ _id: userId }).select(
-      "+position_tag +introduce +my_category +phone +email"
-    );
-
-    if (!profile) {
-      return { state: false, data: null, message: "프로필 정보가 없습니다." };
-    }
-
-    return { state: true, data: profile };
-  } catch (error) {
-    console.log("get profile" + error);
-    return { state: false, message: "프로필 정보 로딩에 실패했습니다." };
-  }
-}
 
 /**
  * 사용자 프로필 정보 업데이트
@@ -131,13 +63,13 @@ export async function saveMyCategory(formData: FormData) {
 
     return {
       state: true,
-      message: "프로필 정보가 저장되었습니다.",
+      message: "관심 카테고리 저장하여 로그인 되었습니다.",
     };
   } catch (error) {
     console.log("profile error" + error);
     return {
       state: false,
-      message: "프로필 저장에 실패했습니다.",
+      message: "관심 카테고리 저장에 실패했습니다",
     };
   }
 }

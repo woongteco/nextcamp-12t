@@ -45,7 +45,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           image: user.profile_img,
           phone: user.phone,
           role: user.role,
-          profile: user.profile,
+          position_tag: user.position_tag,
+          introduce: user.introduce,
+          my_category: user.my_category,
         };
       },
     }),
@@ -74,7 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user, account }: { user: any; account: any }) {
       if (account?.provider !== "credentials") {
-        const { name } = user;
+        const { name, position_tag, introduce, my_category } = user;
         const { providerAccountId, provider } = account;
 
         if (!providerAccountId) {
@@ -90,6 +92,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!socialUserCheck) {
           const user = await new User({
             name,
+            position_tag,
+            introduce,
+            my_category,
             providerAccountId,
             provider,
           });

@@ -5,14 +5,6 @@ const subLabelValue = new mongoose.Schema({
   value: { type: String, required: true },
 });
 
-// @deprecated 프로필
-const profile = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  position_tag: { type: String, default: "" },
-  introduce: { type: String, default: "" },
-  my_category: { type: [subLabelValue], default: [] },
-});
-
 // 유저
 const user = new mongoose.Schema(
   {
@@ -59,7 +51,6 @@ const comment = new mongoose.Schema({
 const post = new mongoose.Schema({
   postId: { type: String },
   category: {
-    value: { type: String, required: true },
     label: { type: String, required: true },
     isRecruiting: { type: Boolean, default: true },
   },
@@ -142,8 +133,6 @@ const postLike = new mongoose.Schema({
 export const User = mongoose.models?.User || mongoose.model("User", user);
 export const Mypage =
   mongoose.models?.Mypage || mongoose.model("Mypage", mypage);
-export const Profile =
-  mongoose.models?.Profile || mongoose.model("Profile", profile);
 export const Post = mongoose.models?.Post || mongoose.model("Post", post);
 export const Study = mongoose.models?.Study || mongoose.model("Study", study);
 export const Comment =

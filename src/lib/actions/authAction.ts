@@ -4,17 +4,19 @@ import { hash } from "bcryptjs";
 import connectDB from "../db";
 import { User } from "../schema";
 import { signIn } from "@/auth";
+import { transporter } from "@/utils/mailer";
 
 const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
 const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
 const nameValid = /^[가-힣]{2,4}$/;
 
-export async function authAction(formData: FormData) {
+export async function register(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const pwCheck = formData.get("pwCheck") as string;
   const name = formData.get("name") as string;
   const phone = formData.get("phone") as string;
+  const hashedPassword = await hash(String(password), 10);
 
   if (!emailValid.test(email)) {
     return { state: false, message: "이메일 유형에 맞게 입력해주세요." };
@@ -41,7 +43,6 @@ export async function authAction(formData: FormData) {
   }
 
   try {
-    const hashedPassword = await hash(String(password), 10);
     const user = new User({
       name,
       email,
@@ -56,26 +57,87 @@ export async function authAction(formData: FormData) {
       email,
       password,
     });
-    return {
-      state: true,
-      message: "회원가입 완료되어 로그인 되었습니다.",
-    };
+
+    return { state: true };
   } catch (error) {
     console.log("auth error" + error);
     return { state: false, message: "회원가입에 실패했습니다." };
   }
 }
 
-export async function loginGoogle() {
-  await signIn("google");
+export async function login(formData: FormData) {
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  if (!email || !password) {
+    return { state: false, message: "입력한 정보를 다시 확인해주세요." };
+  }
+
+  try {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      return { state: false, message: "아이디와 비밀번호를 확인해주세요." };
+    } else {
+      return { state: true, message: "로그인 되었습니다." };
+    }
+  } catch (error) {
+    console.log("login error" + error);
+    return {
+      state: false,
+      message: "로그인중 문제가 발생하여 다시 시도해주세요.",
+    };
+  }
 }
 
-export async function loginKakao() {
-  await signIn("kakao");
-}
+export async function findEmail(formData: FormData) {
+  const name = formData.get("name") as string;
+  const phone = formData.get("phone") as string;
+  const email = formData.get("email") as string;
+  // const verificationCode = Math.floor(Math.random() * 90000 + 10000);
 
-export async function loginGithub() {
-  await signIn("github");
+  if (!name || !phone || !email) {
+    return { state: false, message: "인증 요청할 이메일을 입력해주세요." };
+  }
+
+  await connectDB();
+
+  try {
+    const option = {
+      from: `"CHEMEET" <${process.env.NEXT_APP_EMAIL}>`,
+      to: email,
+      subject: "CHEMEET 인증코드",
+      html: `<p>아래 링크를 클릭하여 이메일 찾기를 완료하세요.</p>
+              <a href="${process.env.BASE_URL}/find/email">이메일 찾기 링크</a>
+      `,
+    };
+
+    await transporter.sendMail(option);
+
+    const user = await User.findOne({ name, phone });
+
+    console.log("@@@@@#@#@#@#@#@" + user.email);
+
+    if (user) {
+      return {
+        state: true,
+        data: user.email,
+        message: "해당 이메일로 인증코드를 보냈습니다.",
+      };
+    } else {
+      return { state: false, message: "해당 유저가 없습니다." };
+    }
+  } catch (error) {
+    console.log("find email error" + error);
+    return {
+      state: false,
+      message: "이메일 인증 요청에 실패했습니다.",
+    };
+  }
 }
 
 /**
