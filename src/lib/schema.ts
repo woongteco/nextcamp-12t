@@ -101,6 +101,36 @@ const study = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// 스터디 찜
+const studyLike = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  studyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Study",
+    required: true,
+  },
+});
+
+// 스터디 지원
+const studyApply = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  studyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Study",
+    required: true,
+  },
+});
+
+// 글 좋아요
+const postLike = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  postId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+    required: true,
+  },
+});
+
 export const User = mongoose.models?.User || mongoose.model("User", user);
 export const Mypage =
   mongoose.models?.Mypage || mongoose.model("Mypage", mypage);
@@ -108,3 +138,11 @@ export const Post = mongoose.models?.Post || mongoose.model("Post", post);
 export const Study = mongoose.models?.Study || mongoose.model("Study", study);
 export const Comment =
   mongoose.models?.Comment || mongoose.model("Comment", comment);
+
+//*데이터 스키마는 목적어(명사)를 가장 먼저, 행동을 설명하는 동사를 다음에 붙여서 네이밍
+export const StudyLike =
+  mongoose.models?.StudyLike || mongoose.model("StudyLike", studyLike);
+export const StudyApply =
+  mongoose.models?.StudyApply || mongoose.model("StudyApply", studyApply);
+export const PostLike =
+  mongoose.models?.PostLike || mongoose.model("PostLike", postLike);

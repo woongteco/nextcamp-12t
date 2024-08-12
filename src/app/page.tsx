@@ -17,7 +17,12 @@ export default async function Home() {
       <TopBannerSection />
       <Container>
         <div className="flex flex-col gap-100 mt-100">
-          {session?.user && <MainStatusBoard name={session?.user.name} />}
+          {session?.user && (
+            <MainStatusBoard
+              name={session.user.name as string}
+              userId={session.user.id}
+            />
+          )}
           <section>
             <SectionTitle size="md" className="mb-6">
               인기 많은 스터디 추천

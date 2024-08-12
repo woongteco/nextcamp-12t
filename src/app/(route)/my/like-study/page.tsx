@@ -3,12 +3,45 @@ import NoneContentItemBase from "@/app/_components/NoneContentItemBase";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardItem from "@/common/Organisms/StudyCardItem";
 import { StudySchema } from "@/types/model/StudyCard";
-import { getStudyCards } from "@/dummies/studies";
+// import { getStudyCards } from "@/dummies/studies";
+import connectDB from "@/lib/db";
+import { StudyLike } from "@/lib/schema";
+import { getSession } from "@/auth";
 
-export default function MyStudyLiked() {
-  const studyCards: StudySchema[] = getStudyCards();
+type State =
+  | { state: false; message: string }
+  | { state: true; data: StudySchema[] };
+
+async function getLikeStudies(userId: string): Promise<State> {
+  await connectDB();
+
+  try {
+    const likedPosts = await StudyLike.find({ userId }).populate({
+      path: "postId",
+      populate: {
+        path: "writer",
+        select: "name role profile_img position_tag",
+      },
+    });
+    if (!likedPosts) {
+      return { state: false, message: "찜한 스터디를 찾을 수 없습니다." };
+    }
+    // console.log("likedPosts", likedPosts);
+    return { state: true, data: [] };
+  } catch (error) {
+    return {
+      state: false,
+      message: "찜한 스터디 정보를 가져오는데 실패했습니다.",
+    };
+  }
+}
+
+export default async function MyStudyLiked() {
+  const session = await getSession();
+  const result = await getLikeStudies(session?.user.id as string);
+  const studyCards = result.state ? result.data : [];
   return (
-    <>
+    <div className="gridContent">
       <SectionTitle size="md" className="mb-6">
         찜한 스터디
       </SectionTitle>
@@ -34,6 +67,6 @@ export default function MyStudyLiked() {
           </ul>
         )}
       </div>
-    </>
+    </div>
   );
 }
