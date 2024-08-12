@@ -2,15 +2,18 @@ import clsx from "clsx";
 import { ComponentProps } from "react";
 
 export default function LoadingContainer({
+  fullScreen = true,
   className,
 }: {
+  fullScreen?: boolean;
   className?: ComponentProps<"div">["className"];
 }) {
   return (
     <>
       <div
         className={clsx(
-          "fixed top-0 left-0 z-modal bg-white/15 backdrop-blur-sm flex items-center justify-center",
+          fullScreen && "fixed top-0 left-0",
+          "z-modal bg-white/15 backdrop-blur-sm flex items-center justify-center",
           className
         )}
       >
