@@ -1,9 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SocialLogin, Google, Kakao, Logo, Github } from "@public/icons";
-import LoginForm from "../_components/LoginForm";
+import { SocialLogin, Logo } from "@public/icons";
+import { LoginForm, SocialLoginForm } from "../_components/LoginForm";
 import AuthWrap from "../_components/AuthWrap";
-import { loginGithub, loginGoogle, loginKakao } from "@/lib/actions/authAction";
 
 export default function Login() {
   return (
@@ -17,23 +16,7 @@ export default function Login() {
       </div>
       <>
         <Image src={SocialLogin} alt="간편 로그인 이미지" />
-        <div className="flex items-center justify-center gap-4">
-          <form action={loginKakao}>
-            <button>
-              <Image src={Kakao} alt="카카오 로그인" />
-            </button>
-          </form>
-          <form action={loginGoogle}>
-            <button>
-              <Image src={Google} alt="구글 로그인" />
-            </button>
-          </form>
-          <form action={loginGithub}>
-            <button>
-              <Image src={Github} alt="깃헙 로그인" />
-            </button>
-          </form>
-        </div>
+        <SocialLoginForm />
       </>
     </AuthWrap>
   );

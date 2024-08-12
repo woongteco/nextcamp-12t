@@ -15,6 +15,16 @@ import { PostDataFull } from "@/types/model/PostItem";
 
 type TQuery = { category?: string; sort?: string };
 
+// async function Test() {
+//   try {
+//     const response = await fetch("http://localhost:3000/api/community");
+//     const { data } = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
 export default async function CommunityPostList({
   searchParams,
 }: {
@@ -57,6 +67,10 @@ export default async function CommunityPostList({
       }
     }
   );
+
+  // const { data } = await Test();
+
+  // console.log("데이터 패칭" + JSON.stringify(data));
 
   return (
     <SidebarAsideContentArea>

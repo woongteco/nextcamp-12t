@@ -38,6 +38,8 @@ export default function SelectCategory({
     console.log("커뮤니티 개설 카테고리" + JSON.stringify(category));
   }, [category]);
 
+  console.log(category);
+
   return (
     <>
       <Field>

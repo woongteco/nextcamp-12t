@@ -15,11 +15,12 @@ import { CATEGORIES } from "@/constants/categories/job_category";
 import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 import ThumbnailInput from "./ThumbnailInput";
-import { studyAction } from "@/lib/actions/studyAction";
+
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
 import { SingleValue } from "react-select";
 import { TSelectOption } from "@/types/model/Category";
+import { createStudy } from "@/lib/actions/studyAction";
 
 type Option = {
   readonly label: string;
@@ -189,7 +190,7 @@ export default function StudyForm({ id }: { id: string }) {
     formData.append("curriculum", JSON.stringify(curriculumList));
 
     try {
-      await studyAction(id, formData);
+      await createStudy(id, formData);
       handleAlert("success", "스터디가 개설 되었습니다.");
 
       // router.replace("/study");

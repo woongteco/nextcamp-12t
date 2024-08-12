@@ -8,8 +8,7 @@ import { revalidatePath } from "next/cache";
 // post
 export async function createCommunity(userId: string, formData: FormData) {
   const postId = nanoid();
-  const categoryValue = formData.get("categoryValue") as string;
-  const categoryLabel = formData.get("categoryLabel") as string;
+  const label = formData.get("category");
   const isRecruiting = formData.get("isRecruiting") === "true";
   const title = formData.get("title") as string;
   const body = formData.get("body") as string;
@@ -17,11 +16,13 @@ export async function createCommunity(userId: string, formData: FormData) {
 
   // console.log("### linkedStudyId", linkedStudyId);
 
+  console.log(label);
+
   if (!userId) {
     return { state: false, message: "유효한 id가 필요합니다." };
   }
 
-  if (!categoryValue || !categoryLabel || !title || !body) {
+  if (!label || !title || !body) {
     return {
       state: false,
       message: "커뮤니티 등록하려면 필수 정보를 입력해주세요.",
@@ -34,8 +35,7 @@ export async function createCommunity(userId: string, formData: FormData) {
     const post = new Post({
       postId,
       category: {
-        value: categoryValue,
-        label: categoryLabel,
+        label,
         isRecruiting,
       },
       contents: {
@@ -72,18 +72,25 @@ export async function getCommunity(postId: string | null = null) {
   try {
     if (postId) {
       const post = await Post.findOne({ postId })
-        .populate("writer", "+name +email +role +profile_img +profile")
+        .populate(
+          "writer",
+          "name email role profile_img position_tag introduce my_category"
+        )
         .populate("comments");
 
       if (!post) {
         return { state: false, message: "해당 게시글을 찾을 수 없습니다." };
       }
+
       return { state: true, data: post };
     } else {
       const postList = await Post.find()
-        .populate("writer", "+name +email +role +profile_img +profile")
+        .populate(
+          "writer",
+          "name email role profile_img position_tag introduce my_category"
+        )
         .sort({ createdAt: "desc" });
-      console.log("# 커뮤니티 글", postList);
+      // console.log("# 커뮤니티 글", postList);
       return { state: true, data: postList };
     }
   } catch (error) {

@@ -17,7 +17,7 @@ export default function DesktopMenu({ profileImage }: TProfileImage) {
       <div className="flex gap-4 items-center divide-x divide-label-alt">
         <div className="relative [&:hover>ul]:block">
           {profileImage}
-          <ul className="fixed top-[4.0625rem] right-16 xl:right-[calc(50vw-600px)] w-40 p-1 pt-2 bg-white shadow-emphasize rounded-b-xl hidden [&_li]:py-[6px] [&_li]:px-3">
+          <ul className="fixed top-[4.0625rem] right-2 xl:right-[calc(50vw-620px)] w-40 p-1 pt-2 bg-white shadow-emphasize rounded-b-xl hidden [&_li]:py-[6px] [&_li]:px-3">
             <DefaultProfileMenuItems />
           </ul>
         </div>
