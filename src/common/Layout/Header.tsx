@@ -1,14 +1,13 @@
-import { Logo } from "@public/icons";
+// import { Logo } from "@public/icons";
 import Image from "next/image";
 import Container from "./Container";
 import { getSession } from "@/auth";
 import SessionedHeader from "./SessionedHeader";
 import Link from "next/link";
+import LogoSvg from "../Atoms/Image/Logo";
 
 export default async function Header() {
   const session = await getSession();
-
-  console.log("해더 서버 세션" + session);
 
   return (
     <header className="fixed top-0 w-full bg-white z-header border-b border-b-line-normal">
@@ -20,7 +19,7 @@ export default async function Header() {
           >
             <h1>
               <Link href={"/"}>
-                <Image src={Logo} alt="logo" />
+                <LogoSvg />
               </Link>
             </h1>
             <nav>
