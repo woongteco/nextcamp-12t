@@ -51,7 +51,6 @@ const comment = new mongoose.Schema({
 const post = new mongoose.Schema({
   postId: { type: String },
   category: {
-    value: { type: String, required: true },
     label: { type: String, required: true },
     isRecruiting: { type: Boolean, default: true },
   },

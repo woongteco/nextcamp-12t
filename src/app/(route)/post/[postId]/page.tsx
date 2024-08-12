@@ -120,10 +120,10 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      <CommentArea
+      {/* <CommentArea
         sessionId={session?.user.id || ""}
         comments={post.comments}
-      />
+      /> */}
     </div>
   );
 }

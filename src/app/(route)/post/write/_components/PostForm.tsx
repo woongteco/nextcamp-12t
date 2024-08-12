@@ -40,6 +40,7 @@ export default function PostForm({
   const [content, setContent] = useState<string>("");
   const router = useRouter();
 
+  console.log(data);
   async function submitPost(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -55,9 +56,9 @@ export default function PostForm({
     if (content) {
       formData.append("body", content);
     }
-    if (data) {
-      formData.append("categoryValue", data.value);
-      formData.append("categoryLabel", data.label);
+
+    if (data.label) {
+      formData.append("label", data.label);
     }
 
     try {
