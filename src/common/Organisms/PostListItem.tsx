@@ -4,6 +4,7 @@ import Profile from "../Molecules/Profile";
 import { PostDataFull } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
+import { flattenCommentLength } from "@/utils/flattenCommentArray";
 
 export default function PostListItem({ item }: { item: PostDataFull }) {
   const createdBefore = getCreatedBefore(item.createdAt);
@@ -34,9 +35,9 @@ export default function PostListItem({ item }: { item: PostDataFull }) {
               }
             />
             <span className="text-label-400 text-label-dimmed">
-              {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개 ·
-              {/* 댓글 스키마 변경으로 맞춰서 수정하기 */}
-              {/* 댓글 {item.comments.length}개 */}
+              {createdBefore}&nbsp;·&nbsp;조회수&nbsp;{item.view}
+              회&nbsp;·&nbsp;좋아요&nbsp;{item.like}개&nbsp;·&nbsp;댓글{" "}
+              {flattenCommentLength(item.comments)}개
             </span>
           </div>
           {(item.category.value === "study" ||
