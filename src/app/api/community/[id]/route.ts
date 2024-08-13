@@ -3,10 +3,11 @@ import {
   getCommunity,
   updateCommunity,
 } from "@/lib/actions/communityAction";
+import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -30,41 +31,40 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const formData = await request.json();
-    const postId = params.id;
+  const formData = await request.formData();
+  const postId = params.id;
 
-    if (!postId) {
-      return Response.json(
-        { error: "community id가 존재하지 않습니다." },
-        { status: 400 }
-      );
-    }
-
-    const data = await updateCommunity(postId, formData);
-    return Response.json({ data }, { status: 200 });
-  } catch (error) {
-    return Response.json({ error }, { status: 500 });
+  if (!postId) {
+    return Response.json(
+      { error: "community id가 존재하지 않습니다." },
+      { status: 400 }
+    );
   }
+
+  const result = await updateCommunity(postId, formData);
+  if (result.state === false) {
+    return Response.json({ error: result }, { status: 500 });
+  }
+  revalidatePath("/post/" + postId);
+  return Response.json({ data: result }, { status: 200 });
 }
 
 export async function DELETE(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const postId = params.id;
+  const postId = params.id;
 
-    if (!postId) {
-      return Response.json(
-        { error: "community id가 존재하지 않습니다." },
-        { status: 400 }
-      );
-    }
-
-    const data = await deleteCommunity(postId);
-    return Response.json({ data }, { status: 200 });
-  } catch (error) {
-    return Response.json({ error }, { status: 500 });
+  if (!postId) {
+    return Response.json(
+      { error: "community id가 존재하지 않습니다." },
+      { status: 400 }
+    );
   }
+
+  const result = await deleteCommunity(postId);
+  if (result.success === false) {
+    return Response.json({ error: result }, { status: 500 });
+  }
+  return Response.json({ data: result }, { status: 200 });
 }

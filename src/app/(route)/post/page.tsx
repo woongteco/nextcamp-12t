@@ -13,6 +13,7 @@ import NonePostItem from "./_components/NonePostItem";
 import { getCommunity } from "@/lib/actions/communityAction";
 import { PostDataFull } from "@/types/model/PostItem";
 import { flattenCommentLength } from "@/utils/flattenCommentArray";
+import { cfetch } from "@/utils/customFetch";
 
 type TQuery = { category?: string; sort?: string };
 
@@ -29,20 +30,20 @@ export default async function CommunityPostList({
     return <NotFound />;
   }
 
-  const result = await fetch(
-    process.env.NEXT_PUBLIC_BASE_URL + "/api/community",
-    {
-      next: { tags: ["community"] },
-    }
-  )
+  const result = await cfetch("/api/community", {
+    next: { tags: ["community"] },
+  })
     .then((res) => res.json())
-    .then(({ data }) => data)
+    .then(({ data }) => {
+      console.log("data", data);
+      return data;
+    })
     .catch((err) => {
       console.error(err);
+      return { data: [] };
     });
 
   let postListData: PostDataFull[] = result.data;
-
   const clientPostList = JSON.parse(JSON.stringify(postListData));
 
   const sortedPosts = clientPostList.sort(
@@ -63,10 +64,6 @@ export default async function CommunityPostList({
       }
     }
   );
-
-  // const { data } = await Test();
-
-  // console.log("데이터 패칭" + JSON.stringify(data));
 
   return (
     <SidebarAsideContentArea>
