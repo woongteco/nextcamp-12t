@@ -79,9 +79,12 @@ export async function login(formData: FormData) {
       email,
       password,
     });
-
+    // 알림 수정 필요
     if (result?.error) {
-      return { state: false, message: "아이디와 비밀번호를 확인해주세요." };
+      return {
+        state: false,
+        message: result.error || "아이디와 비밀번호를 확인해주세요.",
+      };
     } else {
       return { state: true, message: "로그인 되었습니다." };
     }
@@ -98,13 +101,21 @@ export async function findEmail(formData: FormData) {
   const name = formData.get("name") as string;
   const phone = formData.get("phone") as string;
   const email = formData.get("email") as string;
-  // const verificationCode = Math.floor(Math.random() * 90000 + 10000);
 
-  if (!name || !phone || !email) {
-    return { state: false, message: "인증 요청할 이메일을 입력해주세요." };
+  if (!email || !phone || !name) {
+    return {
+      state: false,
+      message: "가입한 정보와 인증할 메일을 입력해주세요.",
+    };
   }
 
   await connectDB();
+
+  const user = await User.findOne({ name, phone });
+
+  if (!user) {
+    return { state: false, message: "해당 유저가 없습니다." };
+  }
 
   try {
     const option = {
@@ -112,31 +123,111 @@ export async function findEmail(formData: FormData) {
       to: email,
       subject: "CHEMEET 인증코드",
       html: `<p>아래 링크를 클릭하여 이메일 찾기를 완료하세요.</p>
-              <a href="${process.env.BASE_URL}/find/email">이메일 찾기 링크</a>
+      <a href="${process.env.BASE_URL}/find/email">이메일 찾기 링크로 이동하기</a>
+      <p>※ 입력하신 정보는 10분간 유효하여 유효시간 내에 완료하세요.</p>
       `,
     };
 
     await transporter.sendMail(option);
 
-    const user = await User.findOne({ name, phone });
-
-    console.log("@@@@@#@#@#@#@#@" + user.email);
-
-    if (user) {
-      return {
-        state: true,
-        data: user.email,
-        message: "해당 이메일로 인증코드를 보냈습니다.",
-      };
-    } else {
-      return { state: false, message: "해당 유저가 없습니다." };
-    }
+    return {
+      state: true,
+      data: user.email,
+      message: "해당 이메일로 인증 링크를 보냈습니다.",
+    };
   } catch (error) {
     console.log("find email error" + error);
     return {
       state: false,
-      message: "이메일 인증 요청에 실패했습니다.",
+      message: "인증 요청에 실패했습니다.",
     };
+  }
+}
+
+export async function findPassword(formData: FormData) {
+  const joinEmail = formData.get("join-email") as string;
+  const email = formData.get("email") as string;
+
+  if (!email || !joinEmail) {
+    return {
+      state: false,
+      message: "가입한 이메일과 인증할 메일을 입력해주세요.",
+    };
+  }
+
+  await connectDB();
+
+  const user = await User.findOne({ email: joinEmail });
+  if (!user) {
+    return { state: false, message: "가입한 이메일 정보가 없습니다." };
+  }
+
+  try {
+    const option = {
+      from: `"CHEMEET" <${process.env.NEXT_APP_EMAIL}>`,
+      to: email,
+      subject: "CHEMEET 인증코드",
+      html: `<p>아래 링크를 클릭하여 새로운 비밀번호로 변경하세요.</p>
+      <a href="${process.env.BASE_URL}/find/password">비밀번호 변경 링크로 이동하기</a>
+      <p>※ 입력하신 정보는 10분간 유효하여 유효시간 내에 완료하세요.</p>
+      `,
+    };
+
+    await transporter.sendMail(option);
+    return {
+      state: true,
+      data: user.email,
+      message: "해당 이메일로 인증 링크를 보냈습니다.",
+    };
+  } catch (error) {
+    console.log("find password error" + error);
+    return {
+      state: false,
+      message: "인증 요청에 실패했습니다.",
+    };
+  }
+}
+
+export async function updatePassword(email: string, formData: FormData) {
+  const userEmail = email;
+  const newPassword = formData.get("password") as string;
+  const newPwCheck = formData.get("pwCheck") as string;
+  const hashedPassword = await hash(String(newPassword), 10);
+
+  if (!userEmail) {
+    return {
+      state: false,
+      message: "비밀번호를 변경할 유저의 이메일이 없습니다.",
+    };
+  }
+
+  if (!newPassword || !newPwCheck) {
+    return { state: false, message: "변경할 비밀번호를 입력해주세요." };
+  }
+
+  if (newPassword !== newPwCheck) {
+    return { state: false, message: "입력한 비밀번호와 일치하지 않습니다." };
+  }
+
+  await connectDB();
+
+  try {
+    const update = await User.findOneAndUpdate(
+      { email: userEmail },
+      { $set: { password: hashedPassword } }
+    );
+
+    if (update) {
+      return { state: true, message: "새로운 비밀번호로 변경되었습니다." };
+    } else {
+      return {
+        state: false,
+        message: "해당 유저를 찾지 못해 비밀번호 변경에 실패했습니다.",
+      };
+    }
+  } catch (error) {
+    console.log("update password error" + error);
+    return { state: false, message: "비밀번호 변경이 실패했습니다." };
   }
 }
 
