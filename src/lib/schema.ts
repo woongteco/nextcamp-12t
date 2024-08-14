@@ -80,15 +80,15 @@ const subStudyInfo = new mongoose.Schema({
   heartCount: { type: Number, default: 0 },
 });
 
-const subContentDetail = new mongoose.Schema({
-  listId: { type: String, required: false },
-  content: { type: String, default: null, required: false },
-});
+// const subContentDetail = new mongoose.Schema({
+//   listId: { type: String, required: false },
+//   content: { type: String, default: null, required: false },
+// });
 
 const subContents = new mongoose.Schema({
   content: { type: String, default: null },
-  rule: [subContentDetail],
-  curriculum: [subContentDetail],
+  rule: { type: [String], default: [] },
+  curriculum: { type: [String], default: [] },
 });
 
 // 스터디
