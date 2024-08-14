@@ -29,8 +29,8 @@ export function LoginForm() {
       const result = await login(formData);
 
       if (result.state) {
-        // router.replace("/");
-        router.back();
+        router.replace("/");
+        // router.back();
         handleAlert("success", result.message);
       } else {
         handleAlert("error", result.message);
