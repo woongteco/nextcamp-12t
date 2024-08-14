@@ -42,7 +42,6 @@ export async function createCommunity(userId: string, formData: FormData) {
         linkedStudyId,
       },
       writer: userId,
-      createdAt: new Date(),
       view: 0,
       like: 0,
     });
@@ -130,7 +129,6 @@ export async function updateCommunity(postId: string, formData: FormData) {
             body,
             linkedStudyId,
           },
-          createdAt: new Date(),
           view: 0,
           like: 0,
         },
