@@ -6,7 +6,6 @@ import connectDB from "../db";
 import { Study } from "../schema";
 import { getStudyCards } from "@/dummies/studies";
 
-
 // post
 export async function createStudy(userId: string, formData: FormData) {
   const studyId = nanoid();
@@ -67,7 +66,6 @@ export async function createStudy(userId: string, formData: FormData) {
       },
       writer: userId,
       heartCount,
-      createdAt: new Date(),
     });
 
     await study.save();

@@ -13,7 +13,7 @@ export default function ShareIconButton({
   height?: string;
 }) {
   const pathname = usePathname();
-  const fullPathname = "https://chemeet.vercel.app" + pathname;
+  const fullPathname = process.env.NEXT_PUBLIC_BASE_URL + pathname;
 
   const { Modal, open } = useModal({
     children: (

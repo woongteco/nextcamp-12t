@@ -1,3 +1,4 @@
+import { getSession } from "@/auth";
 import { createCommunity, getCommunity } from "@/lib/actions/communityAction";
 import { NextRequest } from "next/server";
 
@@ -12,22 +13,23 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const formData = await request.json();
-    const { searchParams } = request.nextUrl;
-    const userId = searchParams.get("userId");
+  const session = await getSession();
+  const userId: string | undefined = session?.user.id;
 
-    if (!userId) {
-      return Response.json(
-        { error: "user id가 존재하지 않습니다." },
-        { status: 400 }
-      );
-    }
+  const formData = await request.formData();
+  console.log("formData", formData);
 
-    const data = await createCommunity(userId, formData);
-
-    return Response.json({ data }, { status: 200 });
-  } catch (error) {
-    return Response.json({ error }, { status: 500 });
+  if (!userId) {
+    return Response.json(
+      { error: "user id가 존재하지 않습니다." },
+      { status: 400 }
+    );
   }
+
+  const result = await createCommunity(userId, formData);
+  if (result.state === false) {
+    return Response.json({ error: result }, { status: 500 });
+  }
+
+  return Response.json({ data: result }, { status: 200 });
 }

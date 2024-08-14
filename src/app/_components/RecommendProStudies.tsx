@@ -23,7 +23,8 @@ export default async function RecommendProStudies({
 }: {
   userId: string;
 }) {
-  const result = await getFavorStudies(userId);
+  const result =
+    userId === "" ? await getAllStudies() : await getFavorStudies(userId);
 
   if (result.state === false) {
     throw new Error("관심 카테고리의 스터디 정보 가져오기 실패");

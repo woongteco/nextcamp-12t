@@ -35,6 +35,7 @@ export default function Thumbnail(props: TImageThumbnailProps) {
       height={height}
       src={src || DefaultThumbnailImg}
       alt={alt}
+      // loading={"lazy" | "eager"}
       className={clsx(
         "thumbnailImage object-cover min-w-full w-auto h-auto bg-line-neutral/80",
         className

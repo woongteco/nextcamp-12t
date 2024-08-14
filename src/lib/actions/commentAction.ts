@@ -29,7 +29,6 @@ export async function createComment(
       commentId,
       content,
       writer: userId,
-      createdAt: new Date(),
       reply: [],
     });
 
@@ -66,10 +65,7 @@ export async function updateComment(commentId: string, formData: FormData) {
   await connectDB();
 
   try {
-    const update = await Comment.findOneAndUpdate(
-      { commentId },
-      { content, createdAt: new Date() }
-    );
+    const update = await Comment.findOneAndUpdate({ commentId }, { content });
 
     if (!update) {
       return { state: false, message: "해당 댓글을 찾을 수 없습니다." };

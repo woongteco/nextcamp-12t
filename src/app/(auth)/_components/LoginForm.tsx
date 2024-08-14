@@ -30,6 +30,7 @@ export function LoginForm() {
 
       if (result.state) {
         router.replace("/");
+        // router.back();
         handleAlert("success", result.message);
       } else {
         handleAlert("error", result.message);

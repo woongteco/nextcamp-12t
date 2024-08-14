@@ -18,6 +18,7 @@ import handleAlert from "@/common/Molecules/handleAlert";
 import SelectLinkedStudy from "./SelectLinkedStudy";
 import ReactQuill from "react-quill";
 import { PostSchema } from "@/types/model/PostItem";
+import { cfetch } from "@/utils/customFetch";
 
 type Option = {
   readonly label: string;
@@ -36,44 +37,55 @@ export default function PostForm({
   sessionId: string;
   defaultValue?: PostValue;
 }) {
-  const [data, setData] = useState<Option>({ value: "", label: "" });
+  const [category, setCategory] = useState<Option>({ value: "", label: "" });
   const [content, setContent] = useState<string>("");
   const router = useRouter();
-
-  console.log(data);
   async function submitPost(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const id = sessionId;
+    // const id = sessionId;
 
-    // console.log("%c# check form-data----------start", "color:pink");
-    // for (const [key, value] of formData) {
-    //   console.log("form-data", { key, value });
-    // }
-    // console.log("%c# check form-data----------end", "color:pink");
-
+    // console.log("category", formData.get("category"));
     if (content) {
       formData.append("body", content);
     }
 
-    if (data.label) {
-      formData.append("label", data.label);
+    if (category.value) {
+      formData.append("categoryValue", category.value);
+      formData.append("categoryLabel", category.label);
     }
 
-    try {
-      const result = defaultValue
-        ? await updateCommunity(defaultValue.postId, formData)
-        : await createCommunity(id, formData);
+    const result = defaultValue?.postId
+      ? await cfetch("/api/community/" + defaultValue.postId, {
+          method: "PATCH",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then(({ data }) => data)
+          .catch((err) => {
+            console.error(err);
+            return err;
+          })
+      : await cfetch("/api/community", {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then(({ data }) => data)
+          .catch((err) => {
+            console.error(err);
+            return err;
+          });
 
-      if (result.state) {
-        handleAlert("success", result.message);
-        router.replace("/post");
-      } else {
-        handleAlert("error", result.message);
-      }
-    } catch (error) {
-      console.log(error);
+    if (result?.state) {
+      handleAlert("success", result.message);
+      router.replace("/post");
+    } else {
+      handleAlert(
+        "error",
+        defaultValue?.postId ? "업데이트에 실패했어요" : "작성에 실패했어요"
+      );
     }
   }
 
@@ -81,7 +93,7 @@ export default function PostForm({
     <>
       <form onSubmit={submitPost} className="mb-100 flex flex-col gap-[30px]">
         <SelectCategory
-          setData={setData}
+          setData={setCategory}
           defaultValue={defaultValue?.category}
         />
         <GridField>
@@ -110,7 +122,7 @@ export default function PostForm({
             />
           </div>
         </GridField>
-        {(data?.value === "study" || data?.value === "project") && (
+        {(category?.value === "study" || category?.value === "project") && (
           <GridField>
             <LabelText form>관련 스터디 링크</LabelText>
             <div className="gridContent">
