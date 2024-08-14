@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 type TUserInput = {
   id: string;
   type: string;
+  name?: string;
   title: string;
   placeholder: string;
   value?: string;
@@ -16,6 +17,7 @@ type TUserInput = {
 export function Input({
   id,
   type,
+  name,
   title,
   placeholder,
   value,
@@ -34,7 +36,7 @@ export function Input({
         <input
           id={id}
           type={type === "password" && pwToggle ? "text" : type}
-          name={id}
+          name={name ? name : id}
           placeholder={placeholder}
           className="w-full p-3 focus:outline-none placeholder:text-xs"
           maxLength={id === "name" ? 4 : id === "phone" ? 11 : 30}
