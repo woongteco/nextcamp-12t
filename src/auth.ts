@@ -18,10 +18,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        if (!email || !password) {
-          throw new CredentialsSignin("정보를 다시 확인해주세요.");
-        }
-
         await connectDB();
 
         const user = await User.findOne({ email }).select(
