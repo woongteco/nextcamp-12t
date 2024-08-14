@@ -2,15 +2,16 @@
 
 import { FormEvent, useState } from "react";
 import { Input } from "./UserInput";
-import { findEmail } from "@/lib/actions/authAction";
+import { findEmail, findPassword } from "@/lib/actions/authAction";
 import handleAlert from "@/common/Molecules/handleAlert";
 import LoadingContainer from "@/common/Layout/LoadingContainer";
 import useFindEmail from "@/store/useFindEmail";
+import Link from "next/link";
 
 export default function FindAuthForm({ title }: { title?: string }) {
   const [sendEmail, setSendEmail] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { userEmail, setUserEmail } = useFindEmail();
+  const { setUserEmail } = useFindEmail();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,11 +20,15 @@ export default function FindAuthForm({ title }: { title?: string }) {
     const formData = new FormData(e.currentTarget);
 
     try {
-      const result = await findEmail(formData);
+      let result;
+      if (title === "이메일") {
+        result = await findEmail(formData);
+      } else {
+        result = await findPassword(formData);
+      }
 
       if (result.state) {
         setSendEmail(true);
-        console.log(result.data);
         setUserEmail(result.data);
         handleAlert("success", result.message);
       } else {
@@ -35,8 +40,6 @@ export default function FindAuthForm({ title }: { title?: string }) {
 
     setLoading(false);
   }
-
-  console.log(userEmail);
 
   return (
     <>
@@ -60,6 +63,7 @@ export default function FindAuthForm({ title }: { title?: string }) {
           <Input
             id="email"
             type="email"
+            name="join-email"
             title="가입한 이메일"
             placeholder="가입한 이메일을 입력하세요."
           />
@@ -81,6 +85,12 @@ export default function FindAuthForm({ title }: { title?: string }) {
             </button>
           )}
         </div>
+        <Link
+          href={"/login"}
+          className="w-full rounded-md py-2 text-white bg-main-600 text-center"
+        >
+          로그인 페이지로 가기
+        </Link>
       </form>
     </>
   );

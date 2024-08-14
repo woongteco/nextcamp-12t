@@ -1,6 +1,5 @@
 import AuthWrap from "../_components/AuthWrap";
 import FindAuthWrap from "../_components/FindAuthWrap";
-import FindAuthForm from "../_components/FindAuthForm";
 
 export default function PWresetPage() {
   return (
