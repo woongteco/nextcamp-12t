@@ -44,14 +44,9 @@ export default function PostForm({
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const id = sessionId;
+    // const id = sessionId;
 
-    // console.log("%c# check form-data----------start", "color:pink");
-    // for (const [key, value] of formData) {
-    //   console.log("form-data", { key, value });
-    // }
-    // console.log("%c# check form-data----------end", "color:pink");
-
+    // console.log("category", formData.get("category"));
     if (content) {
       formData.append("body", content);
     }
