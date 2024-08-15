@@ -41,7 +41,7 @@ export default async function PostDetail({
   const session = await getSession();
 
   const postDetail = await cfetch("/api/community/" + postId, {
-    next: { tags: ["community"] },
+    next: { tags: ["community", postId] },
   })
     .then((res) => res.json())
     .then(({ data }) => data)
@@ -54,6 +54,7 @@ export default async function PostDetail({
     return notFound();
   }
   const post = postDetail.data as PostDataFull;
+  // console.log("post", post);
 
   return (
     <div>
@@ -94,10 +95,7 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      <CommentArea
-        sessionId={session?.user.id || ""}
-        comments={post.comments}
-      />
+      <CommentArea sessionId={session?.user.id || ""} postId={postId} />
     </div>
   );
 }

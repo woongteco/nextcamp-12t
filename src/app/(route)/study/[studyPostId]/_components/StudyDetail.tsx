@@ -15,7 +15,7 @@ export default function StudyDetail() {
     <div>
       <StudyDetailThumbnail thumbnailInfo={thumbnailInfo} />
       <StudyDetailContent contents={contents} user={user} />
-      <CommentArea comments={comments} sessionId="" />
+      <CommentArea postId={String(postId)} sessionId="" />
     </div>
   );
 }
