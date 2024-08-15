@@ -1,7 +1,5 @@
-import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { User } from "../schema";
-import { ProfileSchema } from "@/types/model/User";
 
 export async function getUserData(userId: string) {
   await connectDB();
