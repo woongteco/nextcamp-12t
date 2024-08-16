@@ -12,7 +12,7 @@ import { FLogo } from "../../../public/images";
 
 export default function Footer() {
   return (
-    <footer className="flex xl:h-[25rem] justify-center mt-100 py-20 bg-label-normal">
+    <footer className="flex xl:h-[25rem] justify-center py-20 bg-label-normal">
       <Container>
         {/* sns md:추가 */}
         <div className="flex flex-col gap-10 xl:flex-row xl:justify-between text-line-alt text-[12px]">

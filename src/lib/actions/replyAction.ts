@@ -1,13 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import connectDB from "../db";
-import { Comment } from "../schema";
+import { Comment, User } from "../schema";
 import { nanoid } from "nanoid";
 
 // post
 export async function createReply(
-  id: string,
+  userId: string,
   commentId: string,
   formData: FormData
 ) {
@@ -28,16 +28,19 @@ export async function createReply(
           reply: {
             replyId,
             content,
-            writer: id,
+            writer: userId,
           },
         },
-      }
+      },
+      { new: true }
     );
 
     if (!commentReply) {
       return { state: false, message: "해당 댓글을 찾을 수 없습니다." };
     }
 
+    revalidateTag("community");
+    revalidateTag(commentReply.postId);
     return { state: true, message: "답글이 등록되었습니다." };
   } catch (error) {
     console.log("post reply error");
@@ -84,6 +87,7 @@ export async function updateReply(
       },
       {
         arrayFilters: [{ "reply.replyId": replyId }],
+        new: true,
       }
     );
 
@@ -91,6 +95,8 @@ export async function updateReply(
       return { state: false, message: "해당 답글을 찾을 수 없습니다." };
     }
 
+    revalidateTag("comments");
+    revalidateTag(update.postId);
     return { state: true, message: "답글 수정이 완료되었습니다." };
   } catch (error) {
     console.log("update comment error" + error);
@@ -107,9 +113,10 @@ export async function deleteReply(commentId: string, replyId: string) {
       { commentId, "reply.replyId": replyId },
       { $pull: { reply: { replyId } } }
     );
-    return { success: true, message: "댓글이 삭제되었습니다." };
+    revalidateTag("comments");
+    return { success: true, message: "답글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete comment error", error);
-    return { success: false, message: "댓글 삭제에 실패했습니다." };
+    return { success: false, message: "답글 삭제에 실패했습니다." };
   }
 }

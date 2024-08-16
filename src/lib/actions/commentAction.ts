@@ -2,7 +2,8 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Comment } from "../schema";
+import { Comment, Post } from "../schema";
+import { revalidateTag } from "next/cache";
 
 // post
 export async function createComment(
@@ -24,16 +25,23 @@ export async function createComment(
   await connectDB();
 
   try {
-    const comment = new Comment({
+    await new Comment({
       postId,
       commentId,
       content,
       writer: userId,
       reply: [],
-    });
+    }).save();
 
-    await comment.save();
+    const newComment = await Comment.findOne({ commentId });
 
+    await Post.findOneAndUpdate(
+      { postId },
+      { $push: { comments: newComment._id } }
+    );
+
+    revalidateTag("community");
+    revalidateTag(postId);
     return { state: true, message: "댓글이 등록 되었습니다." };
   } catch (error) {
     console.log("post comment error" + error);
@@ -42,19 +50,25 @@ export async function createComment(
 }
 
 // get
-export async function getComment(postId: string) {
+export async function getComments(postId: string) {
   await connectDB();
 
   try {
-    const comment = await Comment.findOne({ postId }).populate("writer");
+    const comments = await Comment.find({ postId })
+      .populate("writer", "name role profile_img position_tag")
+      .populate({
+        path: "reply",
+        populate: {
+          path: "writer",
+          select: "name role profile_img position_tag",
+        },
+      })
+      .sort({ createdAt: "asc" });
 
-    return { state: true, data: comment };
+    return { state: true, data: comments };
   } catch (error) {
     console.log("get comment error" + error);
-    return {
-      state: false,
-      message: "댓글 조회에 실패했습니다.",
-    };
+    return { state: false, message: "댓글 조회에 실패했습니다." };
   }
 }
 
@@ -65,13 +79,19 @@ export async function updateComment(commentId: string, formData: FormData) {
   await connectDB();
 
   try {
-    const update = await Comment.findOneAndUpdate({ commentId }, { content });
+    const update = await Comment.findOneAndUpdate(
+      { commentId },
+      { content },
+      { new: true }
+    );
 
     if (!update) {
       return { state: false, message: "해당 댓글을 찾을 수 없습니다." };
     }
 
-    return { state: true, message: "댓글 수정이 완료되었습니다." };
+    revalidateTag("comments");
+    revalidateTag(update.postId);
+    return { state: true, message: "댓글 수정되었습니다." };
   } catch (error) {
     console.log("update comment error" + error);
     return { state: false, message: "댓글 수정에 실패했습니다." };
@@ -83,8 +103,19 @@ export async function deleteComment(commentId: string) {
   await connectDB();
 
   try {
-    await Comment.deleteOne({ commentId });
+    const exist = await Comment.findOne({ commentId });
+    if (exist === undefined || exist === null) {
+      return { success: false, message: "댓글을 찾을 수 없습니다." };
+    }
 
+    await Comment.deleteOne({ commentId });
+    await Post.findOneAndUpdate(
+      { postId: exist.postId },
+      { $pull: { comments: exist._id } }
+    );
+
+    revalidateTag("comments");
+    revalidateTag(exist.postId);
     return { success: true, message: "댓글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete comment error", error);

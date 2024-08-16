@@ -1,20 +1,26 @@
-import { createComment } from "@/lib/actions/commentAction";
 import { NextRequest } from "next/server";
+import { getSession } from "@/auth";
+import { createComment } from "@/lib/actions/commentAction";
 
 export async function POST(request: NextRequest) {
-  try {
-    const { searchParams } = request.nextUrl;
-    const userId = searchParams.get("userId");
-    const postId = searchParams.get("postId");
-    const formData = await request.json();
+  // 작성자 session id 확인
+  const session = await getSession();
+  const userId: string | undefined = session?.user.id;
 
-    if (!userId || !postId) {
-      return Response.json({ status: 400 });
-    }
+  const { searchParams } = request.nextUrl;
+  // const userId = searchParams.get("userId");
+  const postId = searchParams.get("parentId");
+  const formData = await request.formData();
 
-    const data = await createComment(userId, postId, formData);
-    return Response.json({ data }, { status: 200 });
-  } catch (error) {
-    return Response.json({ error }, { status: 500 });
+  if (!userId || !postId) {
+    return Response.json({ status: 400 });
   }
+
+  const result = await createComment(userId, postId, formData);
+
+  if (result.state === false) {
+    return Response.json({ error: result }, { status: 500 });
+  }
+
+  return Response.json({ data: result }, { status: 200 });
 }

@@ -35,7 +35,6 @@ export default async function CommunityPostList({
   })
     .then((res) => res.json())
     .then(({ data }) => {
-      console.log("data", data);
       return data;
     })
     .catch((err) => {
