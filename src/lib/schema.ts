@@ -58,6 +58,7 @@ const comment = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 // 커뮤니티
 const post = new mongoose.Schema(
   {
@@ -115,11 +116,7 @@ const study = new mongoose.Schema(
     studyInfo: { type: subStudyInfo, required: true },
     contents: { type: subContents, required: true },
     heartCount: { type: Number, default: 0 },
-    writer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     createdAt: { type: Date, default: Date.now },
   },

@@ -41,7 +41,6 @@ export default function CommentInputForm(props: TCommentInput) {
     }
 
     const uris = [to];
-
     if (to === "/api/comment" && method === "POST") {
       const parentPost = (params?.postId || params?.studyPostId) ?? "";
       uris.push(`?parentId=${parentPost}`);
