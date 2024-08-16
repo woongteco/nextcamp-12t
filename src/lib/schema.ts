@@ -42,8 +42,34 @@ const subReply = new mongoose.Schema(
   },
   { timestamps: true }
 );
+const subReply = new mongoose.Schema(
+  {
+    replyId: { type: String, required: true },
+    content: { type: String, required: true },
+    writer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 // 댓글
+const comment = new mongoose.Schema(
+  {
+    postId: { type: String, required: true },
+    commentId: { type: String, required: true },
+    content: { type: String, required: true },
+    writer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    reply: [subReply],
+  },
+  { timestamps: true }
+);
 const comment = new mongoose.Schema(
   {
     postId: { type: String, required: true },
@@ -84,19 +110,42 @@ const post = new mongoose.Schema(
   },
   { timestamps: true }
 );
+const post = new mongoose.Schema(
+  {
+    postId: { type: String },
+    category: {
+      value: { type: String, required: true },
+      label: { type: String, required: true },
+      isRecruiting: { type: Boolean, default: true },
+    },
+    contents: {
+      title: { type: String, required: true },
+      body: { type: String, required: true },
+      linkedStudyId: { type: String, default: null },
+    },
+    writer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    view: { type: Number, default: 0 },
+    like: { type: Number, default: 0 },
+  },
+  { timestamps: true }
+);
 
 const subStudyInfo = new mongoose.Schema({
   thumbnailUrl: { type: String, default: null },
   title: { type: String, required: true },
-  jobCategory: { type: subLabelValue, required: true },
-  targetCategory: { type: subLabelValue, required: true },
+  jobCategory: { type: String, required: true },
+  targetCategory: { type: String, required: true },
   expense: { type: Number, required: true },
   recruitmentPeople: { type: Number, required: true },
   recruitmentPeriod: { type: [String], default: [] },
   studyPeriod: { type: [String], default: [] },
-  location: { type: subLabelValue, required: true },
-  place: { type: String, default: null, required: true },
-  heartCount: { type: Number, default: 0 },
+  location: { type: String, required: true },
+  place: { type: String, default: null },
 });
 
 // const subContentDetail = new mongoose.Schema({
@@ -114,13 +163,16 @@ const subContents = new mongoose.Schema({
 const study = new mongoose.Schema(
   {
     studyId: { type: String },
-    thumbnailInfo: { type: subStudyInfo, required: true },
+    studyInfo: { type: subStudyInfo, required: true },
     contents: { type: subContents, required: true },
+    heartCount: { type: Number, default: 0 },
     writer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

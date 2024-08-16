@@ -5,9 +5,18 @@ import BackButton from "../../_components/BackButton";
 import StudyDetail from "./_components/StudyDetail";
 
 import { getStudyCards } from "@/dummies/studies";
+import { getStudy } from "@/lib/actions/studyAction";
+import { StudyDataFull } from "@/types/model/StudyCard";
 
-export default function StudyPostComponent() {
-  const studyCards = getStudyCards();
+export default async function StudyPostComponent() {
+  // const studyCards = getStudyCards();
+
+  const result = await getStudy();
+  let studyCardLists: StudyDataFull;
+  studyCardLists = result.data;
+
+  const studyCards = JSON.parse(JSON.stringify(studyCardLists));
+
   return (
     <div>
       <BackButton />

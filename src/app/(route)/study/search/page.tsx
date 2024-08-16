@@ -11,15 +11,24 @@ import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 
 import { TQuery } from "../page";
-import { getStudyCards } from "@/dummies/studies";
 import StudyCardFilter from "../_components/StudyCardFilter";
+import { StudyDataFull } from "@/types/model/StudyCard";
+import { getStudy } from "@/lib/actions/studyAction";
 
-export default function StudySearchPage({
+export default async function StudySearchPage({
   searchParams,
 }: {
   searchParams: TQuery;
 }) {
-  const studyCards = getStudyCards();
+  const result = await getStudy();
+  let studyCardLists: StudyDataFull[];
+
+  if (!result.state) {
+    studyCardLists = [];
+  } else {
+    studyCardLists = result.data;
+  }
+  const studyCards = JSON.parse(JSON.stringify(studyCardLists));
 
   return (
     <>

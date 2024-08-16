@@ -54,7 +54,6 @@ export default async function PostDetail({
     return notFound();
   }
   const post = postDetail.data as PostDataFull;
-  // console.log("post", post);
 
   return (
     <div>
