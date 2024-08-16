@@ -20,34 +20,48 @@ export async function createStudy(userId: string, formData: FormData) {
   const location = formData.get("location") as string;
   const place = formData.get("place") as string;
   const content = formData.get("content") as string;
-  const rule = formData.get("rule");
-  const curriculum = formData.get("curriculum");
+  const rule = formData.get("rules");
+  const curriculum = formData.get("curriculums");
   const heartCount = Number(formData.get("heartCount"));
 
-  if (
-    !thumbnailUrl ||
-    !jobCategory ||
-    !targetCategory ||
-    !expense ||
-    !recruitmentPeople ||
-    !recruitmentPeriod ||
-    !studyPeriod ||
-    !location ||
-    !place ||
-    !content
-  ) {
-    return {
-      state: false,
-      message: "스터디 개설하려면 필수 정보를 입력해주세요.",
-    };
-  }
+  console.log(
+    title,
+    thumbnailUrl,
+    title,
+    jobCategory,
+    targetCategory,
+    expense,
+    recruitmentPeople,
+    recruitmentPeriod,
+    studyPeriod,
+    location,
+    place,
+    content,
+    rule,
+    curriculum
+  );
+
+  // if (
+  //   !jobCategory ||
+  //   !targetCategory ||
+  //   !expense ||
+  //   !recruitmentPeople ||
+  //   !recruitmentPeriod ||
+  //   !studyPeriod ||
+  //   !location
+  // ) {
+  //   return {
+  //     state: false,
+  //     message: "스터디 개설하려면 필수 정보를 입력해주세요.",
+  //   };
+  // }
 
   await connectDB();
 
   try {
     const study = new Study({
       studyId,
-      thumbnailInfo: {
+      studyInfo: {
         thumbnailUrl,
         title,
         jobCategory,
@@ -119,7 +133,7 @@ export async function updateStudy(studyId: string, formData: FormData) {
       { studyId },
       {
         $set: {
-          thumbnailInfo: {
+          studyInfo: {
             thumbnailUrl,
             title,
             jobCategory,

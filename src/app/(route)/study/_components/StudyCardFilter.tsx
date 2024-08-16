@@ -2,14 +2,15 @@
 
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
-import { StudySchema } from "@/types/model/StudyCard";
+import { StudyDataFull, StudySchema } from "@/types/model/StudyCard";
+import { UserSchema } from "@/types/model/User";
 import { includesSearchQuery } from "@/utils/includesSearchQuery";
 import { useSearchParams } from "next/navigation";
 
 export default function StudyCardFilter({
   studyCards,
 }: {
-  studyCards: StudySchema[];
+  studyCards: StudyDataFull[];
 }) {
   const params = useSearchParams();
   const jobKey = params.get("job_c");
@@ -18,15 +19,15 @@ export default function StudyCardFilter({
   const queryKey = params.get("q");
 
   const filteredStudyCards = studyCards.filter((card) => {
-    const matchesJobKey = jobKey ? card.jobCategory.label === jobKey : true;
+    const matchesJobKey = jobKey ? card.studyInfo.jobCategory === jobKey : true;
     const matchesTargetKey = targetKey
-      ? card.targetCategory.value === targetKey
+      ? card.studyInfo.targetCategory === targetKey
       : true;
     const matchesLocationKey = locationKey
-      ? card.location.value === locationKey
+      ? card.studyInfo.location === locationKey
       : true;
     const matchesQueryKey = queryKey
-      ? includesSearchQuery(card.title, queryKey)
+      ? includesSearchQuery(card.studyInfo.title, queryKey)
       : true;
 
     return (

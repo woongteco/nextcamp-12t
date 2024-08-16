@@ -18,16 +18,26 @@ import ThumbnailInput from "./ThumbnailInput";
 
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
-import { SingleValue } from "react-select";
-import { TSelectOption } from "@/types/model/Category";
 import { createStudy } from "@/lib/actions/studyAction";
+import { StudySchema } from "@/types/model/StudyCard";
 
 type Option = {
   readonly label: string;
   readonly value: string;
 };
 
-export default function StudyForm({ id }: { id: string }) {
+export type StudyValue = Omit<
+  StudySchema,
+  "writer" | "comments" | "createdAt" | "heartCount"
+>;
+
+export default function StudyForm({
+  id,
+  defaultValue,
+}: {
+  id: string;
+  defaultValue?: StudyValue;
+}) {
   const router = useRouter();
 
   // Input 타입이 Number일 경우 (maxlength적용, 숫자만입력되게 적용)
@@ -41,6 +51,18 @@ export default function StudyForm({ id }: { id: string }) {
         e.currentTarget.maxLength
       );
   };
+
+  // 스터디 카테고리
+  const [jobCategory, setJobCategory] = useState("");
+  const jobCategoryOption = CATEGORIES.map((m) => ({
+    value: m.value,
+    label: m.label,
+  }));
+  const [targetCategory, setTargetCategory] = useState("");
+  const targetCategoryOption = GOALS.map((m) => ({
+    value: m.value,
+    label: m.label,
+  }));
 
   // 모집기간
   const [recruitmentPeriod, setRecruitmentPeriod] = useState<
@@ -67,14 +89,11 @@ export default function StudyForm({ id }: { id: string }) {
     setFreeChecked((freeChecked) => !freeChecked);
 
   // 스터디방식
+  const [locationCategory, setLocationCategory] = useState("");
   const locationCategoryOption = ONOFF.map((l) => ({
     value: l.value,
     label: l.label,
   }));
-  const defaultLocationCategory = locationCategoryOption[0];
-  const [locationCategory, setLocationCategory] = useState<Option | null>(
-    defaultLocationCategory
-  );
   const [placeChecked, setPlaceChecked] = useState<boolean>(false);
   const [place, setPlace] = useState<string>("");
   useEffect(() => {
@@ -82,6 +101,8 @@ export default function StudyForm({ id }: { id: string }) {
   }, [placeChecked]);
   const PlaceCheckedHandler = () =>
     setPlaceChecked((placeChecked) => !placeChecked);
+
+  const [content, setContent] = useState<string>("");
 
   // 규칙 & 커리큘럼
   const [ruleList, setRuleList] = useState<string[]>([""]);
@@ -175,25 +196,32 @@ export default function StudyForm({ id }: { id: string }) {
       );
     }
     // 참가 비용
-    formData.append("expense", freeChecked ? "0" : free.toString());
+    // formData.append("expense", freeChecked ? "0" : free.toString());
 
     // 스터디 방식 및 장소
-    formData.append("location", locationCategory?.value || "");
-    if (locationCategory?.value === "offline" && !placeChecked) {
-      formData.append("place", place);
+    // formData.append("location", locationCategory?.value || "");
+    // if (locationCategory?.value === "offline" && !placeChecked) {
+    //   formData.append("place", place);
+    // }
+
+    if (content) {
+      formData.append("content", content);
     }
 
     // 스터디 규칙 추가
     formData.append("rules", JSON.stringify(ruleList));
 
     // 세부 커리큘럼 추가
-    formData.append("curriculum", JSON.stringify(curriculumList));
+    formData.append("curriculums", JSON.stringify(curriculumList));
 
     try {
-      await createStudy(id, formData);
-      handleAlert("success", "스터디가 개설 되었습니다.");
-
-      // router.replace("/study");
+      const result = await createStudy(id, formData);
+      if (result.state) {
+        handleAlert("success", "스터디가 개설 되었습니다.");
+        router.replace("/study");
+      } else {
+        handleAlert("error", result.message);
+      }
     } catch (error) {
       if (error instanceof Error) {
         handleAlert("error", error.message);
@@ -221,13 +249,23 @@ export default function StudyForm({ id }: { id: string }) {
         </LabelText>
         <div className="flex gap-3">
           <Input.Select
-            name="jobCategory"
-            options={CATEGORIES}
+            required
+            className="min-w-40"
             placeholder="직무 카테고리"
+            name="jobCategory"
+            options={jobCategoryOption}
+            value={jobCategoryOption.find((f) => f.label === jobCategory)}
+            onChange={(newValue: Option | null) => setJobCategory(jobCategory)}
           />
           <Input.Select
+            required
+            className="min-w-40"
             name="targetCategory"
-            options={GOALS}
+            options={targetCategoryOption}
+            value={targetCategoryOption.find((f) => f.label === targetCategory)}
+            onChange={(newValue: Option | null) =>
+              setTargetCategory(targetCategory)
+            }
             placeholder="목표 카테고리"
           />
         </div>
@@ -299,15 +337,20 @@ export default function StudyForm({ id }: { id: string }) {
         </LabelText>
         <div className="flex flex-col gap-6">
           <Input.Select
+            required
             className="w-[510px]"
             name="location"
             options={locationCategoryOption}
-            defaultValue={defaultLocationCategory}
-            value={locationCategory}
+            defaultValue={locationCategoryOption[0]}
+            value={locationCategoryOption.find(
+              (f) => f.value === locationCategory
+            )}
+            onChange={(newValue: Option | null) =>
+              setLocationCategory(locationCategory)
+            }
             placeholder="스터디 방식"
-            onChange={(newValue) => setLocationCategory(newValue)}
           />
-          {locationCategory?.value === "offline" && (
+          {locationCategory === "offline" && (
             <div className="flex items-center gap-3">
               <Input.Text
                 name="place"
@@ -334,9 +377,10 @@ export default function StudyForm({ id }: { id: string }) {
           스터디 소개
         </LabelText>
         <TextEditor
-          // name="content"
+          id="content"
           className="h-[450px]"
           placeholder="스터디 소개, 스터디 규칙 등을 상세히 작성해 주세요."
+          onChange={(c: string) => setContent(c)}
         />
       </GridField>
       <GridField>
@@ -346,7 +390,6 @@ export default function StudyForm({ id }: { id: string }) {
             <div className="flex items-center gap-6">
               <div className="flex-1" key={index}>
                 <Input.Text
-                  name="rule"
                   className="w-full"
                   placeholder="스터디 규칙을 정해주세요."
                   value={rule}
@@ -377,7 +420,6 @@ export default function StudyForm({ id }: { id: string }) {
             <div className="flex items-center gap-6">
               <div className="flex-1" key={index}>
                 <Input.Text
-                  name="curriculum"
                   className="w-full"
                   placeholder="세부적인 커리큘럼을 정해주세요."
                   value={curriculum}
