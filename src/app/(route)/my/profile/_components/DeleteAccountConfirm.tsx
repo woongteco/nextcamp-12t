@@ -35,7 +35,7 @@ export default function DeleteAccountConfirm({ email }: { email: string }) {
         handleAlert("error", result.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

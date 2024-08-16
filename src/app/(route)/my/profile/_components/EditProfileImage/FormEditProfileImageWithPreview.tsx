@@ -67,7 +67,6 @@ export default function FormEditProfileImageWithPreview({
   }
 
   async function onSave() {
-    console.log("save");
     try {
       const result = await updateUserData(id, { profile_img: imageUrl });
 
@@ -78,7 +77,7 @@ export default function FormEditProfileImageWithPreview({
         handleAlert("error", result.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -98,7 +97,7 @@ export default function FormEditProfileImageWithPreview({
         handleAlert("error", result.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
