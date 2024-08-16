@@ -43,7 +43,7 @@ export default async function Home() {
           </section>
         </div>
       </Container>
-      <section className="reviews-promotion mt-100">
+      <section className="reviews-promotion my-100">
         <Container>
           <SectionTitle size="md" className="mb-6">
             케밋 스터디원들의 놀라운 성장 후기
