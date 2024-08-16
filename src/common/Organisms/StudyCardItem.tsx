@@ -16,7 +16,7 @@ import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
 
 export default function StudyCardItem({ card }: { card: StudyDataFull }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
-  const recruitmentDay = dayjs(card.studyInfo.recruitmentPeriod[1]);
+  const recruitmentDay = dayjs(card.studyInfo?.recruitmentPeriod[1]);
   const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");
 
   console.log("studycard", card);
@@ -39,18 +39,18 @@ export default function StudyCardItem({ card }: { card: StudyDataFull }) {
             useIn="default"
             loading="lazy"
             placeholder="blur"
-            blurDataURL={card.studyInfo.thumbnailUrl + "?blur=2"}
-            src={card.studyInfo.thumbnailUrl || ""}
-            alt={`${card.studyInfo.title} thumbnail`}
+            blurDataURL={card.studyInfo?.thumbnailUrl + "?blur=2"}
+            src={card.studyInfo?.thumbnailUrl || ""}
+            alt={`${card.studyInfo?.title} thumbnail`}
             className="thumbnailImage object-cover min-w-full w-auto h-[100%]"
           />
         </div>
         <div className="block my-4 px-3 h-[7.5rem]">
           <span className="text-label-400 text-label-dimmed line-clamp-1">
-            {card.studyInfo.jobCategory}
+            {card.studyInfo?.jobCategory}
           </span>
           <p className="text-lg font-semibold line-clamp-1">
-            {card.studyInfo.title}
+            {card.studyInfo?.title}
           </p>
           <div className="flex items-center gap-[.25rem] pt-2">
             <Profile
@@ -69,7 +69,7 @@ export default function StudyCardItem({ card }: { card: StudyDataFull }) {
           </div>
           <div className="mt-4 flex gap-1">
             <Keyword bg="bg-card" text="text-label-normal">
-              모집 {card.studyInfo.recruitmentPeople}명
+              모집 {card.studyInfo?.recruitmentPeople}명
             </Keyword>
             <Keyword bg="bg-card" text="text-label-normal">
               {recruitmentDay.format("MM/DD")}마감

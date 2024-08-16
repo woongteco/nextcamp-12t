@@ -42,18 +42,6 @@ const subReply = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const subReply = new mongoose.Schema(
-  {
-    replyId: { type: String, required: true },
-    content: { type: String, required: true },
-    writer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
 
 // 댓글
 const comment = new mongoose.Schema(
@@ -70,46 +58,7 @@ const comment = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const comment = new mongoose.Schema(
-  {
-    postId: { type: String, required: true },
-    commentId: { type: String, required: true },
-    content: { type: String, required: true },
-    writer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    reply: [subReply],
-  },
-  { timestamps: true }
-);
-
 // 커뮤니티
-const post = new mongoose.Schema(
-  {
-    postId: { type: String },
-    category: {
-      value: { type: String, required: true },
-      label: { type: String, required: true },
-      isRecruiting: { type: Boolean, default: true },
-    },
-    contents: {
-      title: { type: String, required: true },
-      body: { type: String, required: true },
-      linkedStudyId: { type: String, default: null },
-    },
-    writer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-    view: { type: Number, default: 0 },
-    like: { type: Number, default: 0 },
-  },
-  { timestamps: true }
-);
 const post = new mongoose.Schema(
   {
     postId: { type: String },
