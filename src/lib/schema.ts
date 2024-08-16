@@ -110,16 +110,22 @@ const subContents = new mongoose.Schema({
 });
 
 // 스터디
-const study = new mongoose.Schema({
-  studyId: { type: String },
-  studyInfo: { type: subStudyInfo, required: true },
-  contents: { type: subContents, required: true },
-  heartCount: { type: Number, default: 0 },
-  writer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-  createdAt: { type: Date, default: Date.now },
+const study = new mongoose.Schema(
+  {
+    studyId: { type: String },
+    studyInfo: { type: subStudyInfo, required: true },
+    contents: { type: subContents, required: true },
+    heartCount: { type: Number, default: 0 },
+    writer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    createdAt: { type: Date, default: Date.now },
+  },
   { timestamps: true }
-});
+);
 
 // 스터디 찜
 const studyLike = new mongoose.Schema({
