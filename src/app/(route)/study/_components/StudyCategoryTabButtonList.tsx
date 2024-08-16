@@ -36,15 +36,13 @@ export default function StudyCategoryTabButtonList({
   const clickHandler = (value: string) => {
     setSelected((prev) => {
       if (prev === value) {
+        onChangeQuery("");
         return "";
       }
+      onChangeQuery(value);
       return value;
     });
   };
-
-  useEffect(() => {
-    onChangeQuery(select);
-  }, [select]);
 
   return (
     <div className="flex gap-4 w-fit mb-11">
