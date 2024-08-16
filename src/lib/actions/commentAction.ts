@@ -103,9 +103,19 @@ export async function deleteComment(commentId: string) {
   await connectDB();
 
   try {
+    const exist = await Comment.findOne({ commentId });
+    if (exist === undefined || exist === null) {
+      return { success: false, message: "댓글을 찾을 수 없습니다." };
+    }
+
     await Comment.deleteOne({ commentId });
+    await Post.findOneAndUpdate(
+      { postId: exist.postId },
+      { $pull: { comments: exist._id } }
+    );
 
     revalidateTag("comments");
+    revalidateTag(exist.postId);
     return { success: true, message: "댓글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete comment error", error);

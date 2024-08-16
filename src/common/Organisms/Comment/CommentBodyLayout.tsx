@@ -56,11 +56,12 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
       .then((res) => res.json())
       .then(({ data }) => {
         close();
+        // console.log(data);
         return data;
       })
       .catch((err) => err);
 
-    if (result.success === false) {
+    if (result?.success === false) {
       handleAlert("error", result.message);
     } else {
       handleAlert("success", result.message);
