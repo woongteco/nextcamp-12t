@@ -26,7 +26,7 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
     children: (
       <div className="flex flex-col gap-4">
         <p className="text-H4 mt-4">이 댓글을 삭제하시겠습니까?</p>
-        <div className="bg-alt text-label-dimmed p-4 rounded-lg">
+        <div className="bg-alt text-label-dimmed p-4 rounded-lg max-w-80 text-wrap whitespace-pre-line break-words hyphens-auto">
           {comment.content}
         </div>
         <div className="flex items-center justify-center gap-4">
@@ -80,7 +80,7 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
           onSubmit={() => setUpdate(false)}
         />
       ) : (
-        <p className="text-body-400 text-label-normal whitespace-pre-line break-all w-full">
+        <p className="text-body-400 text-label-normal whitespace-pre-line break-words hyphens-auto w-full">
           {comment.content}
         </p>
       )}
