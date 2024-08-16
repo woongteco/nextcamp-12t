@@ -1,12 +1,12 @@
 import WideStudyItem from "./WideStudyItem";
 import NoneStudyComponent from "./NoneStudyComponent";
-import { StudySchema } from "@/types/model/StudyCard";
+import { StudyDataFull, StudySchema } from "@/types/model/StudyCard";
 
 export default function WideStudyList({
   studyCards,
   count,
 }: {
-  studyCards: StudySchema[];
+  studyCards: StudyDataFull[];
   count: number;
 }) {
   if (!studyCards) {
