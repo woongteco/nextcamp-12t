@@ -10,13 +10,11 @@ import handleAlert from "@/common/Molecules/handleAlert";
 export default function CommentInput({
   init = false,
   placeholder = "댓글을 작성해보세요",
-  sessionId,
   onCancel,
   onSubmit,
 }: {
   init?: boolean;
   placeholder?: string;
-  sessionId: string;
   onCancel?: () => void;
   onSubmit?: () => void;
 }) {
@@ -32,7 +30,7 @@ export default function CommentInput({
     const postId = params.postId ? params.postId : params.postId || "";
 
     try {
-      const result = await createComment(sessionId, postId, formData);
+      const result = await createComment(postId, formData);
 
       if (result.state) {
         handleAlert("success", result.message);

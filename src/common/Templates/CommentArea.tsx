@@ -63,14 +63,14 @@ export default async function CommentArea({
           <ProfileImg
             size="large"
             src={
-              sessionId
+              sessionId && user?.profile_img
                 ? user?.profile_img
                 : "/images/profile/DummyProfileImg.jpg"
             }
             alt="프로필 이미지"
             className="my-[6px]"
           />
-          <CommentInput init={false} sessionId={sessionId} />
+          <CommentInput init={false} />
         </div>
       )}
     </section>

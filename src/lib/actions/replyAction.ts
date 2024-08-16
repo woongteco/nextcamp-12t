@@ -4,15 +4,18 @@ import { revalidatePath } from "next/cache";
 import connectDB from "../db";
 import { Comment } from "../schema";
 import { nanoid } from "nanoid";
+import { getSession } from "@/auth";
 
 // post
-export async function createReply(
-  id: string,
-  commentId: string,
-  formData: FormData
-) {
+export async function createReply(commentId: string, formData: FormData) {
+  const session = await getSession();
+  const userId = session?.user.id;
   const replyId = nanoid();
   const content = formData.get("content") as string;
+
+  if (!userId) {
+    return { state: false, message: "유효한 id가 필요합니다." };
+  }
 
   if (!content) {
     return { state: false, message: "답글 내용을 입력해주세요." };
@@ -28,7 +31,7 @@ export async function createReply(
           reply: {
             replyId,
             content,
-            writer: id,
+            writer: userId,
           },
         },
       }
