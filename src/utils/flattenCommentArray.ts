@@ -7,7 +7,10 @@ export const flattenCommentArray: FlattenArrayType = (comments) => {
   const flattend = comments.reduce(
     (prev: (CommentBase | ReplySchema)[], curr: CommentSchema) => {
       const { reply, ...comment } = curr;
-      return [...prev, comment, ...reply];
+      if (Array.isArray(reply)) {
+        return [...prev, comment, ...reply];
+      }
+      return [...prev, comment];
     },
     []
   );

@@ -58,7 +58,7 @@ export default function FormEditProfile({
         handleAlert("error", result.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

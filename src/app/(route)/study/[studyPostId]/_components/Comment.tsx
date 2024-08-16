@@ -1,5 +1,5 @@
 import ProfileImg from "@/common/Atoms/Image/ProfileImg";
-import CommentInput from "@/common/Organisms/Comment/CommentInput";
+import CommentInputForm from "@/common/Organisms/Comment/CommentInput";
 import { QandAIcon } from "@public/icons";
 import Image from "next/image";
 import CommentList, { TComment } from "./CommentList";
@@ -31,7 +31,7 @@ export default function Comment({ comments }: { comments: TComment[] }) {
           alt="프로필 이미지"
           className="my-[6px]"
         />
-        <CommentInput />
+        <CommentInputForm />
       </div>
     </div>
   );

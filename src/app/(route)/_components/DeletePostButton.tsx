@@ -1,7 +1,6 @@
 "use client";
 
 import handleAlert from "@/common/Molecules/handleAlert";
-import { deleteCommunity } from "@/lib/actions/communityAction";
 import { TProps } from "@/types/component/props";
 import { cfetch } from "@/utils/customFetch";
 import { useRouter } from "next/navigation";
@@ -18,11 +17,11 @@ export default function DeletePostButton({
     })
       .then((res) => res.json())
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         return data;
       })
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
         return { state: false, message: "상태 업데이트에 실패했습니다." };
       });
 

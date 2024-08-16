@@ -1,43 +1,7 @@
 "use client";
 import Profile from "@/common/Molecules/Profile";
-import { CommentSchema, ReplySchema } from "@/types/model/Comment";
-import { useState } from "react";
-import CommentInput from "./CommentInput";
-
-function CommentBodyLayout({
-  comment,
-  canEdit,
-  canReply = true,
-}: {
-  comment: CommentSchema | ReplySchema;
-  canEdit: boolean;
-  canReply?: boolean;
-}) {
-  const [writeReply, setWrite] = useState<boolean>(false);
-  const createdAt = new Intl.DateTimeFormat("ko-KR", {
-    dateStyle: "medium",
-    timeStyle: "medium",
-  });
-
-  return (
-    <>
-      <p className="text-body-400 text-label-normal">{comment.content}</p>
-      <p className="text-label-400 text-label-dimmed flex flex-row flex-nowrap gap-6">
-        <span>{createdAt.format(Date.parse(comment.createdAt))}</span>
-        {canReply && <button onClick={() => setWrite(true)}>답글쓰기</button>}
-        {canEdit && (
-          <>
-            <button>수정</button>
-            <button>삭제</button>
-          </>
-        )}
-      </p>
-      {writeReply && (
-        <CommentInput init={true} onCancel={() => setWrite(false)} />
-      )}
-    </>
-  );
-}
+import { CommentSchema } from "@/types/model/Comment";
+import { CommentBodyLayout } from "./CommentBodyLayout";
 
 export default function CommentItem({
   comment,
@@ -58,11 +22,15 @@ export default function CommentItem({
         }}
       />
       <div className="flex flex-col gap-5 pl-14">
-        <CommentBodyLayout comment={comment} canEdit={canEdit} />
+        <CommentBodyLayout
+          comment={comment}
+          canEdit={canEdit}
+          commentId={comment.commentId}
+        />
         {comment?.reply &&
           comment.reply.length > 0 &&
           comment.reply.map((reply) => (
-            <div className="flex flex-col gap-5 pt-6" key={reply.commentId}>
+            <div className="flex flex-col gap-5 pt-6" key={reply.replyId}>
               <Profile
                 size="default"
                 user={{
@@ -75,6 +43,7 @@ export default function CommentItem({
               <div className="flex flex-col gap-5 pl-14">
                 <CommentBodyLayout
                   comment={reply}
+                  commentId={comment.commentId}
                   canReply={false}
                   canEdit={canEdit}
                 />
