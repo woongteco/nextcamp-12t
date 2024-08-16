@@ -25,8 +25,6 @@ export default function PostListWithPagination({
   const endPost = current * POSTS_PER_PAGE + 1;
   const currentPosts = postsData.slice(startPost, endPost);
 
-  console.log(currentPosts);
-
   return postsData.length > 0 ? (
     <>
       <PostList posts={currentPosts} />

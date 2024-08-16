@@ -29,7 +29,6 @@ export async function createReply(
             replyId,
             content,
             writer: id,
-            createdAt: new Date(),
           },
         },
       }

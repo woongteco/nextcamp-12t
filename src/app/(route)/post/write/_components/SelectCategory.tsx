@@ -29,16 +29,10 @@ export default function SelectCategory({
   const [category, setCategory] = useState<Option | null>(defaultCategory);
 
   useEffect(() => {
-    console.log(category);
-
     if (category) {
       setData(category);
     }
-
-    console.log("커뮤니티 개설 카테고리" + JSON.stringify(category));
   }, [category]);
-
-  console.log(category);
 
   return (
     <>
@@ -62,15 +56,17 @@ export default function SelectCategory({
           </LabelText>
           <ButtonCheck>
             <ButtonCheck.Radio
-              name="recruitStatus"
+              name="isRecruiting"
               id="statusOpened"
               label="모집중"
+              value={"true"}
               defaultChecked={defaultValue?.isRecruiting || true}
             />
             <ButtonCheck.Radio
-              name="recruitStatus"
+              name="isRecruiting"
               id="statusClosed"
               label="모집완료"
+              value={"false"}
               defaultChecked={!defaultValue?.isRecruiting || false}
             />
           </ButtonCheck>

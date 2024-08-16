@@ -12,18 +12,10 @@ import SearchInput from "../_components/SearchInput";
 import NonePostItem from "./_components/NonePostItem";
 import { getCommunity } from "@/lib/actions/communityAction";
 import { PostDataFull } from "@/types/model/PostItem";
+import { flattenCommentLength } from "@/utils/flattenCommentArray";
+import { cfetch } from "@/utils/customFetch";
 
 type TQuery = { category?: string; sort?: string };
-
-// async function Test() {
-//   try {
-//     const response = await fetch("http://localhost:3000/api/community");
-//     const { data } = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 export default async function CommunityPostList({
   searchParams,
@@ -38,15 +30,20 @@ export default async function CommunityPostList({
     return <NotFound />;
   }
 
-  const result = await getCommunity(); //getPostsData();
-  let postListData: PostDataFull[];
+  const result = await cfetch("/api/community", {
+    next: { tags: ["community"] },
+  })
+    .then((res) => res.json())
+    .then(({ data }) => {
+      console.log("data", data);
+      return data;
+    })
+    .catch((err) => {
+      console.error(err);
+      return { data: [] };
+    });
 
-  if (result.state === false) {
-    postListData = [];
-  } else {
-    postListData = result.data;
-  }
-
+  let postListData: PostDataFull[] = result.data;
   const clientPostList = JSON.parse(JSON.stringify(postListData));
 
   const sortedPosts = clientPostList.sort(
@@ -55,9 +52,9 @@ export default async function CommunityPostList({
         case "latest":
           return Date.parse(b.createdAt) - Date.parse(a.createdAt);
         case "comments":
-          // AS_IS: 대댓글 수까지 계산 X
-          // TO_BE: comments 배열 flatten, 대댓글 수까지 합해서 총 댓글 수 계산
-          return b.comments.length - a.comments.length;
+          return (
+            flattenCommentLength(b.comments) - flattenCommentLength(a.comments)
+          );
         case "likes":
           return b.like - a.like;
         case "views":
@@ -67,10 +64,6 @@ export default async function CommunityPostList({
       }
     }
   );
-
-  // const { data } = await Test();
-
-  // console.log("데이터 패칭" + JSON.stringify(data));
 
   return (
     <SidebarAsideContentArea>

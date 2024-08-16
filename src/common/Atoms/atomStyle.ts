@@ -122,7 +122,7 @@ export const ButtonVariants = cva(
         ],
         "outline.assist": [
           `bg-litne-input/0`,
-          `btorder`,
+          `border`,
           `border-line-input`,
           `hover:bg-line-input/15`,
           `text-line-input`,

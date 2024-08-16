@@ -12,25 +12,9 @@ import { Post } from "@/lib/schema";
 import { notFound } from "next/navigation";
 import DeletePostButton from "../../_components/DeletePostButton";
 import Link from "next/link";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
-import { getCommunity } from "@/lib/actions/communityAction";
-
-// 커뮤니티 상세 페이지 데이터 패칭
-// async function detailPostDataTest(postId: string) {
-//   console.log("data fetch" + postId);
-//   try {
-//     const response = await fetch(
-//       `${process.env.BASE_URL}/api/community/${postId}`
-//     );
-
-//     const data = await response.json();
-//     console.log(data);
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+import { cfetch } from "@/utils/customFetch";
 
 async function increaseViewCount(postId: string) {
   try {
@@ -39,7 +23,7 @@ async function increaseViewCount(postId: string) {
       { $inc: { view: 1 } },
       { new: true }
     );
-    revalidatePath("/post");
+    revalidateTag("community");
     return { state: true, data: update };
   } catch (error: any) {
     return { state: false, message: "Fail to update view count" };
@@ -51,35 +35,25 @@ export default async function PostDetail({
 }: {
   params: { postId: string };
 }) {
-  //
   await increaseViewCount(postId);
 
   // TODO: 로그인한 사용자 정보 상태값으로 대체 필요
   const session = await getSession();
 
-  const postDetail = await getCommunity(postId);
+  const postDetail = await cfetch("/api/community/" + postId, {
+    next: { tags: ["community"] },
+  })
+    .then((res) => res.json())
+    .then(({ data }) => data)
+    .catch((err) => {
+      console.error(err.message);
+      return { state: false };
+    });
 
   if (postDetail.state === false) {
     return notFound();
   }
-  //   else if (postDetail === undefined) {
-  //     return notFound();
-  //   }
-  //
   const post = postDetail.data as PostDataFull;
-  //   const { data: writer } = await getProfile(post.writer as string);
-
-  async function toggleLike() {
-    try {
-      // await toggle-like-action
-    } catch (error: any) {
-      console.error("error", error);
-      return { state: false, message: "상태 업데이트에 실패했습니다." };
-    }
-  }
-
-  // const { data } = await detailPostDataTest(postId);
-  // console.log("커뮤니티 상세 페이지 데이터 패칭" + JSON.stringify(data));
 
   return (
     <div>
@@ -120,10 +94,10 @@ export default async function PostDetail({
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />
       </article>
-      {/* <CommentArea
+      <CommentArea
         sessionId={session?.user.id || ""}
         comments={post.comments}
-      /> */}
+      />
     </div>
   );
 }

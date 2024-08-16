@@ -19,14 +19,6 @@ export default async function CommentArea({
   if (result.state === true) {
     user = result.data;
   }
-  //   let data;
-  //
-  //   if (postId) {
-  //     const findPost = await getComment(postId);
-  //     data = findPost.data;
-  //   }
-  //
-  //   console.log("get comment" + data);
 
   return (
     <section className="flex flex-col gap-8 mt-5 px-10 py-8 rounded-twenty border border-line-normal">
@@ -52,7 +44,9 @@ export default async function CommentArea({
       <div>
         {comments.length === 0 ? (
           <span className="flex items-center justify-center text-H4 text-label-assist bg-alt rounded-twenty h-20">
-            첫번째로 댓글을 남겨보세요!
+            {sessionId
+              ? "첫번째로 댓글을 남겨보세요!"
+              : "로그인한 사용자만 댓글을 남길 수 있어요!"}
           </span>
         ) : (
           comments.map((c: any) => (
@@ -64,19 +58,21 @@ export default async function CommentArea({
           ))
         )}
       </div>
-      <div className="flex flex-row gap-8 items-start w-full">
-        <ProfileImg
-          size="large"
-          src={
-            sessionId
-              ? user?.profile_img
-              : "/images/profile/DummyProfileImg.jpg"
-          }
-          alt="프로필 이미지"
-          className="my-[6px]"
-        />
-        <CommentInput init={false} sessionId={sessionId} />
-      </div>
+      {sessionId && (
+        <div className="flex flex-row gap-8 items-start w-full">
+          <ProfileImg
+            size="large"
+            src={
+              sessionId
+                ? user?.profile_img
+                : "/images/profile/DummyProfileImg.jpg"
+            }
+            alt="프로필 이미지"
+            className="my-[6px]"
+          />
+          <CommentInput init={false} sessionId={sessionId} />
+        </div>
+      )}
     </section>
   );
 }

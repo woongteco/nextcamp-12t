@@ -26,24 +26,24 @@ export default function DefaultProfileMenuItems() {
         href="/my/profile"
       />
       <ProfileMenuItemLink
-        icon={<Image src={StudyIcon} alt="내 스터디" />}
+        icon={<Image src={StudyIcon} alt="내 스터디" loading="eager" />}
         label="내 스터디"
         href="/my/study"
       />
       <ProfileMenuItemLink
-        icon={<Image src={SaveHeartIcon} alt="찜 스터디" />}
+        icon={<Image src={SaveHeartIcon} alt="찜 스터디" loading="eager" />}
         label="찜 스터디"
         href="/my/like-study"
       />
       <ProfileMenuItemLink
-        icon={<Image src={PostIcon} alt="내가 쓴 글" />}
+        icon={<Image src={PostIcon} alt="내가 쓴 글" loading="eager" />}
         label="내가 쓴 글"
         href="/my/post"
       />
       <div className="w-full h-0 border-t my-2 p-0"></div>
       <UnstyledLogoutButton className="w-full">
         <ProfileMenuItemLink
-          icon={<Image src={LogoutIcon} alt="로그아웃" />}
+          icon={<Image src={LogoutIcon} alt="로그아웃" loading="eager" />}
           label="로그아웃"
         />
       </UnstyledLogoutButton>

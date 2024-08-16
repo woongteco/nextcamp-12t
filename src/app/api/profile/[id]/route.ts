@@ -3,7 +3,7 @@ import { getUserData } from "@/lib/actions/userAction";
 import { NextRequest } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

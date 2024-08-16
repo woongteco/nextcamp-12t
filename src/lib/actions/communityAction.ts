@@ -3,26 +3,23 @@
 import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post, Comment } from "../schema";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
 export async function createCommunity(userId: string, formData: FormData) {
   const postId = nanoid();
-  const label = formData.get("category");
+  const categoryValue = formData.get("categoryValue");
+  const categoryLabel = formData.get("categoryLabel");
   const isRecruiting = formData.get("isRecruiting") === "true";
   const title = formData.get("title") as string;
   const body = formData.get("body") as string;
   const linkedStudyId = formData.get("linkedStudyId") as string;
 
-  // console.log("### linkedStudyId", linkedStudyId);
-
-  console.log(label);
-
   if (!userId) {
     return { state: false, message: "유효한 id가 필요합니다." };
   }
 
-  if (!label || !title || !body) {
+  if (!categoryValue || !title || !body) {
     return {
       state: false,
       message: "커뮤니티 등록하려면 필수 정보를 입력해주세요.",
@@ -35,7 +32,8 @@ export async function createCommunity(userId: string, formData: FormData) {
     const post = new Post({
       postId,
       category: {
-        label,
+        value: categoryValue,
+        label: categoryLabel,
         isRecruiting,
       },
       contents: {
@@ -44,14 +42,13 @@ export async function createCommunity(userId: string, formData: FormData) {
         linkedStudyId,
       },
       writer: userId,
-      createdAt: new Date(),
       view: 0,
       like: 0,
     });
 
     await post.save();
 
-    revalidatePath("/post");
+    revalidateTag("community");
     return {
       state: true,
       message: "커뮤니티 글이 등록되었습니다.",
@@ -94,7 +91,6 @@ export async function getCommunity(postId: string | null = null) {
       return { state: true, data: postList };
     }
   } catch (error) {
-    console.log("get profile" + error);
     return {
       state: false,
       message: "게시글 데이터를 가져오는데 실패했습니다.",
@@ -111,6 +107,13 @@ export async function updateCommunity(postId: string, formData: FormData) {
   const body = formData.get("body") as string;
   const linkedStudyId = formData.get("linkedStudyId") as string;
 
+  if (!categoryValue || !title || !body) {
+    return {
+      state: false,
+      message: "커뮤니티 등록하려면 필수 정보를 입력해주세요.",
+    };
+  }
+
   try {
     const update = await Post.findOneAndUpdate(
       { postId },
@@ -126,7 +129,6 @@ export async function updateCommunity(postId: string, formData: FormData) {
             body,
             linkedStudyId,
           },
-          createdAt: new Date(),
           view: 0,
           like: 0,
         },
@@ -137,8 +139,7 @@ export async function updateCommunity(postId: string, formData: FormData) {
     if (!update) {
       return { state: false, message: "해당 커뮤니티 글을 찾을 수 없습니다." };
     }
-    revalidatePath(`/post`);
-    revalidatePath(`/post/${postId}`);
+    revalidateTag(`community`);
     return { state: true, message: "커뮤니티 글이 수정되었습니다." };
   } catch (error) {
     console.log("update post error " + error);
@@ -154,7 +155,7 @@ export async function deleteCommunity(postId: string) {
     await Post.deleteOne({ postId });
     await Comment.deleteMany({ postId });
 
-    revalidatePath("/my/post");
+    revalidateTag("community");
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };
   } catch (error) {
     console.error("delete post error", error);

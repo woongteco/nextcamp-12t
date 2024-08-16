@@ -80,7 +80,6 @@ export async function createStudy(userId: string, formData: FormData) {
       },
       writer: userId,
       heartCount,
-      createdAt: new Date(),
     });
 
     await study.save();

@@ -16,7 +16,7 @@ export default function CommentInput({
 }: {
   init?: boolean;
   placeholder?: string;
-  sessionId?: string;
+  sessionId: string;
   onCancel?: () => void;
   onSubmit?: () => void;
 }) {
@@ -27,10 +27,6 @@ export default function CommentInput({
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    if (!sessionId) {
-      return;
-    }
 
     const formData = new FormData(e.currentTarget);
     const postId = params.postId ? params.postId : params.postId || "";
