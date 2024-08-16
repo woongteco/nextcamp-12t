@@ -3,13 +3,13 @@
 import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
-import Link from "next/link";
 import { Input } from "../../_components/UserInput";
 import useFindEmail from "@/store/useFindEmail";
 import { updatePassword } from "@/lib/actions/authAction";
 import { FormEvent } from "react";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
+import FindNoData from "../../_components/FindNoData";
 
 export default function page() {
   const { userEmail } = useFindEmail();
@@ -43,29 +43,38 @@ export default function page() {
     <>
       <AuthWrap>
         <Image src={Logo} alt="logo" />
-        <p>새로운 비밀번호로 변경해주세요.</p>
-        <form onSubmit={handleSubmit} className="flex flex-col w-full gap-6">
-          <div className="w-full flex flex-col gap-2">
-            <Input
-              id="password"
-              type="password"
-              title="비밀번호"
-              placeholder="********"
-            />
-            <p className="text-xs text-gray-400">
-              ※ 영문 / 숫자 / 특수문자(!, @, #, *)중 1가지 포함 12자 이상
-            </p>
-          </div>
-          <Input
-            id="pwCheck"
-            type="password"
-            title="비밀번호 확인"
-            placeholder="********"
-          />
-          <button className="w-full rounded-md py-2 text-white bg-main-600 text-center">
-            변경 완료 후 로그인 페이지 이동
-          </button>
-        </form>
+        {userEmail ? (
+          <>
+            <p>새로운 비밀번호로 변경해주세요.</p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col w-full gap-6"
+            >
+              <div className="w-full flex flex-col gap-2">
+                <Input
+                  id="password"
+                  type="password"
+                  title="비밀번호"
+                  placeholder="********"
+                />
+                <p className="text-xs text-gray-400">
+                  ※ 영문 / 숫자 / 특수문자(!, @, #, *)중 1가지 포함 12자 이상
+                </p>
+              </div>
+              <Input
+                id="pwCheck"
+                type="password"
+                title="비밀번호 확인"
+                placeholder="********"
+              />
+              <button className="w-full rounded-md py-2 text-white bg-main-600 text-center">
+                변경 완료 후 로그인 페이지 이동
+              </button>
+            </form>
+          </>
+        ) : (
+          <FindNoData link="pw-reset" />
+        )}
       </AuthWrap>
     </>
   );
