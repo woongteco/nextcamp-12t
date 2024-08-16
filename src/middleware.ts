@@ -1,12 +1,14 @@
-import { NextResponse } from "next/server";
-import { getSession } from "./auth";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware() {
-  const session = await getSession();
-  // 미들웨어 빌드 에러 session if 조건문 알아보기
+export async function middleware(request: NextRequest) {
+  const cookieSession = request.cookies.get("authjs.session-token");
 
-  if (!session) {
-    return NextResponse.redirect("http://localhost:3000/login");
+  console.log("미들웨어" + JSON.stringify(cookieSession));
+
+  if (!cookieSession) {
+    const loginUrl = new URL("/login");
+
+    return NextResponse.redirect(loginUrl);
   }
 }
 
