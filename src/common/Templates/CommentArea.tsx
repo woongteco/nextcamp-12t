@@ -5,6 +5,7 @@ import { CommentSchema } from "@/types/model/Comment";
 import { getUserData } from "@/lib/actions/userAction";
 import { TalkBubbleIcon } from "../Atoms/Image/Icon";
 import { cfetch } from "@/utils/customFetch";
+import { flattenCommentLength } from "@/utils/flattenCommentArray";
 
 type TCommentArea = {
   sessionId: string;
@@ -21,14 +22,16 @@ export default async function CommentArea(props: TCommentArea) {
     .then((res) => res.json())
     .then(({ data }) => data)
     .catch(({ error }) => error);
-  const userResult = await getUserData(sessionId);
+  const userResult = sessionId
+    ? await getUserData(sessionId)
+    : { state: true, data: undefined };
   let user;
   let comments: CommentSchema[] = [];
 
   if (userResult.state === true && commentResult.state === true) {
     user = userResult.data;
     comments = commentResult.data ?? [];
-    // console.log("comments data", JSON.stringify(commentResult.data, null, 2));
+    console.log("comments data", JSON.stringify(commentResult.data, null, 2));
   }
 
   return (
@@ -36,7 +39,9 @@ export default async function CommentArea(props: TCommentArea) {
       <p className="flex flex-row items-center gap-1 text-H4">
         <TalkBubbleIcon />
         <span>{titleText}</span>
-        <span className="text-main-600">{comments.length || 0}</span>
+        <span className="text-main-600">
+          {flattenCommentLength(comments) || 0}
+        </span>
       </p>
       <div>
         {comments.length === 0 ? (
