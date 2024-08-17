@@ -95,7 +95,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             provider,
           });
           socialUserCheck = await user.save();
-          console.log("소셜회원정보 저장 완료" + socialUserCheck);
+          console.log("소셜회원정보 저장 완료");
         }
 
         user.id = socialUserCheck._id;
@@ -113,7 +113,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       user: any;
       account: any;
     }) {
-      console.log("JWT", token, "USER", user, "ACCOUNT", account);
+      // console.log("JWT", token, "USER", user, "ACCOUNT", account);
 
       if (user) {
         token.id = user.id;

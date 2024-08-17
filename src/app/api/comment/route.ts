@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
   const userId: string | undefined = session?.user.id;
 
   const { searchParams } = request.nextUrl;
-  // const userId = searchParams.get("userId");
   const postId = searchParams.get("parentId");
   const formData = await request.formData();
 

@@ -1,12 +1,11 @@
 import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
 import Profile from "../Molecules/Profile";
-import { PostDataFull } from "@/types/model/PostItem";
+import { PostDataListItem } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
-import { flattenCommentLength } from "@/utils/flattenCommentArray";
 
-export default function PostListItem({ item }: { item: PostDataFull }) {
+export default function PostListItem({ item }: { item: PostDataListItem }) {
   const createdBefore = getCreatedBefore(item.createdAt);
   return (
     <>
@@ -36,8 +35,7 @@ export default function PostListItem({ item }: { item: PostDataFull }) {
             />
             <span className="text-label-400 text-label-dimmed">
               {createdBefore}&nbsp;·&nbsp;조회수&nbsp;{item.view}
-              회&nbsp;·&nbsp;좋아요&nbsp;{item.like}개&nbsp;·&nbsp;댓글{" "}
-              {flattenCommentLength(item.comments)}개
+              회&nbsp;·&nbsp;좋아요&nbsp;{item.like}개&nbsp;
             </span>
           </div>
           {(item.category.value === "study" ||

@@ -1,9 +1,11 @@
 "use client";
 import { getAllStudies, getStudy } from "@/lib/actions/studyAction";
-import { StudySchema } from "@/types/model/StudyCard";
+import { StudyDataListItem } from "@/types/model/StudyCard";
 import { useId } from "react";
 import { StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
+
+const DEFAULT_THUMBNAIL_URL = "/public/images/thumbnail/DefaultThumbnail.png";
 
 const card = (thumbnailUrl = "", creator = "") => ({
   alignItems: "center",
@@ -43,28 +45,32 @@ const studyCardStyle: StylesConfig<StudyCardSelectOption> = {
   }),
   option: (styles, { data }) => ({
     ...styles,
-    ...card(data.thumbnailUrl, `${data.user.position_tag} ${data.user.name}`),
+    ...card(
+      data.studyInfo.thumbnailUrl || DEFAULT_THUMBNAIL_URL,
+      `${data.writer.position_tag} ${data.writer.name}`
+    ),
   }),
   singleValue: (styles, { data }) => ({
     ...styles,
-    ...card(data.thumbnailUrl, `${data.user.position_tag} ${data.user.name}`),
+    ...card(
+      data.studyInfo.thumbnailUrl || DEFAULT_THUMBNAIL_URL,
+      `${data.writer.position_tag} ${data.writer.name}`
+    ),
   }),
 };
 
-export type StudyCardSelectOption = StudySchema & {
+export type StudyCardSelectOption = StudyDataListItem & {
   value: string;
   label: string;
 };
 
-// DB 데이터 사용 시 `getAllStuies()` 대신 아래 함수(:62 `getStudy()`) 사용.
+// DB 데이터 사용 시 `getAllStudies()` 대신 아래 함수(:62 `getStudy()`) 사용.
 // LinkedStudyCard에서도 DB에서 studyId를 탐색하도록 함께 수정
 // @\app\(route)\post\_components\LinkedStudyCard.tsx
-// getStudy()
 const loadOptions = (inputValue: string) =>
-  // 더미 데이터 액션으로 테스트
   getStudy()
     .then(({ data }) => {
-      // console.log({ inputValue });
+      console.log({ data });
       return data.map((study: any) => ({
         ...study,
         // value: `https://chemeet.vercel.app/study/${study.studyId}`,
@@ -78,11 +84,11 @@ const loadOptions = (inputValue: string) =>
     });
 
 export default function CustomizedStudySelect({
-  // options,
+  options,
   name,
   className = "",
 }: {
-  // options: StudyCardSelectOption[];
+  options: StudyCardSelectOption[];
   name: string;
   className?: string;
 }) {
@@ -94,8 +100,8 @@ export default function CustomizedStudySelect({
       name={name}
       cacheOptions
       defaultOptions
-      loadOptions={loadOptions}
-      // options={options}
+      // loadOptions={loadOptions}
+      options={options}
       styles={studyCardStyle}
       className={className}
       isSearchable
