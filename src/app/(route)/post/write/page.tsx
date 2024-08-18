@@ -11,7 +11,7 @@ export default async function PostWrite() {
 
   return (
     <>
-      <PostForm sessionId={session.user.id} />
+      <PostForm />
     </>
   );
 }

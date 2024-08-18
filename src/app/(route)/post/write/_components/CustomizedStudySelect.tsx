@@ -1,7 +1,8 @@
 "use client";
-import { getAllStudies, getStudy } from "@/lib/actions/studyAction";
 import { StudyDataListItem } from "@/types/model/StudyCard";
-import { useId } from "react";
+import { cfetch } from "@/utils/customFetch";
+import { useEffect, useId, useState } from "react";
+import ReactSelect, { SingleValue } from "react-select";
 import { StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
 
@@ -64,16 +65,12 @@ export type StudyCardSelectOption = StudyDataListItem & {
   label: string;
 };
 
-// DB 데이터 사용 시 `getAllStudies()` 대신 아래 함수(:62 `getStudy()`) 사용.
-// LinkedStudyCard에서도 DB에서 studyId를 탐색하도록 함께 수정
-// @\app\(route)\post\_components\LinkedStudyCard.tsx
 const loadOptions = (inputValue: string) =>
-  getStudy()
+  cfetch("/api/study", { next: { tags: ["study"] } })
+    .then((res) => res.json())
     .then(({ data }) => {
-      console.log({ data });
       return data.map((study: any) => ({
         ...study,
-        // value: `https://chemeet.vercel.app/study/${study.studyId}`,
         value: study.studyId,
         label: study.title,
       }));
@@ -83,28 +80,48 @@ const loadOptions = (inputValue: string) =>
       return [];
     });
 
-export default function CustomizedStudySelect({
-  options,
-  name,
-  className = "",
-}: {
+type CustomizedStudySelectProps = {
   options: StudyCardSelectOption[];
   name: string;
   className?: string;
-}) {
+  defaultValue?: string;
+};
+export default function CustomizedStudySelect(
+  props: CustomizedStudySelectProps
+) {
+  const { options, name, className = "", defaultValue } = props;
   const thisId = useId();
+  const [selected, setSelected] =
+    useState<SingleValue<StudyCardSelectOption | undefined>>(undefined);
+
+  useEffect(() => {
+    // console.log("options", options);
+    const defaultOption = defaultValue
+      ? options.find((opt) => opt.value === defaultValue)
+      : undefined;
+    setSelected(defaultOption);
+  }, [options]);
+
+  const onChange = (select: SingleValue<StudyCardSelectOption>) =>
+    setSelected(select);
+
   return (
-    <AsyncSelect
+    <ReactSelect
       id={thisId}
       instanceId={thisId}
       name={name}
-      cacheOptions
-      defaultOptions
+      // cacheOptions
+      // defaultOptions
       // loadOptions={loadOptions}
       options={options}
       styles={studyCardStyle}
       className={className}
+      // defaultInputValue={defaultValue}
+      value={selected}
+      onChange={onChange}
+      isMulti={false}
       isSearchable
+      isClearable
       placeholder="스터디를 선택하세요"
     />
   );
