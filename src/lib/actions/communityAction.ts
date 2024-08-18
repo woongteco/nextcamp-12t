@@ -69,7 +69,7 @@ export async function getCommunity(postId: string | null = null) {
   try {
     if (postId) {
       const post = await Post.findOne({ postId })
-        .populate("comments")
+        // .populate("comments")
         .populate("writer", "name email role profile_img position_tag");
 
       if (!post) {

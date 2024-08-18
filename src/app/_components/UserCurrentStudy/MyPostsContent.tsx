@@ -13,7 +13,7 @@ async function getPostsData(userId: string): Promise<State> {
 
   try {
     const posts = await Post.find({ writer: userId })
-      .populate("writer")
+      .populate("writer", "name email role profile_img position_tag")
       .populate("comments")
       .sort({ createdAt: "desc" });
     if (!posts) {

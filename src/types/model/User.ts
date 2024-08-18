@@ -34,3 +34,8 @@ export type ProfileSchema = UserSchema & {
   introduce: string;
   my_category: TSelectOption[];
 };
+
+export type WriterSchema = Pick<
+  ProfileSchema,
+  "_id" | "name" | "email" | "role" | "profile_img" | "position_tag"
+>;

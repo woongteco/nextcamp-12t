@@ -94,13 +94,19 @@ export async function createStudy(userId: string, formData: FormData) {
 export async function getStudy(studyId: string | null = null) {
   try {
     if (studyId) {
-      const study = await Study.findOne({ studyId }).populate("writer");
+      const study = await Study.findOne({ studyId }).populate(
+        "writer",
+        "name email role profile_img position_tag"
+      );
       if (!study) {
         return { state: false, message: "해당 스터디를 찾을 수 없습니다." };
       }
       return { state: true, data: study };
     } else {
-      const studyList = await Study.find().populate("writer");
+      const studyList = await Study.find().populate(
+        "writer",
+        "name email role profile_img position_tag"
+      );
       return { state: true, data: studyList };
     }
   } catch (error) {
