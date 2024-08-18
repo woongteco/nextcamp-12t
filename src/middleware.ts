@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   console.log("미들웨어" + JSON.stringify(cookieSession));
 
   if (!cookieSession) {
-    const loginUrl = new URL("/login");
+    const loginUrl = new URL("/login", request.url);
 
     return NextResponse.redirect(loginUrl);
   }
