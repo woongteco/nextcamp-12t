@@ -41,6 +41,7 @@ export async function createComment(
     );
 
     revalidateTag("community");
+    revalidateTag("comments");
     revalidateTag(postId);
     return { state: true, message: "댓글이 등록 되었습니다." };
   } catch (error) {
@@ -55,12 +56,12 @@ export async function getComments(postId: string) {
 
   try {
     const comments = await Comment.find({ postId })
-      .populate("writer", "name role profile_img position_tag")
+      .populate("writer", "name email role profile_img position_tag")
       .populate({
         path: "reply",
         populate: {
           path: "writer",
-          select: "name role profile_img position_tag",
+          select: "name email role profile_img position_tag",
         },
       })
       .sort({ createdAt: "asc" });

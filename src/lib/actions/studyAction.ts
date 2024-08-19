@@ -5,6 +5,7 @@ import { delay } from "@/dummies/utils";
 import connectDB from "../db";
 import { Study } from "../schema";
 import { getStudyCards } from "@/dummies/studies";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
 export async function createStudy(userId: string, formData: FormData) {
@@ -83,6 +84,7 @@ export async function createStudy(userId: string, formData: FormData) {
     });
 
     await study.save();
+    revalidateTag("study");
     return { state: true, message: "스터디 개설이 완료되었습니다." };
   } catch (error) {
     console.log("post study error" + error);
@@ -165,6 +167,8 @@ export async function updateStudy(studyId: string, formData: FormData) {
     if (!update) {
       return { state: false, message: "해당 스터디를 찾을 수 없습니다." };
     }
+    revalidateTag("study");
+    revalidatePath("/study/" + studyId);
     return { state: true, message: "스터디가 수정 되었습니다." };
   } catch (error) {
     console.log("update study error" + error);
@@ -178,22 +182,10 @@ export async function deleteStudy(studyId: string) {
 
   try {
     await Study.deleteOne({ studyId });
+    revalidateTag("study");
     return { state: true, message: "스터디가 삭제 되었습니다." };
   } catch (error) {
     console.log("delete study error" + error);
     return { state: false, message: "스터디 삭제에 실패했습니다." };
   }
-}
-
-export async function getAllStudies() {
-  await delay(1000);
-  const data = getStudyCards();
-  return { state: true, data };
-}
-
-export async function filterStudies(option: object) {
-  await delay(1000);
-  console.log("filterStudies options", option);
-  const data = getStudyCards();
-  return { state: true, data };
 }

@@ -22,7 +22,7 @@ export async function createCommunity(userId: string, formData: FormData) {
   if (!categoryValue || !title || !body) {
     return {
       state: false,
-      message: "커뮤니티 등록하려면 필수 정보를 입력해주세요.",
+      message: "글을 등록하려면 필수 정보를 입력해주세요.",
     };
   }
 
@@ -104,7 +104,7 @@ export async function updateCommunity(postId: string, formData: FormData) {
   if (!categoryValue || !title || !body) {
     return {
       state: false,
-      message: "커뮤니티 등록하려면 필수 정보를 입력해주세요.",
+      message: "글을 등록하려면 필수 정보를 입력해주세요.",
     };
   }
 
@@ -123,8 +123,6 @@ export async function updateCommunity(postId: string, formData: FormData) {
             body,
             linkedStudyId,
           },
-          view: 0,
-          like: 0,
         },
       },
       { new: true }
@@ -133,7 +131,8 @@ export async function updateCommunity(postId: string, formData: FormData) {
     if (!update) {
       return { state: false, message: "해당 커뮤니티 글을 찾을 수 없습니다." };
     }
-    revalidateTag(`community`);
+    revalidateTag("community");
+    revalidatePath("/post/" + postId);
     return { state: true, message: "커뮤니티 글이 수정되었습니다." };
   } catch (error) {
     console.log("update post error " + error);
