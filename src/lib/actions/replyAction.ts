@@ -4,12 +4,13 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import connectDB from "../db";
 import { Comment, User } from "../schema";
 import { nanoid } from "nanoid";
-import { getSession } from "@/auth";
 
 // post
-export async function createReply(commentId: string, formData: FormData) {
-  const session = await getSession();
-  const userId = session?.user.id;
+export async function createReply(
+  userId: string,
+  commentId: string,
+  formData: FormData
+) {
   const replyId = nanoid();
   const content = formData.get("content") as string;
 

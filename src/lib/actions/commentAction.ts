@@ -4,11 +4,14 @@ import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Comment, Post } from "../schema";
 import { revalidateTag } from "next/cache";
+import { getSession } from "@/auth";
 
 // post
-export async function createComment(postId: string, formData: FormData) {
-  const session = await getSession();
-  const userId = session?.user.id;
+export async function createComment(
+  userId: string,
+  postId: string,
+  formData: FormData
+) {
   const commentId = nanoid();
   const content = formData.get("content") as string;
 
