@@ -15,7 +15,6 @@ export default async function SessionedHeader({
   }
 
   const user = result.data;
-  // console.log("header - user", user);
 
   return (
     <div data-name="header__right-side__profile">
