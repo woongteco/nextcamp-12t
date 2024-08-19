@@ -39,7 +39,7 @@ export function Input({
           name={name ? name : id}
           placeholder={placeholder}
           className="w-full p-3 focus:outline-none placeholder:text-xs"
-          maxLength={id === "name" ? 4 : id === "phone" ? 11 : 30}
+          maxLength={id === "name" ? 4 : id === "phone" ? 13 : 30}
           value={value}
           onChange={onChange}
           required

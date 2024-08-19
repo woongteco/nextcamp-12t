@@ -6,10 +6,10 @@ import { Input } from "./UserInput";
 import RegisterCheck from "./RegisterCheck";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { register } from "@/lib/actions/authAction";
+import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 
 export default function RegisterForm() {
   const router = useRouter();
-
   const [phoneData, setPhoneData] = useState<string>("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -31,8 +31,8 @@ export default function RegisterForm() {
   }
 
   function handlePhoneInput(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value.replace(/[^0-9]/g, "");
-    setPhoneData(value);
+    const formatData = formatPhoneNumber(e.target.value);
+    setPhoneData(formatData);
   }
 
   return (

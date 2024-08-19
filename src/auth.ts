@@ -113,8 +113,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       user: any;
       account: any;
     }) {
-      // console.log("JWT", token, "USER", user, "ACCOUNT", account);
-
       if (user) {
         token.id = user.id;
         token.account = account;

@@ -3,7 +3,7 @@
 import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post, Comment } from "../schema";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 // post
 export async function createCommunity(userId: string, formData: FormData) {
@@ -69,7 +69,7 @@ export async function getCommunity(postId: string | null = null) {
   try {
     if (postId) {
       const post = await Post.findOne({ postId })
-        // .populate("comments")
+        .populate("comments")
         .populate("writer", "name email role profile_img position_tag");
 
       if (!post) {

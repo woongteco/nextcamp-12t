@@ -1,5 +1,3 @@
-// import { Logo } from "@public/icons";
-import Image from "next/image";
 import Container from "./Container";
 import { getSession } from "@/auth";
 import SessionedHeader from "./SessionedHeader";
