@@ -25,7 +25,7 @@ const useFindEmail = create(
       name: "find-email",
       onRehydrateStorage: () => (state) => {
         const storageTime = localStorage.getItem("storage-time");
-        if (state && storageTime && Date.now() > parseInt(storageTime)) {
+        if (state && storageTime && Date.now() > Number(storageTime)) {
           state.clearUserEmail();
         }
       },

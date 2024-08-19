@@ -30,7 +30,7 @@ export async function register(formData: FormData) {
   if (password !== pwCheck) {
     return { state: false, message: "입력한 비밀번호와 일치하지 않습니다." };
   }
-  if (phone.length !== 11) {
+  if (phone.length !== 13) {
     return { state: false, message: "휴대폰 번호 11자리를 입력해주세요." };
   }
 

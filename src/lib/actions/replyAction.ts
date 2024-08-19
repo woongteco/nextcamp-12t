@@ -14,6 +14,10 @@ export async function createReply(
   const replyId = nanoid();
   const content = formData.get("content") as string;
 
+  if (!userId) {
+    return { state: false, message: "유효한 id가 필요합니다." };
+  }
+
   if (!content) {
     return { state: false, message: "답글 내용을 입력해주세요." };
   }

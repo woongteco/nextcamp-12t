@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Comment, Post } from "../schema";
 import { revalidateTag } from "next/cache";
+import { getSession } from "@/auth";
 
 // post
 export async function createComment(
