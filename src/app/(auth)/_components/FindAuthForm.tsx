@@ -1,16 +1,18 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Input } from "./UserInput";
 import { findEmail, findPassword } from "@/lib/actions/authAction";
 import handleAlert from "@/common/Molecules/handleAlert";
 import LoadingContainer from "@/common/Layout/LoadingContainer";
 import useFindEmail from "@/store/useFindEmail";
 import Link from "next/link";
+import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 
 export default function FindAuthForm({ title }: { title?: string }) {
   const [sendEmail, setSendEmail] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [phoneData, setPhoneData] = useState<string>("");
   const { setUserEmail } = useFindEmail();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -41,6 +43,11 @@ export default function FindAuthForm({ title }: { title?: string }) {
     setLoading(false);
   }
 
+  function handlePhoneInput(e: ChangeEvent<HTMLInputElement>) {
+    const formatData = formatPhoneNumber(e.target.value);
+    setPhoneData(formatData);
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-5">
@@ -57,6 +64,8 @@ export default function FindAuthForm({ title }: { title?: string }) {
               type="tel"
               title="전화번호"
               placeholder="가입한 휴대폰 번호 입력 (- 제외)"
+              onChange={handlePhoneInput}
+              value={phoneData}
             />
           </>
         ) : (
