@@ -12,7 +12,7 @@ const useFindEmail = create(
     (set) => ({
       userEmail: null,
       setUserEmail: (email: string) => {
-        const checkTime = Date.now() + 1 * 60 * 1000;
+        const checkTime = Date.now() + 10 * 60 * 1000;
         localStorage.setItem("storage-time", checkTime.toString()),
           set({ userEmail: email });
       },
