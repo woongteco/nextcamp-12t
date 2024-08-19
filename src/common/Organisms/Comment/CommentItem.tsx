@@ -6,9 +6,11 @@ import { CommentBodyLayout } from "./CommentBodyLayout";
 export default function CommentItem({
   comment,
   canEdit,
+  sessionId,
 }: {
   comment: CommentSchema;
   canEdit: boolean;
+  sessionId: string;
 }) {
   return (
     <div className="flex flex-col gap-5 border-t py-6 border-t-line-normal">
@@ -26,6 +28,7 @@ export default function CommentItem({
           comment={comment}
           canEdit={canEdit}
           commentId={comment.commentId}
+          sessionId={sessionId}
         />
         {comment?.reply &&
           comment.reply.length > 0 &&
@@ -46,6 +49,7 @@ export default function CommentItem({
                   commentId={comment.commentId}
                   canReply={false}
                   canEdit={canEdit}
+                  sessionId={sessionId}
                 />
               </div>
             </div>
