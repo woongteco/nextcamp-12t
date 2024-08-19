@@ -6,6 +6,7 @@ import { compare } from "bcryptjs";
 import google from "next-auth/providers/google";
 import kakao from "next-auth/providers/kakao";
 import github from "next-auth/providers/github";
+import { ONE_HOUR_IN_SECS } from "./constants/times_unit";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -66,7 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60,
+    maxAge: 24 * ONE_HOUR_IN_SECS,
   },
 
   callbacks: {
