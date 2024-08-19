@@ -1,3 +1,4 @@
-type CustomFetchType = (uri: string, init?: RequestInit) => Promise<Response>;
-export const cfetch: CustomFetchType = (uri, init) =>
-  fetch(process.env.NEXT_PUBLIC_BASE_URL + uri, init);
+type CustomFetchType = (url: string, init?: RequestInit) => Promise<Response>;
+export const cfetch: CustomFetchType = (url, init) => {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + url, init);
+};
