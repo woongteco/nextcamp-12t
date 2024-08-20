@@ -17,10 +17,10 @@ export type StudySchema = {
     thumbnailUrl: string | null;
     title: string;
   };
-  studyContents: {
+  contents: {
     content: string;
-    curriculums: string[];
-    rules: string[];
+    curriculum: string[];
+    rule: string[];
   };
   writer: string;
   heartCount: number;

@@ -2,19 +2,15 @@
 
 import Image from "next/image";
 import AccordionList from "./AccordionList";
-import AccordionTitle from "./AccordionTitle";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { ArrowIcon } from "@public/icons";
 import { useState } from "react";
-
-export type TAccordionList = { listId: number; content: string };
 
 export default function AccordionComponent({
   title,
   lists,
 }: {
   title: string;
-  lists: TAccordionList[];
+  lists: string[];
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
@@ -39,7 +35,6 @@ export default function AccordionComponent({
             {title}
           </span>
         </button>
-        {/* <AccordionTitle title={title} /> */}
         <AccordionList lists={lists} isOpen={isOpen} />
       </div>
     </>
