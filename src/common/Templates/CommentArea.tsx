@@ -30,7 +30,6 @@ export default async function CommentArea(props: TCommentArea) {
   if (userResult.state === true && commentResult.state === true) {
     user = userResult.data;
     comments = commentResult.data ?? [];
-    console.log("comments data", JSON.stringify(commentResult.data, null, 2));
   }
 
   return (
