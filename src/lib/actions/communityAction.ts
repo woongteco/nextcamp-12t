@@ -3,7 +3,7 @@
 import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Post, Comment } from "../schema";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
 export async function createCommunity(userId: string, formData: FormData) {
