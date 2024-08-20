@@ -28,12 +28,12 @@ export async function GET(_: NextRequest) {
         : await Study.find().sort({ heartCount: "desc" });
 
     if (favors.length > 0 && result.length < DEFAULT_SIZE) {
-      const groups = favors.reduce((prev, curr) => {
-        const [cate, g] = curr.split("_");
-        const group = [cate, g].join("_");
-        if (prev.includes(group)) return [...prev];
-        return [...prev, group];
-      }, []);
+      // const groups = favors.reduce((prev, curr) => {
+      //   const [cate, g] = curr.split("_");
+      //   const group = [cate, g].join("_");
+      //   if (prev.includes(group)) return [...prev];
+      //   return [...prev, group];
+      // }, []);
       const notEqual = await Study.find({
         studyInfo: { jobCategory: { $nin: favors } },
       })

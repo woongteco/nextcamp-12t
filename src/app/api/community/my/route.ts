@@ -1,4 +1,3 @@
-import PostWrite from "@/app/(route)/post/write/page";
 import { getSession } from "@/auth";
 import connectDB from "@/lib/db";
 import { Post } from "@/lib/schema";
@@ -24,7 +23,8 @@ export async function GET(_: NextRequest) {
           select: "name email role profile_img position_tag",
         },
       })
-      .populate("comments");
+      // .populate("comments")
+      .sort({ createdAt: "desc" });
     return Response.json({ data }, { status: 200 });
   } catch (error) {
     return Response.json({ error }, { status: 500 });

@@ -17,6 +17,7 @@ export async function GET(_: NextRequest) {
 
   try {
     const data: StudyLikeModel[] = await StudyLike.find({ userId })
+      .select("studyId")
       .populate({
         path: "studyId",
         populate: {
@@ -24,7 +25,8 @@ export async function GET(_: NextRequest) {
           select: "name email role profile_img position_tag",
         },
       })
-      .populate("comments");
+      // .populate("comments")
+      .sort({ createdAt: "desc" });
     return Response.json({ data }, { status: 200 });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
