@@ -27,7 +27,8 @@ export async function GET(
   try {
     const post = await Post.findOne({ postId });
     const exist = await PostLike.exists({ userId, postId: post._id });
-    let result = { state: true, message: "", data: false };
+    let result = { state: true, data: false };
+    // console.log("GET exist:", exist);
     if (exist) {
       result.data = true;
     }
@@ -54,34 +55,27 @@ export async function PATCH(
 
   await connectDB();
   try {
-    const exist = await PostLike.exists({ userId });
     const post = await Post.findOne({ postId });
-    let result = { state: false, message: "", data: null };
-    console.log("exist:", exist);
+    const exist = await PostLike.exists({ userId, postId: post._id });
+    let result = { state: false, message: "" };
+    // console.log("PATCH exist:", exist);
     if (exist) {
       await PostLike.deleteOne({ userId, postId: post._id });
-      const update = await Post.findOneAndUpdate(
-        { postId },
-        { $inc: { like: -1 } },
-        { new: true }
-      );
+      await Post.findOneAndUpdate({ postId }, { $inc: { like: -1 } });
       result.message = "좋아요를 취소했습니다.";
-      result.data = update;
     } else {
       await new PostLike({ userId, postId: post._id }).save();
-      const update = await Post.findOneAndUpdate(
-        { postId },
-        { $inc: { like: 1 } },
-        { new: true }
-      );
+      await Post.findOneAndUpdate({ postId }, { $inc: { like: 1 } });
       result.message = "이 글을 좋아합니다.";
-      result.data = update;
     }
     result.state = true;
     revalidatePath("/post/" + postId);
-    revalidateTag(postId);
+    // revalidateTag(postId);
     return Response.json({ result }, { status: 200 });
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    return Response.json(
+      { error: { state: false, message: "업데이트에 실패했습니다." } },
+      { status: 500 }
+    );
   }
 }
