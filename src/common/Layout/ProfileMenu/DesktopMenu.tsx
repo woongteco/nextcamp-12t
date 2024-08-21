@@ -55,7 +55,24 @@ export default function DesktopMenu({
               <span>알림</span>
             </div>
             {alertList.length ? (
-              <AlertList alertList={alertList} setCount={setCount} />
+              alertList.map((list, index) =>
+                list.comments.length ? (
+                  <div key={index}>
+                    <AlertList list={list} setCount={setCount} />
+                    <button
+                      type="button"
+                      className="w-full text-right text-sm text-gray-600"
+                      onClick={() => setCount(0)}
+                    >
+                      모든 알림 읽음
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center text-gray-600 h-20">
+                    <p>새로운 알림이 없습니다.</p>
+                  </div>
+                )
+              )
             ) : (
               <div className="flex items-center justify-center text-gray-600 h-20">
                 <p>새로운 알림이 없습니다.</p>
