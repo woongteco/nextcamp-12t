@@ -6,6 +6,7 @@ import useModal from "@/hooks/useModal";
 import Button from "@/common/Atoms/Form/Button";
 import { cfetch } from "@/utils/customFetch";
 import handleAlert from "@/common/Molecules/handleAlert";
+import { useRouter } from "next/navigation";
 
 type TCommentBodyLayout = {
   comment: CommentOrReply;
@@ -16,7 +17,9 @@ type TCommentBodyLayout = {
 };
 export function CommentBodyLayout(props: TCommentBodyLayout) {
   const { comment, commentId, canEdit, canReply = true, sessionId } = props;
+  const router = useRouter();
 
+  const [content, setContent] = useState(comment.content);
   const toURLs = [`/api/comment/`, commentId];
   if (comment?.replyId !== undefined) {
     toURLs.push("/reply/", comment.replyId);
@@ -28,7 +31,7 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
       <div className="flex flex-col gap-4">
         <p className="text-H4 mt-4">이 댓글을 삭제하시겠습니까?</p>
         <div className="bg-alt text-label-dimmed p-4 rounded-lg max-w-80 text-wrap whitespace-pre-line break-words hyphens-auto">
-          {comment.content}
+          {content}
         </div>
         <div className="flex items-center justify-center gap-4">
           <Button variation="outline" color="default" onClick={onDeleteCancel}>
@@ -42,8 +45,6 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
     ),
   });
 
-  const [writeReply, setWrite] = useState<boolean>(false);
-  const [update, setUpdate] = useState<boolean>(false);
   const createdAt = new Intl.DateTimeFormat("ko-KR", {
     dateStyle: "medium",
     timeStyle: "medium",
@@ -62,13 +63,16 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
       })
       .catch((err) => err);
 
-    if (result?.success === false) {
-      handleAlert("error", result.message);
-    } else {
+    if (result?.success === true) {
+      router.refresh();
       handleAlert("success", result.message);
+    } else {
+      handleAlert("error", result.message);
     }
   }
 
+  const [writeReply, setWrite] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
   const hadUpdated = comment.createdAt !== comment.updatedAt;
   return (
     <>
@@ -77,13 +81,14 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
           to={toURLString}
           method="PATCH"
           init={true}
-          defaultValue={comment.content}
+          value={content}
+          onChange={(e) => setContent(e.currentTarget.value)}
           onCancel={() => setUpdate(false)}
           onSubmit={() => setUpdate(false)}
         />
       ) : (
         <p className="text-body-400 text-label-normal whitespace-pre-line break-words hyphens-auto w-full">
-          {comment.content}
+          {content}
         </p>
       )}
       <p className="text-label-400 text-label-dimmed flex flex-row flex-nowrap gap-6">

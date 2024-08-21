@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
   const userId: string | undefined = session?.user.id;
 
   const formData = await request.formData();
-  console.log("formData", formData);
 
   if (!userId) {
     return Response.json(

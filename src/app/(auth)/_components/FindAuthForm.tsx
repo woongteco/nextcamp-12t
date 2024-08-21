@@ -5,7 +5,7 @@ import { Input } from "./UserInput";
 import { findEmail, findPassword } from "@/lib/actions/authAction";
 import handleAlert from "@/common/Molecules/handleAlert";
 import LoadingContainer from "@/common/Layout/LoadingContainer";
-import useFindEmail from "@/store/useFindEmail";
+import useFindEmail from "@/store/findEmailStore";
 import Link from "next/link";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 

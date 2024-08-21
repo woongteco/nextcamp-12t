@@ -100,8 +100,8 @@ const subStudyInfo = new mongoose.Schema({
 
 const subContents = new mongoose.Schema({
   content: { type: String, default: null },
-  rule: { type: [String], default: [] },
-  curriculum: { type: [String], default: [] },
+  rules: { type: [String], default: [] },
+  curriculums: { type: [String], default: [] },
 });
 
 // 스터디

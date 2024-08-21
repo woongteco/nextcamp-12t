@@ -6,7 +6,7 @@ import LinkedStudyCard from "../_components/LinkedStudyCard";
 import CommentArea from "@/common/Templates/CommentArea";
 import ShareIconButton from "../../_components/ShareIconButton";
 import LikeIconButton from "../../_components/LikeIconButton";
-import { PostDataFull } from "@/types/model/PostItem";
+import { PostDataFull, PostDataListItem } from "@/types/model/PostItem";
 import { getCreatedBefore } from "@/utils/getCreatedBefore";
 import { Post } from "@/lib/schema";
 import { notFound } from "next/navigation";
@@ -53,7 +53,7 @@ export default async function PostDetail({
   if (postDetail.state === false) {
     return notFound();
   }
-  const post = postDetail.data as PostDataFull;
+  const post = postDetail.data as PostDataListItem;
 
   return (
     <div>
@@ -70,26 +70,28 @@ export default async function PostDetail({
             <Profile user={post.writer ?? NULL_USER_FOR_PROFILE} size="large" />
             <p className="text-label-400 text-label-dimmed flex flex-row gap-8 items-center">
               <span>{getCreatedBefore(post.createdAt)}</span>
-              {String(session?.user.id) === String(post.writer?._id) && (
-                <>
-                  <Link
-                    href={`/post/write/${post.postId}`}
-                    className="hover:underline hover:text-main-600"
-                  >
-                    수정하기
-                  </Link>
-                  <DeletePostButton postId={postId}>삭제하기</DeletePostButton>
-                </>
-              )}
+              {session?.user.id !== undefined &&
+                String(session?.user.id) === String(post.writer?._id) && (
+                  <>
+                    <Link
+                      href={`/post/write/${post.postId}`}
+                      className="hover:underline hover:text-main-600"
+                    >
+                      수정하기
+                    </Link>
+                    <DeletePostButton postId={postId}>
+                      삭제하기
+                    </DeletePostButton>
+                  </>
+                )}
             </p>
             <div className="flex gap-4 items-center ml-auto">
               <ShareIconButton width="32" height="32" />
-              <LikeIconButton liked={false} postId={postId} />
-              <span className="text-H4">{post.like}</span>
+              <LikeIconButton count={post.like} postId={postId} />
             </div>
           </div>
         </div>
-        <div className="px-4">
+        <div className="px-6">
           <ContentArea html={post.contents.body} />
         </div>
         <LinkedStudyCard studyId={post.contents.linkedStudyId || ""} />

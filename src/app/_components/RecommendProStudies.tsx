@@ -1,41 +1,23 @@
+import { CommentBodyLayout } from "@/common/Organisms/Comment/CommentBodyLayout";
 import StudyCardList from "@/common/Templates/CardList";
-import {
-  filterStudies,
-  getAllStudies,
-  getStudy,
-} from "@/lib/actions/studyAction";
-import { getUserData } from "@/lib/actions/userAction";
 import { StudyDataFull } from "@/types/model/StudyCard";
+import { cfetch } from "@/utils/customFetch";
 
-async function getFavorStudies(userId: string) {
-  // 1. profile에서 관심 카테고리 가져오기
-  // 2. 관심카테고리로 필터링하여 스터디 리스트 가져오기
+export default async function RecommendProStudies() {
+  const response = await cfetch("/api/study-matching/favor", {
+    next: { tags: ["study"] },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => err);
 
-  const profile = await getUserData(userId);
-
-  if (profile.state === false) {
-    const result = await getStudy();
-    return result;
+  if (!response?.data) {
+    throw new Error("최신 스터디 정보 가져오기 실패");
   }
 
-  const result = await filterStudies(profile.data.my_category);
-
-  return result;
-}
-
-export default async function RecommendProStudies({
-  userId,
-}: {
-  userId: string;
-}) {
-  const result =
-    userId === "" ? await getStudy() : await getFavorStudies(userId);
-
-  if (result.state === false) {
-    throw new Error("관심 카테고리의 스터디 정보 가져오기 실패");
-  }
-
-  const recommend: StudyDataFull[] = result.data;
+  const recommend: StudyDataFull[] = response.data;
 
   return <StudyCardList studyCards={recommend} count={8} />;
 }

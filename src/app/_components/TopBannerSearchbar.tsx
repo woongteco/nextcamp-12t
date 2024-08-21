@@ -34,17 +34,19 @@ export default function TopBannerSearchbar() {
         <Input.Select
           name="job_c"
           placeholder="직무 선택"
-          unstyled
           options={CATEGORIES_GROUPS}
           className="w-[160px]"
+          unstyled
+          isClearable
         />
         <div className="h-4 w-0 border-l border-l-line-input"></div>
         <Input.Select
           name="c"
           placeholder="목표 선택"
-          unstyled
           options={GOALS}
           className="w-[140px]"
+          unstyled
+          isClearable
         />
         <div className="h-4 w-0 border-l border-l-line-input hidden md:block"></div>
         <div className="flex flex-nowrap gap-5">

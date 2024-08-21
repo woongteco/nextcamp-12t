@@ -1,4 +1,4 @@
-import { ProfileSchema } from "./User";
+import { ProfileSchema, WriterSchema } from "./User";
 import { CommentSchema } from "./Comment";
 
 type CommentId = CommentSchema["commentId"];
@@ -17,10 +17,10 @@ export type StudySchema = {
     thumbnailUrl: string | null;
     title: string;
   };
-  studyContents: {
+  contents: {
     content: string;
-    curriculums: string[];
-    rules: string[];
+    curriculum: string[];
+    rule: string[];
   };
   writer: string;
   heartCount: number;
@@ -28,7 +28,11 @@ export type StudySchema = {
   comments: CommentId[];
 };
 
+export type StudyDataListItem = Omit<StudySchema, "writer"> & {
+  writer: WriterSchema;
+};
+
 export type StudyDataFull = Omit<StudySchema, "writer" | "comments"> & {
-  writer: ProfileSchema;
+  writer: WriterSchema;
   comments: CommentSchema[];
 };

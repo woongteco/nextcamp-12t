@@ -33,10 +33,11 @@ export async function createReply(
             replyId,
             content,
             writer: userId,
+            createdAt: Date.now(),
           },
         },
       },
-      { new: true }
+      { new: true, timestamps: false }
     );
 
     if (!commentReply) {
@@ -87,11 +88,13 @@ export async function updateReply(
       {
         $set: {
           "reply.$[reply].content": content,
+          "reply.$[reply].updatedAt": Date.now(),
         },
       },
       {
         arrayFilters: [{ "reply.replyId": replyId }],
         new: true,
+        timestamps: false,
       }
     );
 
@@ -115,7 +118,8 @@ export async function deleteReply(commentId: string, replyId: string) {
   try {
     await Comment.updateOne(
       { commentId, "reply.replyId": replyId },
-      { $pull: { reply: { replyId } } }
+      { $pull: { reply: { replyId } } },
+      { timestamps: false }
     );
     revalidateTag("comments");
     return { success: true, message: "답글이 삭제되었습니다." };

@@ -7,16 +7,10 @@ import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import Input from "@/common/Molecules/Form/Input";
 import SelectCategory from "./SelectCategory";
-import { FormEvent, useRef, useState } from "react";
-import { Session } from "next-auth";
-import {
-  createCommunity,
-  updateCommunity,
-} from "@/lib/actions/communityAction";
-import { redirect, useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import handleAlert from "@/common/Molecules/handleAlert";
 import SelectLinkedStudy from "./SelectLinkedStudy";
-import ReactQuill from "react-quill";
 import { PostSchema } from "@/types/model/PostItem";
 import { cfetch } from "@/utils/customFetch";
 
@@ -31,22 +25,22 @@ export type PostValue = Omit<
 >;
 
 export default function PostForm({
-  sessionId,
   defaultValue,
 }: {
-  sessionId: string;
   defaultValue?: PostValue;
 }) {
   const [category, setCategory] = useState<Option>({ value: "", label: "" });
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>(
+    defaultValue?.contents.body || ""
+  );
+  const [disabled, setDisabled] = useState<boolean>(false);
   const router = useRouter();
   async function submitPost(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setDisabled(() => true);
 
     const formData = new FormData(e.currentTarget);
-    // const id = sessionId;
 
-    // console.log("category", formData.get("category"));
     if (content) {
       formData.append("body", content);
     }
@@ -64,7 +58,7 @@ export default function PostForm({
           .then((res) => res.json())
           .then(({ data }) => data)
           .catch((err) => {
-            console.error(err);
+            console.log("err", err);
             return err;
           })
       : await cfetch("/api/community", {
@@ -74,14 +68,17 @@ export default function PostForm({
           .then((res) => res.json())
           .then(({ data }) => data)
           .catch((err) => {
-            console.error(err);
             return err;
           });
 
     if (result?.state) {
       handleAlert("success", result.message);
-      router.replace("/post");
+      router.replace(
+        "/post" + (defaultValue?.postId ? "/" + defaultValue?.postId : "")
+      );
+      router.refresh();
     } else {
+      setDisabled(() => false);
       handleAlert(
         "error",
         defaultValue?.postId ? "업데이트에 실패했어요" : "작성에 실패했어요"
@@ -124,9 +121,11 @@ export default function PostForm({
         </GridField>
         {(category?.value === "study" || category?.value === "project") && (
           <GridField>
-            <LabelText form>관련 스터디 링크</LabelText>
+            <LabelText form>관련 스터디</LabelText>
             <div className="gridContent">
-              <SelectLinkedStudy />
+              <SelectLinkedStudy
+                defaultValue={defaultValue?.contents.linkedStudyId || undefined}
+              />
             </div>
           </GridField>
         )}
@@ -134,7 +133,7 @@ export default function PostForm({
           <LinkButton href="/post" variation="outline" size="form">
             작성 취소
           </LinkButton>
-          <Button variation="solid" size="form">
+          <Button variation="solid" size="form" disabled={disabled}>
             작성 완료
           </Button>
         </div>

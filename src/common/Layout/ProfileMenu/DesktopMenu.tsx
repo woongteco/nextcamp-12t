@@ -25,7 +25,7 @@ export default function DesktopMenu({
     });
   }, [count]);
 
-  console.log(count);
+  // console.log(count);
 
   return (
     <div className="gap-8 items-center hidden lg:flex">
@@ -46,10 +46,12 @@ export default function DesktopMenu({
         <div className="w-[1px] h-6 bg-gray-400" />
         <div className="relative [&:hover>div]:block cursor-pointer h-16 flex items-center">
           <Image src={AlarmIcon} alt="alarm" />
-          <div className="absolute top-2 left-3 px-[5px] py-[2px] rounded-lg bg-red-500 text-white text-xs">
-            {count}
-          </div>
-          <div className="fixed top-[4.0625rem] right-2 xl:right-[calc(50vw-700px)] w-80 p-3 bg-white shadow-emphasize rounded-b-xl hidden cursor-default">
+          {count !== 0 && (
+            <div className="absolute top-2 left-3 px-[5px] py-[2px] rounded-lg bg-red-500 text-white text-xs">
+              {count}
+            </div>
+          )}
+          <div className="fixed top-[4.0625rem] right-2 xl:right-[calc(50vw-620px)] w-80 p-3 bg-white shadow-emphasize rounded-b-xl hidden cursor-default">
             <div className="flex items-center gap-2 mb-2 font-semibold text-lg">
               <Image src={AlarmIcon} className="w-5 h-5 mt-[2px]" alt="alarm" />
               <span>알림</span>

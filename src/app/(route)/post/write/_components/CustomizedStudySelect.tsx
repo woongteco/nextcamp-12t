@@ -1,9 +1,12 @@
 "use client";
-import { getAllStudies, getStudy } from "@/lib/actions/studyAction";
-import { StudySchema } from "@/types/model/StudyCard";
-import { useId } from "react";
+import { StudyDataListItem } from "@/types/model/StudyCard";
+import { cfetch } from "@/utils/customFetch";
+import { useEffect, useId, useState } from "react";
+import ReactSelect, { SingleValue } from "react-select";
 import { StylesConfig } from "react-select";
 import AsyncSelect from "react-select/async";
+
+const DEFAULT_THUMBNAIL_URL = "/public/images/thumbnail/DefaultThumbnail.png";
 
 const card = (thumbnailUrl = "", creator = "") => ({
   alignItems: "center",
@@ -43,31 +46,31 @@ const studyCardStyle: StylesConfig<StudyCardSelectOption> = {
   }),
   option: (styles, { data }) => ({
     ...styles,
-    ...card(data.thumbnailUrl, `${data.user.position_tag} ${data.user.name}`),
+    ...card(
+      data.studyInfo.thumbnailUrl || DEFAULT_THUMBNAIL_URL,
+      `${data.writer.position_tag} ${data.writer.name}`
+    ),
   }),
   singleValue: (styles, { data }) => ({
     ...styles,
-    ...card(data.thumbnailUrl, `${data.user.position_tag} ${data.user.name}`),
+    ...card(
+      data.studyInfo.thumbnailUrl || DEFAULT_THUMBNAIL_URL,
+      `${data.writer.position_tag} ${data.writer.name}`
+    ),
   }),
 };
 
-export type StudyCardSelectOption = StudySchema & {
+export type StudyCardSelectOption = StudyDataListItem & {
   value: string;
   label: string;
 };
 
-// DB 데이터 사용 시 `getAllStuies()` 대신 아래 함수(:62 `getStudy()`) 사용.
-// LinkedStudyCard에서도 DB에서 studyId를 탐색하도록 함께 수정
-// @\app\(route)\post\_components\LinkedStudyCard.tsx
-// getStudy()
 const loadOptions = (inputValue: string) =>
-  // 더미 데이터 액션으로 테스트
-  getStudy()
+  cfetch("/api/study", { next: { tags: ["study"] } })
+    .then((res) => res.json())
     .then(({ data }) => {
-      // console.log({ inputValue });
       return data.map((study: any) => ({
         ...study,
-        // value: `https://chemeet.vercel.app/study/${study.studyId}`,
         value: study.studyId,
         label: study.title,
       }));
@@ -77,28 +80,48 @@ const loadOptions = (inputValue: string) =>
       return [];
     });
 
-export default function CustomizedStudySelect({
-  // options,
-  name,
-  className = "",
-}: {
-  // options: StudyCardSelectOption[];
+type CustomizedStudySelectProps = {
+  options: StudyCardSelectOption[];
   name: string;
   className?: string;
-}) {
+  defaultValue?: string;
+};
+export default function CustomizedStudySelect(
+  props: CustomizedStudySelectProps
+) {
+  const { options, name, className = "", defaultValue } = props;
   const thisId = useId();
+  const [selected, setSelected] =
+    useState<SingleValue<StudyCardSelectOption | undefined>>(undefined);
+
+  useEffect(() => {
+    // console.log("options", options);
+    const defaultOption = defaultValue
+      ? options.find((opt) => opt.value === defaultValue)
+      : undefined;
+    setSelected(defaultOption);
+  }, [options]);
+
+  const onChange = (select: SingleValue<StudyCardSelectOption>) =>
+    setSelected(select);
+
   return (
-    <AsyncSelect
+    <ReactSelect
       id={thisId}
       instanceId={thisId}
       name={name}
-      cacheOptions
-      defaultOptions
-      loadOptions={loadOptions}
-      // options={options}
+      // cacheOptions
+      // defaultOptions
+      // loadOptions={loadOptions}
+      options={options}
       styles={studyCardStyle}
       className={className}
+      // defaultInputValue={defaultValue}
+      value={selected}
+      onChange={onChange}
+      isMulti={false}
       isSearchable
+      isClearable
       placeholder="스터디를 선택하세요"
     />
   );
