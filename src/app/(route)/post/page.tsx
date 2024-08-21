@@ -10,10 +10,9 @@ import { WriteIcon } from "@/common/Atoms/Image/Icon";
 import PostListWithPagination from "@/common/Templates/PostListWithPagination";
 import SearchInput from "../_components/SearchInput";
 import NonePostItem from "./_components/NonePostItem";
-import { getCommunity } from "@/lib/actions/communityAction";
 import { PostDataFull } from "@/types/model/PostItem";
-import { flattenCommentLength } from "@/utils/flattenCommentArray";
 import { cfetch } from "@/utils/customFetch";
+import { ONE_MIN_IN_MS } from "@/constants/times_unit";
 
 type TQuery = { category?: string; sort?: string };
 
@@ -31,7 +30,7 @@ export default async function CommunityPostList({
   }
 
   const result = await cfetch("/api/community", {
-    next: { tags: ["community"] },
+    next: { tags: ["community"], revalidate: 5 * ONE_MIN_IN_MS },
   })
     .then((res) => res.json())
     .then(({ data }) => {
@@ -51,9 +50,7 @@ export default async function CommunityPostList({
         case "latest":
           return Date.parse(b.createdAt) - Date.parse(a.createdAt);
         case "comments":
-          return (
-            flattenCommentLength(b.comments) - flattenCommentLength(a.comments)
-          );
+          return b.comments.length - a.comments.length;
         case "likes":
           return b.like - a.like;
         case "views":
