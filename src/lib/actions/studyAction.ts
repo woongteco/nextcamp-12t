@@ -20,8 +20,8 @@ export async function createStudy(userId: string, formData: FormData) {
   const location = formData.get("location") as string;
   const place = formData.get("place") as string;
   const content = formData.get("content") as string;
-  const rule = formData.get("rules");
-  const curriculum = formData.get("curriculums");
+  const rules = formData.get("rules");
+  const curriculums = formData.get("curriculums");
   const heartCount = Number(formData.get("heartCount"));
 
   console.log(
@@ -37,8 +37,8 @@ export async function createStudy(userId: string, formData: FormData) {
     location,
     place,
     content,
-    rule,
-    curriculum
+    rules,
+    curriculums
   );
 
   // if (
@@ -75,8 +75,8 @@ export async function createStudy(userId: string, formData: FormData) {
       },
       contents: {
         content,
-        rule,
-        curriculum,
+        rules,
+        curriculums,
       },
       writer: userId,
       heartCount,

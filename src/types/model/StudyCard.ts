@@ -19,8 +19,8 @@ export type StudySchema = {
   };
   contents: {
     content: string;
-    curriculum: string[];
-    rule: string[];
+    curriculums: string[];
+    rules: string[];
   };
   writer: string;
   heartCount: number;

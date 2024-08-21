@@ -54,6 +54,8 @@ export default async function StudyDetailPage({
 
   const studyCards = JSON.parse(JSON.stringify(studyCardLists));
 
+  console.log("dbdb study ", study);
+
   return (
     <div>
       <BackButton />
