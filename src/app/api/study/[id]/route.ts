@@ -2,7 +2,7 @@ import { deleteStudy, getStudy, updateStudy } from "@/lib/actions/studyAction";
 import { NextRequest } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -45,7 +45,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: Request,
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
