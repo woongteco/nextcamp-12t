@@ -12,10 +12,9 @@ async function getPostsData(userId: string): Promise<State> {
   await connectDB();
 
   try {
-    const posts = await Post.find({ writer: userId })
-      .populate("writer")
-      .populate("comments")
-      .sort({ createdAt: "desc" });
+    const posts = await Post.find({ writer: userId }).sort({
+      createdAt: "desc",
+    });
     if (!posts) {
       return { state: false, message: "해당 게시글을 찾을 수 없습니다." };
     }

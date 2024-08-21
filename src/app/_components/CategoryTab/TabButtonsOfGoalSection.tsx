@@ -1,69 +1,28 @@
-"use client";
-import { GOALS } from "@/constants/categories/study_goal";
+import MainTabButtonGroup from "./MainTabButtonGroup";
+import MainSectionOfGoals from "./MainSectionOfGoals";
+import { cfetch } from "@/utils/customFetch";
+import { StudyDataFull } from "@/types/model/StudyCard";
 
-import { useEffect, useState } from "react";
-import { TabButton } from "./TabButton";
-import StudyCardList from "@/common/Templates/CardList";
-import { CategoryTabIcon, categoryIconsName } from "./TabIcons";
-import { StudySchema } from "@/types/model/StudyCard";
-import { getStudyCards } from "@/dummies/studies";
-import Skeleton from "@/common/Atoms/Skeleton";
+export default async function TabButtonsOfGoalSection() {
+  const response = await cfetch("/api/study", {
+    next: { tags: ["study"] },
+  })
+    .then((res) => res.json())
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((err) => err);
 
-const GOALS_TAB = GOALS.map((goal, index) => ({
-  ...goal,
-  iconName: categoryIconsName[index],
-}));
-
-export default function TabButtonsOfGoalSection() {
-  const initGoal = GOALS[0].value;
-  const init = getStudyCards();
-  const initStudies = init.filter((s) => s.targetCategory.value === initGoal);
-  const [selected, setSelected] = useState(initGoal);
-  const [proStudies, setStudies] = useState<StudySchema[]>(initStudies);
-
-  useEffect(() => {
-    setStudies(() => init.filter((s) => s.targetCategory.value === selected));
-  }, [selected]);
-
-  function clickHandler(value: string) {
-    // 다시 클릭 시 빈 값으로 돌아갈 필요 없음
-    setSelected(value);
+  if (!response?.data) {
+    throw new Error("스터디 정보 가져오기 실패");
   }
+
+  const data: StudyDataFull[] = response.data;
 
   return (
     <>
-      <div className="flex flex-wrap xl:flex-row gap-4 w-fit mx-auto mb-11">
-        {GOALS_TAB.map(({ label, value, iconName }) => {
-          const active = selected === value;
-          return (
-            <TabButton
-              key={value}
-              label={label}
-              active={active}
-              onClick={() => clickHandler(value)}
-            >
-              <CategoryTabIcon
-                name={iconName}
-                strokeColor={active ? "#FFFFFF" : undefined}
-              />
-            </TabButton>
-          );
-        })}
-      </div>
-      {proStudies.length > 0 ? (
-        <StudyCardList studyCards={proStudies} count={8} />
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          <StudyCardSkeleton />
-          <StudyCardSkeleton />
-          <StudyCardSkeleton />
-          <StudyCardSkeleton />
-        </div>
-      )}
+      <MainTabButtonGroup />
+      <MainSectionOfGoals data={JSON.parse(JSON.stringify(data))} />
     </>
   );
-}
-
-function StudyCardSkeleton() {
-  return <Skeleton className="rounded-twenty hover:shadow-normal h-[338px]" />;
 }

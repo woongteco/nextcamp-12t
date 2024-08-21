@@ -17,7 +17,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         type="image"
         alt="preview"
         src={imageUrl}
-        className="w-20 h-20 rounded-full my-4 aspect-square"
+        className="w-20 h-20 rounded-full my-4 object-cover"
       />
       <p className="text-label-400 text-label-alt">
         *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하

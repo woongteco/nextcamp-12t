@@ -26,7 +26,6 @@ export default async function page({
   return (
     <>
       <PostForm
-        sessionId={session.user.id}
         defaultValue={JSON.parse(JSON.stringify(result.data, null, 2))}
       />
     </>

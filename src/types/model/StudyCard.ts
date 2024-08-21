@@ -1,4 +1,4 @@
-import { ProfileSchema } from "./User";
+import { ProfileSchema, WriterSchema } from "./User";
 import { CommentSchema } from "./Comment";
 
 type CommentId = CommentSchema["commentId"];
@@ -28,7 +28,11 @@ export type StudySchema = {
   comments: CommentId[];
 };
 
+export type StudyDataListItem = Omit<StudySchema, "writer"> & {
+  writer: WriterSchema;
+};
+
 export type StudyDataFull = Omit<StudySchema, "writer" | "comments"> & {
-  writer: ProfileSchema;
+  writer: WriterSchema;
   comments: CommentSchema[];
 };

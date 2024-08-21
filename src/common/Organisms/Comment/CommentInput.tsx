@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FocusEvent, FormEvent, useRef, useState } from "react";
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { cfetch } from "@/utils/customFetch";
 
@@ -12,7 +12,8 @@ type TCommentInput = {
   method: "POST" | "PATCH";
   init?: boolean;
   placeholder?: string;
-  defaultValue?: string;
+  value?: string;
+  onChange?: (e: FocusEvent<HTMLTextAreaElement, Element>) => void;
   onSubmit?: () => void;
   onCancel?: () => void;
 };
@@ -22,10 +23,12 @@ export default function CommentInputForm(props: TCommentInput) {
     method,
     init = false,
     placeholder = "댓글을 작성해보세요",
-    defaultValue,
+    value,
+    onChange,
     onCancel,
     onSubmit,
   } = props;
+  const router = useRouter();
   const [focus, setFocus] = useState<boolean>(init);
   const commentRef = useRef<HTMLFormElement>(null);
   const params = useParams<{ postId?: string; studyPostId?: string }>();
@@ -56,10 +59,11 @@ export default function CommentInputForm(props: TCommentInput) {
         console.error(err);
         return err;
       });
-    console.log("post comment", result);
+    // console.log("post comment", result);
     if (result?.state) {
       onSubmit && onSubmit();
-      setFocus(false);
+      // setFocus(false);
+      router.refresh();
       handleAlert("success", result.message);
     } else {
       handleAlert("error", result.message);
@@ -75,7 +79,10 @@ export default function CommentInputForm(props: TCommentInput) {
       <Input.Textarea
         name="content"
         placeholder={placeholder}
-        defaultValue={defaultValue || ""}
+        defaultValue={value || ""}
+        onBlur={(e) => {
+          onChange && onChange(e);
+        }}
       />
       <Button
         variation="outline"

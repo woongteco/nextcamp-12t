@@ -4,7 +4,7 @@ import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
 import { Input } from "../../_components/UserInput";
-import useFindEmail from "@/store/useFindEmail";
+import useFindEmail from "@/store/findEmailStore";
 import { updatePassword } from "@/lib/actions/authAction";
 import { FormEvent } from "react";
 import handleAlert from "@/common/Molecules/handleAlert";

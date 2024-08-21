@@ -7,6 +7,8 @@ import RecommendProStudies from "./_components/RecommendProStudies";
 import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 import MainStatusBoard from "./_components/MainStatusBoard";
 import { getSession } from "@/auth";
+import { Suspense } from "react";
+import Skeleton from "@/common/Atoms/Skeleton";
 
 export default async function Home() {
   const session = await getSession();
@@ -25,9 +27,11 @@ export default async function Home() {
           )}
           <section>
             <SectionTitle size="md" className="mb-6">
-              인기 많은 스터디 추천
+              {session?.user
+                ? "관심 있을만한 스터디 추천"
+                : "인기 많은 스터디 추천"}
             </SectionTitle>
-            <RecommendProStudies userId={session?.user.id || ""} />
+            <RecommendProStudies />
           </section>
           <section>
             <SectionTitle size="md" className="mb-6">

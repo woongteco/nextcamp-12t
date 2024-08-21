@@ -31,7 +31,7 @@ export default function AlertList({ alertList, setCount }: AlertListProps) {
               </div>
             ))
           ) : (
-            <div>새로운 알림이 없습니다.</div>
+            <div key="none">새로운 알림이 없습니다.</div>
           )
         )}
       </ul>

@@ -3,7 +3,7 @@ import Dropdown from "@/common/Molecules/Dropdown";
 import LinkButton from "@/common/Atoms/LinkButton";
 import PostListWithPagination from "@/common/Templates/PostListWithPagination";
 import { WriteIcon } from "@/common/Atoms/Image/Icon";
-import { PostDataFull } from "@/types/model/PostItem";
+import { PostDataFull, PostDataListItem } from "@/types/model/PostItem";
 import NonePostItem from "../../post/_components/NonePostItem";
 import { getSession } from "@/auth";
 import connectDB from "@/lib/db";
@@ -13,13 +13,13 @@ import { notFound } from "next/navigation";
 
 type State =
   | { state: false; message: string }
-  | { state: true; data: PostDataFull[] };
+  | { state: true; data: PostDataListItem[] };
 async function getPostsData(userId: string): Promise<State> {
   await connectDB();
 
   try {
     const posts = await Post.find({ writer: userId })
-      .populate("writer")
+      .populate("writer", "name email role profile_img position_tag")
       .populate("comments")
       .sort({ createdAt: "desc" });
     if (!posts) {
@@ -37,7 +37,7 @@ export default async function MyPost() {
 
   if (!result.state) return notFound();
 
-  const posts: PostDataFull[] = result.data;
+  const posts: PostDataListItem[] = result.data;
   // console.log("posts", posts);
 
   return (

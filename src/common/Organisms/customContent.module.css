@@ -6,6 +6,15 @@
   padding-block-start: 2.5rem;
   padding-block-end: 3.74rem;
 }
+.postBody > * {
+  display: block;
+  color: black;
+  text-align: left;
+  white-space: pre-wrap;
+  text-wrap: balance;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
 .postBody p,
 .postBody ol,
 .postBody ul,
@@ -19,16 +28,8 @@
 .postBody h6 {
   margin: 0;
   padding: 0;
+  white-space: break-spaces;
   counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
-}
-.postBody > * {
-  display: block;
-  color: black;
-  text-align: left;
-  white-space: pre-wrap;
-  text-wrap: balance;
-  word-wrap: break-word;
-  box-sizing: border-box;
 }
 .postBody p {
   font-weight: 400;
