@@ -1,5 +1,5 @@
 import { CommentSchema } from "./Comment";
-import { ProfileSchema } from "./User";
+import { WriterSchema } from "./User";
 
 type CommentId = CommentSchema["commentId"];
 
@@ -22,7 +22,11 @@ export type PostSchema = {
   comments: CommentId[];
 };
 
+export type PostDataListItem = Omit<PostSchema, "writer"> & {
+  writer: WriterSchema;
+};
+
 export type PostDataFull = Omit<PostSchema, "writer" | "comments"> & {
-  writer: ProfileSchema;
+  writer: WriterSchema;
   comments: CommentSchema[];
 };

@@ -16,7 +16,7 @@ export default function ProfileImg(
   };
   return (
     <Image
-      className={clsx(className, "rounded-full aspect-square")}
+      className={clsx(className, "rounded-full aspect-square object-cover")}
       width={square[size]}
       height={square[size]}
       alt={alt}

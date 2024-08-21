@@ -387,8 +387,8 @@ export default function StudyForm({
         <LabelText form>스터디 규칙</LabelText>
         <div className="flex flex-col flex-1 gap-4">
           {ruleList.map((rule, index) => (
-            <div className="flex items-center gap-6">
-              <div className="flex-1" key={index}>
+            <div key={`r-${index}`} className="flex items-center gap-6">
+              <div className="flex-1">
                 <Input.Text
                   className="w-full"
                   placeholder="스터디 규칙을 정해주세요."
@@ -417,8 +417,8 @@ export default function StudyForm({
 
         <div className="flex flex-col flex-1 gap-4">
           {curriculumList.map((curriculum, index) => (
-            <div className="flex items-center gap-6">
-              <div className="flex-1" key={index}>
+            <div key={`c-${index}`} className="flex items-center gap-6">
+              <div className="flex-1">
                 <Input.Text
                   className="w-full"
                   placeholder="세부적인 커리큘럼을 정해주세요."

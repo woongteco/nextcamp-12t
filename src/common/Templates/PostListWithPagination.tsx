@@ -1,5 +1,5 @@
 "use client";
-import { PostDataFull } from "@/types/model/PostItem";
+import { PostDataListItem } from "@/types/model/PostItem";
 import PostList from "./PostList";
 import Pagination from "../Molecules/Pagination";
 import { useState } from "react";
@@ -11,7 +11,7 @@ const POSTS_PER_PAGE = 20;
 export default function PostListWithPagination({
   posts,
 }: {
-  posts: PostDataFull[];
+  posts: PostDataListItem[];
 }) {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q");

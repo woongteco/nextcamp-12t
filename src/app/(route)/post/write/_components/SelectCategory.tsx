@@ -67,7 +67,9 @@ export default function SelectCategory({
               id="statusClosed"
               label="모집완료"
               value={"false"}
-              defaultChecked={!defaultValue?.isRecruiting || false}
+              defaultChecked={
+                defaultValue?.isRecruiting ? !defaultValue.isRecruiting : false
+              }
             />
           </ButtonCheck>
         </Field>

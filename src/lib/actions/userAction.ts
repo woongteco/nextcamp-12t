@@ -11,7 +11,6 @@ export async function getUserData(userId: string) {
       return { state: false, message: "사용자 데이터를 찾을 수 없습니다." };
     }
 
-    console.log("userData", data);
     return { state: true, data };
   } catch (error: any) {
     console.error("error", error.message);

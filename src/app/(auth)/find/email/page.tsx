@@ -1,6 +1,6 @@
 "use client";
 
-import useFindEmail from "@/store/useFindEmail";
+import useFindEmail from "@/store/findEmailStore";
 import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
