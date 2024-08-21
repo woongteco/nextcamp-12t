@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
-import { StudyDataFull, StudySchema } from "@/types/model/StudyCard";
+import { StudyDataFull } from "@/types/model/StudyCard";
 import Thumbnail from "@/common/Atoms/Image/Thumbnail";
 import Profile from "@/common/Molecules/Profile";
 import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";

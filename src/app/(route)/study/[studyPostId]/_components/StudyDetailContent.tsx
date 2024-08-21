@@ -1,21 +1,20 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import LeaderProfile, { TLeaderProfile } from "./LeaderProfile";
-import AccordionComponent, {
-  TAccordionList,
-} from "../../_components/AccordionComponent";
+import AccordionComponent from "../../_components/AccordionComponent";
+import ContentArea from "@/common/Organisms/ContentArea";
 
 export type TContents = {
   content: string;
-  rule: TAccordionList[];
-  curriculum: TAccordionList[];
+  rule: string[];
+  curriculum: string[];
 };
 
 export default function StudyDetailContent({
   contents,
-  user,
+  writer,
 }: {
   contents: TContents;
-  user: TLeaderProfile;
+  writer: TLeaderProfile;
 }) {
   const { content, rule, curriculum } = contents;
 
@@ -26,7 +25,7 @@ export default function StudyDetailContent({
           <SectionTitle size="md" className="pb-6 text-2xl font-semibold">
             스터디장
           </SectionTitle>
-          <LeaderProfile user={user} />
+          <LeaderProfile writer={writer} />
         </div>
 
         <div className="py-16  border-b">
@@ -34,7 +33,7 @@ export default function StudyDetailContent({
             스터디 소개
           </SectionTitle>
           <div className="max-w-screen-md w-full mt-6 leading-6 font-normal text-base">
-            {content}
+            <ContentArea html={content} />
           </div>
         </div>
       </div>
