@@ -98,11 +98,6 @@ const subStudyInfo = new mongoose.Schema({
   place: { type: String, default: null },
 });
 
-// const subContentDetail = new mongoose.Schema({
-//   listId: { type: String, required: false },
-//   content: { type: String, default: null, required: false },
-// });
-
 const subContents = new mongoose.Schema({
   content: { type: String, default: null },
   rule: { type: [String], default: [] },
