@@ -6,6 +6,7 @@ import ProfileInputArea from "../ProfileInputArea";
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
 import handleAlert from "@/common/Molecules/handleAlert";
+import { changePassword } from "@/lib/actions/authAction";
 
 type TNewPw = {
   currentPassword: string;
@@ -26,15 +27,34 @@ export default function FormUpdatePassword() {
     const { name, value } = e.currentTarget;
     setNewPw((prev) => ({ ...prev, [name]: value }));
   }
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (newPw.newPassword.length < 12 && newPw.newPasswordCheck.length < 12) {
       handleAlert("error", "비밀번호가 너무 짧습니다.");
       return;
     }
 
+    if (String(newPw.newPassword) !== String(newPw.newPasswordCheck)) {
+      handleAlert(
+        "error",
+        "변경하려는 비밀번호가 '비밀번호 확인'과 일치하지 않습니다. 다시 한 번 확인해주세요."
+      );
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
-    handleAlert("error", "비밀번호를 변경할 수 없습니다.");
+
+    try {
+      const result = await changePassword(formData);
+
+      if (result?.state) {
+        handleAlert("success", result.message);
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <form onSubmit={handleSubmit} className="text-body-400">
