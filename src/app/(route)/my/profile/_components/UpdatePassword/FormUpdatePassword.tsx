@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import Image from "next/image";
 import { PasswordHide, PasswordShow } from "@public/icons";
 import ProfileInputArea from "../ProfileInputArea";
@@ -52,12 +52,20 @@ export default function FormUpdatePassword() {
       } else {
         handleAlert("error", result.message);
       }
+      formReset();
     } catch (error) {
       console.log(error);
     }
   }
+
+  const formRef = useRef<HTMLFormElement>(null);
+  function formReset() {
+    if (formRef?.current) {
+      formRef.current.reset();
+    }
+  }
   return (
-    <form onSubmit={handleSubmit} className="text-body-400">
+    <form ref={formRef} onSubmit={handleSubmit} className="text-body-400">
       <ProfileInputArea>
         <button
           type="button"
