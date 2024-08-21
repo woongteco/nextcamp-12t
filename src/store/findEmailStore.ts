@@ -7,7 +7,7 @@ type TFindEmail = {
   clearUserEmail: () => void;
 };
 
-const findEmailStore = create(
+const useFindEmail = create(
   persist<TFindEmail>(
     (set) => ({
       userEmail: null,
@@ -33,4 +33,4 @@ const findEmailStore = create(
   )
 );
 
-export default findEmailStore;
+export default useFindEmail;

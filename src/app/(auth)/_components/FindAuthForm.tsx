@@ -5,7 +5,7 @@ import { Input } from "./UserInput";
 import { findEmail, findPassword } from "@/lib/actions/authAction";
 import handleAlert from "@/common/Molecules/handleAlert";
 import LoadingContainer from "@/common/Layout/LoadingContainer";
-import findEmailStore from "@/store/findEmailStore";
+import useFindEmail from "@/store/findEmailStore";
 import Link from "next/link";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 
@@ -13,7 +13,7 @@ export default function FindAuthForm({ title }: { title?: string }) {
   const [sendEmail, setSendEmail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [phoneData, setPhoneData] = useState<string>("");
-  const { setUserEmail } = findEmailStore();
+  const { setUserEmail } = useFindEmail();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
