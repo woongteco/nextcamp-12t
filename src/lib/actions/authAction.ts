@@ -257,26 +257,19 @@ export async function changePassword(formData: FormData) {
   const newPassword = formData.get("newPassword") as string;
   const newPwCheck = formData.get("newPasswordCheck") as string;
 
-  if (newPassword !== newPwCheck) {
-    return { state: false, message: "입력한 비밀번호와 일치하지 않습니다." };
-  }
+  // if (newPassword !== newPwCheck) {
+  //   return { state: false, message: "입력한 비밀번호와 일치하지 않습니다." };
+  // }
 
-  const hashedPassword = await hash(String(newPassword), 10);
+  const newFormData = new FormData();
+  newFormData.append("password", newPassword);
+  newFormData.append("pwCheck", newPwCheck);
+  // const hashedPassword = await hash(String(newPassword), 10);
 
   try {
-    const update = await User.findOneAndUpdate(
-      { email: userEmail },
-      { $set: { password: hashedPassword } }
-    );
+    const result = await updatePassword(userEmail, newFormData);
 
-    if (update) {
-      return { state: true, message: "새로운 비밀번호로 변경되었습니다." };
-    } else {
-      return {
-        state: false,
-        message: "해당 유저를 찾지 못해 비밀번호 변경에 실패했습니다.",
-      };
-    }
+    return result;
   } catch (error) {
     console.log("update password error" + error);
     return { state: false, message: "비밀번호 변경이 실패했습니다." };
