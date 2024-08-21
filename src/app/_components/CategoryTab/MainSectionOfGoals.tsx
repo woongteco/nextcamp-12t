@@ -2,7 +2,7 @@
 import { StudyDataFull } from "@/types/model/StudyCard";
 import Skeleton from "@/common/Atoms/Skeleton";
 import StudyCardList from "@/common/Templates/CardList";
-import MainTabSelectedStore from "@/store/MainTabStore";
+import mainTabSelectedStore from "@/store/mainTabStore";
 import { useEffect, useState } from "react";
 
 export default function MainSectionOfGoals({
@@ -10,13 +10,13 @@ export default function MainSectionOfGoals({
 }: {
   data: StudyDataFull[];
 }) {
-  const { mainTab } = MainTabSelectedStore();
+  const { mainTab } = mainTabSelectedStore();
   const initStudies = data.filter(
     (s) => s.studyInfo.targetCategory === mainTab
   );
   const [studies, setStudies] = useState<StudyDataFull[]>(initStudies);
   useEffect(() => {
-    console.log({ studies });
+    // console.log({ studies });
     setStudies(() =>
       data.filter((s) => s.studyInfo.targetCategory === mainTab)
     );

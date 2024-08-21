@@ -1,7 +1,7 @@
 "use client";
 import { GOALS } from "@/constants/categories/study_goal";
 import { CategoryTabIcon, categoryIconsName } from "./TabIcons";
-import MainTabSelectedStore from "@/store/MainTabStore";
+import mainTabSelectedStore from "@/store/mainTabStore";
 import { TabButton } from "./TabButton";
 import { MouseEvent } from "react";
 
@@ -11,7 +11,7 @@ const GOALS_TAB = GOALS.map((goal, index) => ({
 }));
 
 export default function MainTabButtonGroup() {
-  const { mainTab, setMainTab } = MainTabSelectedStore();
+  const { mainTab, setMainTab } = mainTabSelectedStore();
   function changeTab(value: string) {
     // 다시 클릭 시 빈 값으로 돌아갈 필요 없음
     setMainTab(value);

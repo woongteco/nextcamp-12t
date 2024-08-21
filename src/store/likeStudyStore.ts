@@ -11,23 +11,20 @@ type TLikeState = {
   liked: boolean;
   setLiked: (liked: boolean) => void;
   fetchLiked: (postId: string) => Promise<ResponseState>;
-  // likePost: PostLikeModel[];
-  // setLikePush: ({ userId, postId }: PostLikeModel) => void;
-  // setLikePull: ({ userId, postId }: PostLikeModel) => void;
   fetchLikeToggle: (postId: string) => Promise<ResponseState>;
 };
 
-const LikePostStore = create<TLikeState>((set, get) => ({
+const likeStudyStore = create<TLikeState>((set, get) => ({
   liked: false,
   setLiked: (liked: boolean) => set({ liked }),
   fetchLiked: async (postId: string) => {
     try {
-      const response = await cfetch("/api/community/likes/" + postId, {
+      const response = await cfetch("/api/study/likes/" + postId, {
         method: "GET",
       })
         .then((res) => res.json())
         .then(({ result }) => {
-          console.log("data", { result });
+          // console.log("data", { result });
           return result;
         })
         .catch((err) => {
@@ -39,31 +36,18 @@ const LikePostStore = create<TLikeState>((set, get) => ({
 
       get().setLiked(response.data);
       return response;
-    } catch (error: any) {
-      throw new Error(error?.message as string);
+    } catch (error) {
+      console.error(error);
     }
   },
-  // likePost: [],
-  // setLikePost: (likePost: PostLikeModel[]) => set({ likePost }),
-  // setLikePush: (newLikePost: PostLikeModel) =>
-  //   set(({ likePost }) => ({ likePost: [...likePost, newLikePost] })),
-  // setLikePull: ({ userId, postId }: PostLikeModel) =>
-  //   set(({ likePost }) => {
-  //     const updated = likePost.filter((likes) => {
-  //       if (likes.userId !== userId || likes.postId !== postId) {
-  //         return likes;
-  //       }
-  //     });
-  //     return { likePost: updated };
-  //   }),
   fetchLikeToggle: async (postId: string) => {
     try {
-      const response = await cfetch("/api/community/likes/" + postId, {
+      const response = await cfetch("/api/study/likes/" + postId, {
         method: "PATCH",
       })
         .then((res) => res.json())
         .then(({ result }) => {
-          console.log("data", { result });
+          // console.log("data", { result });
           return result;
         })
         .catch((err) => {
@@ -78,9 +62,9 @@ const LikePostStore = create<TLikeState>((set, get) => ({
       state.setLiked(!state.liked);
       return response;
     } catch (error: any) {
-      throw new Error(error?.message as string);
+      console.error(error);
     }
   },
 }));
 
-export default LikePostStore;
+export default likeStudyStore;

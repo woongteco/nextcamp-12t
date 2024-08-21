@@ -85,7 +85,7 @@ export default function PostForm({
       );
     }
   }
-  console.log("defaultValue", defaultValue);
+
   return (
     <>
       <form onSubmit={submitPost} className="mb-100 flex flex-col gap-[30px]">

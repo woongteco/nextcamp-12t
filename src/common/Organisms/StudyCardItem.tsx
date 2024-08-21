@@ -19,7 +19,7 @@ export default function StudyCardItem({ card }: { card: StudyDataFull }) {
   const recruitmentDay = dayjs(card.studyInfo?.recruitmentPeriod[1]);
   const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");
 
-  console.log("studycard", card);
+  // console.log("studycard", card);
 
   return (
     <li

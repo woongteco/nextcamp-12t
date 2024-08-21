@@ -37,7 +37,7 @@ export default async function LikeStudyStatusContent({
   const count = result.state ? result.data.length : 0;
   const previewName = result.state
     ? count > 0
-      ? `${result.data[0].title as string}`
+      ? `${result.data[0].studyInfo.title as string}`
       : "관심있는 스터디를 찜해보세요!"
     : "관심있는 스터디를 찜해보세요!";
 
