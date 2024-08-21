@@ -3,7 +3,7 @@
 import { hash } from "bcryptjs";
 import connectDB from "../db";
 import { User } from "../schema";
-import { signIn } from "@/auth";
+import { getSession, signIn } from "@/auth";
 import { transporter } from "@/utils/mailer";
 
 const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
@@ -210,6 +210,58 @@ export async function updatePassword(email: string, formData: FormData) {
   }
 
   await connectDB();
+
+  try {
+    const update = await User.findOneAndUpdate(
+      { email: userEmail },
+      { $set: { password: hashedPassword } }
+    );
+
+    if (update) {
+      return { state: true, message: "새로운 비밀번호로 변경되었습니다." };
+    } else {
+      return {
+        state: false,
+        message: "해당 유저를 찾지 못해 비밀번호 변경에 실패했습니다.",
+      };
+    }
+  } catch (error) {
+    console.log("update password error" + error);
+    return { state: false, message: "비밀번호 변경이 실패했습니다." };
+  }
+}
+
+export async function changePassword(formData: FormData) {
+  const session = await getSession();
+  const userEmail = session?.user.email;
+
+  if (!userEmail) {
+    return {
+      state: false,
+      message:
+        "이메일이 없습니다. 현재 이메일로 회원가입한 사용자만 비밀번호를 변경할 수 있습니다.",
+    };
+  }
+
+  const password = formData.get("currentPassword") as string;
+  const pwHashed = await hash(String(password), 10);
+
+  const rightUser = await User.exists({ email: userEmail, password: pwHashed });
+  if (!rightUser) {
+    return {
+      state: false,
+      message: "현재 비밀번호가 바르지 않습니다. 다시 확인해주세요.",
+    };
+  }
+
+  const newPassword = formData.get("newPassword") as string;
+  const newPwCheck = formData.get("newPasswordCheck") as string;
+
+  if (newPassword !== newPwCheck) {
+    return { state: false, message: "입력한 비밀번호와 일치하지 않습니다." };
+  }
+
+  const hashedPassword = await hash(String(newPassword), 10);
 
   try {
     const update = await User.findOneAndUpdate(
