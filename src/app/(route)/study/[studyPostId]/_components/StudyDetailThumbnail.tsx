@@ -3,37 +3,28 @@ import Keyword from "@/common/Atoms/Text/Keyword";
 import ThumbnailInfoList from "./ThumbnailInfoLabel";
 import Link from "next/link";
 import ShareIconButton from "@/app/(route)/_components/ShareIconButton";
-import { DetailFullHeartIcon } from "@public/icons";
 import dayjs from "dayjs";
 import SaveHeartButton from "@/common/Molecules/Form/SaveHeartButton";
+import { DefaultThumbnailImg } from "@public/images";
 
 export type TThumbnailInfo = {
-  thumbnailUrl: string;
-  title: string;
-  jobCategory: {
-    label: string;
-    value: string;
-  };
-  targetCategory: {
-    label: string;
-    value: string;
-  };
   expense: number;
-  recruitmentPeople: string;
-  recruitmentPeriod: string[];
-  studyPeriod: string[];
-  location: {
-    label: string;
-    value: string;
-  };
-  place: string;
-  heartStatus: boolean;
-  heartCount: number;
+  jobCategory: string;
+  location: string;
+  place: string | null;
+  recruitmentPeople: number;
+  recruitmentPeriod: [string, string];
+  studyPeriod: [string, string];
+  targetCategory: string;
+  thumbnailUrl: string | null;
+  title: string;
 };
 export default function StudyDetailThumbnail({
-  thumbnailInfo,
+  studyInfo,
+  heart,
 }: {
-  thumbnailInfo: TThumbnailInfo;
+  studyInfo: TThumbnailInfo;
+  heart: number;
 }) {
   const {
     thumbnailUrl,
@@ -44,10 +35,9 @@ export default function StudyDetailThumbnail({
     recruitmentPeople,
     recruitmentPeriod,
     studyPeriod,
+    place,
     location,
-    heartStatus,
-    heartCount,
-  } = thumbnailInfo;
+  } = studyInfo;
 
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
   const recruitmentDay = dayjs(recruitmentPeriod[1]);
@@ -60,7 +50,7 @@ export default function StudyDetailThumbnail({
           width={582}
           height={438}
           className="w-[36.375rem] h-[27.375rem] rounded-3xl"
-          src={thumbnailUrl}
+          src={thumbnailUrl || DefaultThumbnailImg}
           alt="썸네일 이미지"
         />
         <div className="flex gap-1 absolute left-0 top-6">
@@ -77,20 +67,18 @@ export default function StudyDetailThumbnail({
         </div>
       </div>
       <div className="flex-1">
-        <span className="block mb-3 text-[#888] text-xl">
-          {jobCategory.label}
-        </span>
+        <span className="block mb-3 text-[#888] text-xl">{jobCategory}</span>
         <p className="text-H2">{title}</p>
         <div className="flex gap-8 py-10">
           <ThumbnailInfoList />
           <ul className="flex flex-col gap-4 text-xl">
-            <li>{targetCategory.label}</li>
-            <li>{recruitmentPeople}</li>
+            <li>{targetCategory}</li>
+            <li>{recruitmentPeople}명</li>
             <li>{expense.toLocaleString("ko-KR")}원</li>
             <li>
               {studyPeriod[0]} ~ {studyPeriod[1]}
             </li>
-            <li>{location.label}</li>
+            <li>{location}</li>
           </ul>
         </div>
 
@@ -106,7 +94,7 @@ export default function StudyDetailThumbnail({
           </button>
           <div className="flex items-center gap-3">
             <ShareIconButton />
-            <SaveHeartButton heartCount={heartCount} />
+            <SaveHeartButton heart={heart} />
           </div>
         </div>
       </div>
