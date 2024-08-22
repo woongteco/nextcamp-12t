@@ -98,7 +98,7 @@ export async function getStudy(studyId: string | null = null) {
     if (studyId) {
       const study = await Study.findOne({ studyId }).populate(
         "writer",
-        "name email role profile_img position_tag"
+        "name email role profile_img position_tag introduce my_category"
       );
       if (!study) {
         return { state: false, message: "해당 스터디를 찾을 수 없습니다." };

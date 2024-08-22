@@ -1,7 +1,8 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import LeaderProfile, { TLeaderProfile } from "./LeaderProfile";
+import LeaderProfile from "./LeaderProfile";
 import AccordionComponent from "../../_components/AccordionComponent";
 import ContentArea from "@/common/Organisms/ContentArea";
+import { ProfileSchema } from "@/types/model/User";
 
 export type TContents = {
   content: string;
@@ -14,10 +15,9 @@ export default function StudyDetailContent({
   writer,
 }: {
   contents: TContents;
-  writer: TLeaderProfile;
+  writer: ProfileSchema;
 }) {
   const { content, rules, curriculums } = contents;
-  console.log("contents", rules, curriculums);
 
   return (
     <div className="my-20 border-t border-b">

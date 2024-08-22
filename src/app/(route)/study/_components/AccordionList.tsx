@@ -5,8 +5,6 @@ export default function AccordionList({
   lists: string[];
   isOpen: boolean;
 }) {
-  console.log("list", lists);
-
   return (
     <ul className={`${isOpen ? "flex " : "hidden"} flex-col gap-12 pt-6 pb-16`}>
       {lists.map((list, i) => {

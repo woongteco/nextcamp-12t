@@ -33,6 +33,6 @@ export type StudyDataListItem = Omit<StudySchema, "writer"> & {
 };
 
 export type StudyDataFull = Omit<StudySchema, "writer" | "comments"> & {
-  writer: WriterSchema;
+  writer: ProfileSchema;
   comments: CommentSchema[];
 };
