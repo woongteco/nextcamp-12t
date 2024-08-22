@@ -6,6 +6,7 @@ import ShareIconButton from "@/app/(route)/_components/ShareIconButton";
 import dayjs from "dayjs";
 import SaveHeartButton from "@/common/Molecules/Form/SaveHeartButton";
 import { DefaultThumbnailImg } from "@public/images";
+import ApplyButton from "./ApplyButton";
 
 export type TThumbnailInfo = {
   expense: number;
@@ -89,9 +90,7 @@ export default function StudyDetailThumbnail({
           >
             스터디룸 살펴보기
           </Link>
-          <button className="px-2 w-full max-w-[12.5rem] h-16 border rounded-ten bg-main-700 font-semibold text-base text-white">
-            스터디 참여 신청하기
-          </button>
+          <ApplyButton resultDay={resultDay} />
           <div className="flex items-center gap-3">
             <ShareIconButton />
             <SaveHeartButton heart={heart} />

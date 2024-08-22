@@ -47,16 +47,12 @@ export default async function StudyDetailPage({
 
   const study = studyDetail.data as StudyDataFull;
 
-  console.log("study", study);
-
   // studylist
   const result = await getStudy();
   let studyCardLists: StudyDataFull;
   studyCardLists = result.data;
 
   const studyCards = JSON.parse(JSON.stringify(studyCardLists));
-
-  console.log("dbdb study ", study);
 
   return (
     <div>
