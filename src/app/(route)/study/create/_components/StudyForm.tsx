@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 
 import Button from "@/common/Atoms/Form/Button";
@@ -20,8 +21,9 @@ import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
 import { createStudy } from "@/lib/actions/studyAction";
 import { StudySchema } from "@/types/model/StudyCard";
+import { cfetch } from "@/utils/customFetch";
 
-type Option = {
+type CategoryOption = {
   readonly label: string;
   readonly value: string;
 };
@@ -32,10 +34,8 @@ export type StudyValue = Omit<
 >;
 
 export default function StudyForm({
-  id,
   defaultValue,
 }: {
-  id: string;
   defaultValue?: StudyValue;
 }) {
   const router = useRouter();
@@ -53,16 +53,31 @@ export default function StudyForm({
   };
 
   // 스터디 카테고리
-  const [jobCategory, setJobCategory] = useState("");
-  const jobCategoryOption = CATEGORIES.map((m) => ({
+  const [jobCategory, setJobCategory] = useState<CategoryOption | null>(null);
+  const handleJobCategoryChange = (newValue: CategoryOption | null) => {
+    if (newValue) {
+      setJobCategory(newValue);
+    }
+  };
+  const jobCategoryOption: CategoryOption[] = CATEGORIES.map((m) => ({
     value: m.value,
     label: m.label,
   }));
-  const [targetCategory, setTargetCategory] = useState("");
+
+  const [targetCategory, setTargetCategory] = useState<CategoryOption | null>(
+    null
+  );
+  const handleTargetCategoryChange = (newValue: CategoryOption | null) => {
+    if (newValue) {
+      setTargetCategory(newValue);
+    }
+  };
   const targetCategoryOption = GOALS.map((m) => ({
     value: m.value,
     label: m.label,
   }));
+
+  console.log("category", jobCategory, targetCategory);
 
   // 모집기간
   const [recruitmentPeriod, setRecruitmentPeriod] = useState<
@@ -71,12 +86,33 @@ export default function StudyForm({
   const handleRecruitmentDateChange = (dates: [Date, Date]) => {
     setRecruitmentPeriod(dates);
   };
+  const formRecruitmentDates = recruitmentPeriod?.map((date) =>
+    date
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\./g, "")
+      .replace(/ /g, ".")
+  );
 
   // 스터디기간
   const [studyPreiod, setStudyPeriod] = useState<[Date, Date] | null>(null);
   const handleStudyDateChange = (dates: [Date, Date]) => {
     setStudyPeriod(dates);
   };
+
+  const formStudyDates = studyPreiod?.map((date) =>
+    date
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\./g, "")
+      .replace(/ /g, ".")
+  );
 
   // 참가비용
   const [freeChecked, setFreeChecked] = useState<boolean>(false);
@@ -89,11 +125,17 @@ export default function StudyForm({
     setFreeChecked((freeChecked) => !freeChecked);
 
   // 스터디방식
-  const [locationCategory, setLocationCategory] = useState("");
   const locationCategoryOption = ONOFF.map((l) => ({
     value: l.value,
     label: l.label,
   }));
+  const [locationCategory, setLocationCategory] =
+    useState<CategoryOption | null>(locationCategoryOption[0]);
+  const handleLocationCategoryChange = (newValue: CategoryOption | null) => {
+    if (newValue) {
+      setLocationCategory(newValue);
+    }
+  };
   const [placeChecked, setPlaceChecked] = useState<boolean>(false);
   const [place, setPlace] = useState<string>("");
   useEffect(() => {
@@ -165,31 +207,22 @@ export default function StudyForm({
 
     const formData = new FormData(e.currentTarget);
 
+    if (jobCategory) {
+      formData.append("jobCategory", JSON.stringify(jobCategory));
+    }
+    if (targetCategory) {
+      formData.append("targetCategory", JSON.stringify(targetCategory));
+    }
+
+    if (locationCategory) {
+      formData.append("location", JSON.stringify(locationCategory));
+    }
+
     if (studyPreiod) {
-      const formStudyDates = studyPreiod?.map((date) =>
-        date
-          .toLocaleDateString("ko-KR", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-          .replace(/\./g, "")
-          .replace(/ /g, ".")
-      );
       formData.append("studyPeriod", JSON.stringify(formStudyDates));
     }
 
     if (recruitmentPeriod) {
-      const formRecruitmentDates = recruitmentPeriod.map((date) =>
-        date
-          .toLocaleDateString("ko-KR", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-          .replace(/\./g, "")
-          .replace(/ /g, ".")
-      );
       formData.append(
         "recruitmentPeriod",
         JSON.stringify(formRecruitmentDates)
@@ -207,24 +240,56 @@ export default function StudyForm({
     if (content) {
       formData.append("content", content);
     }
-
     // 스터디 규칙 추가
-    formData.append("rules", JSON.stringify(ruleList));
+    if (ruleList) {
+      formData.append("rules", JSON.stringify(ruleList));
+    }
 
     // 세부 커리큘럼 추가
-    formData.append("curriculums", JSON.stringify(curriculumList));
+    if (curriculumList) {
+      formData.append("curriculums", JSON.stringify(curriculumList));
+    }
 
     try {
-      const result = await createStudy(id, formData);
-      if (result.state) {
-        handleAlert("success", "스터디가 개설 되었습니다.");
-        router.replace("/study");
-      } else {
-        handleAlert("error", result.message);
-      }
+      const result = defaultValue?.studyId
+        ? await cfetch("/api/study/" + defaultValue.studyId, {
+            method: "PATCH",
+            body: formData,
+          })
+            .then((res) => res.json())
+            .then(({ data }) => data)
+            .catch((err) => {
+              console.error(err);
+              return err;
+            })
+        : await cfetch("/api/study", {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                res.json();
+                handleAlert("success", "스터디가 개설 되었습니다.");
+
+                router.replace("/study");
+                router.refresh();
+              } else {
+                console.log("error", res);
+
+                handleAlert(
+                  "error",
+                  "스터디 개설에 실패했습니다. 다시 시도 후, 관리자에게 문의하세요."
+                );
+              }
+            })
+            .catch((err) => {
+              console.log("err", err);
+              return err;
+            });
     } catch (error) {
       if (error instanceof Error) {
         handleAlert("error", error.message);
+        console.log("error", error.message);
       }
     }
   }
@@ -252,21 +317,17 @@ export default function StudyForm({
             required
             className="min-w-40"
             placeholder="직무 카테고리"
-            name="jobCategory"
             options={jobCategoryOption}
-            value={jobCategoryOption.find((f) => f.label === jobCategory)}
-            onChange={(newValue: Option | null) => setJobCategory(jobCategory)}
+            value={jobCategory}
+            onChange={handleJobCategoryChange}
           />
           <Input.Select
             required
             className="min-w-40"
-            name="targetCategory"
-            options={targetCategoryOption}
-            value={targetCategoryOption.find((f) => f.label === targetCategory)}
-            onChange={(newValue: Option | null) =>
-              setTargetCategory(targetCategory)
-            }
             placeholder="목표 카테고리"
+            options={targetCategoryOption}
+            value={targetCategory}
+            onChange={handleTargetCategoryChange}
           />
         </div>
       </GridField>
@@ -324,6 +385,7 @@ export default function StudyForm({
             <ButtonCheck.Radio
               onClick={FreeCheckedHandler}
               checked={freeChecked}
+              defaultChecked={freeChecked}
               name="free"
               id="free"
               label="참가비 무료"
@@ -339,18 +401,13 @@ export default function StudyForm({
           <Input.Select
             required
             className="w-[510px]"
-            name="location"
             options={locationCategoryOption}
-            defaultValue={locationCategoryOption[0]}
-            value={locationCategoryOption.find(
-              (f) => f.value === locationCategory
-            )}
-            onChange={(newValue: Option | null) =>
-              setLocationCategory(locationCategory)
-            }
+            value={locationCategory}
+            defaultValue={locationCategory}
+            onChange={handleLocationCategoryChange}
             placeholder="스터디 방식"
           />
-          {locationCategory === "offline" && (
+          {locationCategory?.value === "offline" && (
             <div className="flex items-center gap-3">
               <Input.Text
                 name="place"
@@ -359,11 +416,12 @@ export default function StudyForm({
                 onChange={(e) => setPlace(e.target.value)}
                 value={place}
                 disabled={placeChecked}
+                readOnly
               />
               <ButtonCheck>
                 <ButtonCheck.Radio
                   id="place-whether"
-                  onClick={PlaceCheckedHandler}
+                  onChange={PlaceCheckedHandler}
                   checked={placeChecked}
                   label="장소 미정"
                 />
@@ -380,6 +438,7 @@ export default function StudyForm({
           id="content"
           className="h-[450px]"
           placeholder="스터디 소개, 스터디 규칙 등을 상세히 작성해 주세요."
+          defaultValue={defaultValue?.contents.content}
           onChange={(c: string) => setContent(c)}
         />
       </GridField>

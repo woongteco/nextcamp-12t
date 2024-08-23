@@ -6,16 +6,17 @@ import ShareIconButton from "@/app/(route)/_components/ShareIconButton";
 import dayjs from "dayjs";
 import SaveHeartButton from "@/common/Molecules/Form/SaveHeartButton";
 import { DefaultThumbnailImg } from "@public/images";
+import ApplyButton from "./ApplyButton";
 
 export type TThumbnailInfo = {
   expense: number;
-  jobCategory: string;
-  location: string;
+  jobCategory: { label: string; value: string };
+  location: { label: string; value: string };
   place: string | null;
   recruitmentPeople: number;
   recruitmentPeriod: [string, string];
   studyPeriod: [string, string];
-  targetCategory: string;
+  targetCategory: { label: string; value: string };
   thumbnailUrl: string | null;
   title: string;
 };
@@ -67,18 +68,20 @@ export default function StudyDetailThumbnail({
         </div>
       </div>
       <div className="flex-1">
-        <span className="block mb-3 text-[#888] text-xl">{jobCategory}</span>
+        <span className="block mb-3 text-[#888] text-xl">
+          {jobCategory.label}
+        </span>
         <p className="text-H2">{title}</p>
         <div className="flex gap-8 py-10">
           <ThumbnailInfoList />
           <ul className="flex flex-col gap-4 text-xl">
-            <li>{targetCategory}</li>
+            <li>{targetCategory.label}</li>
             <li>{recruitmentPeople}명</li>
             <li>{expense.toLocaleString("ko-KR")}원</li>
             <li>
               {studyPeriod[0]} ~ {studyPeriod[1]}
             </li>
-            <li>{location}</li>
+            <li>{location.label}</li>
           </ul>
         </div>
 
@@ -89,9 +92,7 @@ export default function StudyDetailThumbnail({
           >
             스터디룸 살펴보기
           </Link>
-          <button className="px-2 w-full max-w-[12.5rem] h-16 border rounded-ten bg-main-700 font-semibold text-base text-white">
-            스터디 참여 신청하기
-          </button>
+          <ApplyButton resultDay={resultDay} />
           <div className="flex items-center gap-3">
             <ShareIconButton />
             <SaveHeartButton heart={heart} />

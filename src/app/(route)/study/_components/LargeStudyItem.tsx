@@ -52,7 +52,7 @@ export default function LargeStudyItem({ card }: { card: StudyDataFull }) {
           <div className="w-full my-4 border border-primary-heavy2"></div>
           <div>
             <span className="text-label-400 font-light text-white">
-              {card.studyInfo.jobCategory}
+              {card.studyInfo.jobCategory.label}
             </span>
             <p className="text-lg font-semibold text-white">
               {card.studyInfo.title}
