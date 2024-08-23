@@ -30,13 +30,12 @@ export function LoginForm() {
 
       if (result.state) {
         router.replace("/");
-        // router.back();
         handleAlert("success", result.message);
       } else {
         handleAlert("error", result.message);
       }
     } catch (error) {
-      console.log(error);
+      handleAlert("error", "로그인 중 문제가 발생했습니다.");
     }
   }
 
