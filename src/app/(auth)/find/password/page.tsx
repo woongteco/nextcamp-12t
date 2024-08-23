@@ -4,15 +4,15 @@ import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
 import { Input } from "../../_components/UserInput";
-import useFindEmail from "@/store/findEmailStore";
+import findEmailStore from "@/store/findEmailStore";
 import { updatePassword } from "@/lib/actions/authAction";
 import { FormEvent } from "react";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
 import FindNoData from "../../_components/FindNoData";
 
-export default function page() {
-  const { userEmail } = useFindEmail();
+export default function FindPassword() {
+  const { userEmail } = findEmailStore();
   const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
