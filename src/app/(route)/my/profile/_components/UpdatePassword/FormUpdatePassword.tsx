@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import Image from "next/image";
 import { PasswordHide, PasswordShow } from "@public/icons";
 import ProfileInputArea from "../ProfileInputArea";
@@ -52,9 +52,15 @@ export default function FormUpdatePassword() {
       } else {
         handleAlert("error", result.message);
       }
+      formReset();
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function formReset() {
+    setPwShow(false);
+    setNewPw(newPwInit);
   }
   return (
     <form onSubmit={handleSubmit} className="text-body-400">

@@ -12,11 +12,11 @@ async function getLikeStudies(userId: string): Promise<State> {
   await connectDB();
 
   try {
-    const likedPosts = await StudyLike.find({ userId }).populate("postId");
-    if (!likedPosts) {
+    const likedStudies = await StudyLike.find({ userId }).populate("postId");
+    if (!likedStudies) {
       return { state: false, message: "찜한 스터디를 찾을 수 없습니다." };
     }
-    console.log("likedPosts", likedPosts);
+
     return { state: true, data: [] };
   } catch (error) {
     return {
