@@ -5,6 +5,8 @@ import connectDB from "../db";
 import { User } from "../schema";
 import { getSession } from "@/auth";
 import { UserSchema } from "@/types/model/User";
+import { supabase } from "../supabase";
+import { nanoid } from "nanoid";
 
 /**
  * 사용자 프로필 정보 업데이트
@@ -105,5 +107,28 @@ export async function updateUserData(id: string, updateDoc: UpdateDocument) {
   } catch (error: any) {
     console.log("get profile" + error);
     return { state: false, message: "프로필 정보 로딩에 실패했습니다." };
+  }
+}
+
+export async function supabaseUploadImage(formData: FormData) {
+  const file = formData.get("file") as File;
+  const fileName = nanoid();
+
+  try {
+    const { error } = await supabase.storage
+      .from("image")
+      .upload(`profile_image/${fileName}`, file);
+
+    if (error) {
+      return { state: false, message: "이미지 파일이 업로드 되지않았습니다." };
+    }
+
+    const { data } = supabase.storage
+      .from("image")
+      .getPublicUrl(`profile_image/${fileName}`);
+
+    return { state: true, result: data.publicUrl };
+  } catch (error) {
+    return { state: false, message: "이미지 업로드에 실패했습니다." };
   }
 }
