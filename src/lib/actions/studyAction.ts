@@ -1,34 +1,32 @@
 "use server";
 
 import { nanoid } from "nanoid";
-import { delay } from "@/dummies/utils";
 import connectDB from "../db";
 import { Study } from "../schema";
-import { getStudyCards } from "@/dummies/studies";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
 export async function createStudy(userId: string, formData: FormData) {
   const studyId = nanoid();
-  const thumbnailUrl = formData.get("thumbnailUrl") as string;
   const title = formData.get("title") as string;
-  const jobCategory = formData.get("jobCategory") as string;
-  const targetCategory = formData.get("targetCategory") as string;
+  const thumbnailUrl = formData.get("thumbnailUrl") as string;
+  const jobCategory = JSON.parse(formData.get("jobCategory") as string);
+  const targetCategory = JSON.parse(formData.get("targetCategory") as string);
   const expense = Number(formData.get("expense"));
   const recruitmentPeople = Number(formData.get("recruitmentPeople"));
-  const recruitmentPeriod = formData.get("recruitmentPeriod");
-  const studyPeriod = formData.get("studyPeriod") as string;
-  const location = formData.get("location") as string;
+  const recruitmentPeriod = JSON.parse(
+    formData.get("recruitmentPeriod") as string
+  );
+  const studyPeriod = JSON.parse(formData.get("studyPeriod") as string);
+  const location = JSON.parse(formData.get("location") as string);
   const place = formData.get("place") as string;
   const content = formData.get("content") as string;
-  const rules = formData.get("rules");
-  const curriculums = formData.get("curriculums");
-  const heartCount = Number(formData.get("heartCount"));
+  const rules = JSON.parse(formData.get("rules") as string);
+  const curriculums = JSON.parse(formData.get("curriculums") as string);
 
   console.log(
     title,
     thumbnailUrl,
-    title,
     jobCategory,
     targetCategory,
     expense,
@@ -42,20 +40,21 @@ export async function createStudy(userId: string, formData: FormData) {
     curriculums
   );
 
-  // if (
-  //   !jobCategory ||
-  //   !targetCategory ||
-  //   !expense ||
-  //   !recruitmentPeople ||
-  //   !recruitmentPeriod ||
-  //   !studyPeriod ||
-  //   !location
-  // ) {
-  //   return {
-  //     state: false,
-  //     message: "스터디 개설하려면 필수 정보를 입력해주세요.",
-  //   };
-  // }
+  if (
+    !title ||
+    !jobCategory ||
+    !targetCategory ||
+    !expense ||
+    !recruitmentPeople ||
+    !recruitmentPeriod ||
+    !studyPeriod ||
+    !location
+  ) {
+    return {
+      state: false,
+      message: "스터디 개설하려면 필수 정보를 입력해주세요.",
+    };
+  }
 
   await connectDB();
 
@@ -80,7 +79,6 @@ export async function createStudy(userId: string, formData: FormData) {
         curriculums,
       },
       writer: userId,
-      heartCount,
     });
 
     await study.save();
@@ -119,20 +117,21 @@ export async function getStudy(studyId: string | null = null) {
 
 // update
 export async function updateStudy(studyId: string, formData: FormData) {
-  const thumbnailUrl = formData.get("thumbnailUrl") as string;
   const title = formData.get("title") as string;
-  const jobCategory = formData.get("jobCategory") as string;
-  const targetCategory = formData.get("targetCategory") as string;
+  const thumbnailUrl = formData.get("thumbnailUrl") as string;
+  const jobCategory = JSON.parse(formData.get("jobCategory") as string);
+  const targetCategory = JSON.parse(formData.get("targetCategory") as string);
   const expense = Number(formData.get("expense"));
   const recruitmentPeople = Number(formData.get("recruitmentPeople"));
-  const recruitmentPeriod = formData.get("recruitmentPeriod");
-  const studyPeriod = formData.get("studyPeriod") as string;
-  const location = formData.get("location") as string;
+  const recruitmentPeriod = JSON.parse(
+    formData.get("recruitmentPeriod") as string
+  );
+  const studyPeriod = JSON.parse(formData.get("studyPeriod") as string);
+  const location = JSON.parse(formData.get("location") as string);
   const place = formData.get("place") as string;
   const content = formData.get("content") as string;
-  const rule = formData.get("rule");
-  const curriculum = formData.get("curriculum");
-  const heartCount = Number(formData.get("heartCount"));
+  const rules = JSON.parse(formData.get("rules") as string);
+  const curriculums = JSON.parse(formData.get("curriculums") as string);
 
   await connectDB();
 
@@ -155,10 +154,9 @@ export async function updateStudy(studyId: string, formData: FormData) {
           },
           contents: {
             content,
-            rule,
-            curriculum,
+            rules,
+            curriculums,
           },
-          heartCount,
         },
       },
       { new: true }

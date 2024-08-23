@@ -7,13 +7,13 @@ export type StudySchema = {
   studyId: string;
   studyInfo: {
     expense: number;
-    jobCategory: string;
-    location: string;
+    jobCategory: { label: string; value: string };
+    location: { label: string; value: string };
     place: string | null;
     recruitmentPeople: number;
     recruitmentPeriod: [string, string];
     studyPeriod: [string, string];
-    targetCategory: string;
+    targetCategory: { label: string; value: string };
     thumbnailUrl: string | null;
     title: string;
   };

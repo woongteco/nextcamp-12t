@@ -10,13 +10,13 @@ import ApplyButton from "./ApplyButton";
 
 export type TThumbnailInfo = {
   expense: number;
-  jobCategory: string;
-  location: string;
+  jobCategory: { label: string; value: string };
+  location: { label: string; value: string };
   place: string | null;
   recruitmentPeople: number;
   recruitmentPeriod: [string, string];
   studyPeriod: [string, string];
-  targetCategory: string;
+  targetCategory: { label: string; value: string };
   thumbnailUrl: string | null;
   title: string;
 };
@@ -68,18 +68,20 @@ export default function StudyDetailThumbnail({
         </div>
       </div>
       <div className="flex-1">
-        <span className="block mb-3 text-[#888] text-xl">{jobCategory}</span>
+        <span className="block mb-3 text-[#888] text-xl">
+          {jobCategory.label}
+        </span>
         <p className="text-H2">{title}</p>
         <div className="flex gap-8 py-10">
           <ThumbnailInfoList />
           <ul className="flex flex-col gap-4 text-xl">
-            <li>{targetCategory}</li>
+            <li>{targetCategory.label}</li>
             <li>{recruitmentPeople}명</li>
             <li>{expense.toLocaleString("ko-KR")}원</li>
             <li>
               {studyPeriod[0]} ~ {studyPeriod[1]}
             </li>
-            <li>{location}</li>
+            <li>{location.label}</li>
           </ul>
         </div>
 

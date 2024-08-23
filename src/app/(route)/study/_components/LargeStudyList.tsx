@@ -1,4 +1,4 @@
-import { StudySchema } from "@/types/model/StudyCard";
+import { StudyDataFull, StudySchema } from "@/types/model/StudyCard";
 import LargeStudyItem from "./LargeStudyItem";
 import NoneStudyComponent from "./NoneStudyComponent";
 
@@ -6,7 +6,7 @@ export default function LargeStudyList({
   studyCards,
   count,
 }: {
-  studyCards: StudySchema[];
+  studyCards: StudyDataFull[];
   count: number;
 }) {
   if (!studyCards) {

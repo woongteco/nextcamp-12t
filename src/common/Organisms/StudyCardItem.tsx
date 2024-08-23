@@ -45,7 +45,7 @@ export default function StudyCardItem({ card }: { card: StudyDataFull }) {
         </div>
         <div className="block my-4 px-3 h-[7.5rem]">
           <span className="text-label-400 text-label-dimmed line-clamp-1">
-            {card.studyInfo?.jobCategory}
+            {card.studyInfo?.jobCategory.label}
           </span>
           <p className="text-lg font-semibold line-clamp-1">
             {card.studyInfo?.title}
