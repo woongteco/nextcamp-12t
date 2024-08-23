@@ -58,14 +58,12 @@ export default function FormUpdatePassword() {
     }
   }
 
-  const formRef = useRef<HTMLFormElement>(null);
   function formReset() {
-    if (formRef?.current) {
-      formRef.current.reset();
-    }
+    setPwShow(false);
+    setNewPw(newPwInit);
   }
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="text-body-400">
+    <form onSubmit={handleSubmit} className="text-body-400">
       <ProfileInputArea>
         <button
           type="button"
