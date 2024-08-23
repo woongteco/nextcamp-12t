@@ -11,7 +11,7 @@ import handleAlert from "@/common/Molecules/handleAlert";
 import { useRouter } from "next/navigation";
 import FindNoData from "../../_components/FindNoData";
 
-export default function page() {
+export default function FindPassword() {
   const { userEmail } = findEmailStore();
   const router = useRouter();
 

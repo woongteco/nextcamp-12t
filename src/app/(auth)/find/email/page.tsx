@@ -7,7 +7,7 @@ import { Logo } from "@public/icons";
 import Link from "next/link";
 import FindNoData from "../../_components/FindNoData";
 
-export default function page() {
+export default function FindEmail() {
   const { userEmail } = findEmailStore();
 
   return (
