@@ -7,6 +7,8 @@ import RecommendProStudies from "./_components/RecommendProStudies";
 import RecommendLatestStudies from "./_components/RecommendLatestStudies";
 import MainStatusBoard from "./_components/MainStatusBoard";
 import { getSession } from "@/auth";
+import { Suspense } from "react";
+import Skeleton from "@/common/Atoms/Skeleton";
 
 export default async function Home() {
   const session = await getSession();
