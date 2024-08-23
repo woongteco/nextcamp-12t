@@ -1,14 +1,14 @@
 "use client";
 
-import useFindEmail from "@/store/findEmailStore";
+import findEmailStore from "@/store/findEmailStore";
 import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
 import Link from "next/link";
 import FindNoData from "../../_components/FindNoData";
 
-export default function page() {
-  const { userEmail } = useFindEmail();
+export default function FindEmail() {
+  const { userEmail } = findEmailStore();
 
   return (
     <>

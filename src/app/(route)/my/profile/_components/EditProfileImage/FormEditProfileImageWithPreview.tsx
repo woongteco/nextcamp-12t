@@ -8,7 +8,11 @@ import ProfileImg from "@/common/Atoms/Image/ProfileImg";
 import { DummyProfileImg } from "@public/images";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
 import Button from "@/common/Atoms/Form/Button";
-import { updateUserData } from "@/lib/actions/profileAction";
+import {
+  updateUserData,
+  supabaseUploadImage,
+} from "@/lib/actions/profileAction";
+import { resizeFile } from "@/utils/resizeFile";
 
 export type ProfileImageFormProps = {
   id: string;
@@ -50,19 +54,27 @@ export default function FormEditProfileImageWithPreview({
     };
   }, [imageUrl]);
 
-  function getImage(e: ChangeEvent<HTMLInputElement>) {
+  async function getImage(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
 
     if (files && files.length > 0) {
       const file = files[0];
-      const fileReader = new FileReader();
 
-      fileReader.onload = () => {
-        const encoding = fileReader.result as string;
-        setImageUrl(encoding);
-      };
+      const previewUrl = URL.createObjectURL(file);
+      setImageUrl(previewUrl);
 
-      fileReader.readAsDataURL(file);
+      const resizeImage = await resizeFile(file);
+
+      const formData = new FormData();
+      formData.append("file", resizeImage);
+
+      const upload = await supabaseUploadImage(formData);
+
+      if (upload.state && upload.result) {
+        setImageUrl(upload.result);
+      } else {
+        handleAlert("error", upload.message);
+      }
     }
   }
 

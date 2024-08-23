@@ -13,9 +13,10 @@ type TCommentBodyLayout = {
   commentId: string;
   canEdit: boolean;
   canReply?: boolean;
+  sessionId: string;
 };
 export function CommentBodyLayout(props: TCommentBodyLayout) {
-  const { comment, commentId, canEdit, canReply = true } = props;
+  const { comment, commentId, canEdit, canReply = true, sessionId } = props;
   const router = useRouter();
 
   const [content, setContent] = useState(comment.content);
@@ -96,7 +97,9 @@ export function CommentBodyLayout(props: TCommentBodyLayout) {
             ? createdAt.format(Date.parse(comment.updatedAt)) + " (수정됨)"
             : createdAt.format(Date.parse(comment.createdAt))}
         </span>
-        {canReply && <button onClick={() => setWrite(true)}>답글쓰기</button>}
+        {canReply && sessionId && (
+          <button onClick={() => setWrite(true)}>답글쓰기</button>
+        )}
         {canEdit && (
           <>
             <button onClick={() => setUpdate((prev) => !prev)}>수정</button>

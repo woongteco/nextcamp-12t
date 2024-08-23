@@ -21,9 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         await connectDB();
 
-        const user = await User.findOne({ email }).select(
-          "+id +name +image +phone +role +profile"
-        );
+        const user = await User.findOne({ email });
 
         if (!user) {
           throw new CredentialsSignin("가입되지 않는 회원입니다.");
