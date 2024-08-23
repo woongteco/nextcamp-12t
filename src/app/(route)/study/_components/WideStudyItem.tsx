@@ -46,7 +46,7 @@ export default function WideStudyItem({ card }: { card: StudyDataFull }) {
           </div>
           <div className="flex flex-col w-1/2">
             <span className="text-label-400 font-light text-white">
-              {card.studyInfo.jobCategory}
+              {card.studyInfo.jobCategory.label}
             </span>
             <p className="text-lg font-semibold text-white line-clamp-2">
               {card.studyInfo.title}

@@ -88,13 +88,13 @@ const post = new mongoose.Schema(
 const subStudyInfo = new mongoose.Schema({
   thumbnailUrl: { type: String, default: null },
   title: { type: String, required: true },
-  jobCategory: { type: String, required: true },
-  targetCategory: { type: String, required: true },
+  jobCategory: { type: subLabelValue, required: true },
+  targetCategory: { type: subLabelValue, required: true },
   expense: { type: Number, required: true },
   recruitmentPeople: { type: Number, required: true },
   recruitmentPeriod: { type: [String], default: [] },
   studyPeriod: { type: [String], default: [] },
-  location: { type: String, required: true },
+  location: { type: subLabelValue, required: true },
   place: { type: String, default: null },
 });
 

@@ -1,19 +1,9 @@
+import { ProfileSchema } from "@/types/model/User";
 import { BadgeIcon, ProfileHeartIcon } from "@public/icons";
 import { DummyProfileImg } from "@public/images";
 import Image from "next/image";
 
-export type TLeaderProfile = {
-  _id: string;
-  email: string;
-  name: string;
-  profile_img: string | null;
-  phone: string;
-  role: string;
-  position_tag: string | "";
-  introduce: string | "";
-  my_category: { label: string; value: string }[];
-};
-export default function LeaderProfile({ writer }: { writer: TLeaderProfile }) {
+export default function LeaderProfile({ writer }: { writer: ProfileSchema }) {
   return (
     <div className="max-w-screen-sm w-full">
       <div className="flex justify-between items-start">

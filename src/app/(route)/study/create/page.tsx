@@ -1,11 +1,14 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyForm from "./_components/StudyForm";
 import { getSession } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function page() {
   const session = await getSession();
-  const id = session?.user.id as string;
 
+  if (!session) {
+    return redirect("/login");
+  }
   return (
     <>
       <SectionTitle size="lg" className="pb-6 border-b border-black">
@@ -18,7 +21,7 @@ export default async function page() {
           당신이 가진 직무 역량과 팁을 공유해주세요
         </span>
       </div>
-      <StudyForm id={id} />
+      <StudyForm />
     </>
   );
 }
