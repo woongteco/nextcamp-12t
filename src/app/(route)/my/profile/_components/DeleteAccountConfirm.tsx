@@ -13,7 +13,10 @@ export default function DeleteAccountConfirm({ email }: { email: string }) {
   const { Modal, open } = useModal({
     children: (
       <div className="flex flex-col gap-6">
-        <p className="text-H3 text-label-normal">정말로 데이터를 삭제할까요?</p>
+        <p className="text-H3 text-label-normal">
+          정말로 데이터를 삭제할까요? 계정을 삭제하면 작성한 게시물들의 작성자가
+          익명 처리되며 자동으로 삭제되지 않습니다.
+        </p>
         <div className="flex items-center justify-center gap-4">
           <Button variation="solid" color="danger" onClick={unregister}>
             계정 삭제
@@ -54,6 +57,8 @@ export default function DeleteAccountConfirm({ email }: { email: string }) {
           버튼을 클릭하면 계정이 영구적으로 삭제되는 것을 이해했습니다.
           <br />
           계정을 삭제한 후에 해당 계정을 복구할 수 없습니다.
+          <br />
+          작성한 게시물의 작성자가 익명 처리됩니다.
         </Label>
       </div>
       <Button

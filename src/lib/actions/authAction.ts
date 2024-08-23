@@ -1,6 +1,6 @@
 "use server";
 
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import connectDB from "../db";
 import { User } from "../schema";
 import { getSession, signIn } from "@/auth";
@@ -244,9 +244,18 @@ export async function changePassword(formData: FormData) {
   }
 
   const password = formData.get("currentPassword") as string;
-  const pwHashed = await hash(String(password), 10);
+  const newPassword = formData.get("newPassword") as string;
 
-  const rightUser = await User.exists({ email: userEmail, password: pwHashed });
+  if (String(password) === String(newPassword)) {
+    return {
+      state: false,
+      message:
+        "현재 비밀번호와 변경할 비밀번호가 같아 변경할 수 없습니다. 다른 비밀번호를 입력해주세요.",
+    };
+  }
+
+  const user = await User.findOne({ email: userEmail });
+  const rightUser = await compare(String(password), user.password);
   if (!rightUser) {
     return {
       state: false,
@@ -254,17 +263,11 @@ export async function changePassword(formData: FormData) {
     };
   }
 
-  const newPassword = formData.get("newPassword") as string;
   const newPwCheck = formData.get("newPasswordCheck") as string;
-
-  // if (newPassword !== newPwCheck) {
-  //   return { state: false, message: "입력한 비밀번호와 일치하지 않습니다." };
-  // }
 
   const newFormData = new FormData();
   newFormData.append("password", newPassword);
   newFormData.append("pwCheck", newPwCheck);
-  // const hashedPassword = await hash(String(newPassword), 10);
 
   try {
     const result = await updatePassword(userEmail, newFormData);
