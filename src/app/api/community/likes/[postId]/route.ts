@@ -32,6 +32,7 @@ export async function GET(
     if (exist) {
       result.data = true;
     }
+    revalidatePath(`/post/${postId}`);
     return Response.json({ result }, { status: 200 });
   } catch (error) {
     return Response.json({ error }, { status: 500 });

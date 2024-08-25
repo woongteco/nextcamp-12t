@@ -1,33 +1,35 @@
 "use client";
-import { useRouter } from "next/navigation";
 import likePostStore from "@/store/likePostStore";
 import handleAlert from "@/common/Molecules/handleAlert";
 import Button from "@/common/Atoms/Form/Button";
 import { LikeThumbIcon } from "@/common/Atoms/Image/Icon";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import { ONE_SEC_IN_MS } from "@/constants/times_unit";
 import clsx from "clsx";
 
-export default function LikeIconButton({
-  count,
-  postId,
-}: {
+type LikeIconButtonProps = {
   count: number;
   postId: string;
-}) {
+  sessionId: string | undefined;
+};
+export default function LikeIconButton(props: LikeIconButtonProps) {
+  const { count, postId, sessionId } = props;
+  const likedCount = count < 0 ? 0 : count;
+
   const { liked, fetchLiked, fetchLikeToggle } = likePostStore();
+  const [init, setLike] = useState<boolean>(false);
   const checkLiked = async () => {
-    await fetchLiked(postId);
+    const result = await fetchLiked(postId);
+    setLike(result?.data ?? false);
+    console.log("init", init);
   };
   useEffect(() => {
     checkLiked();
   }, []);
 
-  const router = useRouter();
   async function toggleLike() {
     const result = await fetchLikeToggle(postId);
-    router.refresh();
     if (result.state) {
       handleAlert("success", result.message);
     } else {
@@ -41,10 +43,19 @@ export default function LikeIconButton({
     config: { duration: ONE_SEC_IN_MS },
   });
 
+  // init과 liked 데이터가 다를 때
+  // 화면에 보이는 liked count 값에 차이가 발생하는 정도
+  const diff: number =
+    init === false && liked === true
+      ? 1
+      : init === true && liked === false
+      ? -1
+      : 0;
   return (
     <div className="flex gap-2 items-center">
       <Button.Icon
         className="[&:hover_path]:stroke-main-600"
+        disabled={sessionId ? false : true}
         onClick={toggleLike}
       >
         <animated.div
@@ -62,7 +73,7 @@ export default function LikeIconButton({
       <span
         className={clsx("text-H4", [liked ? "text-main-600" : "opacity-30"])}
       >
-        {count < 0 ? "0" : count}
+        {likedCount + diff}
       </span>
     </div>
   );
