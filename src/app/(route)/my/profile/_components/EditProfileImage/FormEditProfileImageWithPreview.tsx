@@ -137,7 +137,7 @@ export default function FormEditProfileImageWithPreview({
           </Button>
         </div>
         <p className="text-label-400 text-label-alt mt-2">
-          *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하
+          *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하 권장
         </p>
       </div>
       {Modal}

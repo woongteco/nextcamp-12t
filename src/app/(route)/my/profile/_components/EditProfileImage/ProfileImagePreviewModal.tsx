@@ -20,7 +20,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         className="w-20 h-20 rounded-full my-4 object-cover"
       />
       <p className="text-label-400 text-label-alt">
-        *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하
+        *권장 이미지 - 확장자: png, jpg, jpeg / 용량: 1MB 이하 권장
       </p>
       <div className="flex items-center justify-start gap-4">
         <ImageInputWithButton
