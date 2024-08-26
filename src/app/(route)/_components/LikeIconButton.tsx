@@ -30,10 +30,10 @@ export default function LikeIconButton(props: LikeIconButtonProps) {
 
   async function toggleLike() {
     const result = await fetchLikeToggle(postId);
-    if (result.state) {
+    if (result?.state) {
       handleAlert("success", result.message);
     } else {
-      handleAlert("error", result.message);
+      handleAlert("error", result?.message || "Error: 좋아요에 실패했습니다.");
     }
   }
 
