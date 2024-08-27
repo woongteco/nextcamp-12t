@@ -17,13 +17,12 @@ export default function DesktopMenu({
   profileImage,
   alertList,
 }: DesktopMenuProps) {
-  const [count, setCount] = useState(0);
+  const [commentArr, setCommnetArr] = useState<string[]>([]);
 
   useEffect(() => {
-    alertList.forEach((el) => {
-      setCount(el.comments.length);
-    });
-  }, [count]);
+    const countArr = alertList.flatMap((el) => el.comments);
+    setCommnetArr(countArr);
+  }, [alertList]);
 
   return (
     <div className="gap-8 items-center hidden lg:flex">
@@ -44,9 +43,9 @@ export default function DesktopMenu({
         <div className="w-[1px] h-6 bg-gray-400" />
         <div className="relative [&:hover>div]:block cursor-pointer h-16 flex items-center">
           <Image src={AlarmIcon} alt="alarm" />
-          {count !== 0 && (
-            <div className="absolute top-2 left-3 px-[5px] py-[2px] rounded-lg bg-red-500 text-white text-xs">
-              {count}
+          {commentArr.length !== 0 && (
+            <div className="absolute px-[6px] py-1 top-2 left-3 text-xs bg-red-500 text-white rounded-lg">
+              {commentArr.length}
             </div>
           )}
           <div className="fixed top-[4.0625rem] right-2 xl:right-[calc(50vw-620px)] w-80 p-3 bg-white shadow-emphasize rounded-b-xl hidden cursor-default">
@@ -59,11 +58,11 @@ export default function DesktopMenu({
                 (list, index) =>
                   list.comments.length && (
                     <div key={index}>
-                      <AlertList list={list} setCount={setCount} />
+                      <AlertList list={list} />
                       <button
                         type="button"
                         className="w-full text-right text-sm text-gray-600"
-                        onClick={() => setCount(0)}
+                        onClick={() => setCommnetArr([])}
                       >
                         모든 알림 읽음
                       </button>

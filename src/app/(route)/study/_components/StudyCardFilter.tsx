@@ -19,12 +19,14 @@ export default function StudyCardFilter({
   const queryKey = params.get("q");
 
   const filteredStudyCards = studyCards.filter((card) => {
-    const matchesJobKey = jobKey ? card.studyInfo.jobCategory === jobKey : true;
+    const matchesJobKey = jobKey
+      ? card.studyInfo.jobCategory.value === jobKey
+      : true;
     const matchesTargetKey = targetKey
-      ? card.studyInfo.targetCategory === targetKey
+      ? card.studyInfo.targetCategory.value === targetKey
       : true;
     const matchesLocationKey = locationKey
-      ? card.studyInfo.location === locationKey
+      ? card.studyInfo.location.value === locationKey
       : true;
     const matchesQueryKey = queryKey
       ? includesSearchQuery(card.studyInfo.title, queryKey)

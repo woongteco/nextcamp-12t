@@ -6,10 +6,9 @@ import { Dispatch, SetStateAction } from "react";
 
 type AlertListProps = {
   list: TUserAlert;
-  setCount: Dispatch<SetStateAction<number>>;
 };
 
-export default function AlertList({ list, setCount }: AlertListProps) {
+export default function AlertList({ list }: AlertListProps) {
   return (
     <>
       <ul className="flex flex-col justify-center gap-2 pb-2 text-sm mb-3">

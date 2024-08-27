@@ -9,12 +9,16 @@ export async function getAlert(userId: string) {
   await connectDB();
 
   try {
-    const result = await Post.find({ writer: userId }).select(
+    const data = await Post.find({ writer: userId }).select(
       "postId contents.title comments"
     );
-    if (!result) {
+
+    if (!data) {
       return { state: false, message: "해당 계정은 알림이 없습니다." };
     }
+
+    const result = JSON.parse(JSON.stringify(data));
+
     return { state: true, result };
   } catch (error) {
     return { state: false, message: "알림 조회에 실패했습니다." };

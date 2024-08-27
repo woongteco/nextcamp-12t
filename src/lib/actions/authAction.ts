@@ -74,25 +74,17 @@ export async function login(formData: FormData) {
   }
 
   try {
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
-    // 알림 수정 필요
-    if (result?.error) {
-      return {
-        state: false,
-        message: result.error || "아이디와 비밀번호를 확인해주세요.",
-      };
-    } else {
-      return { state: true, message: "로그인 되었습니다." };
-    }
+
+    return { state: true, message: "로그인 되었습니다." };
   } catch (error) {
-    console.log("login error" + error);
     return {
       state: false,
-      message: "로그인중 문제가 발생하여 다시 시도해주세요.",
+      message: "이메일 또는 비밀번호를 다시 확인해주세요.",
     };
   }
 }

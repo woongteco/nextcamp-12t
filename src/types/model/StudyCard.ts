@@ -7,20 +7,20 @@ export type StudySchema = {
   studyId: string;
   studyInfo: {
     expense: number;
-    jobCategory: string;
-    location: string;
+    jobCategory: { label: string; value: string };
+    location: { label: string; value: string };
     place: string | null;
     recruitmentPeople: number;
     recruitmentPeriod: [string, string];
     studyPeriod: [string, string];
-    targetCategory: string;
+    targetCategory: { label: string; value: string };
     thumbnailUrl: string | null;
     title: string;
   };
   contents: {
     content: string;
-    curriculum: string[];
-    rule: string[];
+    curriculums: string[];
+    rules: string[];
   };
   writer: string;
   heartCount: number;
@@ -33,6 +33,6 @@ export type StudyDataListItem = Omit<StudySchema, "writer"> & {
 };
 
 export type StudyDataFull = Omit<StudySchema, "writer" | "comments"> & {
-  writer: WriterSchema;
+  writer: ProfileSchema;
   comments: CommentSchema[];
 };
