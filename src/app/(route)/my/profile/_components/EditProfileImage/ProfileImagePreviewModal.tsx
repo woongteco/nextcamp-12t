@@ -1,7 +1,7 @@
 import Button from "@/common/Atoms/Form/Button";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 
 type PropsToPreviewModal = {
   imageUrl: string;
@@ -10,6 +10,16 @@ type PropsToPreviewModal = {
 };
 export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
   const { imageUrl, getImage, onSave } = props;
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    const handleTime = setTimeout(() => {
+      setActive(false);
+    }, 1000);
+
+    return () => clearTimeout(handleTime);
+  }, []);
+
   return (
     <div className="flex flex-col items-center gap-4">
       <SectionTitle size="md">프로필 미리보기</SectionTitle>
@@ -32,7 +42,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         >
           다시 선택
         </ImageInputWithButton>
-        <Button variation="solid" onClick={onSave}>
+        <Button variation="solid" disabled={active} onClick={onSave}>
           저장
         </Button>
       </div>
