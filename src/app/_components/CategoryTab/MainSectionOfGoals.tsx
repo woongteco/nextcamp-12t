@@ -19,7 +19,7 @@ export default function MainSectionOfGoals({
 }) {
   const initSelected: string = GOALS[0].value;
   const initStudies: StudyDataFull[] = data.filter(
-    (s) => s.studyInfo.targetCategory === initSelected
+    (s) => s.studyInfo.targetCategory.value === initSelected
   );
   const [selected, setSelected] = useState<string>(initSelected);
   const [studies, setStudies] = useState<StudyDataFull[]>(initStudies);
@@ -53,7 +53,7 @@ export default function MainSectionOfGoals({
                 console.log(":selected:", value);
                 setSelected(value);
                 const newSelected: StudyDataFull[] = data.filter(
-                  (s) => s.studyInfo.targetCategory === value
+                  (s) => s.studyInfo.targetCategory.value === value
                 );
                 setStudies(newSelected);
               }}
