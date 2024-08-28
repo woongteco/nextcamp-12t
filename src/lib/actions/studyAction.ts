@@ -49,7 +49,8 @@ export async function createStudy(userId: string, formData: FormData) {
     !recruitmentPeople ||
     !recruitmentPeriod ||
     !studyPeriod ||
-    !location
+    !location ||
+    !content
   ) {
     return {
       state: false,

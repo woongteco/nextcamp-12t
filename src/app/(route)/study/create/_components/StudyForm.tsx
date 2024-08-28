@@ -207,7 +207,7 @@ export default function StudyForm({
   async function action(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const formData = new FormData();
+    const formData = new FormData(e.currentTarget);
 
     if (imageUrl) {
       formData.append("thumbnailUrl", imageUrl);
@@ -272,27 +272,23 @@ export default function StudyForm({
             method: "POST",
             body: formData,
           })
-            .then((res) => {
-              if (res.status === 200) {
-                res.json();
-                handleAlert("success", "스터디가 개설 되었습니다.");
-
-                router.replace("/study");
-                router.refresh();
-              } else {
-                console.log("error", res);
-
-                handleAlert(
-                  "error",
-                  "스터디 개설에 실패했습니다. 다시 시도 후, 관리자에게 문의하세요."
-                );
-              }
+            .then((res) => res.json())
+            .then(({ data }) => {
+              return data;
             })
             .catch((err) => {
               console.log("err", err);
               return err;
             });
       console.log("resulte", result);
+
+      if (result?.state) {
+        handleAlert("success", result.message);
+        router.replace("/study");
+        router.refresh();
+      } else {
+        handleAlert("error", result.message);
+      }
     } catch (error) {
       if (error instanceof Error) {
         handleAlert("error", error.message);
@@ -430,6 +426,7 @@ export default function StudyForm({
                   id="place-whether"
                   onChange={PlaceCheckedHandler}
                   checked={placeChecked}
+                  defaultChecked={placeChecked}
                   label="장소 미정"
                 />
               </ButtonCheck>
