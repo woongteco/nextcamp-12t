@@ -21,6 +21,8 @@ export default function FindPassword() {
     const formData = new FormData(e.currentTarget);
 
     if (!userEmail) {
+      handleAlert("error", "비밀번호를 변경할 유저의 이메일이 없습니다.");
+
       return;
     }
 
