@@ -99,7 +99,7 @@ const subStudyInfo = new mongoose.Schema({
 });
 
 const subContents = new mongoose.Schema({
-  content: { type: String, default: null },
+  content: { type: String, default: "", required: true },
   rules: { type: [String], default: [] },
   curriculums: { type: [String], default: [] },
 });
