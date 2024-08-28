@@ -22,6 +22,8 @@ import { useRouter } from "next/navigation";
 import { createStudy } from "@/lib/actions/studyAction";
 import { StudySchema } from "@/types/model/StudyCard";
 import { cfetch } from "@/utils/customFetch";
+import { resizeFile } from "@/utils/resizeFile";
+import { supabaseUploadImage } from "@/lib/actions/profileAction";
 
 type CategoryOption = {
   readonly label: string;
@@ -52,6 +54,8 @@ export default function StudyForm({
       );
   };
 
+  const [imageUrl, setImageUrl] = useState<string>("");
+
   // 스터디 카테고리
   const [jobCategory, setJobCategory] = useState<CategoryOption | null>(null);
   const handleJobCategoryChange = (newValue: CategoryOption | null) => {
@@ -76,8 +80,6 @@ export default function StudyForm({
     value: m.value,
     label: m.label,
   }));
-
-  console.log("category", jobCategory, targetCategory);
 
   // 모집기간
   const [recruitmentPeriod, setRecruitmentPeriod] = useState<
@@ -205,7 +207,11 @@ export default function StudyForm({
   async function action(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData();
+
+    if (imageUrl) {
+      formData.append("thumbnailUrl", imageUrl);
+    }
 
     if (jobCategory) {
       formData.append("jobCategory", JSON.stringify(jobCategory));
@@ -286,6 +292,7 @@ export default function StudyForm({
               console.log("err", err);
               return err;
             });
+      console.log("resulte", result);
     } catch (error) {
       if (error instanceof Error) {
         handleAlert("error", error.message);
@@ -307,7 +314,7 @@ export default function StudyForm({
           required
         />
       </GridField>
-      <ThumbnailInput />
+      <ThumbnailInput imageUrl={imageUrl} setImageUrl={setImageUrl} />
       <GridField>
         <LabelText form required>
           스터디 카테고리
