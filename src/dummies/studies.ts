@@ -1,8 +1,10 @@
 import { getImageUrl } from "./getImages";
 import { StudySchema } from "@/types/model/StudyCard";
 
-// 스터디카드 리스트
-const studyCards: StudySchema[] = [
+/**
+ * @deprecated
+ */
+const studyCards = [
   {
     studyId: "0",
     user: {
@@ -563,6 +565,6 @@ const studyCards: StudySchema[] = [
   },
 ];
 
-export function getStudyCards(): StudySchema[] {
-  return studyCards;
-}
+// export function getStudyCards(): StudySchema[] {
+//   return studyCards;
+// }

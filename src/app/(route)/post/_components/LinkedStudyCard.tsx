@@ -1,31 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import connectDB from "@/lib/db";
 import { DummyProfileImg } from "@public/images";
-import { getWriter } from "@/dummies/user";
 import Thumbnail from "@/common/Atoms/Image/Thumbnail";
 import { StudyDataListItem, StudySchema } from "@/types/model/StudyCard";
-import { getStudyCards } from "@/dummies/studies";
-import { Study } from "@/lib/schema";
-import { delay } from "@/dummies/utils";
 import { getStudy } from "@/lib/actions/studyAction";
-
-type StudyState =
-  | { state: true; data: StudySchema }
-  | { state: false; message: string };
-
-// AS_IS: testing with dummy data
-// TO_BE: DB에 스터디 데이터가 존재한다면 DB에서 데이터를 가져와서 사용: line 11
-// async function getStudy(studyId: string): Promise<StudyState> {
-//   await delay(500);
-//   const data: StudySchema | undefined = getStudyCards().find(
-//     (study) => study.studyId === studyId
-//   );
-//   if (data === undefined) {
-//     return { state: false, message: `Not Found id: ${studyId}` };
-//   }
-//   return { state: true, data };
-// }
 
 export default async function LinkedStudyCard({
   studyId,
