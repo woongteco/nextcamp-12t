@@ -120,6 +120,8 @@ export async function supabaseThumbnailImage(formData: FormData) {
 
 // get
 export async function getStudy(studyId: string | null = null) {
+  await connectDB();
+
   try {
     if (studyId) {
       const study = await Study.findOne({ studyId }).populate(
