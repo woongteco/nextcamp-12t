@@ -10,11 +10,11 @@ type PropsToPreviewModal = {
 };
 export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
   const { imageUrl, getImage, onSave } = props;
-  const [active, setActive] = useState(true);
+  const [disabled, setDisadled] = useState(true);
 
   useEffect(() => {
     const handleTime = setTimeout(() => {
-      setActive(false);
+      setDisadled(false);
     }, 1000);
 
     return () => clearTimeout(handleTime);
@@ -42,7 +42,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         >
           다시 선택
         </ImageInputWithButton>
-        <Button variation="solid" disabled={active} onClick={onSave}>
+        <Button variation="solid" disabled={disabled} onClick={onSave}>
           저장
         </Button>
       </div>
