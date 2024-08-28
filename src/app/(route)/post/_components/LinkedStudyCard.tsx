@@ -56,7 +56,7 @@ export default async function LinkedStudyCard({
         <div className="flex flex-col gap-4 py-5">
           <div className="study-info flex flex-col gap-0">
             <span className="text-body-nomral text-label-dimmed">
-              {study.studyInfo.jobCategory} 스터디
+              {study.studyInfo.jobCategory.label} 스터디
             </span>
             <p className="text-[20px] text-black font-semibold w-full overflow-hidden text-nowrap text-ellipsis">
               {study.studyInfo.title}
