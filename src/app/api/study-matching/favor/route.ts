@@ -11,12 +11,14 @@ export async function GET(_: NextRequest) {
   const userId = session?.user.id;
   await connectDB();
 
-  if (noData(userId)) {
-    const data = await Study.find().sort({ heartCount: "desc" });
-    return Response.json({ data }, { status: 200 });
-  }
-
   try {
+    if (noData(userId)) {
+      const data = await Study.find()
+        .populate("writer", "name email role profile_img position_tag")
+        .sort({ heartCount: "desc" });
+      return Response.json({ data }, { status: 200 });
+    }
+
     const favors = await User.find({ _id: userId }).select("my_category");
     const result =
       favors.length > 0
@@ -25,7 +27,9 @@ export async function GET(_: NextRequest) {
           })
             .populate("writer", "name email role profile_img position_tag")
             .sort({ createdAt: "desc" })
-        : await Study.find().sort({ heartCount: "desc" });
+        : await Study.find()
+            .populate("writer", "name email role profile_img position_tag")
+            .sort({ heartCount: "desc" });
 
     if (favors.length > 0 && result.length < DEFAULT_SIZE) {
       // const groups = favors.reduce((prev, curr) => {

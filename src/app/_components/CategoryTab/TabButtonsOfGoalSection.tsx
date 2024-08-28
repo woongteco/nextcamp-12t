@@ -21,7 +21,7 @@ export default async function TabButtonsOfGoalSection() {
 
   return (
     <>
-      <MainTabButtonGroup />
+      {/* <MainTabButtonGroup /> */}
       <MainSectionOfGoals data={JSON.parse(JSON.stringify(data))} />
     </>
   );

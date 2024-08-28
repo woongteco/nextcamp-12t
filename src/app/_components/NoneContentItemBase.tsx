@@ -8,7 +8,7 @@ export default function NoneContentItemBase({
   return (
     <div
       className={clsx(
-        "flex flex-col items-center justify-center gap-4 w-full h-[19rem] border border-label-dimmed	rounded-3xl text-center",
+        "flex flex-col items-center justify-center gap-4 w-full h-[19rem] border text-label-dimmed rounded-3xl text-center",
         className
       )}
     >

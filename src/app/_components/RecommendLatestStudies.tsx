@@ -1,5 +1,4 @@
 import StudyCardList from "@/common/Templates/CardList";
-import { getStudyCards } from "@/dummies/studies";
 import { StudyDataFull } from "@/types/model/StudyCard";
 import { cfetch } from "@/utils/customFetch";
 

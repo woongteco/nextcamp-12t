@@ -16,7 +16,7 @@ export default function StudyCardList({
   studyCards: StudyDataFull[];
   count?: number;
 }) {
-  if (!studyCards) {
+  if (studyCards.length === 0) {
     return <NoneStudyComponent />;
   }
   const STUDYCARDS = count ? studyCards.slice(0, count) : studyCards;

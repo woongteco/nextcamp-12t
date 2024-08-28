@@ -16,7 +16,10 @@ function encodeNumToStr(num: number): string {
   return encoded;
 }
 
-const example: PostDataFull[] = [
+/**
+ * @deprecated
+ */
+const example = [
   {
     postId: encodeNumToStr(101355),
     category: {
@@ -190,17 +193,17 @@ const example: PostDataFull[] = [
   },
 ];
 
-export function getPosts(category?: string): PostDataFull[] {
-  if (category === undefined || category === "all") {
-    return example;
-  }
-  return example.filter((post) => post.category.value === category);
-}
+// export function getPosts(category?: string): PostDataFull[] {
+//   if (category === undefined || category === "all") {
+//     return example;
+//   }
+//   return example.filter((post) => post.category.value === category);
+// }
 
-export function getPost(id: string): PostDataFull {
-  const filtered = example.find((post) => post.postId === id);
-  if (filtered) {
-    return filtered;
-  }
-  return { ...example[0] };
-}
+// export function getPost(id: string): PostDataFull {
+//   const filtered = example.find((post) => post.postId === id);
+//   if (filtered) {
+//     return filtered;
+//   }
+//   return { ...example[0] };
+// }
