@@ -52,9 +52,9 @@ export default async function ParticipatedInStudyStatusContent({
         {result.state && count > 0 ? (
           <div>
             <p className="text-label-neutral text-label-400">
-              {result.data[0].jobCategory.label}
+              {result.data[0].studyInfo.jobCategory.label}
             </p>
-            <p className="text-label-normal text-H4">{result.data[0].title}</p>
+            <p className="text-label-normal text-H4">{result.data[0].studyInfo.title}</p>
           </div>
         ) : (
           <div>
