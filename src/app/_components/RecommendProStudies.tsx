@@ -14,7 +14,7 @@ export default async function RecommendProStudies() {
     .catch((err) => err);
 
   if (!response?.data) {
-    throw new Error("최신 스터디 정보 가져오기 실패");
+    throw new Error("추천 스터디 정보 가져오기 실패");
   }
 
   const recommend: StudyDataFull[] = response.data;

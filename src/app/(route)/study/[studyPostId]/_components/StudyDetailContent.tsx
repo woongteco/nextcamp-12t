@@ -1,12 +1,13 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import LeaderProfile, { TLeaderProfile } from "./LeaderProfile";
+import LeaderProfile from "./LeaderProfile";
 import AccordionComponent from "../../_components/AccordionComponent";
 import ContentArea from "@/common/Organisms/ContentArea";
+import { ProfileSchema } from "@/types/model/User";
 
 export type TContents = {
   content: string;
-  rule: string[];
-  curriculum: string[];
+  rules: string[];
+  curriculums: string[];
 };
 
 export default function StudyDetailContent({
@@ -14,9 +15,9 @@ export default function StudyDetailContent({
   writer,
 }: {
   contents: TContents;
-  writer: TLeaderProfile;
+  writer: ProfileSchema;
 }) {
-  const { content, rule, curriculum } = contents;
+  const { content, rules, curriculums } = contents;
 
   return (
     <div className="my-20 border-t border-b">
@@ -38,8 +39,8 @@ export default function StudyDetailContent({
         </div>
       </div>
 
-      <AccordionComponent title="규칙" lists={rule} />
-      <AccordionComponent title="세부 커리큘럼" lists={curriculum} />
+      <AccordionComponent title="규칙" lists={rules} />
+      <AccordionComponent title="세부 커리큘럼" lists={curriculums} />
     </div>
   );
 }

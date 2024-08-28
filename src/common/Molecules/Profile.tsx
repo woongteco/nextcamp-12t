@@ -30,6 +30,8 @@ export default function Profile({
   };
 
   const src = user.profile_img || "/images/profile/DummyProfileImg.jpg";
+  console.log("profile user", user.name);
+
   return (
     <div className={clsx("flex flex-row flex-nowrap items-center", gap[size])}>
       <ProfileImg size={size} src={src} alt={`${user.name} 프로필 이미지`} />

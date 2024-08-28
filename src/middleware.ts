@@ -35,5 +35,6 @@ export const config = {
     "/find/:path*",
     "/register",
     "/pw-reset",
+    "/set-category",
   ],
 };

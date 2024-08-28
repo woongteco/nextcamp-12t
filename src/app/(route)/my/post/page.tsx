@@ -45,14 +45,14 @@ export default async function MyPost() {
       <SectionTitle size="md" className="mb-6">
         작성한 글
       </SectionTitle>
-      <div className="flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
+      <div className="flex flex-row items-start justify-between pb-6">
         <LinkButton href="/post/write" className="self-end ml-auto">
           <WriteIcon />
           <span className="text-body-600">커뮤니티 글 작성하기</span>
         </LinkButton>
       </div>
       {posts.length > 0 ? (
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 border-t border-t-line-neutral">
           <PostList posts={posts} />
         </div>
       ) : (

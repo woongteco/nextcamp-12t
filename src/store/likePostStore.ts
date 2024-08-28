@@ -4,7 +4,7 @@ import { create } from "zustand";
 
 type ResponseState = {
   state: boolean;
-  data: PostDataFull | null;
+  data?: boolean;
   message?: string;
 };
 type TLikeState = {
