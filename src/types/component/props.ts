@@ -1,4 +1,4 @@
-import { ImageProps } from "next/image";
+import { TButtonProps } from "@/common/Atoms/Form/Button";
 import { ComponentProps, MouseEventHandler, ReactNode, RefObject } from "react";
 
 export type TProps = {
@@ -8,33 +8,11 @@ export type TClassnameProps = { className: string };
 export type TIconButtonProps = ComponentProps<"button"> & {
   variation: "icon";
   size?: number;
-  colors?: {
-    bg: string;
-    text?: string;
+};
+export type TLinkButtonProps = React.ComponentProps<"a"> &
+  Omit<TButtonProps, "startIcon" | "endIcon"> & {
+    href: string | object;
   };
-};
-export type TButtonProps = ComponentProps<"button"> & {
-  variation: "solid" | "outline" | "text";
-  colors?: {
-    bg: string;
-    text?: string;
-  };
-  fullWidth?: boolean;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-};
-export type TImageInputWithButtonProps = {
-  buttonProps: Omit<TButtonProps, "children">;
-  children: ReactNode; // be button's children
-} & Omit<
-  ComponentProps<"input">,
-  "type" | "accept" | "hidden" | "style" | "ref"
->;
-export type TLinkButtonProps = React.ComponentProps<"a"> & {
-  colors?: TButtonProps["colors"];
-  variation?: TButtonProps["variation"];
-  href: string | object;
-};
 type TLabel = {
   form?: boolean;
   required?: boolean;
@@ -49,11 +27,6 @@ export type TNavItemProps = {
   href: string;
   label: string;
   active: boolean;
-};
-export type TImageThumbnailProps = ImageProps & {
-  src: string;
-  alt: string;
-  useIn?: "list" | "specific" | "linked";
 };
 export type TModalPortalProps<T> = TProps & {
   onClose: MouseEventHandler<T>;

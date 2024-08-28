@@ -3,44 +3,45 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import handleAlert from "./ErrorAlert";
+import handleAlert from "@/common/Molecules/handleAlert";
+import Image from "next/image";
+import { login } from "@/lib/actions/authAction";
+import { Google, Kakao, Github } from "@public/icons";
+import { signIn } from "next-auth/react";
 
-export default function LoginForm() {
+const socialLoginList = [
+  { provider: "kakao", icon: Kakao },
+  { provider: "google", icon: Google },
+  { provider: "github", icon: Github },
+];
+
+export function LoginForm() {
   const router = useRouter();
   const [pwData, setPwData] = useState<string>("");
 
-  async function login(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("password");
 
-    if (!email || !password) {
-      handleAlert("error", "입력한 정보를 다시 확인해 주세요.");
-      return;
+    try {
+      const result = await login(formData);
+
+      if (result.state) {
+        router.replace("/");
+        handleAlert("success", result.message);
+      } else {
+        handleAlert("error", result.message);
+      }
+    } catch (error) {
+      handleAlert("error", "로그인 중 문제가 발생했습니다.");
     }
-
-    const login = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    if (login?.error) {
-      handleAlert("error", "이메일 또는 비밀번호를 다시 확인해주세요.");
-      setPwData("");
-      return;
-    }
-
-    router.refresh();
   }
 
   return (
     <>
-      <form onSubmit={login} className="flex flex-col w-full gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-5">
         <Input
           id="email"
           type="email"
@@ -61,6 +62,7 @@ export default function LoginForm() {
           </button>
           <Link
             href="/register"
+            scroll={false}
             className="w-full text-center rounded-md py-2 bg-main-25"
           >
             회원가입
@@ -68,5 +70,20 @@ export default function LoginForm() {
         </div>
       </form>
     </>
+  );
+}
+
+export function SocialLoginForm() {
+  return (
+    <div className="flex items-center justify-center gap-4">
+      {socialLoginList.map(({ provider, icon }) => (
+        <button
+          key={provider}
+          onClick={() => signIn(provider, { callbackUrl: "/" })}
+        >
+          <Image src={icon} alt={`${provider} 로그인`} />
+        </button>
+      ))}
+    </div>
   );
 }

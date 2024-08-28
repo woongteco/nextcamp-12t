@@ -3,7 +3,6 @@ import StudyCardList from "@/common/Templates/CardList";
 import LargeStudyList from "./_components/LargeStudyList";
 import WideStudyList from "./_components/WideStudyList";
 
-import { getStudyCards } from "@/dummies/studies";
 import { GOALS } from "@/constants/categories/study_goal";
 import { ONOFF } from "@/constants/categories/study_type";
 
@@ -15,8 +14,8 @@ import {
   onOffIconsName,
 } from "@/app/_components/CategoryTab/TabIcons";
 import { getSession } from "@/auth";
-import { StudyList } from "@/lib/schema";
-import connectDB from "@/lib/db";
+import { getStudy } from "@/lib/actions/studyAction";
+import { StudyDataFull } from "@/types/model/StudyCard";
 
 export type TQuery = {
   job_c?: string;
@@ -31,13 +30,15 @@ export default async function StudyComponent({
   searchParams: TQuery;
 }) {
   const session = await getSession();
-  const studyCards = getStudyCards();
+  const result = await getStudy();
+  let studyCardLists: StudyDataFull[];
 
-  await connectDB();
-
-  const studyList = await StudyList.find();
-
-  console.log("스터디 리스트 가져오기" + studyList);
+  if (!result.state) {
+    studyCardLists = [];
+  } else {
+    studyCardLists = result.data;
+  }
+  const studyCards = JSON.parse(JSON.stringify(studyCardLists));
 
   return (
     <>

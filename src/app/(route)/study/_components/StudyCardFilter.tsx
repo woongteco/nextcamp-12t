@@ -2,13 +2,15 @@
 
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyCardList from "@/common/Templates/CardList";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudyDataFull, StudySchema } from "@/types/model/StudyCard";
+import { UserSchema } from "@/types/model/User";
+import { includesSearchQuery } from "@/utils/includesSearchQuery";
 import { useSearchParams } from "next/navigation";
 
 export default function StudyCardFilter({
   studyCards,
 }: {
-  studyCards: TStudyCard[];
+  studyCards: StudyDataFull[];
 }) {
   const params = useSearchParams();
   const jobKey = params.get("job_c");
@@ -17,14 +19,18 @@ export default function StudyCardFilter({
   const queryKey = params.get("q");
 
   const filteredStudyCards = studyCards.filter((card) => {
-    const matchesJobKey = jobKey ? card.jobCategory.label === jobKey : true;
+    const matchesJobKey = jobKey
+      ? card.studyInfo.jobCategory.value === jobKey
+      : true;
     const matchesTargetKey = targetKey
-      ? card.targetCategory.value === targetKey
+      ? card.studyInfo.targetCategory.value === targetKey
       : true;
     const matchesLocationKey = locationKey
-      ? card.location.label === locationKey
+      ? card.studyInfo.location.value === locationKey
       : true;
-    const matchesQueryKey = queryKey ? card.title.includes(queryKey) : true;
+    const matchesQueryKey = queryKey
+      ? includesSearchQuery(card.studyInfo.title, queryKey)
+      : true;
 
     return (
       matchesJobKey && matchesTargetKey && matchesLocationKey && matchesQueryKey
@@ -37,10 +43,10 @@ export default function StudyCardFilter({
         <SectionTitle size="md">
           전체 검색 결과 {filteredStudyCards.length}개
         </SectionTitle>
-        <div className="flex gap-3 font-semibold text-sm text-[#c2c3c4]">
+        {/* <div className="flex gap-3 font-semibold text-sm text-[#c2c3c4]">
           <span>최신 순</span>
           <span>좋아요 순</span>
-        </div>
+        </div> */}
       </div>
       <StudyCardList studyCards={filteredStudyCards} />
     </>

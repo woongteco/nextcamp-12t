@@ -46,6 +46,9 @@ body {
   .inputWrap {
     @apply flex flex-col gap-2 w-full text-sm;
   }
+  .gridContent {
+    @apply lg:w-[calc(100vw-2rem-240px-30px)] xl:w-[calc(1200px-280px-30px)];
+  }
 }
 
 button,
@@ -63,4 +66,16 @@ details > summary {
 
 .swiper-pagination-bullet-active {
   background-color: var(--color-label-strong);
+}
+
+/* input number 화살표 없애기 */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox  */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

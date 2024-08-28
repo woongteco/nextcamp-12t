@@ -1,8 +1,17 @@
 import { TProps } from "@/types/component/props";
+import clsx from "clsx";
 
-export default function NoneContentItemBase({ children }: TProps) {
+export default function NoneContentItemBase({
+  className,
+  children,
+}: { className?: string } & TProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full h-[19rem] border border-main-500	rounded-3xl text-center">
+    <div
+      className={clsx(
+        "flex flex-col items-center justify-center gap-4 w-full h-[19rem] border text-label-dimmed rounded-3xl text-center",
+        className
+      )}
+    >
       {children}
     </div>
   );

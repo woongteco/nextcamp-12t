@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import NotFound from "@/app/not-found";
 import LinkButton from "@/common/Atoms/LinkButton";
 import SidebarAsideContentArea from "@/common/Layout/Sidebar/SidebarAsideContentArea";
@@ -11,10 +10,9 @@ import { WriteIcon } from "@/common/Atoms/Image/Icon";
 import PostListWithPagination from "@/common/Templates/PostListWithPagination";
 import SearchInput from "../_components/SearchInput";
 import NonePostItem from "./_components/NonePostItem";
-
-import { Post } from "@/lib/schema";
-import connectDB from "@/lib/db";
-import { getPosts } from "@/dummies/posts";
+import { PostDataFull } from "@/types/model/PostItem";
+import { cfetch } from "@/utils/customFetch";
+import { ONE_MIN_IN_MS } from "@/constants/times_unit";
 
 type TQuery = { category?: string; sort?: string };
 
@@ -30,33 +28,38 @@ export default async function CommunityPostList({
   if (filteredMenu === undefined || sortedBy === undefined) {
     return <NotFound />;
   }
-  console.log(category);
-  /**
-   * TODO
-   * - 글 리스트 데이터 가져오기 : TPost[]
-   */
 
-  //   await connectDB();
-  //
-  //   const posts = await Post.find();
+  const result = await cfetch("/api/community", {
+    next: { tags: ["community"], revalidate: 5 * ONE_MIN_IN_MS },
+  })
+    .then((res) => res.json())
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((err) => {
+      console.error(err);
+      return { data: [] };
+    });
 
-  const posts = getPosts(category);
+  let postListData: PostDataFull[] = result.data;
+  const clientPostList = JSON.parse(JSON.stringify(postListData));
 
-  const sortedPosts = posts.sort((a, b) => {
-    switch (sortedBy.key) {
-      case "latest":
-        return Date.parse(b.createdAt) - Date.parse(a.createdAt);
-      case "comments":
-        return b.comments.length - a.comments.length;
-      case "likes":
-        return b.like - a.like;
-      case "views":
-        return b.view - a.view;
-      default:
-        throw new Error("잘못된 정렬 기준입니다.");
+  const sortedPosts = clientPostList.sort(
+    (a: PostDataFull, b: PostDataFull) => {
+      switch (sortedBy.key) {
+        case "latest":
+          return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+        case "comments":
+          return b.comments.length - a.comments.length;
+        case "likes":
+          return b.like - a.like;
+        case "views":
+          return b.view - a.view;
+        default:
+          throw new Error("잘못된 정렬 기준입니다.");
+      }
     }
-  });
-  console.log("posts", posts);
+  );
 
   return (
     <SidebarAsideContentArea>
@@ -65,13 +68,12 @@ export default async function CommunityPostList({
           <SideNavItem key={key} {...item} active={key === category} />
         ))}
       </SidebarNavArea>
-      <section className="lg:w-[calc(100vw-2rem-240px-30px)] xl:w-auto">
-        <div className="w-full flex flex-row items-start justify-between pb-9">
+      <section className="w-full lg:w-[calc(100vw-2rem-240px-30px)] xl:w-[890px]">
+        <div className="flex flex-row items-start justify-between pb-9">
           <p className="text-H2">{filteredMenu.label} 글</p>
-          {/* <ContentSearchBar /> */}
           <SearchInput origin="post" />
         </div>
-        <div className="w-full flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
+        <div className="flex flex-row items-start justify-between pb-6 border-b border-b-line-neutral">
           <Dropdown
             buttonLabel={sortedBy.label}
             items={POST_SORT_BY.map((item) => (
@@ -102,7 +104,9 @@ export default async function CommunityPostList({
             <PostListWithPagination posts={sortedPosts} />
           </div>
         ) : (
-          <NonePostItem />
+          <div className="pt-8">
+            <NonePostItem />
+          </div>
         )}
       </section>
     </SidebarAsideContentArea>

@@ -1,9 +1,21 @@
 import { UserSchema } from "./User";
+import { TSelectOption } from "./Category";
 
-export type ProfileSchema = {
-  _id: object;
+// get profile data .populate("userId")
+// @deprecated
+export type _ProfileSchema = {
+  _id: string;
   userId: UserSchema;
   position_tag: string;
   introduce: string;
-  my_category: string[];
+  my_category: TSelectOption[];
 };
+
+// @deprecated
+// export type TProfileData = {
+//   _id: string;
+//   userId: UserSchema;
+//   position_tag: string;
+//   introduce: string;
+//   my_category: TSelectOption[];
+// };

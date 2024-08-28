@@ -1,24 +1,31 @@
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { DefaultThumbnailImg } from "@public/images";
-import { TImageThumbnailProps } from "@/types/component/props";
 import clsx from "clsx";
 
+export type TImageThumbnailProps = ImageProps & {
+  src: string;
+  alt: string;
+  useIn?: "default" | "specific" | "linked" | "wide" | "large";
+};
+
 /**
- * @argument useIn list(기본 스터디 리스트의 썸네일), specific(스터디 상세 페이지 썸네일), linked(커뮤니티 관련 스터디 링크 카드 썸네일)
+ * @argument useIn default(기본 스터디 리스트의 썸네일), specific(스터디 상세 페이지 썸네일), linked(커뮤니티 관련 스터디 링크 카드 썸네일), wide, large
  */
 
 export default function Thumbnail(props: TImageThumbnailProps) {
   const defaultSize = {
-    list: { width: 268, height: 180 },
+    default: { width: 268, height: 180 },
     specific: { width: 582, height: 438 },
     linked: { width: 200, height: 132 },
+    wide: { width: 588, height: 180 },
+    large: { width: 392, height: 448 },
   };
   const {
     alt,
     src,
-    useIn = "list",
-    width = defaultSize[props.useIn || "list"].width,
-    height = defaultSize[props.useIn || "list"].height,
+    useIn = "default",
+    width = defaultSize[props.useIn || "default"].width,
+    height = defaultSize[props.useIn || "default"].height,
     className,
     ...restProps
   } = props;
@@ -28,8 +35,9 @@ export default function Thumbnail(props: TImageThumbnailProps) {
       height={height}
       src={src || DefaultThumbnailImg}
       alt={alt}
+      // loading={"lazy" | "eager"}
       className={clsx(
-        "thumbnailImage object-cover min-w-full w-auto h-auto",
+        "thumbnailImage object-cover min-w-full w-auto h-auto bg-line-neutral/80",
         className
       )}
       {...restProps}

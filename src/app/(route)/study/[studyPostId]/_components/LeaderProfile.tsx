@@ -1,18 +1,9 @@
+import { ProfileSchema } from "@/types/model/User";
 import { BadgeIcon, ProfileHeartIcon } from "@public/icons";
+import { DummyProfileImg } from "@public/images";
 import Image from "next/image";
 
-export type TLeaderProfile = {
-  id: number;
-  userType: string;
-  username: string;
-  nickname: string;
-  email: string;
-  jobcategory: string;
-  profileUrl: string;
-  content: string;
-  tags: string[];
-};
-export default function LeaderProfile({ user }: { user: TLeaderProfile }) {
+export default function LeaderProfile({ writer }: { writer: ProfileSchema }) {
   return (
     <div className="max-w-screen-sm w-full">
       <div className="flex justify-between items-start">
@@ -21,18 +12,18 @@ export default function LeaderProfile({ user }: { user: TLeaderProfile }) {
             className="w-12 h-12 rounded-full"
             width={48}
             height={48}
-            src={user.profileUrl}
+            src={writer.profile_img || DummyProfileImg}
             alt="profile"
           />
           <div className="flex flex-col">
             <div className="flex gap-2">
-              <span className="text-2xl font-semibold">{user.nickname}</span>
-              {user.userType === "pro" ? (
+              <span className="text-2xl font-semibold">{writer.name}</span>
+              {writer.role === "pro" ? (
                 <Image src={BadgeIcon} alt="프로 뱃지" />
               ) : null}
             </div>
             <span className="text-sm text-label-dimmed">
-              {user.jobcategory} / {user.email}
+              {writer.position_tag} / {writer.email}
             </span>
           </div>
         </div>
@@ -41,14 +32,14 @@ export default function LeaderProfile({ user }: { user: TLeaderProfile }) {
           <span className="text-main-600 font-semibold">찜하기</span>
         </button>
       </div>
-      <p className="pt-4 text-sm text-label-dimmed">{user.content}</p>
+      <p className="pt-4 text-sm text-label-dimmed">{writer.introduce}</p>
       <div className="flex gap-4 mt-4">
-        {user.tags.map((tag) => (
+        {writer.my_category.map((tag) => (
           <span
-            key={tag}
+            key={tag.value}
             className="py-1 px-5 text-main-600 text-xs font-semibold border border-blue-600 rounded-twenty"
           >
-            {tag}
+            {tag.label}
           </span>
         ))}
       </div>

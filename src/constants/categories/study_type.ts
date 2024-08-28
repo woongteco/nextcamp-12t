@@ -1,6 +1,6 @@
-import { CategoryOption } from "@/types/model/Category";
+import { TSelectOption } from "@/types/model/Category";
 
-export const ONOFF: CategoryOption[] = [
-  { label: "오프라인", value: "offline" },
+export const ONOFF: TSelectOption[] = [
   { label: "온라인", value: "online" },
+  { label: "오프라인", value: "offline" },
 ];

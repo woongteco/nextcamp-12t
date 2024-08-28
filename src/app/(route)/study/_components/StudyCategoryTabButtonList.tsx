@@ -4,7 +4,7 @@ import { TabButton } from "@/app/_components/CategoryTab/TabButton";
 import { CategoryTabIcon } from "@/app/_components/CategoryTab/TabIcons";
 import useQueryString from "@/hooks/useQueryString";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type TStudyCategoryValue = {
   label: string;
@@ -34,8 +34,14 @@ export default function StudyCategoryTabButtonList({
   });
 
   const clickHandler = (value: string) => {
-    onChangeQuery(value);
-    setSelected(value);
+    setSelected((prev) => {
+      if (prev === value) {
+        onChangeQuery("");
+        return "";
+      }
+      onChangeQuery(value);
+      return value;
+    });
   };
 
   return (

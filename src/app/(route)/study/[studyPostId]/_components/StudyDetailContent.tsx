@@ -1,23 +1,23 @@
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
-import LeaderProfile, { TLeaderProfile } from "./LeaderProfile";
-import AccordionComponent, {
-  TAccordionList,
-} from "../../_components/AccordionComponent";
+import LeaderProfile from "./LeaderProfile";
+import AccordionComponent from "../../_components/AccordionComponent";
+import ContentArea from "@/common/Organisms/ContentArea";
+import { ProfileSchema } from "@/types/model/User";
 
 export type TContents = {
   content: string;
-  rule: TAccordionList[];
-  curriculum: TAccordionList[];
+  rules: string[];
+  curriculums: string[];
 };
 
 export default function StudyDetailContent({
   contents,
-  user,
+  writer,
 }: {
   contents: TContents;
-  user: TLeaderProfile;
+  writer: ProfileSchema;
 }) {
-  const { content, rule, curriculum } = contents;
+  const { content, rules, curriculums } = contents;
 
   return (
     <div className="my-20 border-t border-b">
@@ -26,7 +26,7 @@ export default function StudyDetailContent({
           <SectionTitle size="md" className="pb-6 text-2xl font-semibold">
             스터디장
           </SectionTitle>
-          <LeaderProfile user={user} />
+          <LeaderProfile writer={writer} />
         </div>
 
         <div className="py-16  border-b">
@@ -34,13 +34,13 @@ export default function StudyDetailContent({
             스터디 소개
           </SectionTitle>
           <div className="max-w-screen-md w-full mt-6 leading-6 font-normal text-base">
-            {content}
+            <ContentArea html={content} />
           </div>
         </div>
       </div>
 
-      <AccordionComponent title="규칙" lists={rule} />
-      <AccordionComponent title="세부 커리큘럼" lists={curriculum} />
+      <AccordionComponent title="규칙" lists={rules} />
+      <AccordionComponent title="세부 커리큘럼" lists={curriculums} />
     </div>
   );
 }

@@ -1,9 +1,11 @@
-import { TComment } from "@/app/(route)/study/[studyPostId]/_components/CommentList";
 import { getImageUrl } from "./getImages";
 import { TThumbnailInfo } from "@/app/(route)/study/[studyPostId]/_components/StudyDetailThumbnail";
 import { TContents } from "@/app/(route)/study/[studyPostId]/_components/StudyDetailContent";
 
-// 스터디 게시글 상세 : 스터디장 프로필
+/**
+ * 스터디 게시글 상세 : 스터디장 프로필
+ * @deprecated
+ */
 export function getStudyLeaderUser() {
   return {
     id: 1,
@@ -19,13 +21,12 @@ export function getStudyLeaderUser() {
   };
 }
 
-// 스터디 상세 더미
+/**
+ * 스터디 상세 더미
+ * @deprecated 
+ */
 export function getStudyPostDetail() {
-  const result: {
-    studyPostId: number;
-    thumbnailInfo: TThumbnailInfo;
-    contents: TContents;
-  } = {
+  const result = {
     // 스터디 상세페이지
     studyPostId: 1,
     thumbnailInfo: {
@@ -43,7 +44,10 @@ export function getStudyPostDetail() {
       recruitmentPeople: "20명",
       recruitmentPeriod: ["2024.11.21", "2024.11.30"],
       studyPeriod: ["2024.12.01", "2024.12.11"],
-      onoff: "오프라인",
+      location: {
+        label: "오프라인",
+        value: "offline",
+      },
       place: "오프 사무실",
       heartStatus: false,
       heartCount: 262,
@@ -69,14 +73,14 @@ export function getStudyPostDetail() {
     },
   };
   return result;
-  return result;
 }
 
-// 댓글 더미
+/** 
+ * 댓글 더미
+ * @deprecated
+ */
 export function getComments() {
-  const result: {
-    comments: TComment[];
-  } = {
+  const result = {
     comments: [
       {
         commentId: 1,

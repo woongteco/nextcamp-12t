@@ -1,25 +1,38 @@
-import { TUserBase } from "./User";
+import { ProfileSchema, WriterSchema } from "./User";
+import { CommentSchema } from "./Comment";
 
-export type TStudyCard = {
+type CommentId = CommentSchema["commentId"];
+
+export type StudySchema = {
   studyId: string;
-  user: TUserBase;
-  thumbnailUrl: string;
-  title: string;
-  jobCategory: {
-    label: string;
-    value: string;
+  studyInfo: {
+    expense: number;
+    jobCategory: { label: string; value: string };
+    location: { label: string; value: string };
+    place: string | null;
+    recruitmentPeople: number;
+    recruitmentPeriod: [string, string];
+    studyPeriod: [string, string];
+    targetCategory: { label: string; value: string };
+    thumbnailUrl: string | null;
+    title: string;
   };
-  targetCategory: {
-    label: string;
-    value: string;
+  contents: {
+    content: string;
+    curriculums: string[];
+    rules: string[];
   };
-  recruitmentPeople: number;
-  recruitmentPeriod: string[];
-  location: {
-    label: string;
-    value: string;
-  };
-  place: string | null;
+  writer: string;
   heartCount: number;
   createAt: string;
+  comments: CommentId[];
+};
+
+export type StudyDataListItem = Omit<StudySchema, "writer"> & {
+  writer: WriterSchema;
+};
+
+export type StudyDataFull = Omit<StudySchema, "writer" | "comments"> & {
+  writer: ProfileSchema;
+  comments: CommentSchema[];
 };

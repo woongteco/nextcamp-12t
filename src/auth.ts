@@ -6,6 +6,7 @@ import { compare } from "bcryptjs";
 import google from "next-auth/providers/google";
 import kakao from "next-auth/providers/kakao";
 import github from "next-auth/providers/github";
+import { ONE_HOUR_IN_SECS } from "./constants/times_unit";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -16,18 +17,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("크레덴셜", credentials);
         const { email, password } = credentials;
-
-        if (!email || !password) {
-          throw new CredentialsSignin("정보를 다시 확인해주세요.");
-        }
 
         await connectDB();
 
-        const user = await User.findOne({ email }).select(
-          "+id +name +image +phone +role"
-        );
+        const user = await User.findOne({ email });
 
         if (!user) {
           throw new CredentialsSignin("가입되지 않는 회원입니다.");
@@ -46,6 +40,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           image: user.profile_img,
           phone: user.phone,
           role: user.role,
+          position_tag: user.position_tag,
+          introduce: user.introduce,
+          my_category: user.my_category,
         };
       },
     }),
@@ -68,33 +65,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60,
+    maxAge: 24 * ONE_HOUR_IN_SECS,
   },
 
   callbacks: {
     async signIn({ user, account }: { user: any; account: any }) {
-      console.log("확인", user, account);
-
       if (account?.provider !== "credentials") {
-        const { name } = user;
+        const { name, position_tag, introduce, my_category } = user;
         const { providerAccountId, provider } = account;
+
+        if (!providerAccountId) {
+          throw new CredentialsSignin(
+            "로그인에 실패했습니다. 다시 시도해주세요."
+          );
+        }
 
         await connectDB();
 
-        const socialUserCheck = await User.findOne({
-          providerAccountId,
-          provider,
-        });
+        let socialUserCheck = await User.findOne({ providerAccountId });
 
         if (!socialUserCheck) {
           const user = await new User({
             name,
+            position_tag,
+            introduce,
+            my_category,
             providerAccountId,
             provider,
           });
-          const dbSave = await user.save();
-          console.log("소셜회원정보 저장 완료" + dbSave);
+          socialUserCheck = await user.save();
+          console.log("소셜회원정보 저장 완료");
         }
+
+        user.id = socialUserCheck._id;
       }
 
       return true;
@@ -109,10 +112,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       user: any;
       account: any;
     }) {
-      console.log("JWT", token, "USER", user, "ACCOUNT", account);
-
       if (user) {
-        token.user = user;
+        token.id = user.id;
         token.account = account;
       }
 
@@ -120,7 +121,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ session, token }: { session: any; token: any }) {
-      session.user = token.user;
+      session.user.id = token.id;
       session.account = token.account;
 
       return session;

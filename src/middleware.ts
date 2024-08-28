@@ -1,23 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
-// import { getSession } from "./auth";
 
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-};
 export async function middleware(request: NextRequest) {
-  return NextResponse.next();
+  const cookieSession = request.cookies.get("authjs.session-token");
+  const url = request.nextUrl;
+  const currentUrl = url.pathname;
+  const loginUrl = new URL("/login", request.url);
+  const homeUrl = new URL("/", request.url);
+  const noSessionRoute = ["/login", "/register", "/pw-reset"];
+  const noSessionFindRoute = /^\/find(\/.*)?$/;
+
+  if (!cookieSession) {
+    if (
+      !noSessionRoute.includes(currentUrl) &&
+      !noSessionFindRoute.test(currentUrl)
+    ) {
+      return NextResponse.redirect(loginUrl);
+    }
+  } else {
+    if (
+      noSessionRoute.includes(currentUrl) ||
+      noSessionFindRoute.test(currentUrl)
+    ) {
+      return NextResponse.redirect(homeUrl);
+    }
+  }
 }
 
-/* export const config = {
-  matcher: ["/my/:path*", "/post/write"],
+export const config = {
+  matcher: [
+    "/my/:path*",
+    "/post/write",
+    "/study/create",
+    "/login",
+    "/find/:path*",
+    "/register",
+    "/pw-reset",
+    "/set-category",
+  ],
 };
-
-export async function middleware(request: NextRequest) {
-  const session = await getSession();
-
-  // 세션정보 확인하고 있는경우 통과 없는경우에는 로그인 모달창 떠야하는데 경로가 아닌점 고민
-  // 클라이언트 구분 하기
-  if (session) {
-    return NextResponse.next();
-  }
-} */

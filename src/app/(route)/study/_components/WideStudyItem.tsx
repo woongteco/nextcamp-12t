@@ -1,23 +1,23 @@
-import Image from "next/image";
-import { BadgeIcon } from "@public/icons";
 import Link from "next/link";
 import Keyword from "@/common/Atoms/Text/Keyword";
 import dayjs from "dayjs";
-import { TStudyCard } from "@/types/model/StudyCard";
+import { StudyDataFull } from "@/types/model/StudyCard";
+import Thumbnail from "@/common/Atoms/Image/Thumbnail";
+import Profile from "@/common/Molecules/Profile";
+import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
 
-export default function WideStudyItem({ card }: { card: TStudyCard }) {
+export default function WideStudyItem({ card }: { card: StudyDataFull }) {
   const nowDay = dayjs(new Date()).format("YYYY.MM.DD");
-  const recruitmentDay = dayjs(card.recruitmentPeriod[1]);
+  const recruitmentDay = dayjs(card.studyInfo.recruitmentPeriod[1]);
   const resultDay = dayjs(nowDay).diff(recruitmentDay, "days");
 
   return (
     <Link href={`/study/${card.studyId}`} className="h-[11.25rem] relative">
-      <Image
-        src={card.thumbnailUrl}
+      <Thumbnail
+        src={card.studyInfo.thumbnailUrl || ""}
         className="absolute rounded-[1.25rem] h-full"
-        width={588}
-        height={180}
-        alt="스터디 썸네일 이미지"
+        useIn="wide"
+        alt={`${card.studyInfo.title} 스터디 썸네일 이미지`}
       />
 
       <div className="w-full h-full absolute bg-gradient-to-r from-black/30 to-black bg-no-repeat rounded-[1.25rem]">
@@ -30,33 +30,33 @@ export default function WideStudyItem({ card }: { card: TStudyCard }) {
         </Keyword>
         <div className="absolute bottom-5 flex items-end justify-between px-5 w-full">
           <div className="flex items-center gap-[.25rem]">
-            <Image
-              src={card.thumbnailUrl}
-              width={40}
-              height={40}
-              className="w-10 h-10 rounded-full"
-              alt="프로필 이미지"
+            <Profile
+              size="small"
+              user={
+                card.writer
+                  ? {
+                      profile_img: card.writer.profile_img,
+                      name: card.writer.name,
+                      role: card.writer.role,
+                      position_tag: card.writer.position_tag,
+                    }
+                  : NULL_USER_FOR_PROFILE
+              }
             />
-            <span className="font-semibold text-subtitle text-white">
-              {card.user.name}
-            </span>
-            {card.user.role === "pro" ? (
-              <Image src={BadgeIcon} alt="pro badge" />
-            ) : null}
           </div>
           <div className="flex flex-col w-1/2">
             <span className="text-label-400 font-light text-white">
-              {card.jobCategory.value}
+              {card.studyInfo.jobCategory.label}
             </span>
             <p className="text-lg font-semibold text-white line-clamp-2">
-              {card.title}
+              {card.studyInfo.title}
             </p>
             <div className="mt-2 flex gap-1">
               <Keyword
                 text="text-line-neutral"
                 className="border border-line-neutral"
               >
-                모집 {card.recruitmentPeople}명
+                모집 {card.studyInfo.recruitmentPeople}명
               </Keyword>
               <Keyword
                 text="text-line-neutral"

@@ -4,11 +4,7 @@ import { DetailFullHeartIcon, DetailHeartIcon } from "@public/icons";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function SaveHeartButton({
-  heartCount,
-}: {
-  heartCount: number;
-}) {
+export default function SaveHeartButton({ heart }: { heart: number }) {
   const [saveHeart, setSaveHeart] = useState<boolean>(false);
 
   return (
@@ -23,7 +19,7 @@ export default function SaveHeartButton({
         />
       </button>
       <span className="text-label-neutral font-semibold">
-        {saveHeart ? heartCount++ : heartCount - 1}
+        {saveHeart ? heart++ : heart - 1}
       </span>
     </>
   );

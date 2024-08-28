@@ -1,49 +1,11 @@
 import Link from "next/link";
 import Keyword from "../Atoms/Text/Keyword";
 import Profile from "../Molecules/Profile";
-import { TPost } from "@/types/model/PostItem";
+import { PostDataListItem } from "@/types/model/PostItem";
+import { getCreatedBefore } from "@/utils/getCreatedBefore";
+import { NULL_USER_FOR_PROFILE } from "@/constants/null_user";
 
-function getCreatedBefore(createdAt: string): string {
-  const createdTime = Date.parse(createdAt);
-  const thisTime = Date.now();
-  // second: n/1000, minute: n/1000/60, hour: n/1000/60/60, day: n/1000/60/60/24 ...
-  const diff = (thisTime - createdTime) / 1000;
-  const times: Array<{
-    unit:
-      | "year"
-      | "quarter"
-      | "month"
-      | "week"
-      | "day"
-      | "hour"
-      | "minute"
-      | "second";
-    milliSeconds: number;
-  }> = [
-    { unit: "year", milliSeconds: 60 * 60 * 24 * 365 },
-    { unit: "month", milliSeconds: 60 * 60 * 24 * 30 },
-    { unit: "week", milliSeconds: 60 * 60 * 24 * 7 },
-    { unit: "day", milliSeconds: 60 * 60 * 24 },
-    { unit: "hour", milliSeconds: 60 * 60 },
-    { unit: "minute", milliSeconds: 60 },
-  ];
-  const rtf = new Intl.RelativeTimeFormat("ko", { style: "short" });
-
-  // 년 단위부터 알맞는 단위 찾기
-  for (const value of times) {
-    const betweenTime = Math.floor(diff / value.milliSeconds);
-
-    // 큰 단위는 0보다 작은 소수 단위 나옴
-    if (betweenTime > 0) {
-      return rtf.format(betweenTime * -1, value.unit);
-    }
-  }
-
-  // 모든 단위가 맞지 않을 시
-  return "방금 전";
-}
-
-export default function PostListItem({ item }: { item: TPost }) {
+export default function PostListItem({ item }: { item: PostDataListItem }) {
   const createdBefore = getCreatedBefore(item.createdAt);
   return (
     <>
@@ -58,10 +20,22 @@ export default function PostListItem({ item }: { item: TPost }) {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <Profile size="small" user={item.writer} />
+            <Profile
+              size="small"
+              user={
+                item.writer
+                  ? {
+                      profile_img: item.writer.profile_img,
+                      name: item.writer.name,
+                      role: item.writer.role,
+                      position_tag: item.writer.position_tag,
+                    }
+                  : NULL_USER_FOR_PROFILE
+              }
+            />
             <span className="text-label-400 text-label-dimmed">
-              {createdBefore} · 조회수 {item.view}회 · 좋아요 {item.like}개 ·
-              댓글 {item.comments.length}개
+              {createdBefore}&nbsp;·&nbsp;조회수&nbsp;{item.view}
+              회&nbsp;·&nbsp;좋아요&nbsp;{item.like}개&nbsp;
             </span>
           </div>
           {(item.category.value === "study" ||

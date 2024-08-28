@@ -1,5 +1,5 @@
 "use client";
-import { TPost } from "@/types/model/PostItem";
+import { PostDataListItem } from "@/types/model/PostItem";
 import PostList from "./PostList";
 import Pagination from "../Molecules/Pagination";
 import { useState } from "react";
@@ -8,7 +8,11 @@ import NonePostItem from "@/app/(route)/post/_components/NonePostItem";
 
 const POSTS_PER_PAGE = 20;
 
-export default function PostListWithPagination({ posts }: { posts: TPost[] }) {
+export default function PostListWithPagination({
+  posts,
+}: {
+  posts: PostDataListItem[];
+}) {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q");
   const [current, setCurrent] = useState(1);
@@ -20,6 +24,7 @@ export default function PostListWithPagination({ posts }: { posts: TPost[] }) {
   const startPost = (current - 1) * POSTS_PER_PAGE;
   const endPost = current * POSTS_PER_PAGE + 1;
   const currentPosts = postsData.slice(startPost, endPost);
+
   return postsData.length > 0 ? (
     <>
       <PostList posts={currentPosts} />

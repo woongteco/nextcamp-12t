@@ -1,16 +1,23 @@
-import { WriterSchema } from "./User";
+import { ProfileSchema } from "./User";
 
-type CommentBase = {
-  commentId: string;
+export type CommentBase = {
   content: string;
-  writer: WriterSchema;
+  writer: ProfileSchema;
   createdAt: string;
+  updatedAt: string;
 };
 
-export type ReplySchema = CommentBase & {
-  originId: string;
+type CommentOptional = {
+  replyId?: string;
+  commentId?: string;
+  postId?: string;
+  reply?: ReplySchema[];
 };
 
-export type CommentSchema = CommentBase & {
-  reply: ReplySchema[];
-};
+export type ReplySchema = CommentBase &
+  Required<Pick<CommentOptional, "replyId">>;
+
+export type CommentSchema = CommentBase &
+  Required<Pick<CommentOptional, "postId" | "commentId" | "reply">>;
+
+export type CommentOrReply = CommentBase & CommentOptional;

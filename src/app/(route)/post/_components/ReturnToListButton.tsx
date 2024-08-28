@@ -27,7 +27,7 @@ export default function ReturnToListButton() {
           strokeLinejoin="round"
         />
       </svg>
-      <span>목록으로 돌아가기</span>
+      <span>뒤로 돌아가기</span>
     </button>
   );
 }
