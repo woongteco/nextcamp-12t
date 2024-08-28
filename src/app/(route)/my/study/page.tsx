@@ -49,8 +49,6 @@ function Empty({ text }: { text: string }) {
     <div
       className=
         "flex flex-col items-center justify-center gap-4 w-full h-[19rem] border rounded-3xl text-label-dimmed text-center"
-    >
-      {text}
-    </div>
+    >{text}</div>
   )
 }
