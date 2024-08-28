@@ -22,6 +22,8 @@ import { useRouter } from "next/navigation";
 import { createStudy } from "@/lib/actions/studyAction";
 import { StudySchema } from "@/types/model/StudyCard";
 import { cfetch } from "@/utils/customFetch";
+import { resizeFile } from "@/utils/resizeFile";
+import { supabaseUploadImage } from "@/lib/actions/profileAction";
 
 type CategoryOption = {
   readonly label: string;
@@ -52,6 +54,8 @@ export default function StudyForm({
       );
   };
 
+  const [imageUrl, setImageUrl] = useState<string>("");
+
   // 스터디 카테고리
   const [jobCategory, setJobCategory] = useState<CategoryOption | null>(null);
   const handleJobCategoryChange = (newValue: CategoryOption | null) => {
@@ -76,8 +80,6 @@ export default function StudyForm({
     value: m.value,
     label: m.label,
   }));
-
-  console.log("category", jobCategory, targetCategory);
 
   // 모집기간
   const [recruitmentPeriod, setRecruitmentPeriod] = useState<
@@ -207,6 +209,10 @@ export default function StudyForm({
 
     const formData = new FormData(e.currentTarget);
 
+    if (imageUrl) {
+      formData.append("thumbnailUrl", imageUrl);
+    }
+
     if (jobCategory) {
       formData.append("jobCategory", JSON.stringify(jobCategory));
     }
@@ -266,26 +272,23 @@ export default function StudyForm({
             method: "POST",
             body: formData,
           })
-            .then((res) => {
-              if (res.status === 200) {
-                res.json();
-                handleAlert("success", "스터디가 개설 되었습니다.");
-
-                router.replace("/study");
-                router.refresh();
-              } else {
-                console.log("error", res);
-
-                handleAlert(
-                  "error",
-                  "스터디 개설에 실패했습니다. 다시 시도 후, 관리자에게 문의하세요."
-                );
-              }
+            .then((res) => res.json())
+            .then(({ data }) => {
+              return data;
             })
             .catch((err) => {
               console.log("err", err);
               return err;
             });
+      console.log("resulte", result);
+
+      if (result?.state) {
+        handleAlert("success", result.message);
+        router.replace("/study");
+        router.refresh();
+      } else {
+        handleAlert("error", result.message);
+      }
     } catch (error) {
       if (error instanceof Error) {
         handleAlert("error", error.message);
@@ -307,7 +310,7 @@ export default function StudyForm({
           required
         />
       </GridField>
-      <ThumbnailInput />
+      <ThumbnailInput imageUrl={imageUrl} setImageUrl={setImageUrl} />
       <GridField>
         <LabelText form required>
           스터디 카테고리
@@ -423,6 +426,7 @@ export default function StudyForm({
                   id="place-whether"
                   onChange={PlaceCheckedHandler}
                   checked={placeChecked}
+                  defaultChecked={placeChecked}
                   label="장소 미정"
                 />
               </ButtonCheck>
