@@ -17,3 +17,4 @@ export async function getUserData(userId: string) {
     return { state: false, message: "잘못된 시도입니다. userId: " + userId };
   }
 }
+

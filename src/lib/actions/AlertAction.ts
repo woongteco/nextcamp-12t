@@ -35,7 +35,6 @@ export async function getAlert(userId: string) {
   } catch (error) {
     return { state: false, message: "알림 조회에 실패했습니다." };
   }
-}
 
 export async function updateAlert(userId: string, formData: FormData) {
   const postComment = formData.get("postComment");
