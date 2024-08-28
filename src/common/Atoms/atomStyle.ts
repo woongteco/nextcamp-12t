@@ -68,7 +68,7 @@ export const ButtonVariants = cva(
   flex flex-row items-center justify-center gap-2 px-5 py-3 
   font-bold text-nowrap text-ellipsis overflow-hidden rounded-ten 
   transition-colors
-  disabled:border-label-assist disabled:text-label-assist disabled:cursor-not-allowed disabled:opacity-35
+  disabled:border-label-assist disabled:cursor-not-allowed disabled:opacity-65
   `,
   {
     variants: {
