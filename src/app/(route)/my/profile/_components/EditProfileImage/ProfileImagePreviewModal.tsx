@@ -1,8 +1,7 @@
-"use client";
 import Button from "@/common/Atoms/Form/Button";
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import ImageInputWithButton from "@/common/Molecules/Form/ImageInputWithButton";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler } from "react";
 
 type PropsToPreviewModal = {
   imageUrl: string;
@@ -11,12 +10,6 @@ type PropsToPreviewModal = {
 };
 export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
   const { imageUrl, getImage, onSave } = props;
-  const [disabled, setDisabled] = useState(false);
-  async function clickHandler() {
-    setDisabled(true);
-    await onSave();
-    setDisabled(false);
-  }
   return (
     <div className="flex flex-col items-center gap-4">
       <SectionTitle size="md">프로필 미리보기</SectionTitle>
@@ -39,7 +32,7 @@ export default function ProfileImagePreviewModal(props: PropsToPreviewModal) {
         >
           다시 선택
         </ImageInputWithButton>
-        <Button variation="solid" onClick={clickHandler} disabled={disabled}>
+        <Button variation="solid" onClick={onSave}>
           저장
         </Button>
       </div>
