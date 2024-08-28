@@ -12,10 +12,11 @@ export default function DeleteAccountConfirm({ email }: { email: string }) {
   const [checked, setChecked] = useState<boolean>(false);
   const { Modal, open } = useModal({
     children: (
-      <div className="flex flex-col gap-6">
-        <p className="text-H3 text-label-normal">
-          정말로 데이터를 삭제할까요? 계정을 삭제하면 작성한 게시물들의 작성자가
-          익명 처리되며 자동으로 삭제되지 않습니다.
+      <div className="flex flex-col gap-6 max-w-96">
+        <p className="text-H3 text-label-normal">정말로 데이터를 삭제할까요?</p>
+        <p className="text-body-400 text-label-neutral break-words">
+          계정을 삭제하면 작성한 게시물들의 작성자가 익명 처리되며 자동으로
+          삭제되지 않습니다.
         </p>
         <div className="flex items-center justify-center gap-4">
           <Button variation="solid" color="danger" onClick={unregister}>
