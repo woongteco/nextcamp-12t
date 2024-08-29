@@ -22,7 +22,7 @@ export default function LikeIconButton(props: LikeIconButtonProps) {
   const checkLiked = async () => {
     const result = await fetchLiked(postId);
     setLike(result?.data ?? false);
-    console.log("init", init);
+    // console.log("init", init);
   };
   useEffect(() => {
     checkLiked();
