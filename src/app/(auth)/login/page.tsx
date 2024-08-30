@@ -6,7 +6,7 @@ import AuthWrap from "../_components/AuthWrap";
 
 export default function Login() {
   return (
-    <AuthWrap>
+    <>
       <Image src={Logo} alt="logo" />
       <LoginForm />
       <div className="flex items-center gap-3 text-sm">
@@ -18,6 +18,6 @@ export default function Login() {
         <Image src={SocialLogin} alt="간편 로그인 이미지" />
         <SocialLoginForm />
       </>
-    </AuthWrap>
+    </>
   );
 }
