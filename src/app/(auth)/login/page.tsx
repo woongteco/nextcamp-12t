@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { SocialLogin, Logo } from "@public/icons";
 import { LoginForm, SocialLoginForm } from "../_components/LoginForm";
-import AuthWrap from "../_components/AuthWrap";
 
 export default function Login() {
   return (
