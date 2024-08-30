@@ -1,7 +1,6 @@
 "use client";
 
 import findEmailStore from "@/store/findEmailStore";
-import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
 import Link from "next/link";
