@@ -1,3 +1,5 @@
+"use client";
+
 import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import { AdditionIcon } from "@/common/Atoms/Image/Icon";
@@ -15,7 +17,6 @@ export default function ThumbnailInput({
   imageUrl: string;
   setImageUrl: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  // const [preview, setPreview] = useState<string>("");
   const fileInput = useRef<HTMLInputElement>(null);
 
   async function getImage(e: ChangeEvent<HTMLInputElement>) {
@@ -40,22 +41,6 @@ export default function ThumbnailInput({
       }
     }
   }
-  // const onUloadImage = (e: any) => {
-  //   const files = e.target.files;
-
-  //   if (files && files.length > 0) {
-  //     const file = files[0];
-  //     const fileReader = new FileReader();
-
-  //     fileReader.onloadend = () => {
-  //       const encoding = fileReader.result as string;
-  //       setPreview(encoding);
-  //       return encoding;
-  //     };
-
-  //     fileReader.readAsDataURL(file);
-  //   }
-  // };
 
   const onClickImageButton = () => {
     fileInput.current?.click();

@@ -17,14 +17,14 @@ export default function LeaderProfile({ writer }: { writer: ProfileSchema }) {
           />
           <div className="flex flex-col">
             <div className="flex gap-2">
-              <span className="text-2xl font-semibold">{writer.name}</span>
+              <span className="text-2xl font-semibold">
+                {writer.position_tag} {writer.name}
+              </span>
               {writer.role === "pro" ? (
                 <Image src={BadgeIcon} alt="프로 뱃지" />
               ) : null}
             </div>
-            <span className="text-sm text-label-dimmed">
-              {writer.position_tag} / {writer.email}
-            </span>
+            <span className="text-sm text-label-dimmed"> {writer.email}</span>
           </div>
         </div>
         <button className="flex items-center gap-1 px-4 py-1 bg-main-25 rounded-full">
@@ -33,7 +33,7 @@ export default function LeaderProfile({ writer }: { writer: ProfileSchema }) {
         </button>
       </div>
       <p className="pt-4 text-sm text-label-dimmed">{writer.introduce}</p>
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-2 flex-wrap mt-4">
         {writer.my_category.map((tag) => (
           <span
             key={tag.value}
