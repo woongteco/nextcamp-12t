@@ -1,13 +1,16 @@
+"use client";
+
 import SectionTitle from "@/common/Atoms/Text/SectionTitle";
 import StudyForm from "./_components/StudyForm";
-import { getSession } from "@/auth";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-export default async function page() {
-  const session = await getSession();
+export default function page() {
+  const router = useRouter();
+  const { data: session } = useSession();
 
   if (!session) {
-    return redirect("/login");
+    router.replace("/login");
   }
   return (
     <>
