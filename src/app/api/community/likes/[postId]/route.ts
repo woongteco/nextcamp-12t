@@ -4,7 +4,8 @@ import { Post, PostLike } from "@/lib/schema";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 
-export async function GET(
+// @deprecated
+/* export async function GET(
   _: NextRequest,
   { params }: { params: { postId: string } }
 ) {
@@ -37,7 +38,7 @@ export async function GET(
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }
-}
+} */
 
 export async function PATCH(
   _: NextRequest,
