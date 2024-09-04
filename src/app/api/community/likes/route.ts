@@ -26,6 +26,6 @@ export async function GET(request: NextRequest) {
 
       return Response.json({ result }, { status: 200 });
     } catch (error) {
-      return Response.json({ error }, { status: 500 });
+      return Response.json({ error: { state: false, message: "좋아요 데이터를 가져오는데 실패했습니다." } }, { status: 500 });
     }
   }
