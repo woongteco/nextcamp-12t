@@ -41,7 +41,7 @@ export default async function CommunityPostList({
       return { data: [] };
     });
 
-  let postListData: PostDataFull[] = result.data;
+  let postListData: PostDataFull[] = category === "all" ? result.data : result.data.filter((item: PostDataFull) => item.category.value === category);
   const clientPostList = JSON.parse(JSON.stringify(postListData));
 
   const sortedPosts = clientPostList.sort(

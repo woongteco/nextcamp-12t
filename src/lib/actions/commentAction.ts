@@ -43,9 +43,7 @@ export async function createComment(
       { $push: { comments: newComment._id } }
     );
 
-    revalidateTag("community");
     revalidateTag("comments");
-    revalidateTag(postId);
 
     if (newComment) {
       const { postId, commentId } = newComment;
