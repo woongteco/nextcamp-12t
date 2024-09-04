@@ -2,8 +2,9 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Comment, Post } from "../schema";
+import { Alert, Comment, Post } from "../schema";
 import { revalidateTag } from "next/cache";
+import { comment } from "postcss";
 
 // post
 export async function createComment(
@@ -35,6 +36,8 @@ export async function createComment(
 
     const newComment = await Comment.findOne({ commentId });
 
+    console.log("서버액션 댓글" + newComment);
+
     await Post.findOneAndUpdate(
       { postId },
       { $push: { comments: newComment._id } }
@@ -43,6 +46,23 @@ export async function createComment(
     revalidateTag("community");
     revalidateTag("comments");
     revalidateTag(postId);
+
+    if (newComment) {
+      const { postId, commentId } = newComment;
+
+      await Alert.findOneAndUpdate(
+        { "alertList.typeId": postId },
+        {
+          $push: {
+            "alertList.$.comments": {
+              comment: commentId,
+              read: false,
+            },
+          },
+        }
+      );
+    }
+
     return { state: true, message: "댓글이 등록 되었습니다." };
   } catch (error) {
     console.log("post comment error" + error);
@@ -113,6 +133,11 @@ export async function deleteComment(commentId: string) {
     await Post.findOneAndUpdate(
       { postId: exist.postId },
       { $pull: { comments: exist._id } }
+    );
+
+    await Alert.findOneAndUpdate(
+      { "alertList.comments.comment": commentId },
+      { $pull: { "alertList.$[].comments": { comment: commentId } } }
     );
 
     revalidateTag("comments");
