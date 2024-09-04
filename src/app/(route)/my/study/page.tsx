@@ -38,7 +38,7 @@ export default async function MyStudyPage() {
         {/* <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-gutter-sm xl:gap-gutter-xl">
           <StudyCardItem card={[]} />
         </ul> */}
-          <Empty text="내가 만든 스터디가 없어요. 원하는 스터디를 만들어 보세요!" />
+          <Empty text="내가 만든 스터디가 없어요. 원하는 스터디를 찾을 수 없다면 직접 만들어 보세요!" />
       </section>
     </div>
   );

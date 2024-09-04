@@ -13,11 +13,11 @@ export default async function TabButtonsOfGoalSection() {
     })
     .catch((err) => err);
 
-  if (!response?.data) {
-    throw new Error("스터디 정보 가져오기 실패");
-  }
+  // if (!response?.data) {
+  //   throw new Error("스터디 정보 가져오기 실패");
+  // }
 
-  const data: StudyDataFull[] = response.data;
+  const data: StudyDataFull[] = response?.data ?? [];
 
   return (
     <>

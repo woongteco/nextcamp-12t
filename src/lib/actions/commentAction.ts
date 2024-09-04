@@ -40,9 +40,7 @@ export async function createComment(
       { $push: { comments: newComment._id } }
     );
 
-    revalidateTag("community");
     revalidateTag("comments");
-    revalidateTag(postId);
     return { state: true, message: "댓글이 등록 되었습니다." };
   } catch (error) {
     console.log("post comment error" + error);

@@ -12,11 +12,11 @@ export default async function RecommendLatestStudies() {
     })
     .catch((err) => err);
 
-  if (!response?.data) {
-    throw new Error("최신 스터디 정보 가져오기 실패");
-  }
+  // if (!response?.data) {
+  //   throw new Error("최신 스터디 정보 가져오기 실패");
+  // }
 
-  const latest: StudyDataFull[] = response.data;
+  const latest: StudyDataFull[] = response?.data ?? [];
 
   return <StudyCardList studyCards={latest} count={8} />;
 }
