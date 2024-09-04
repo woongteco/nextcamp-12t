@@ -13,11 +13,11 @@ export default async function RecommendProStudies() {
     })
     .catch((err) => err);
 
-  if (!response?.data) {
-    throw new Error("추천 스터디 정보 가져오기 실패");
-  }
+  // if (!response?.data) {
+  //   throw new Error("추천 스터디 정보 가져오기 실패");
+  // }
 
-  const recommend: StudyDataFull[] = response.data;
+  const recommend: StudyDataFull[] = response?.data ?? [];
 
   return <StudyCardList studyCards={recommend} count={8} />;
 }

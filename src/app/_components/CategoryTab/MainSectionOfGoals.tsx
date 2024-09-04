@@ -3,7 +3,6 @@ import { MouseEvent, useEffect, useState } from "react";
 import { GOALS } from "@/constants/categories/study_goal";
 import { categoryIconsName, CategoryTabIcon } from "./TabIcons";
 import { StudyDataFull } from "@/types/model/StudyCard";
-import Skeleton from "@/common/Atoms/Skeleton";
 import StudyCardList from "@/common/Templates/CardList";
 import { TabButton } from "./TabButton";
 
@@ -69,23 +68,17 @@ export default function MainSectionOfGoals({
       {studies.length > 0 ? (
         <StudyCardList studyCards={studies} count={8} />
       ) : (
-        <Skeletons />
+        <Empty text="해당 목표를 가진 스터디가 없어요. 다른 목표를 선택해보세요." />
       )}
     </>
   );
 }
 
-function StudyCardSkeleton() {
-  return <Skeleton className="rounded-twenty hover:shadow-normal h-[338px]" />;
-}
-
-function Skeletons() {
+function Empty({ text }: { text: string }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-      <StudyCardSkeleton />
-      <StudyCardSkeleton />
-      <StudyCardSkeleton />
-      <StudyCardSkeleton />
-    </div>
-  );
+    <div
+      className=
+        "flex flex-col items-center justify-center gap-4 w-full h-[19rem] border rounded-3xl text-label-dimmed text-center"
+    >{text}</div>
+  )
 }

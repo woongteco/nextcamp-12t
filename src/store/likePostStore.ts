@@ -4,22 +4,26 @@ import { create } from "zustand";
 
 type ResponseState = {
   state: boolean;
-  data?: boolean;
+  data?: string[];
   message?: string;
 };
 type TLikeState = {
-  liked: boolean;
-  setLiked: (liked: boolean) => void;
-  fetchLiked: (postId: string) => Promise<ResponseState>;
+  liked: string[];
+  setLiked: (fetched: string[]) => void;
+  addLiked: (postId: string) => void;
+  delLiked: (postId: string) => void;
+  fetchUsersLiked: () => Promise<ResponseState>;
   fetchLikeToggle: (postId: string) => Promise<ResponseState>;
 };
 
 const likePostStore = create<TLikeState>((set, get) => ({
-  liked: false,
-  setLiked: (liked: boolean) => set({ liked }),
-  fetchLiked: async (postId: string) => {
+  liked: [],
+  setLiked: (fetched: string[]) => set({ liked: fetched }),
+  addLiked: (postId: string) => set((state) => ({ liked: [...state.liked, postId] })),
+  delLiked: (postId: string) => set((state) => ({ liked: state.liked.filter(id => id !== postId) })),
+  fetchUsersLiked: async () => {
     try {
-      const response = await cfetch("/api/community/likes/" + postId, {
+      const response = await cfetch("/api/community/likes", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -30,11 +34,10 @@ const likePostStore = create<TLikeState>((set, get) => ({
         .catch((err) => {
           throw new Error(err.message);
         });
-      if (response?.state === false) {
-        return response;
+      if (response?.data !== undefined && response?.data !== null) {
+        get().setLiked(response.data);
       }
 
-      get().setLiked(response.data);
       return response;
     } catch (error) {
       console.error(error);
@@ -58,8 +61,8 @@ const likePostStore = create<TLikeState>((set, get) => ({
         return response;
       }
 
-      const state = get();
-      state.setLiked(!state.liked);
+      // const state = get();
+      // state.setLiked(!state.liked);
       return response;
     } catch (error: any) {
       console.error(error);
