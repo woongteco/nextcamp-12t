@@ -17,19 +17,29 @@ export default function LikeIconButton(props: LikeIconButtonProps) {
   const { count, postId, sessionId } = props;
   const likedCount = count < 0 ? 0 : count;
 
-  const { liked, fetchLiked, fetchLikeToggle } = likePostStore();
-  const [init, setLike] = useState<boolean>(false);
+  const { liked: likedPost, fetchUsersLiked: fetchLiked, fetchLikeToggle, addLiked, delLiked } = likePostStore();
+  const liked = likedPost.includes(postId)
+  const [init, setInit] = useState<boolean>(false)
   const checkLiked = async () => {
-    const result = await fetchLiked(postId);
-    setLike(result?.data ?? false);
-    // console.log("init", init);
+    await fetchLiked();
+    setInit(likedPost.includes(postId))
   };
   useEffect(() => {
     checkLiked();
   }, []);
+  useEffect(() => {
+    console.log("liked??", liked)
+  }, [liked])
 
   async function toggleLike() {
-    const result = await fetchLikeToggle(postId);
+    if (liked) {
+      delLiked(postId)
+    } else {
+      addLiked(postId)
+    }
+
+    // 추후 throttle 처리 필요?
+    const result = await fetchLikeToggle(postId)
     if (result?.state) {
       handleAlert("success", result.message);
     } else {
