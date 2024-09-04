@@ -22,6 +22,7 @@ export default function FindPassword() {
 
     if (!userEmail) {
       handleAlert("error", "비밀번호를 변경할 유저의 이메일이 없습니다.");
+
       return;
     }
 

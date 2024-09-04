@@ -33,23 +33,23 @@ export default function DesktopMenu({
         <Image src={CreateStudyIcon} alt="create study" />
         <span className="text-label-400">스터디 만들기</span>
       </Link>
-      <div className="flex gap-4 items-center">
-        <div className="relative [&:hover>ul]:block cursor-pointer">
+      <div className="flex gap-2 items-center">
+        <div className="relative [&:hover>ul]:block cursor-pointer px-2 ">
           {profileImage}
-          <ul className="fixed top-[4.0625rem] right-2 xl:right-[calc(50vw-620px)] w-40 p-1 pt-2 bg-white shadow-emphasize rounded-b-xl hidden [&_li]:py-[6px] [&_li]:px-3 cursor-default">
+          <ul className="fixed top-[4.0625rem] right-4 xl:right-[calc(50vw-605px)] w-40 p-1 pt-2 bg-white shadow-emphasize rounded-b-xl hidden [&_li]:py-[6px] [&_li]:px-3 cursor-default">
             <DefaultProfileMenuItems />
           </ul>
         </div>
         <div className="w-[1px] h-6 bg-gray-400" />
-        <div className="relative [&:hover>div]:block cursor-pointer h-16 flex items-center">
-          <Image src={AlarmIcon} alt="alarm" />
-          {commentArr.length !== 0 && (
-            <div className="absolute px-[6px] py-1 top-2 left-3 text-xs bg-red-500 text-white rounded-lg">
-              {commentArr.length}
-            </div>
-          )}
-          <div className="fixed top-[4.0625rem] right-2 xl:right-[calc(50vw-620px)] w-80 p-3 bg-white shadow-emphasize rounded-b-xl hidden cursor-default">
-            <div className="flex items-center gap-2 mb-2 font-semibold text-lg">
+        <div className="[&:hover>div]:block cursor-pointer h-16 flex items-center px-2 ">
+          <div className="relative">
+            <Image src={AlarmIcon} alt="alarm" />
+            {commentArr.length !== 0 && (
+              <div className="absolute w-[10px] h-[10px] -top-[3px] right-[1px] bg-red-500 rounded-full" />
+            )}
+          </div>
+          <div className="fixed top-[4.0625rem] right-4 xl:right-[calc(50vw-690px)] w-80 p-3 bg-white shadow-emphasize rounded-b-xl hidden cursor-default">
+            <div className="flex items-center gap-1 font-semibold text-lg">
               <Image src={AlarmIcon} className="w-5 h-5 mt-[2px]" alt="alarm" />
               <span>알림</span>
             </div>
@@ -59,13 +59,15 @@ export default function DesktopMenu({
                   list.comments.length && (
                     <div key={index}>
                       <AlertList list={list} />
-                      <button
-                        type="button"
-                        className="w-full text-right text-sm text-gray-600"
-                        onClick={() => setCommnetArr([])}
-                      >
-                        모든 알림 읽음
-                      </button>
+                      <div className="w-full text-right text-sm text-gray-600">
+                        <button
+                          type="button"
+                          onClick={() => setCommnetArr([])}
+                          className="p-2 border rounded-lg hover:bg-gray-100"
+                        >
+                          모든 알림 읽음
+                        </button>
+                      </div>
                     </div>
                   )
               )

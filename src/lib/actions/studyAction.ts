@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import connectDB from "../db";
 import { Study } from "../schema";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { supabase } from "../supabase";
 
 // post
 export async function createStudy(userId: string, formData: FormData) {
@@ -48,7 +49,8 @@ export async function createStudy(userId: string, formData: FormData) {
     !recruitmentPeople ||
     !recruitmentPeriod ||
     !studyPeriod ||
-    !location
+    !location ||
+    !content
   ) {
     return {
       state: false,
@@ -90,8 +92,36 @@ export async function createStudy(userId: string, formData: FormData) {
   }
 }
 
+// ThumbnailImage
+export async function supabaseThumbnailImage(formData: FormData) {
+  const file = formData.get("file") as string;
+  const fileName = nanoid();
+
+  try {
+    const { error } = await supabase.storage
+      .from("image")
+      .upload(`study/${fileName}`, file);
+
+    if (error) {
+      return {
+        state: false,
+        message: "썸네일 이미지 파일이 업로드 되지 않았습니다.",
+      };
+    }
+
+    const { data } = supabase.storage
+      .from("image")
+      .getPublicUrl(`study/${fileName}`);
+    return { state: true, result: data.publicUrl };
+  } catch (err) {
+    return { state: false, message: "썸네일 이미지 업로드에 실패했습니다." };
+  }
+}
+
 // get
 export async function getStudy(studyId: string | null = null) {
+  await connectDB();
+
   try {
     if (studyId) {
       const study = await Study.findOne({ studyId }).populate(
