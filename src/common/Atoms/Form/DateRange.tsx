@@ -43,9 +43,9 @@ export default function DateRangePicker({
         selected={endDate}
         onChange={(date) => handleEndDateChange(date!)}
         selectsEnd
+        minDate={startDate}
         startDate={startDate}
         endDate={endDate}
-        minDate={startDate}
         className="w-[144px] border-white text-center cursor-pointer"
         ariaDescribedBy="react-datepicker"
       />
