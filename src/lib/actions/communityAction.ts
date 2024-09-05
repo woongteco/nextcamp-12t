@@ -164,6 +164,10 @@ export async function deleteCommunity(postId: string) {
   try {
     await Post.deleteOne({ postId });
     await Comment.deleteMany({ postId });
+    await Alert.updateOne(
+      { "alertList.typeId": postId },
+      { $pull: { alertList: { typeId: postId } } }
+    );
 
     revalidateTag("community");
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };
