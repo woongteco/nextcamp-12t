@@ -94,7 +94,7 @@ export default function DesktopMenu({
               commentReadList.length && "pb-10"
             } bg-white shadow-emphasize rounded-b-xl hidden cursor-default`}
           >
-            <div className="flex items-center font-semibold text-lg">
+            <div className="flex items-center gap-1 font-semibold text-lg">
               <Image src={AlarmIcon} className="w-5 h-5 mt-[2px]" alt="alarm" />
               <span>알림</span>
             </div>
