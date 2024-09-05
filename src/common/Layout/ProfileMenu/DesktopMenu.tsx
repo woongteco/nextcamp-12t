@@ -4,41 +4,63 @@ import { AlarmIcon, CreateStudyIcon } from "@public/icons";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultProfileMenuItems from "./DefaultProfileMenuItems";
-import { ReactNode } from "react";
-import { TAlert, TAlertItem } from "./ResponsiveMenu";
+import { ReactNode, useMemo } from "react";
 import AlertList from "@/app/_components/AlertList";
+import { cfetch } from "@/utils/customFetch";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAlert } from "@/lib/actions/AlertAction";
+import { TAlert, TAlertItem } from "@/types/model/Alert";
 
 type DesktopMenuProps = {
   profileImage: ReactNode;
   userId: string;
-  data: TAlert[];
 };
 
 export default function DesktopMenu({
   profileImage,
   userId,
-  data,
 }: DesktopMenuProps) {
-  const alertList = data.flatMap(({ alertList }) =>
-    alertList.flatMap(({ type, typeId, title, comments }: TAlertItem) =>
-      comments.map(({ _id, comment, read }) => ({
-        type,
-        typeId,
-        title,
-        comments: [{ _id, comment, read }],
-      }))
-    )
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery({
+    queryKey: ["alert", userId],
+    queryFn: ({ queryKey }) => getAlert(queryKey[1]),
+  });
+  const dataList: TAlert[] = data?.data || [];
+
+  const alertList = useMemo(() => {
+    return dataList.flatMap(({ alertList }) =>
+      alertList.flatMap(({ type, typeId, title, comments }: TAlertItem) =>
+        comments.map(({ _id, comment, read }) => ({
+          type,
+          typeId,
+          title,
+          comments: [{ _id, comment, read }],
+        }))
+      )
+    );
+  }, [dataList]);
+
+  const allRead = dataList.every(({ allRead }) => allRead);
+
+  const commentReadList = dataList.flatMap(({ alertList }) =>
+    alertList.flatMap(({ comments }) => comments.map(({ read }) => read))
   );
 
-  const commentReadList = data.flatMap((el) =>
-    el.alertList.flatMap((item) => item.comments.map((c) => c.read))
-  );
+  const { mutate } = useMutation({
+    mutationFn: async ({ id, type }: { id: string; type: string }) => {
+      return await cfetch(`/api/alert/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ type }),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["alert", userId] });
+    },
+  });
 
-  async function handleReadAlert(id: string, type: string) {
-    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/alert/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ type }),
-    });
+  function handleReadAlert(id: string, type: string) {
+    mutate({ id, type });
   }
 
   return (
@@ -62,16 +84,21 @@ export default function DesktopMenu({
           <div className="relative">
             <Image src={AlarmIcon} alt="alarm" />
             {commentReadList.length !== 0 &&
-              commentReadList.includes(false) && (
+              commentReadList.includes(false) &&
+              !allRead && (
                 <div className="absolute w-2 h-2 -top-[2px] right-[3px] bg-red-500 rounded-full" />
               )}
           </div>
-          <div className="fixed top-[4.0625rem] right-4 xl:right-[calc(50vw-690px)] w-80 p-3 bg-white shadow-emphasize rounded-b-xl hidden cursor-default">
-            <div className="flex items-center gap-1 font-semibold text-lg">
+          <div
+            className={`fixed top-[4.0625rem] right-4 xl:right-[calc(50vw-690px)] w-80 p-3 ${
+              commentReadList.length && "pb-10"
+            } bg-white shadow-emphasize rounded-b-xl hidden cursor-default`}
+          >
+            <div className="flex items-center font-semibold text-lg">
               <Image src={AlarmIcon} className="w-5 h-5 mt-[2px]" alt="alarm" />
               <span>알림</span>
             </div>
-            <ul>
+            <ul className="max-h-80 overflow-y-auto border-y my-3">
               {commentReadList.length ? (
                 alertList.map((alert) => (
                   <li
@@ -92,18 +119,18 @@ export default function DesktopMenu({
                   <p>새로운 알림이 없습니다.</p>
                 </div>
               )}
-              {alertList.length !== 0 && (
-                <div className="text-right text-xs text-gray-600">
-                  <button
-                    type="button"
-                    className="p-2 border rounded-lg hover:bg-gray-100"
-                    onClick={() => handleReadAlert(userId, "read-all")}
-                  >
-                    모든 알림 읽음
-                  </button>
-                </div>
-              )}
             </ul>
+            {alertList.length !== 0 && (
+              <div className="absolute bottom-[10px] right-3 text-right text-xs text-gray-600">
+                <button
+                  type="button"
+                  className="p-2 border rounded-lg hover:bg-gray-100"
+                  onClick={() => handleReadAlert(userId, "read-all")}
+                >
+                  모든 알림 읽음
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
