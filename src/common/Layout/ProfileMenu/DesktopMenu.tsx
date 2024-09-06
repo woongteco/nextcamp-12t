@@ -29,19 +29,25 @@ export default function DesktopMenu({
   const dataList: TAlert[] = data?.data || [];
 
   const alertList = useMemo(() => {
-    return dataList.flatMap(({ alertList }) =>
-      alertList.flatMap(({ type, typeId, title, comments }: TAlertItem) =>
-        comments.map(({ _id, comment, read }) => ({
-          type,
-          typeId,
-          title,
-          comments: [{ _id, comment, read }],
-        }))
+    return dataList
+      .flatMap(({ alertList }) =>
+        alertList.flatMap(({ type, typeId, title, comments }: TAlertItem) =>
+          comments.map(({ _id, comment, read }) => ({
+            type,
+            typeId,
+            title,
+            comments: [{ _id, comment, read }],
+          }))
+        )
       )
-    );
+      .sort((a, b) =>
+        a.comments[0].read === b.comments[0].read
+          ? 0
+          : a.comments[0].read
+          ? 1
+          : -1
+      );
   }, [dataList]);
-
-  const allRead = dataList.every(({ allRead }) => allRead);
 
   const commentReadList = dataList.flatMap(({ alertList }) =>
     alertList.flatMap(({ comments }) => comments.map(({ read }) => read))
@@ -84,8 +90,7 @@ export default function DesktopMenu({
           <div className="relative">
             <Image src={AlarmIcon} alt="alarm" />
             {commentReadList.length !== 0 &&
-              commentReadList.includes(false) &&
-              !allRead && (
+              commentReadList.includes(false) && (
                 <div className="absolute w-2 h-2 -top-[2px] right-[3px] bg-red-500 rounded-full" />
               )}
           </div>

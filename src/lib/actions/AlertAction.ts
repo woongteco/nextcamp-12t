@@ -1,5 +1,6 @@
 "use server";
 
+import { TAlertItem } from "@/types/model/Alert";
 import connectDB from "../db";
 import { Alert } from "../schema";
 
@@ -37,6 +38,17 @@ export async function updateAlert(id: string) {
         new: true,
       }
     );
+
+    if (update) {
+      const { alertList, userId } = update;
+      const allReadCheck = alertList.every(({ comments }: TAlertItem) =>
+        comments.every(({ read }) => read)
+      );
+
+      if (allReadCheck) {
+        await Alert.updateOne({ userId }, { $set: { allRead: true } });
+      }
+    }
 
     return { state: true, update };
   } catch (error) {
