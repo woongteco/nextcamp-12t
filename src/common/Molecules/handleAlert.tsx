@@ -25,11 +25,12 @@ function activeToast(
 
 export default function handleAlert(
   type: "success" | "error" | "loading",
-  content?: string
+  content?: string,
+  message?: string
 ) {
   if (toastId) {
-    activeToast(type, content);
+    activeToast(type, content, message);
   } else {
-    toastId = activeToast(type, content);
+    toastId = activeToast(type, content, message);
   }
 }
