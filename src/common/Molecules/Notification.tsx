@@ -19,6 +19,17 @@ const STATUS_ICON = {
       />
     </svg>
   ),
+  loading: (
+    <svg
+      height="30px"
+      width="30px"
+      viewBox="0 -960 960 960"
+      fill="#e8eaed"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z" />
+    </svg>
+  ),
   warn: (
     <svg
       width="24"
@@ -57,7 +68,7 @@ const STATUS_ICON = {
 
 export default function Notification(props: {
   t: Toast;
-  status?: "default" | "success" | "warn" | "error";
+  status?: "default" | "success" | "warn" | "error" | "loading";
   message?: { title?: string; text?: string };
 }) {
   const { t, status = "default", message = {} } = props;
@@ -77,7 +88,10 @@ export default function Notification(props: {
       <div className="flex-1 w-0 p-4">
         <div
           className={`flex items-start ${
-            (status === "error" || status === "success") && "items-center"
+            (status === "error" ||
+              status === "success" ||
+              status === "loading") &&
+            "items-center"
           }`}
         >
           {status !== "default" && (
@@ -85,7 +99,9 @@ export default function Notification(props: {
               <div
                 className={clsx(
                   "flex items-center justify-center h-10 w-10 rounded-full",
-                  statusColor[status]
+                  status === "loading"
+                    ? "bg-transparent animate-spin"
+                    : statusColor[status]
                 )}
               >
                 {STATUS_ICON[status]}

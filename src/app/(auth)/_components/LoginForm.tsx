@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import Link from "next/link";
 import { Input } from "./UserInput";
 import { useRouter } from "next/navigation";
@@ -19,21 +19,24 @@ const socialLoginList = [
 export function LoginForm() {
   const router = useRouter();
   const [pwData, setPwData] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
 
-    try {
-      const result = await login(formData);
+    handleAlert("loading", "로그인 중 입니다.");
 
-      if (result.state) {
-        router.replace("/");
-        handleAlert("success", result.message);
-      } else {
-        handleAlert("error", result.message);
-      }
+    try {
+      startTransition(async () => {
+        const result = await login(formData);
+        if (result.state) {
+          router.replace("/");
+          handleAlert("success", result.message);
+        } else {
+          handleAlert("error", result.message);
+        }
+      });
     } catch (error) {
       handleAlert("error", "로그인 중 문제가 발생했습니다.");
     }
@@ -47,6 +50,7 @@ export function LoginForm() {
           type="email"
           title="이메일"
           placeholder="example@chemeet.com"
+          disabled={isPending}
         />
         <Input
           id="password"
@@ -54,19 +58,24 @@ export function LoginForm() {
           title="비밀번호"
           placeholder="********"
           value={pwData}
+          disabled={isPending}
           onChange={(e) => setPwData(e.target.value)}
         />
         <div className="w-full flex flex-col items-center gap-4">
-          <button className="w-full rounded-md py-2 text-white bg-main-600">
+          <button
+            className="w-full rounded-md py-2 text-white bg-main-600"
+            disabled={isPending}
+          >
             로그인
           </button>
-          <Link
-            href="/register"
-            scroll={false}
+          <button
+            type="button"
             className="w-full text-center rounded-md py-2 bg-main-25"
+            onClick={() => router.push("/register")}
+            disabled={isPending}
           >
             회원가입
-          </Link>
+          </button>
         </div>
       </form>
     </>

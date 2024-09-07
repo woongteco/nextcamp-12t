@@ -11,18 +11,11 @@ type TUserInput = {
   title: string;
   placeholder: string;
   value?: string;
+  disabled?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function Input({
-  id,
-  type,
-  name,
-  title,
-  placeholder,
-  value,
-  onChange,
-}: TUserInput) {
+export function Input({ id, type, name, title, ...restProps }: TUserInput) {
   const [pwToggle, setPwToggle] = useState(false);
 
   return (
@@ -37,11 +30,9 @@ export function Input({
           id={id}
           type={type === "password" && pwToggle ? "text" : type}
           name={name ? name : id}
-          placeholder={placeholder}
-          className="w-full p-3 focus:outline-none placeholder:text-xs"
           maxLength={id === "name" ? 4 : id === "phone" ? 13 : 30}
-          value={value}
-          onChange={onChange}
+          className="w-full p-3 focus:outline-none placeholder:text-xs"
+          {...restProps}
           required
         />
         {(id === "password" || id === "pwCheck") && (
