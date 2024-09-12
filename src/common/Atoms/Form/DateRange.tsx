@@ -1,32 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import "./customDateRange.css";
 
 export default function DateRangePicker({
-  id,
-  onChange,
+  defaultDate,
+  setData,
 }: {
-  id: string;
-  onChange: (dates: [Date, Date]) => void;
+  defaultDate: [Date, Date] | [string, string];
+  setData: Dispatch<[Date, Date]>;
 }) {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(
+    typeof defaultDate[0] === "string"
+      ? new Date(defaultDate[0])
+      : defaultDate[0]
+  );
+  const [endDate, setEndDate] = useState(
+    typeof defaultDate[1] === "string"
+      ? new Date(defaultDate[1])
+      : defaultDate[1]
+  );
+
+  // 기존 데이터를 Date 객체로 변환
+  useEffect(() => {
+    if (defaultDate && defaultDate[0] && defaultDate[1]) {
+      setStartDate(startDate);
+      setEndDate(endDate);
+      setData([startDate, endDate]); // defaultDate가 있을 경우 초기화
+    }
+  }, [setData]);
+
   const handleStartDateChange = (date: Date) => {
-    setStartDate(date);
-    onChange([date, endDate]);
+    if (date) {
+      setStartDate(date);
+      setData([date, endDate!]); // startDate 업데이트
+    }
   };
-  const handleEndDateChange = (date: Date) => {
-    setEndDate(date);
-    onChange([startDate, date]);
+
+  const handleEndDateChange = (date: Date | null) => {
+    if (date) {
+      setEndDate(date);
+      setData([startDate!, date]); // endDate 업데이트
+    }
   };
+
   return (
     <div className="flex justify-between items-center px-[18px] py-[15px] w-[383px] hover:border-label-alt focus:outline-main-600 border border-line-input rounded-ten [&>*]:inline-block [&>*]:text-label-assist">
       <ReactDatePicker
         dateFormat="yyyy.MM.dd"
-        id={`${id}-start`}
-        name={`${id}-start`}
+        // id={`${id}-start`}
+        // name={`${id}-start`}
         selected={startDate}
         onChange={(date) => handleStartDateChange(date!)}
         selectsStart
@@ -38,8 +62,8 @@ export default function DateRangePicker({
       <span className="inline-block text-label-dimmed mx-6">~</span>
       <ReactDatePicker
         dateFormat="yyyy.MM.dd"
-        id={`${id}-end`}
-        name={`${id}-end`}
+        // id={`${id}-end`}
+        // name={`${id}-end`}
         selected={endDate}
         onChange={(date) => handleEndDateChange(date!)}
         selectsEnd
