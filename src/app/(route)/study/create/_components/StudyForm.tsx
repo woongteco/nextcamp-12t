@@ -22,8 +22,8 @@ import { useRouter } from "next/navigation";
 import { createStudy } from "@/lib/actions/studyAction";
 import { StudySchema } from "@/types/model/StudyCard";
 import { cfetch } from "@/utils/customFetch";
-import { resizeFile } from "@/utils/resizeFile";
-import { supabaseUploadImage } from "@/lib/actions/profileAction";
+import SelectCategory from "./SelectCategory";
+import CalenarDates from "./CalenarDates";
 
 type CategoryOption = {
   readonly label: string;
@@ -41,6 +41,7 @@ export default function StudyForm({
   defaultValue?: StudyValue;
 }) {
   const router = useRouter();
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   // Input 타입이 Number일 경우 (maxlength적용, 숫자만입력되게 적용)
   const onNumberInputFilter = (e: FormEvent<HTMLInputElement>) => {
@@ -54,40 +55,25 @@ export default function StudyForm({
       );
   };
 
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   // 스터디 카테고리
-  const [jobCategory, setJobCategory] = useState<CategoryOption | null>(null);
-  const handleJobCategoryChange = (newValue: CategoryOption | null) => {
-    if (newValue) {
-      setJobCategory(newValue);
-    }
-  };
-  const jobCategoryOption: CategoryOption[] = CATEGORIES.map((m) => ({
-    value: m.value,
-    label: m.label,
-  }));
+  const [jobCategory, setJobCategory] = useState<CategoryOption | null>({
+    value: "",
+    label: "",
+  });
 
-  const [targetCategory, setTargetCategory] = useState<CategoryOption | null>(
-    null
-  );
-  const handleTargetCategoryChange = (newValue: CategoryOption | null) => {
-    if (newValue) {
-      setTargetCategory(newValue);
-    }
-  };
-  const targetCategoryOption = GOALS.map((m) => ({
-    value: m.value,
-    label: m.label,
-  }));
+  // 목표 카테고리
+  const [targetCategory, setTargetCategory] = useState<CategoryOption | null>({
+    value: "",
+    label: "",
+  });
 
   // 모집기간
-  const [recruitmentPeriod, setRecruitmentPeriod] = useState<
-    [Date, Date] | null
-  >(null);
-  const handleRecruitmentDateChange = (dates: [Date, Date]) => {
-    setRecruitmentPeriod(dates);
-  };
+  const [recruitmentPeriod, setRecruitmentPeriod] = useState<[Date, Date]>([
+    new Date(),
+    new Date(),
+  ]);
   const formRecruitmentDates = recruitmentPeriod?.map((date) =>
     date
       .toLocaleDateString("ko-KR", {
@@ -100,10 +86,10 @@ export default function StudyForm({
   );
 
   // 스터디기간
-  const [studyPreiod, setStudyPeriod] = useState<[Date, Date] | null>(null);
-  const handleStudyDateChange = (dates: [Date, Date]) => {
-    setStudyPeriod(dates);
-  };
+  const [studyPreiod, setStudyPeriod] = useState<[Date, Date]>([
+    new Date(),
+    new Date(),
+  ]);
 
   const formStudyDates = studyPreiod?.map((date) =>
     date
@@ -127,17 +113,9 @@ export default function StudyForm({
     setFreeChecked((freeChecked) => !freeChecked);
 
   // 스터디방식
-  const locationCategoryOption = ONOFF.map((l) => ({
-    value: l.value,
-    label: l.label,
-  }));
   const [locationCategory, setLocationCategory] =
-    useState<CategoryOption | null>(locationCategoryOption[0]);
-  const handleLocationCategoryChange = (newValue: CategoryOption | null) => {
-    if (newValue) {
-      setLocationCategory(newValue);
-    }
-  };
+    useState<CategoryOption | null>({ value: "", label: "" });
+
   const [placeChecked, setPlaceChecked] = useState<boolean>(false);
   const [place, setPlace] = useState<string>("");
   useEffect(() => {
@@ -146,7 +124,9 @@ export default function StudyForm({
   const PlaceCheckedHandler = () =>
     setPlaceChecked((placeChecked) => !placeChecked);
 
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>(
+    defaultValue?.contents.content || ""
+  );
 
   // 규칙 & 커리큘럼
   const [ruleList, setRuleList] = useState<string[]>([""]);
@@ -206,6 +186,7 @@ export default function StudyForm({
   // action
   async function action(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setDisabled(() => true);
 
     const formData = new FormData(e.currentTarget);
 
@@ -224,16 +205,17 @@ export default function StudyForm({
       formData.append("location", JSON.stringify(locationCategory));
     }
 
-    if (studyPreiod) {
-      formData.append("studyPeriod", JSON.stringify(formStudyDates));
-    }
-
-    if (recruitmentPeriod) {
+    if (formRecruitmentDates) {
       formData.append(
         "recruitmentPeriod",
         JSON.stringify(formRecruitmentDates)
       );
     }
+
+    if (formStudyDates) {
+      formData.append("studyPeriod", JSON.stringify(formStudyDates));
+    }
+
     // 참가 비용
     // formData.append("expense", freeChecked ? "0" : free.toString());
 
@@ -256,44 +238,46 @@ export default function StudyForm({
       formData.append("curriculums", JSON.stringify(curriculumList));
     }
 
-    try {
-      const result = defaultValue?.studyId
-        ? await cfetch("/api/study/" + defaultValue.studyId, {
-            method: "PATCH",
-            body: formData,
+    const result = defaultValue?.studyId
+      ? await cfetch("/api/study/" + defaultValue.studyId, {
+          method: "PATCH",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then(({ data }) => data)
+          .catch((err) => {
+            console.error(err);
+            return err;
           })
-            .then((res) => res.json())
-            .then(({ data }) => data)
-            .catch((err) => {
-              console.error(err);
-              return err;
-            })
-        : await cfetch("/api/study", {
-            method: "POST",
-            body: formData,
+      : await cfetch("/api/study", {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then(({ data }) => {
+            return data;
           })
-            .then((res) => res.json())
-            .then(({ data }) => {
-              return data;
-            })
-            .catch((err) => {
-              console.log("err", err);
-              return err;
-            });
-      console.log("resulte", result);
+          .catch((err) => {
+            console.log("err", err);
+            return err;
+          });
 
-      if (result?.state) {
-        handleAlert("success", result.message);
-        router.replace("/study");
-        router.refresh();
-      } else {
-        handleAlert("error", result.message);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        handleAlert("error", error.message);
-        console.log("error", error.message);
-      }
+    console.log("수정 값 result", result);
+
+    if (result?.state) {
+      handleAlert("success", result.message);
+      router.replace(
+        "/study" + (defaultValue?.studyId ? "/" + defaultValue?.studyId : "")
+      );
+      router.refresh();
+    } else {
+      setDisabled(() => false);
+      handleAlert(
+        "error",
+        defaultValue?.studyId
+          ? "스터디 업데이트에 실패했어요."
+          : "작성에 실패했어요."
+      );
     }
   }
 
@@ -308,29 +292,31 @@ export default function StudyForm({
           className="flex-1"
           placeholder="제목을 입력하세요."
           required
+          defaultValue={defaultValue?.studyInfo.title}
         />
       </GridField>
-      <ThumbnailInput imageUrl={imageUrl} setImageUrl={setImageUrl} />
+      <ThumbnailInput
+        imageUrl={imageUrl}
+        setImageUrl={setImageUrl}
+        defaultValue={defaultValue?.studyInfo.thumbnailUrl}
+      />
       <GridField>
         <LabelText form required>
           스터디 카테고리
         </LabelText>
         <div className="flex gap-3">
-          <Input.Select
-            required
-            className="min-w-40"
-            placeholder="직무 카테고리"
-            options={jobCategoryOption}
-            value={jobCategory}
-            onChange={handleJobCategoryChange}
-          />
-          <Input.Select
-            required
-            className="min-w-40"
+          <SelectCategory
+            setData={setJobCategory}
+            defaultValue={defaultValue?.studyInfo.jobCategory}
+            categorys={CATEGORIES}
             placeholder="목표 카테고리"
-            options={targetCategoryOption}
-            value={targetCategory}
-            onChange={handleTargetCategoryChange}
+          />
+
+          <SelectCategory
+            setData={setTargetCategory}
+            defaultValue={defaultValue?.studyInfo.targetCategory}
+            categorys={GOALS}
+            placeholder="목표 카테고리"
           />
         </div>
       </GridField>
@@ -346,6 +332,7 @@ export default function StudyForm({
             required
             placeholder="0"
             className="w-32 text-right"
+            defaultValue={defaultValue?.studyInfo.recruitmentPeople}
           />
           <span>명</span>
         </div>
@@ -354,16 +341,21 @@ export default function StudyForm({
         <LabelText form required>
           모집 기간
         </LabelText>
-        <Input.DateRange
-          id="recruitmentPeriod"
-          onChange={handleRecruitmentDateChange}
+        <CalenarDates
+          defaultDate={defaultValue?.studyInfo.recruitmentPeriod}
+          data={recruitmentPeriod}
+          setData={setRecruitmentPeriod}
         />
       </GridField>
       <GridField>
         <LabelText form required>
           스터디 기간
         </LabelText>
-        <Input.DateRange id="studyPeriod" onChange={handleStudyDateChange} />
+        <CalenarDates
+          defaultDate={defaultValue?.studyInfo.studyPeriod}
+          data={studyPreiod}
+          setData={setStudyPeriod}
+        />
       </GridField>
       <GridField>
         <LabelText form required>
@@ -378,9 +370,14 @@ export default function StudyForm({
               required
               placeholder="0"
               className="w-32 text-right"
-              onChange={(e) => setFree(parseInt(e.target.value))}
-              value={free}
+              onChange={(e) => {
+                console.log("free", free, freeChecked);
+
+                setFree(parseInt(e.target.value));
+              }}
+              value={!freeChecked ? free : 0}
               disabled={freeChecked}
+              defaultValue={defaultValue?.studyInfo.expense}
             />
             <span>원</span>
           </div>
@@ -389,7 +386,6 @@ export default function StudyForm({
               onClick={FreeCheckedHandler}
               checked={freeChecked}
               defaultChecked={freeChecked}
-              name="free"
               id="free"
               label="참가비 무료"
             />
@@ -400,24 +396,25 @@ export default function StudyForm({
         <LabelText form required>
           스터디 방식
         </LabelText>
-        <div className="flex flex-col gap-6">
-          <Input.Select
-            required
-            className="w-[510px]"
-            options={locationCategoryOption}
-            value={locationCategory}
-            defaultValue={locationCategory}
-            onChange={handleLocationCategoryChange}
+        <div className="flex flex-col gap-6 w-[510px]">
+          <SelectCategory
+            setData={setLocationCategory}
+            defaultValue={defaultValue?.studyInfo.location}
+            categorys={ONOFF}
             placeholder="스터디 방식"
           />
           {locationCategory?.value === "offline" && (
             <div className="flex items-center gap-3">
               <Input.Text
                 name="place"
-                className="w-[380px]"
+                className="min-w-[378px]"
                 placeholder="주소를 입력해주세요."
                 onChange={(e) => setPlace(e.target.value)}
-                value={place}
+                defaultValue={
+                  defaultValue?.studyInfo.place
+                    ? defaultValue?.studyInfo.place
+                    : place
+                }
                 disabled={placeChecked}
                 readOnly
               />
@@ -477,7 +474,6 @@ export default function StudyForm({
       </GridField>
       <GridField>
         <LabelText form>세부 커리큘럼</LabelText>
-
         <div className="flex flex-col flex-1 gap-4">
           {curriculumList.map((curriculum, index) => (
             <div key={`c-${index}`} className="flex items-center gap-6">
@@ -512,7 +508,7 @@ export default function StudyForm({
         <LinkButton href="/study" variation="outline" size="form">
           작성 취소
         </LinkButton>
-        <Button variation="solid" type="submit" size="form">
+        <Button variation="solid" size="form" disabled={disabled}>
           작성 완료
         </Button>
       </div>
