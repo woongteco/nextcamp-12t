@@ -2,7 +2,7 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Post, Comment } from "../schema";
+import { Post, Comment, Alert } from "../schema";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 // post
@@ -48,7 +48,24 @@ export async function createCommunity(userId: string, formData: FormData) {
 
     await post.save();
 
+    if (post) {
+      await Alert.updateOne(
+        { userId },
+        {
+          $push: {
+            alertList: {
+              type: "post",
+              typeId: postId,
+              title,
+            },
+          },
+        },
+        { upsert: true }
+      );
+    }
+
     revalidateTag("community");
+
     return {
       state: true,
       message: "커뮤니티 글이 등록되었습니다.",
@@ -147,6 +164,10 @@ export async function deleteCommunity(postId: string) {
   try {
     await Post.deleteOne({ postId });
     await Comment.deleteMany({ postId });
+    await Alert.updateOne(
+      { "alertList.typeId": postId },
+      { $pull: { alertList: { typeId: postId } } }
+    );
 
     revalidateTag("community");
     return { success: true, message: "커뮤니티 글이 삭제되었습니다." };

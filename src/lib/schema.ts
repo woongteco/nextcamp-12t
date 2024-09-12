@@ -155,10 +155,20 @@ const postLike = new mongoose.Schema({
 // 알림 count
 const alert = new mongoose.Schema({
   userId: { type: String, required: true },
-  count: {
-    postComment: { type: Number, default: 0 },
-    studyComment: { type: Number, default: 0 },
-  },
+  alertList: [
+    {
+      type: { type: String, enum: ["post", "study"], required: true },
+      typeId: { type: String, required: true },
+      title: { type: String, required: true },
+      comments: [
+        {
+          comment: { type: String, default: "" },
+          read: { type: Boolean, default: false },
+        },
+      ],
+    },
+  ],
+  allRead: { type: Boolean, default: false },
 });
 
 export const User = mongoose.models?.User || mongoose.model("User", user);

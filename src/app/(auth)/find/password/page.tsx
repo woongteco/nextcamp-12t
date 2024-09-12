@@ -1,6 +1,5 @@
 "use client";
 
-import AuthWrap from "../../_components/AuthWrap";
 import Image from "next/image";
 import { Logo } from "@public/icons";
 import { Input } from "../../_components/UserInput";
@@ -42,41 +41,36 @@ export default function FindPassword() {
 
   return (
     <>
-      <AuthWrap>
-        <Image src={Logo} alt="logo" />
-        {userEmail ? (
-          <>
-            <p>새로운 비밀번호로 변경해주세요.</p>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col w-full gap-6"
-            >
-              <div className="w-full flex flex-col gap-2">
-                <Input
-                  id="password"
-                  type="password"
-                  title="비밀번호"
-                  placeholder="********"
-                />
-                <p className="text-xs text-gray-400">
-                  ※ 영문 / 숫자 / 특수문자(!, @, #, *)중 1가지 포함 12자 이상
-                </p>
-              </div>
+      <Image src={Logo} alt="logo" />
+      {userEmail ? (
+        <>
+          <p>새로운 비밀번호로 변경해주세요.</p>
+          <form onSubmit={handleSubmit} className="flex flex-col w-full gap-6">
+            <div className="w-full flex flex-col gap-2">
               <Input
-                id="pwCheck"
+                id="password"
                 type="password"
-                title="비밀번호 확인"
+                title="비밀번호"
                 placeholder="********"
               />
-              <button className="w-full rounded-md py-2 text-white bg-main-600 text-center">
-                변경 완료 후 로그인 페이지 이동
-              </button>
-            </form>
-          </>
-        ) : (
-          <FindNoData link="pw-reset" />
-        )}
-      </AuthWrap>
+              <p className="text-xs text-gray-400">
+                ※ 영문 / 숫자 / 특수문자(!, @, #, *)중 1가지 포함 12자 이상
+              </p>
+            </div>
+            <Input
+              id="pwCheck"
+              type="password"
+              title="비밀번호 확인"
+              placeholder="********"
+            />
+            <button className="w-full rounded-md py-2 text-white bg-main-600 text-center">
+              변경 완료 후 로그인 페이지 이동
+            </button>
+          </form>
+        </>
+      ) : (
+        <FindNoData link="pw-reset" />
+      )}
     </>
   );
 }

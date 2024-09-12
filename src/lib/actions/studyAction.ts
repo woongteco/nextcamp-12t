@@ -2,7 +2,7 @@
 
 import { nanoid } from "nanoid";
 import connectDB from "../db";
-import { Study } from "../schema";
+import { Alert, Study } from "../schema";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { supabase } from "../supabase";
 
@@ -82,6 +82,22 @@ export async function createStudy(userId: string, formData: FormData) {
       },
       writer: userId,
     });
+
+    if (study) {
+      await Alert.updateOne(
+        { userId },
+        {
+          $push: {
+            alertList: {
+              type: "study",
+              typeId: studyId,
+              title,
+            },
+          },
+        },
+        { upsert: true }
+      );
+    }
 
     await study.save();
     revalidateTag("study");
@@ -226,6 +242,10 @@ export async function deleteStudy(studyId: string) {
 
   try {
     await Study.deleteOne({ studyId });
+    await Alert.updateOne(
+      { "alertList.typeId": studyId },
+      { $pull: { alertList: { typeId: studyId } } }
+    );
 
     revalidateTag("study");
     return { state: true, message: "스터디가 삭제 되었습니다." };
