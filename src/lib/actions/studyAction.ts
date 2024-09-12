@@ -124,19 +124,20 @@ export async function getStudy(studyId: string | null = null) {
 
   try {
     if (studyId) {
-      const study = await Study.findOne({ studyId }).populate(
-        "writer",
-        "name email role profile_img position_tag introduce my_category"
-      );
+      const study = await Study.findOne({ studyId })
+        .populate("comments")
+        .populate(
+          "writer",
+          "name email role profile_img position_tag introduce my_category"
+        );
       if (!study) {
         return { state: false, message: "해당 스터디를 찾을 수 없습니다." };
       }
       return { state: true, data: study };
     } else {
-      const studyList = await Study.find().populate(
-        "writer",
-        "name email role profile_img position_tag"
-      );
+      const studyList = await Study.find()
+        .populate("writer", "name email role profile_img position_tag")
+        .sort({ createAt: "desc" });
       return { state: true, data: studyList };
     }
   } catch (error) {
@@ -163,7 +164,22 @@ export async function updateStudy(studyId: string, formData: FormData) {
   const rules = JSON.parse(formData.get("rules") as string);
   const curriculums = JSON.parse(formData.get("curriculums") as string);
 
-  await connectDB();
+  if (
+    !title ||
+    !jobCategory ||
+    !targetCategory ||
+    !expense ||
+    !recruitmentPeople ||
+    !recruitmentPeriod ||
+    !studyPeriod ||
+    !location ||
+    !content
+  ) {
+    return {
+      state: false,
+      message: "스터디 개설하려면 필수 정보를 입력해주세요.",
+    };
+  }
 
   try {
     const update = await Study.findOneAndUpdate(
@@ -210,6 +226,7 @@ export async function deleteStudy(studyId: string) {
 
   try {
     await Study.deleteOne({ studyId });
+
     revalidateTag("study");
     return { state: true, message: "스터디가 삭제 되었습니다." };
   } catch (error) {
