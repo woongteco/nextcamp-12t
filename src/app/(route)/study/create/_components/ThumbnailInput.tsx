@@ -1,3 +1,5 @@
+"use client";
+
 import GridField from "@/common/Atoms/Form/Field";
 import { LabelText } from "@/common/Atoms/Form/Label";
 import { AdditionIcon } from "@/common/Atoms/Image/Icon";
@@ -6,16 +8,17 @@ import { supabaseThumbnailImage } from "@/lib/actions/studyAction";
 import { resizeFile } from "@/utils/resizeFile";
 import { DefaultThumbnailImg } from "@public/images";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef } from "react";
 
 export default function ThumbnailInput({
   imageUrl,
   setImageUrl,
+  defaultValue,
 }: {
-  imageUrl: string;
-  setImageUrl: React.Dispatch<React.SetStateAction<string>>;
+  imageUrl: string | null;
+  setImageUrl: React.Dispatch<React.SetStateAction<string | null>>;
+  defaultValue?: string | null;
 }) {
-  // const [preview, setPreview] = useState<string>("");
   const fileInput = useRef<HTMLInputElement>(null);
 
   async function getImage(e: ChangeEvent<HTMLInputElement>) {
@@ -40,22 +43,6 @@ export default function ThumbnailInput({
       }
     }
   }
-  // const onUloadImage = (e: any) => {
-  //   const files = e.target.files;
-
-  //   if (files && files.length > 0) {
-  //     const file = files[0];
-  //     const fileReader = new FileReader();
-
-  //     fileReader.onloadend = () => {
-  //       const encoding = fileReader.result as string;
-  //       setPreview(encoding);
-  //       return encoding;
-  //     };
-
-  //     fileReader.readAsDataURL(file);
-  //   }
-  // };
 
   const onClickImageButton = () => {
     fileInput.current?.click();
@@ -67,14 +54,30 @@ export default function ThumbnailInput({
       <div className="flex flex-col">
         <div className="flex items-start gap-8">
           <div>
-            {imageUrl ? (
-              <Image
-                width={280}
-                height={180}
-                className="w-[280px] h-[180px] rounded-ten object-cover"
-                src={imageUrl}
-                alt="썸네일 이미지"
-              />
+            {defaultValue ? (
+              <div className="relative">
+                <Image
+                  width={280}
+                  height={180}
+                  className="w-[280px] h-[180px] rounded-ten object-cover"
+                  src={defaultValue}
+                  alt="썸네일 이미지"
+                />
+                <input
+                  type="file"
+                  name="thumbnailUrl"
+                  accept="image/*"
+                  ref={fileInput}
+                  onChange={(e) => getImage(e)}
+                  hidden
+                />
+
+                <button
+                  type="button"
+                  onClick={onClickImageButton}
+                  className="absolute top-0 left-0 flex items-center justify-center flex-col gap-2 w-[280px] h-[180px] border rounded-ten border-[#e2e2e4] bg-black opacity-30 cursor-pointer"
+                ></button>
+              </div>
             ) : (
               <>
                 <input
@@ -85,6 +88,7 @@ export default function ThumbnailInput({
                   onChange={(e) => getImage(e)}
                   hidden
                 />
+
                 <button
                   type="button"
                   onClick={onClickImageButton}
