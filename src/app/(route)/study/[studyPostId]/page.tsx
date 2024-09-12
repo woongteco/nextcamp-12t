@@ -10,6 +10,7 @@ import { Study } from "@/lib/schema";
 import { revalidateTag } from "next/cache";
 import { cfetch } from "@/utils/customFetch";
 import { notFound } from "next/navigation";
+import ControlButton from "./_components/ControlButton";
 
 async function increaseViewCount(studyId: string) {
   try {
@@ -56,7 +57,10 @@ export default async function StudyDetailPage({
 
   return (
     <div>
-      <BackButton />
+      <div className="flex justify-between items-start">
+        <BackButton />
+        <ControlButton study={study} />
+      </div>
       <StudyDetail study={study} />
 
       <div className="mt-20">
