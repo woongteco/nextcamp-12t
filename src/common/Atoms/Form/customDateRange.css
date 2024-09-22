@@ -127,3 +127,7 @@
 .react-datepicker__day--range-end:hover {
   background-color: var(--color-main-700);
 }
+
+.react-datepicker__input-container input {
+  color: #000;
+}
