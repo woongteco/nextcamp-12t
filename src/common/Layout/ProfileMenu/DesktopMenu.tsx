@@ -26,7 +26,7 @@ export default function DesktopMenu({
     queryKey: ["alert", userId],
     queryFn: ({ queryKey }) => getAlert(queryKey[1]),
   });
-  const dataList: TAlert[] = data?.data || [];
+  const dataList: TAlert[] = useMemo(() => data?.data || [], [data]);
 
   const alertList = useMemo(() => {
     return dataList
