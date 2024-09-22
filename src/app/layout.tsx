@@ -26,7 +26,6 @@ export const generateViewport = (): Viewport => {
     initialScale: 1,
     maximumScale: 1,
     userScalable: false,
-    // Also supported by less commonly used
     interactiveWidget: "resizes-visual",
     themeColor: "#2A7FFE",
   };
