@@ -4,7 +4,7 @@ import { compare, hash } from "bcryptjs";
 import connectDB from "../db";
 import { User } from "../schema";
 import { getSession, signIn } from "@/auth";
-import { transporter } from "@/utils/mailer";
+import { sendEmail } from "@/utils/mailer";
 
 const emailValid = /^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/;
 const passwordValid = /^(?=.*[a-zA-Z])(?=.*[!@#*])(?=.*[0-9]).{12,}$/;
@@ -110,17 +110,7 @@ export async function findEmail(formData: FormData) {
   }
 
   try {
-    const option = {
-      from: `"CHEMEET" <${process.env.NEXT_APP_EMAIL}>`,
-      to: email,
-      subject: "CHEMEET 인증코드",
-      html: `<p>아래 링크를 클릭하여 이메일 찾기를 완료하세요.</p>
-      <a href="${process.env.BASE_URL}/find/email">이메일 찾기 링크로 이동하기</a>
-      <p>※ 입력하신 정보는 10분간 유효하여 유효시간 내에 완료하세요.</p>
-      `,
-    };
-
-    await transporter.sendMail(option);
+    await sendEmail(email);
 
     return {
       state: true,
@@ -155,17 +145,8 @@ export async function findPassword(formData: FormData) {
   }
 
   try {
-    const option = {
-      from: `"CHEMEET" <${process.env.NEXT_APP_EMAIL}>`,
-      to: email,
-      subject: "CHEMEET 인증코드",
-      html: `<p>아래 링크를 클릭하여 새로운 비밀번호로 변경하세요.</p>
-      <a href="${process.env.BASE_URL}/find/password">비밀번호 변경 링크로 이동하기</a>
-      <p>※ 입력하신 정보는 10분간 유효하여 유효시간 내에 완료하세요.</p>
-      `,
-    };
+    await sendEmail(email, joinEmail);
 
-    await transporter.sendMail(option);
     return {
       state: true,
       data: user.email,
