@@ -1,14 +1,27 @@
 "use client";
+
 import Button from "@/common/Atoms/Form/Button";
 import Input from "@/common/Molecules/Form/Input";
 import handleAlert from "@/common/Molecules/handleAlert";
 import { CATEGORIES_GROUPS } from "@/constants/categories/job_category";
 import { GOALS } from "@/constants/categories/study_goal";
+import findEmailStore from "@/store/findEmailStore";
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 
 export default function TopBannerSearchbar() {
   const router = useRouter();
+  const { clearUserEmail } = findEmailStore();
+
+  useEffect(() => {
+    const storageTime = localStorage.getItem("storage-time");
+    const currentTime = Date.now();
+
+    if (storageTime && currentTime > Number(storageTime)) {
+      clearUserEmail();
+    }
+  }, [clearUserEmail]);
+
   function search(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 

@@ -23,9 +23,10 @@ const findEmailStore = create(
     }),
     {
       name: "find-email",
-      onRehydrateStorage: () => (state) => {
+      onRehydrateStorage: (state) => {
         const storageTime = localStorage.getItem("storage-time");
-        if (state && storageTime && Date.now() > Number(storageTime)) {
+        const currentTime = Date.now();
+        if (state && storageTime && currentTime > Number(storageTime)) {
           state.clearUserEmail();
         }
       },
