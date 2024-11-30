@@ -22,10 +22,10 @@ export type TThumbnailInfo = {
 };
 export default function StudyDetailThumbnail({
   studyInfo,
-  heart,
+  count,
 }: {
   studyInfo: TThumbnailInfo;
-  heart: number;
+  count: number;
 }) {
   const {
     thumbnailUrl,
@@ -95,7 +95,7 @@ export default function StudyDetailThumbnail({
           <ApplyButton resultDay={resultDay} />
           <div className="flex items-center gap-3">
             <ShareIconButton />
-            <SaveHeartButton heart={heart} />
+            <SaveHeartButton count={count} />
           </div>
         </div>
       </div>

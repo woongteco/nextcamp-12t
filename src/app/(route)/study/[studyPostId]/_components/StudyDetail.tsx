@@ -10,7 +10,7 @@ export default async function StudyDetail({ study }: { study: StudyDataFull }) {
 
   return (
     <div>
-      <StudyDetailThumbnail studyInfo={studyInfo} heart={heartCount} />
+      <StudyDetailThumbnail studyInfo={studyInfo} count={heartCount} />
       <StudyDetailContent contents={contents} writer={writer} />
       <CommentArea
         postId={String(studyId)}
